@@ -30,7 +30,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/eclipse-ee4j/jax-ws-api</connection>
-        <developerConnection>${scm.developerConnection}</developerConnection>
+        <developerConnection>scm:git:git://github.com/eclipse-ee4j/jax-ws-api</developerConnection>
         <url>https://github.com/eclipse-ee4j/jax-ws-api</url>
         <tag>HEAD</tag>
     </scm>
