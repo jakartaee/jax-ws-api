@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.4</version>
     </parent>
 
     <groupId>jakarta.xml.ws</groupId>
@@ -85,19 +85,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.xml.bind</groupId>
+            <groupId>jakarta.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>${jaxb.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>javax.xml.soap</groupId>
-            <artifactId>javax.xml.soap-api</artifactId>
+            <groupId>jakarta.xml.soap</groupId>
+            <artifactId>jakarta.xml.soap-api</artifactId>
             <version>${soap.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
             <version>${javax.annotation-api.version}</version>
         </dependency>
     </dependencies>
@@ -110,8 +110,8 @@
         <extension.name>javax.xml.ws</extension.name>
         <spec.version>2.4</spec.version>
         <old.spec.version>2.3</old.spec.version>
-        <jaxb.version>2.3.1</jaxb.version>
-        <soap.version>1.4.0</soap.version>
+        <jaxb.version>2.3.2</jaxb.version>
+        <soap.version>1.4.1</soap.version>
 
         <non.final>false</non.final>
         <mod.dir>${project.build.directory}/mods</mod.dir>
@@ -120,7 +120,7 @@
         <findbugs.threshold>Low</findbugs.threshold>
         <maven.build.timestamp.format>yyMMdd.HHmm</maven.build.timestamp.format>
         <scm.developerConnection>scm:git:git@github.com:javaee/jax-ws-spec.git</scm.developerConnection>
-        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
+        <javax.annotation-api.version>1.3.3</javax.annotation-api.version>
     </properties>
 
     <build>
@@ -148,7 +148,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.6</version>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -183,7 +183,7 @@
                 <plugin>
                     <groupId>org.glassfish.build</groupId>
                     <artifactId>spec-version-maven-plugin</artifactId>
-                    <version>1.3</version>
+                    <version>1.5</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -270,7 +270,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
                     <excludes>
                         <exclude>**/*.java</exclude>
                     </excludes>
@@ -392,6 +394,7 @@ href='http://www.oracle.com/technetwork/java/index-jsp-137004.html'><i>Metro Web
                         <groupId>org.glassfish.build</groupId>
                         <artifactId>spec-version-maven-plugin</artifactId>
                         <configuration>
+                            <specMode>jakarta</specMode>
                             <spec>
                                 <nonFinal>${non.final}</nonFinal>
                                 <jarType>api</jarType>
