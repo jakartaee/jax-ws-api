@@ -111,7 +111,7 @@
         <findbugs.threshold>Low</findbugs.threshold>
         <maven.build.timestamp.format>yyMMdd.HHmm</maven.build.timestamp.format>
 
-        <annotation-api.version>1.3.3</annotation-api.version>
+        <annotation-api.version>1.3.4</annotation-api.version>
         <jaxb-api.version>2.3.2</jaxb-api.version>
         <soap-api.version>1.4.1</soap-api.version>
     </properties>
