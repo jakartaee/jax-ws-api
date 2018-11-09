@@ -4,7 +4,7 @@ so the easiest way is using bash.
 To run tests, use following scripts:
 
 1) ./setup.sh
-    builds jaxws-api and creates directory endorsed which is picked up by tests
+    builds javax.xml.ws-api and creates directory endorsed which is picked up by tests
 
 2) ./runtests.sh
     runs all the scenarios declared in scenarios.sh
