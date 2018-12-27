@@ -22,7 +22,7 @@
 
     <groupId>jakarta.xml.ws</groupId>
     <artifactId>jakarta.xml.ws-api</artifactId>
-    <version>2.3.2-SNAPSHOT</version>
+    <version>2.3.2</version>
     <packaging>jar</packaging>
     <name>JAX-WS API</name>
     <description>JAX-WS (JSR 224) API</description>
