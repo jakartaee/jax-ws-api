@@ -1,13 +1,13 @@
-# Notices for Eclipse Project for JAX-WS
+# Notices for Jakarta XML Web Services
 
-This content is produced and maintained by the Eclipse Project for JAX-WS
+This content is produced and maintained by the Jakarta XML Web Services
 project.
 
 * Project home: https://projects.eclipse.org/projects/ee4j.jaxws
 
 ## Trademarks
 
-Eclipse Project for JAX-WS is a trademark of the Eclipse Foundation.
+ Jakarta XML Web Services is a trademark of the Eclipse Foundation.
 
 ## Copyright
 
