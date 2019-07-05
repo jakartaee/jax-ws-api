@@ -1,4 +1,4 @@
-# Contributing to Eclipse Project for JAX-WS
+# Contributing to Jakarta XML Web Services
 
 Thanks for your interest in this project.
 
@@ -19,9 +19,9 @@ more.
 
 The project maintains the following source code repositories
 
-* https://github.com/eclipse-ee4j/saaj-api
-* https://github.com/eclipse-ee4j/jax-ws-api
 * https://github.com/eclipse-ee4j/jws-api
+* https://github.com/eclipse-ee4j/jax-ws-api
+* https://github.com/eclipse-ee4j/saaj-api
 
 ## Eclipse Contributor Agreement
 

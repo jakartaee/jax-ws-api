@@ -1,5 +1,5 @@
-# JAX-WS (JSR 224) API
+# Jakarta XML Web Services API
 
 ### Licensing and Governance
 
-JAXB API is licensed under a license - [EDL 1.0](LICENSE.md).
+Jakarta XML Web Services project is licensed under [EDL 1.0](LICENSE.md) license.
