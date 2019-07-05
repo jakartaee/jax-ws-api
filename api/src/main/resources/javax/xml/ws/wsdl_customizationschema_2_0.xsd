@@ -4,8 +4,8 @@
            elementFormDefault="qualified"
            targetNamespace="http://java.sun.com/xml/ns/jaxws"
            attributeFormDefault="unqualified">
-  <xsd:annotation>
-    <xsd:documentation>
+  <xs:annotation>
+    <xs:documentation>
 
       Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
 
@@ -15,8 +15,8 @@
 
       SPDX-License-Identifier: BSD-3-Clause
 
-    </xsd:documentation>
-  </xsd:annotation>
+    </xs:documentation>
+  </xs:annotation>
 
     <xs:annotation>
         <xs:documentation>
