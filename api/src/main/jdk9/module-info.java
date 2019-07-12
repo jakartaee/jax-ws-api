@@ -8,6 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+/**
+ * <p>
+ * References in this document to JAX-WS refer to the Jakarta XML Web Services unless otherwise noted.
+ * References in this document to SAAJ refer to the Jakarta SOAP with Attachments unless otherwise noted.
+ * References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.
+ * References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
+ */
 module java.xml.ws {
     requires java.xml.bind;
     requires java.logging;
