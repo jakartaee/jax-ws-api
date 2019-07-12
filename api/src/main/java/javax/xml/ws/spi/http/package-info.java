@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -13,6 +13,12 @@
   web services in containers(for e.g. servlet containers). This SPI
   is not for end developers but provides a way for the container
   developers to deploy JAX-WS services portably.
+
+  <p>
+  References in this document to JAX-WS refer to the Jakarta XML Web Services unless otherwise noted.
+  References in this document to SAAJ refer to the Jakarta XML Web Services unless otherwise noted.
+  References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.
+  References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
 
   <p>
   The portable deployment is done as below:
