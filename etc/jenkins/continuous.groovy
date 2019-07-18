@@ -76,7 +76,6 @@ pipeline {
                         sh 'etc/jenkins/continuous.sh'
                     }
                 }
-                junit '**/target/surefire-reports/*.xml'
                 recordIssues(tools: [spotBugs(useRankAsPriority: true)])
             }
         }
