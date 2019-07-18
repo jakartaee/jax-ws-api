@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -9,10 +9,12 @@
  */
 
 /**
+ * Jakarta XML Web Services API.
+ *
  * <p>
- * References in this document to JAX-WS refer to the Jakarta XML Web Services unless otherwise noted.
- * References in this document to SAAJ refer to the Jakarta SOAP with Attachments unless otherwise noted.
- * References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.
+ * References in this document to JAX-WS refer to the Jakarta XML Web Services unless otherwise noted.<br>
+ * References in this document to SAAJ refer to the Jakarta SOAP with Attachments unless otherwise noted.<br>
+ * References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.<br>
  * References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
  */
 module java.xml.ws {
