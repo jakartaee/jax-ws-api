@@ -1,12 +1,19 @@
+[//]: # " Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved. "
+[//]: # "  "
+[//]: # " This program and the accompanying materials are made available under the "
+[//]: # " terms of the Eclipse Distribution License v. 1.0, which is available at "
+[//]: # " http://www.eclipse.org/org/documents/edl-v10.php. "
+[//]: # "  "
+[//]: # " SPDX-License-Identifier: BSD-3-Clause "
+
 # Contributing to Jakarta XML Web Services
 
 Thanks for your interest in this project.
 
 ## Project description
 
-The Java API for XML Web Services (JAX-WS) is a Java programming language API
-for creating web services, particularly SOAP services. JAX-WS is one of the Java
-XML programming APIs. It is part of the Java EE platform.
+Jakarta XML Web Services defines a means for implementing XML-Based Web Services
+based on Jakarta SOAP with Attachments and Jakarta Web Services Metadata.
 
 * https://projects.eclipse.org/projects/ee4j.jaxws
 

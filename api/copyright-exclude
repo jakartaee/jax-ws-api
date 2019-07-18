@@ -1,9 +1,3 @@
-api/copyright-exclude
-api/copyright.txt
-api/exclude.xml
-api/offline-javadoc/package-list
-/CONTRIBUTING.md
-/LICENSE.md
-/README.md
-
-
+copyright-exclude
+copyright.txt
+test/README.txt

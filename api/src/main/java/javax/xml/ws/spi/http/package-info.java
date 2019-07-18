@@ -9,15 +9,15 @@
  */
 
 /**
-  Provides HTTP SPI that is used for portable deployment of JAX-WS
-  web services in containers(for e.g. servlet containers). This SPI
+  Provides HTTP SPI that is used for portable deployment of Jakarta XML Web Services
+  in containers (for example servlet containers). This SPI
   is not for end developers but provides a way for the container
-  developers to deploy JAX-WS services portably.
+  developers to deploy Jakarta XML Web Services portably.
 
   <p>
-  References in this document to JAX-WS refer to the Jakarta XML Web Services unless otherwise noted.
-  References in this document to SAAJ refer to the Jakarta SOAP with Attachments unless otherwise noted.
-  References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.
+  References in this document to JAX-WS refer to the Jakarta XML Web Services unless otherwise noted.<br>
+  References in this document to SAAJ refer to the Jakarta SOAP with Attachments unless otherwise noted.<br>
+  References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.<br>
   References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
 
   <p>
