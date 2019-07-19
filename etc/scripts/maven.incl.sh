@@ -87,7 +87,10 @@ set_version() {
         ${6} \
         -DnewVersion="${3}" \
         -DgenerateBackupPoms=false \
-        clean ${VERSIONS_PLUGIN}:set glassfish-copyright:repair)
+        clean ${VERSIONS_PLUGIN}:set)
+  # Fix copyright headers. Do not fail the build if plugin is missing
+  (cd ${2} && \
+    mvn -U -C glassfish-copyright:repair || true)
   echo '--[ Commit modified pom.xml files ]---------------------------------------------'
   local POM_FILES=`git status | grep -E 'modified:.*pom\.xml' | sed -e 's/[[:space:]][[:space:]]*modified:[[:space:]][[:space:]]*//'`
   git add ${POM_FILES} && \
