@@ -87,7 +87,7 @@ set_version() {
         ${6} \
         -DnewVersion="${3}" \
         -DgenerateBackupPoms=false \
-        clean ${VERSIONS_PLUGIN}:set)
+        clean ${VERSIONS_PLUGIN}:set glassfish-copyright:repair)
   echo '--[ Commit modified pom.xml files ]---------------------------------------------'
   local POM_FILES=`git status | grep -E 'modified:.*pom\.xml' | sed -e 's/[[:space:]][[:space:]]*modified:[[:space:]][[:space:]]*//'`
   git add ${POM_FILES} && \
