@@ -1,3 +1,4 @@
 copyright-exclude
 copyright.txt
 test/README.txt
+api/src/main/javadoc/doc-files/speclicense.html
