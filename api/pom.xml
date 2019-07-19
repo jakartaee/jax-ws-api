@@ -118,8 +118,6 @@
         <spotbugs.threshold>Low</spotbugs.threshold>
         <spotbugs.version>3.1.11</spotbugs.version>
 
-        <release.spec.title>Maintenance Release</release.spec.title>
-        <release.spec.date>Jul 11, 2017</release.spec.date>
         <release.spec.feedback>jaxws-dev@eclipse.org</release.spec.feedback>
 
         <api.package>javax.xml.ws</api.package>
