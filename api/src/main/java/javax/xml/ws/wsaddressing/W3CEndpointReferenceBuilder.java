@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -28,19 +28,19 @@ import javax.xml.ws.spi.Provider;
  * an application component, for example a factory component,
  * to create an {@code W3CEndpointReference} for a
  * web service endpoint published by the same 
- * Java EE application. It can also be used to create
+ * Jakarta EE application. It can also be used to create
  * {@code W3CEndpointReferences} for an Java SE based
  * endpoint by providing the {@code address} property.
  * <p>
  * When creating a {@code W3CEndpointReference} for an
- * endpoint that is not published by the same Java EE application,
+ * endpoint that is not published by the same Jakarta EE application,
  * the {@code address} property MUST be specified.
  * <p>
  * When creating a {@code W3CEndpointReference} for an endpoint
- * published by the same Java EE application, the {@code address}
+ * published by the same Jakarta EE application, the {@code address}
  * property MAY be {@code null} but then the {@code serviceName}
  * and {@code endpointName} MUST specify an endpoint published by
- * the same Java EE application.
+ * the same Jakarta EE application.
  * <p>
  * When the {@code wsdlDocumentLocation} is specified it MUST refer
  * to a valid WSDL document and the {@code serviceName} and
@@ -68,7 +68,7 @@ public final class W3CEndpointReferenceBuilder {
      * The {@code address} MUST be set to a non-{@code null}
      * value when building a {@code W3CEndpointReference} for a
      * web service endpoint that is not published by the same
-     * Java EE application or when running on Java SE.
+     * Jakarta EE application or when running on Java SE.
      *
      * @param address The address of the endpoint to be targeted
      *      by the returned {@code W3CEndpointReference}.
@@ -114,7 +114,7 @@ public final class W3CEndpointReferenceBuilder {
      *      by the returned {@code W3CEndpointReference}.  This property
      *      may also be used with the {@code endpointName} (portName)
      *      property to lookup the {@code address} of a web service
-     *      endpoint that is published by the same Java EE application.
+     *      endpoint that is published by the same Jakarta EE application.
      *
      * @return A {@code W3CEndpointReferenceBuilder} instance with
      *   the {@code serviceName} as {@code wsam:ServiceName}
@@ -140,7 +140,7 @@ public final class W3CEndpointReferenceBuilder {
      *      {@code endpointName} (portName) property may also be
      *      used with the {@code serviceName} property to lookup
      *      the {@code address} of a web service
-     *      endpoint published by the same Java EE application.
+     *      endpoint published by the same Jakarta EE application.
      *
      * @return A {@code W3CEndpointReferenceBuilder} instance with
      *   the {@code endpointName} as
@@ -283,14 +283,14 @@ public final class W3CEndpointReferenceBuilder {
      * for any endpoint by specifying the {@code address} property along
      * with any other desired properties.  This method
      * can also be used to create a {@code W3CEndpointReference} for
-     * an endpoint that is published by the same Java EE application.
+     * an endpoint that is published by the same Jakarta EE application.
      * This method can automatically determine the {@code address} of
-     * an endpoint published by the same Java EE application that is identified by the 
+     * an endpoint published by the same Jakarta EE application that is identified by the 
      * {@code serviceName} and
      * {@code endpointName} properties.  If the {@code address} is
      * {@code null} and the {@code serviceName} and
      * {@code endpointName}
-     * do not identify an endpoint published by the same Java EE application, a 
+     * do not identify an endpoint published by the same Jakarta EE application, a 
      * {@code java.lang.IllegalStateException} MUST be thrown.
      * 
      *
@@ -306,7 +306,7 @@ public final class W3CEndpointReferenceBuilder {
      *            {@code endpointName} is NOT {@code null}.
      *        <li>If the {@code address} property is {@code null} and
      *            the {@code serviceName} and {@code endpointName} do not
-     *            specify a valid endpoint published by the same Java EE
+     *            specify a valid endpoint published by the same Jakarta EE
      *            application.
      *        <li>If the {@code serviceName} is NOT {@code null}
      *             and is not present in the specified WSDL.

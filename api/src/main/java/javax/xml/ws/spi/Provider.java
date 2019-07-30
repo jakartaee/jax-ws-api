@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -221,15 +221,15 @@ public abstract class Provider {
      * for any endpoint by specifying the {@code address} property along
      * with any other desired properties.  This method
      * can also be used to create a {@code W3CEndpointReference} for
-     * an endpoint that is published by the same Java EE application.
+     * an endpoint that is published by the same Jakarta EE application.
      * To do so the {@code address} property can be provided or this
      * method can automatically determine the {@code address} of
-     * an endpoint that is published by the same Java EE application and is
+     * an endpoint that is published by the same Jakarta EE application and is
      * identified by the {@code serviceName} and
      * {@code portName} properties.  If the {@code address} is
      * {@code null} and the {@code serviceName} and
      * {@code portName} do not identify an endpoint published by the
-     * same Java EE application, a
+     * same Jakarta EE application, a
      * {@code javax.lang.IllegalStateException} MUST be thrown.
      *
      * @param address Specifies the address of the target endpoint
@@ -257,7 +257,7 @@ public abstract class Provider {
      *            {@code portName} is NOT {@code null}.
      *        <li>If the {@code address} property is {@code null} and
      *            the {@code serviceName} and {@code portName} do not
-     *            specify a valid endpoint published by the same Java EE
+     *            specify a valid endpoint published by the same Jakarta EE
      *            application.
      *        <li>If the {@code serviceName}is NOT {@code null}
      *             and is not present in the specified WSDL.
@@ -287,15 +287,15 @@ public abstract class Provider {
      * for any endpoint by specifying the {@code address} property along
      * with any other desired properties.  This method
      * can also be used to create a {@code W3CEndpointReference} for
-     * an endpoint that is published by the same Java EE application.
+     * an endpoint that is published by the same Jakarta EE application.
      * To do so the {@code address} property can be provided or this
      * method can automatically determine the {@code address} of
-     * an endpoint that is published by the same Java EE application and is
+     * an endpoint that is published by the same Jakarta EE application and is
      * identified by the {@code serviceName} and
      * {@code portName} propeties.  If the {@code address} is
      * {@code null} and the {@code serviceName} and
      * {@code portName} do not identify an endpoint published by the
-     * same Java EE application, a
+     * same Jakarta EE application, a
      * {@code javax.lang.IllegalStateException} MUST be thrown.
      *
      * @param address Specifies the address of the target endpoint
@@ -329,7 +329,7 @@ public abstract class Provider {
      *            {@code portName} is NOT {@code null}.
      *        <li>If the {@code address} property is {@code null} and
      *            the {@code serviceName} and {@code portName} do not
-     *            specify a valid endpoint published by the same Java EE
+     *            specify a valid endpoint published by the same Jakarta EE
      *            application.
      *        <li>If the {@code serviceName}is NOT {@code null}
      *             and is not present in the specified WSDL.
