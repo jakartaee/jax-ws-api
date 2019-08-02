@@ -329,7 +329,7 @@
                         <Implementation-Version>${spec.implementation.version}</Implementation-Version>
                         <Specification-Version>${spec.specification.version}</Specification-Version>
                         <DynamicImport-Package>org.glassfish.hk2.osgiresourcelocator</DynamicImport-Package>
-                        <Specification-Vendor>Oracle Corporation</Specification-Vendor>
+                        <Specification-Vendor>Eclipse Foundation</Specification-Vendor>
                         <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
                         <Implementation-Vendor-Id>org.glassfish</Implementation-Vendor-Id>
                         <Implementation-Build-Id>${scmBranch}-${buildNumber}, ${timestamp}</Implementation-Build-Id>
@@ -371,7 +371,7 @@
                     <header><![CDATA[Jakarta XML Web Services<br>v${spec.version}]]></header>
                     <bottom><![CDATA[
 Comments to: <a href="mailto:${release.spec.feedback}">${release.spec.feedback}</a>.<br>
-Copyright &#169; {inceptionYear}&#x2013;{currentYear} Oracle and/or its affiliates. All rights reserved.<br>
+Copyright &#169; 2019 Eclipse Foundation. All rights reserved.<br>
 Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
                     </bottom>
                     <detectJavaApiLink>false</detectJavaApiLink>
