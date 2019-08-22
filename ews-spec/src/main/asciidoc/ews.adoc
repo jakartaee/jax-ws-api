@@ -1,0 +1,3 @@
+== Introduction
+
+This specification defines the Web Services for Jakarta EE architecture.
