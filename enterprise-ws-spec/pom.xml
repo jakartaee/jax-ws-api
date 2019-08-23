@@ -25,10 +25,10 @@
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.eclipse.ee4j.ews</groupId>
-    <artifactId>ews-spec</artifactId>
+    <groupId>org.eclipse.ee4j.ws</groupId>
+    <artifactId>enterprise-ws-spec</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
     <name>Jakarta Enterprise Web Services Specification</name>
 
     <properties>
@@ -111,7 +111,7 @@
                         </goals>
                         <configuration>
                             <backend>html5</backend>
-                            <outputFile>${project.build.directory}/generated-docs/ews-spec-${project.version}.html</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/enterprise-ws-spec-${project.version}.html</outputFile>
                             <attributes>
                                 <doctype>book</doctype>
                                 <status>${status}</status>
@@ -134,7 +134,7 @@
                         </goals>
                         <configuration>
                             <backend>pdf</backend>
-                            <outputFile>${project.build.directory}/generated-docs/ews-spec-${project.version}.pdf</outputFile>
+                            <outputFile>${project.build.directory}/generated-docs/enterprise-ws-spec-${project.version}.pdf</outputFile>
                             <attributes>
                                 <pdf-stylesdir>${project.basedir}/src/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
@@ -155,7 +155,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDocumentName>ews-spec.adoc</sourceDocumentName>
+                    <sourceDocumentName>enterprise-ws-spec.adoc</sourceDocumentName>
                     <sourceHighlighter>coderay</sourceHighlighter>
                     <attributes>
                         <revnumber>${project.version}</revnumber>

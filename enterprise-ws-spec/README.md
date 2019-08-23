@@ -16,7 +16,7 @@ Run the full build:
 `mvn install`
 
 Locate the html files:
-- `target/generated-docs/ews-spec-<version>.html`
+- `target/generated-docs/enterprise-ws-spec-<version>.html`
 
 Locate the PDF files:
-- `target/generated-docs/ews-spec-<version>.pdf`
+- `target/generated-docs/enterprise-ws-spec-<version>.pdf`
