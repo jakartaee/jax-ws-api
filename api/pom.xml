@@ -130,7 +130,7 @@
         <maven.build.timestamp.format>yyMMdd.HHmm</maven.build.timestamp.format>
         <legal.doc.source>${project.basedir}/..</legal.doc.source>
 
-        <annotation-api.version>1.3.4</annotation-api.version>
+        <annotation-api.version>1.3.5</annotation-api.version>
         <jaxb-api.version>2.3.3</jaxb-api.version>
         <soap-api.version>1.4.2</soap-api.version>
         <jws-api.version>2.1.0</jws-api.version>
