@@ -18,10 +18,12 @@
  * References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
  */
 module java.xml.ws {
-    requires java.xml.bind;
-    requires java.logging;
-    requires java.xml.soap;
+    requires transitive java.xml;
+    requires transitive java.xml.bind;
+    requires transitive java.xml.soap;
+
     requires java.annotation;
+    requires java.logging;
 
     exports javax.xml.ws;
     exports javax.xml.ws.handler;
@@ -32,8 +34,5 @@ module java.xml.ws {
     exports javax.xml.ws.spi.http;
     exports javax.xml.ws.wsaddressing;
 
-    uses javax.xml.ws.spi.Invoker;
     uses javax.xml.ws.spi.Provider;
-    uses javax.xml.ws.spi.ServiceDelegate;
-    uses javax.xml.ws.spi.WebServiceFeatureAnnotation;
 }
