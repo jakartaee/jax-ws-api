@@ -22,7 +22,6 @@ module java.xml.ws {
     requires transitive java.xml.bind;
     requires transitive java.xml.soap;
 
-    requires java.annotation;
     requires java.logging;
 
     exports javax.xml.ws;
