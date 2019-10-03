@@ -58,7 +58,7 @@ import java.lang.annotation.RetentionPolicy;
  * annotation annotated with the {@code WebServiceFeatureAnnotation}
  * that is specified with {@code WebServiceRef}, an ERROR MUST be given.
  *
- * @see javax.annotation.Resource
+ * @see "javax.annotation.Resource"
  * @see WebServiceFeatureAnnotation
  *
  * @since 1.6, JAX-WS 2.0
