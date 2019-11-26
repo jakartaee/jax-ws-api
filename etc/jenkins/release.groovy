@@ -18,8 +18,6 @@
 //   GIT_USER_EMAIL      - Git user e-mail (for commits)
 //   SSH_CREDENTIALS_ID  - Jenkins ID of SSH credentials
 //   GPG_CREDENTIALS_ID  - Jenkins ID of GPG credentials (stored as KEYRING variable)
-//   SETTINGS_XML_ID     - Jenkins ID of settings.xml file
-//   SETTINGS_SEC_XML_ID - Jenkins ID of settings-security.xml file
 
 pipeline {
     
@@ -60,21 +58,11 @@ pipeline {
         // Perform release
         stage('Release') {
             steps {
-                configFileProvider([
-                        configFile(
-                            fileId: SETTINGS_XML_ID,
-                            targetLocation: '/home/jenkins/.m2/settings.xml'
-                        ), 
-                        configFile(
-                            fileId: SETTINGS_SEC_XML_ID, 
-                            targetLocation: '/home/jenkins/.m2/'
-                        )]) {
-                    sshagent([SSH_CREDENTIALS_ID]) {
-                        sh '''
-                            etc/jenkins/release.sh "${API_VERSION}" "${NEXT_API_VERSION}" \
-                                                   "${DRY_RUN}" "${OVERWRITE}"
-                        '''
-                    }
+                sshagent([SSH_CREDENTIALS_ID]) {
+                    sh '''
+                        etc/jenkins/release.sh "${API_VERSION}" "${NEXT_API_VERSION}" \
+                                               "${DRY_RUN}" "${OVERWRITE}"
+                    '''
                 }
             }
         }
