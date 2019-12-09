@@ -33,5 +33,7 @@ module java.xml.ws {
     exports javax.xml.ws.spi.http;
     exports javax.xml.ws.wsaddressing;
 
+    opens javax.xml.ws.wsaddressing to java.xml.bind;
+
     uses javax.xml.ws.spi.Provider;
 }
