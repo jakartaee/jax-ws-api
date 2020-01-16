@@ -1,6 +1,6 @@
 <!--
 
-    Copyright (c) 2013, 2018 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2013, 2020 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -17,7 +17,7 @@
     -->
     <Match>
         <Or>
-            <Class name="javax.xml.ws.spi.http.HttpContext"/>
+            <Class name="jakarta.xml.ws.spi.http.HttpContext"/>
         </Or>
         <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"/>
     </Match>
@@ -26,7 +26,7 @@
     Exceptions caught by intention; nothing unexpected and unwanted can happen
     -->
     <Match>
-        <Class name="javax.xml.ws.spi.FactoryFinder"/>
+        <Class name="jakarta.xml.ws.spi.FactoryFinder"/>
         <Bug pattern="REC_CATCH_EXCEPTION"/>
     </Match>
     

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -10,8 +10,8 @@
 
 package jaxws.test;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.ws.spi.Provider;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.ws.spi.Provider;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
