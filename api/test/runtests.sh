@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (c) 2015, 2018 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2015, 2020 Oracle and/or its affiliates. All rights reserved.
 #
 # This program and the accompanying materials are made available under the
 # terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -16,9 +16,9 @@
 #
 # in short:
 #
-# 1) ServiceLoader: /META-INF/services/javax.xml.ws.spi.Provider
-# 2) $java.home/lib/jaxws.properties - keyd by javax.xml.ws.spi.Provider
-# 3) SystemProperty: javax.xml.ws.spi.Provider
+# 1) ServiceLoader: /META-INF/services/jakarta.xml.ws.spi.Provider
+# 2) $java.home/lib/jaxws.properties - keyd by jakarta.xml.ws.spi.Provider
+# 3) SystemProperty: jakarta.xml.ws.spi.Provider
 #  * OSGi (non-SPEC)
 # 4) default provider
 
@@ -114,7 +114,7 @@ clean() {
 #
 # Sets up:
 #  1) ${java.home}/conf/jaxws.properties file
-#  2) META-INF/services/javax.xml.ws.spi.Provider file
+#  2) META-INF/services/jakarta.xml.ws.spi.Provider file
 prepare() {
     PROPS=$1
     SVC=$2
@@ -125,15 +125,15 @@ prepare() {
 
     if [ "$SVC" != "-" ]; then
         mkdir -p META-INF/services
-        echo "$SVC" > META-INF/services/javax.xml.ws.spi.Provider
+        echo "$SVC" > META-INF/services/jakarta.xml.ws.spi.Provider
     else
         rm -rf META-INF
     fi
 
     echo META-INF: $SVC
-    if [ -f META-INF/services/javax.xml.ws.spi.Provider ]; then
-      echo "   "`ls -al META-INF/services/javax.xml.ws.spi.Provider`
-      echo "   "`cat META-INF/services/javax.xml.ws.spi.Provider`
+    if [ -f META-INF/services/jakarta.xml.ws.spi.Provider ]; then
+      echo "   "`ls -al META-INF/services/jakarta.xml.ws.spi.Provider`
+      echo "   "`cat META-INF/services/jakarta.xml.ws.spi.Provider`
       echo ""
     fi
 
@@ -200,8 +200,8 @@ export DEFAULT=com.sun.xml.ws.spi.ProviderImpl
 cd src
 
 ### old version of API
-#FACTORY_ID=javax.xml.ws.spi.Provider
-#SVC_FACTORY_ID=javax.xml.ws.spi.Provider
+#FACTORY_ID=jakarta.xml.ws.spi.Provider
+#SVC_FACTORY_ID=jakarta.xml.ws.spi.Provider
 #FACTORY_IMPL_PREFIX=jaxws.factory.
 
 compileAll

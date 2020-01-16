@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -9,7 +9,7 @@
  */
 
 /**
- * Jakarta XML Web Services API.
+ * This package defines APIs related to WS-Addressing.
  *
  * <p>
  * References in this document to JAX-WS refer to the Jakarta XML Web Services unless otherwise noted.<br>
@@ -17,23 +17,6 @@
  * References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.<br>
  * References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
  */
-module java.xml.ws {
-    requires transitive java.xml;
-    requires transitive java.xml.bind;
-    requires transitive java.xml.soap;
-
-    requires java.logging;
-
-    exports jakarta.xml.ws;
-    exports jakarta.xml.ws.handler;
-    exports jakarta.xml.ws.handler.soap;
-    exports jakarta.xml.ws.http;
-    exports jakarta.xml.ws.soap;
-    exports jakarta.xml.ws.spi;
-    exports jakarta.xml.ws.spi.http;
-    exports jakarta.xml.ws.wsaddressing;
-
-    opens jakarta.xml.ws.wsaddressing to java.xml.bind;
-
-    uses jakarta.xml.ws.spi.Provider;
-}
+@javax.xml.bind.annotation.XmlSchema(namespace=W3CEndpointReference.NS,
+                                     location="http://www.w3.org/2006/03/addressing/ws-addr.xsd")
+package jakarta.xml.ws.wsaddressing;
