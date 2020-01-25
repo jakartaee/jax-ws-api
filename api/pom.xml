@@ -394,7 +394,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
-                    <release>11</release>
+                    <source>1.8</source>
+                    <release>8</release>
+                    <additionalOptions>
+                        <additionalOption>--frames</additionalOption>
+                    </additionalOptions>
+                    <sourceFileExcludes>
+                        <sourceFileExclude>module-info.java</sourceFileExclude>
+                    </sourceFileExcludes>
                     <notimestamp>true</notimestamp>
                     <docfilessubdirs>true</docfilessubdirs>
                     <groups>
