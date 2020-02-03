@@ -17,7 +17,7 @@
  * References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.<br>
  * References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
  */
-module java.xml.ws {
+module jakarta.xml.ws {
     requires transitive java.xml;
     requires transitive java.xml.bind;
     requires transitive java.xml.soap;
