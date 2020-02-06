@@ -10,18 +10,18 @@
 
 package jakarta.xml.ws.handler.soap;
 
-import javax.xml.soap.SOAPMessage;
+import jakarta.xml.soap.SOAPMessage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.namespace.QName;
 import java.util.Set;
 
 /** The interface {@code SOAPMessageContext}
  *  provides access to the SOAP message for either RPC request or 
- *  response. The {@code javax.xml.soap.SOAPMessage} specifies
+ *  response. The {@code jakarta.xml.soap.SOAPMessage} specifies
  *  the standard Java API for the representation of a SOAP 1.1 message
  *  with attachments.
  *
- *  @see javax.xml.soap.SOAPMessage
+ *  @see jakarta.xml.soap.SOAPMessage
  * 
  *  @since 1.6, JAX-WS 2.0
 **/

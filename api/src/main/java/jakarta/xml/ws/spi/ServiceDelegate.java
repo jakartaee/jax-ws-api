@@ -280,11 +280,11 @@ public abstract class ServiceDelegate {
      * the user's choosing.
      *
      * @param <T> type used for messages or message payloads. Implementations are required to
-     * support {@code javax.xml.transform.Source} and {@code javax.xml.soap.SOAPMessage}.
+     * support {@code javax.xml.transform.Source} and {@code jakarta.xml.soap.SOAPMessage}.
      * @param portName  Qualified name for the target service endpoint
      * @param type The class of object used for messages or message
      * payloads. Implementations are required to support
-     * {@code javax.xml.transform.Source} and {@code javax.xml.soap.SOAPMessage}.
+     * {@code javax.xml.transform.Source} and {@code jakarta.xml.soap.SOAPMessage}.
      * @param mode Controls whether the created dispatch instance is message
      * or payload oriented, i.e. whether the user will work with complete
      * protocol messages or message payloads. E.g. when using the SOAP
@@ -296,7 +296,7 @@ public abstract class ServiceDelegate {
      * @throws WebServiceException If any error in the creation of
      *                  the {@code Dispatch} object
      * @see javax.xml.transform.Source
-     * @see javax.xml.soap.SOAPMessage
+     * @see jakarta.xml.soap.SOAPMessage
      **/
     public abstract <T> Dispatch<T> createDispatch(QName portName, Class<T> type,
             Service.Mode mode);
@@ -306,11 +306,11 @@ public abstract class ServiceDelegate {
      * the user's choosing.
      *
      * @param <T> type used for messages or message payloads. Implementations are required to
-     * support {@code javax.xml.transform.Source} and {@code javax.xml.soap.SOAPMessage}.
+     * support {@code javax.xml.transform.Source} and {@code jakarta.xml.soap.SOAPMessage}.
      * @param portName  Qualified name for the target service endpoint
      * @param type The class of object used for messages or message
      * payloads. Implementations are required to support
-     * {@code javax.xml.transform.Source} and {@code javax.xml.soap.SOAPMessage}.
+     * {@code javax.xml.transform.Source} and {@code jakarta.xml.soap.SOAPMessage}.
      * @param mode Controls whether the created dispatch instance is message
      * or payload oriented, i.e. whether the user will work with complete
      * protocol messages or message payloads. E.g. when using the SOAP
@@ -328,7 +328,7 @@ public abstract class ServiceDelegate {
      *                  this port or is unsupported.
      *
      * @see javax.xml.transform.Source
-     * @see javax.xml.soap.SOAPMessage
+     * @see jakarta.xml.soap.SOAPMessage
      * @see WebServiceFeature
      *
      * @since 1.6, JAX-WS 2.1
@@ -368,13 +368,13 @@ public abstract class ServiceDelegate {
      *
      * @param <T> type of object used to messages or message
      * payloads. Implementations are required to support
-     * {@code javax.xml.transform.Source} and {@code javax.xml.soap.SOAPMessage}.
+     * {@code javax.xml.transform.Source} and {@code jakarta.xml.soap.SOAPMessage}.
      * @param endpointReference  The {@code EndpointReference}
      * for the target service endpoint that will be invoked by the
      * returned {@code Dispatch} object.
      * @param type The class of object used to messages or message
      * payloads. Implementations are required to support
-     * {@code javax.xml.transform.Source} and {@code javax.xml.soap.SOAPMessage}.
+     * {@code javax.xml.transform.Source} and {@code jakarta.xml.soap.SOAPMessage}.
      * @param mode Controls whether the created dispatch instance is message
      * or payload oriented, i.e. whether the user will work with complete
      * protocol messages or message payloads. E.g. when using the SOAP
@@ -403,7 +403,7 @@ public abstract class ServiceDelegate {
      *                  </UL>
      *
      * @see javax.xml.transform.Source
-     * @see javax.xml.soap.SOAPMessage
+     * @see jakarta.xml.soap.SOAPMessage
      * @see WebServiceFeature
      *
      * @since 1.6, JAX-WS 2.1

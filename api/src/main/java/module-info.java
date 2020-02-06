@@ -20,7 +20,7 @@
 module jakarta.xml.ws {
     requires transitive java.xml;
     requires transitive java.xml.bind;
-    requires transitive java.xml.soap;
+    requires transitive jakarta.xml.soap;
 
     requires java.logging;
 
