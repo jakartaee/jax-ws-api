@@ -26,3 +26,4 @@ include::license-efsl.adoc[]
 // == Jakarta XML Web Services
 :sectnums:
 include::xml-ws.adoc[]
+include::XMLWebServices.adoc[]
