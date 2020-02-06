@@ -13,8 +13,8 @@ package jakarta.xml.ws.soap;
 
 import java.util.Set;
 import jakarta.xml.ws.Binding;
-import javax.xml.soap.SOAPFactory;
-import javax.xml.soap.MessageFactory;
+import jakarta.xml.soap.SOAPFactory;
+import jakarta.xml.soap.MessageFactory;
 
 /** The {@code SOAPBinding} interface is an abstraction for
  *  the SOAP binding.

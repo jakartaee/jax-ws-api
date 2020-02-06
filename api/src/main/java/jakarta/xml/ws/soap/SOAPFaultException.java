@@ -10,7 +10,7 @@
 
 package jakarta.xml.ws.soap;
 
-import javax.xml.soap.SOAPFault;
+import jakarta.xml.soap.SOAPFault;
 
 /** The {@code SOAPFaultException} exception represents a
  *  SOAP 1.1 or 1.2 fault.
@@ -18,8 +18,8 @@ import javax.xml.soap.SOAPFault;
  *  <p>A {@code SOAPFaultException} wraps a SAAJ {@code SOAPFault}
  *  that manages the SOAP-specific representation of faults.
  *  The {@code createFault} method of
- *  {@code javax.xml.soap.SOAPFactory} may be used to create an instance
- *  of {@code javax.xml.soap.SOAPFault} for use with the
+ *  {@code jakarta.xml.soap.SOAPFactory} may be used to create an instance
+ *  of {@code jakarta.xml.soap.SOAPFault} for use with the
  *  constructor. {@code SOAPBinding} contains an accessor for the
  *  {@code SOAPFactory} used by the binding instance.
  *
@@ -29,7 +29,7 @@ import javax.xml.soap.SOAPFault;
  *  <p>Refer to the SOAP specification for a complete
  *  description of SOAP faults.
  *
- *  @see javax.xml.soap.SOAPFault
+ *  @see jakarta.xml.soap.SOAPFault
  *  @see jakarta.xml.ws.soap.SOAPBinding#getSOAPFactory
  *  @see jakarta.xml.ws.ProtocolException
  *
@@ -42,7 +42,7 @@ public class SOAPFaultException extends jakarta.xml.ws.ProtocolException  {
     /** Constructor for SOAPFaultException
      *  @param fault   {@code SOAPFault} representing the fault
      *
-     *  @see javax.xml.soap.SOAPFactory#createFault
+     *  @see jakarta.xml.soap.SOAPFactory#createFault
      **/
     public SOAPFaultException(SOAPFault fault) {
         super(fault.getFaultString());
@@ -51,10 +51,10 @@ public class SOAPFaultException extends jakarta.xml.ws.ProtocolException  {
     
     /** Gets the embedded {@code SOAPFault} instance.
      *
-     *  @return {@code javax.xml.soap.SOAPFault} SOAP
+     *  @return {@code jakarta.xml.soap.SOAPFault} SOAP
      *          fault element
      **/
-    public javax.xml.soap.SOAPFault getFault() {
+    public jakarta.xml.soap.SOAPFault getFault() {
         return this.fault;
     }
 }

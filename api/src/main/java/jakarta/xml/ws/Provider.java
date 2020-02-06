@@ -27,7 +27,7 @@ package jakarta.xml.ws;
  *  @since 1.6, JAX-WS 2.0
  *
  *  @see javax.xml.transform.Source
- *  @see javax.xml.soap.SOAPMessage
+ *  @see jakarta.xml.soap.SOAPMessage
  *  @see jakarta.xml.ws.ServiceMode
 **/
 public interface Provider<T> {

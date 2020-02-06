@@ -111,7 +111,7 @@
 
         <release.spec.feedback>jaxws-dev@eclipse.org</release.spec.feedback>
 
-        <api.package>javax.xml.ws</api.package>
+        <api.package>jakarta.xml.ws</api.package>
         <extension.name>jakarta.xml.ws</extension.name>
         <spec.version>3.0</spec.version>
         <old.spec.version>2.3</old.spec.version>
@@ -121,8 +121,8 @@
         <legal.doc.source>${project.basedir}/..</legal.doc.source>
 
         <jaxb-api.version>2.3.3</jaxb-api.version>
-        <soap-api.version>1.4.2</soap-api.version>
-        <jws-api.version>2.1.0</jws-api.version>
+        <soap-api.version>2.0.0-RC1</soap-api.version>
+        <jws-api.version>3.0.0-rc1</jws-api.version>
     </properties>
 
     <build>
@@ -407,7 +407,7 @@
                     <groups>
                         <group>
                             <title>Jakarta XML Web Services API Packages</title>
-                            <packages>javax.xml.ws*</packages>
+                            <packages>jakarta.xml.ws*</packages>
                         </group>
                     </groups>
                     <description>Jakarta XML Web Services API documentation</description>
