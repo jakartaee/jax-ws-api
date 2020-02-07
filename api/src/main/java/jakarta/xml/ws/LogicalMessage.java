@@ -11,7 +11,7 @@
 package jakarta.xml.ws;
 
 import javax.xml.transform.Source;
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 
 /** The {@code LogicalMessage} interface represents a
  *  protocol agnostic XML message and contains methods that

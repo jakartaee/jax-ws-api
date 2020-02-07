@@ -30,7 +30,7 @@
 #        3) property file: non-existing class property
 #        4) property file: invalid class property
 #
-#        # system property: javax.xml.bind.context.factory
+#        # system property: jakarta.xml.bind.context.factory
 #        5) system property: ok
 #        6) system property: ClassNotFound
 #        7) system property: incorrect class
@@ -210,8 +210,8 @@ cleanAll
 
 ## new version of API
 #FACTORY_IMPL_PREFIX=jaxb.factory.jaxbctxfactory.New
-#FACTORY_ID=javax.xml.bind.JAXBContextFactory
-#SVC_FACTORY_ID=javax.xml.bind.JAXBContextFactory
+#FACTORY_ID=jakarta.xml.bind.JAXBContextFactory
+#SVC_FACTORY_ID=jakarta.xml.bind.JAXBContextFactory
 #
 #compileAll
 #source ../scenarios.sh

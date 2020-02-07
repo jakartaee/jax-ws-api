@@ -16,7 +16,7 @@ import jakarta.xml.ws.Dispatch;
 import jakarta.xml.ws.Service;
 import jakarta.xml.ws.handler.HandlerResolver;
 import jakarta.xml.ws.WebServiceFeature;
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.ws.EndpointReference;
 import jakarta.xml.ws.WebServiceException;
 
@@ -431,7 +431,7 @@ public abstract class ServiceDelegate {
      * @throws WebServiceException If any error in the creation of
      *                  the {@code Dispatch} object
      *
-     * @see javax.xml.bind.JAXBContext
+     * @see jakarta.xml.bind.JAXBContext
      **/
     public abstract Dispatch<Object> createDispatch(QName portName,
             JAXBContext context, Service.Mode mode);
@@ -459,7 +459,7 @@ public abstract class ServiceDelegate {
      *                  feature is enabled that is not compatible with
      *                  this port or is unsupported.
      *
-     * @see javax.xml.bind.JAXBContext
+     * @see jakarta.xml.bind.JAXBContext
      * @see WebServiceFeature
      *
      * @since 1.6, JAX-WS 2.1
@@ -529,7 +529,7 @@ public abstract class ServiceDelegate {
      *                    compatible with this port or is unsupported.
      *                  </UL>
      *
-     * @see javax.xml.bind.JAXBContext
+     * @see jakarta.xml.bind.JAXBContext
      * @see WebServiceFeature
      *
      * @since 1.6, JAX-WS 2.1

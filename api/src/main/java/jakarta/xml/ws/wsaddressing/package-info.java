@@ -17,6 +17,6 @@
  * References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.<br>
  * References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
  */
-@javax.xml.bind.annotation.XmlSchema(namespace=W3CEndpointReference.NS,
+@jakarta.xml.bind.annotation.XmlSchema(namespace=W3CEndpointReference.NS,
                                      location="http://www.w3.org/2006/03/addressing/ws-addr.xsd")
 package jakarta.xml.ws.wsaddressing;

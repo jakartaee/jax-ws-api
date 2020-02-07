@@ -13,7 +13,7 @@ package jakarta.xml.ws;
 import javax.xml.namespace.QName;
 import java.util.Iterator;
 import jakarta.xml.ws.handler.HandlerResolver;
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.ws.spi.ServiceDelegate;
 import jakarta.xml.ws.spi.Provider;
 
@@ -508,7 +508,7 @@ public class Service {
      * @throws WebServiceException If any error in the creation of
      *                  the {@code Dispatch} object.
      *
-     * @see javax.xml.bind.JAXBContext
+     * @see jakarta.xml.bind.JAXBContext
      **/
     public Dispatch<Object> createDispatch(QName portName, JAXBContext context,
             Mode mode) {
@@ -538,7 +538,7 @@ public class Service {
      *                  feature is enabled that is not compatible with
      *                  this port or is unsupported.
      *
-     * @see javax.xml.bind.JAXBContext
+     * @see jakarta.xml.bind.JAXBContext
      * @see WebServiceFeature
      *
      * @since 1.6, JAX-WS 2.1
@@ -611,7 +611,7 @@ public class Service {
      *                    compatible with this port or is unsupported.
      *                  </UL>
      *
-     * @see javax.xml.bind.JAXBContext
+     * @see jakarta.xml.bind.JAXBContext
      * @see WebServiceFeature
      *
      * @since 1.6, JAX-WS 2.1
