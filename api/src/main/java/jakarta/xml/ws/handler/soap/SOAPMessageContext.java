@@ -11,7 +11,7 @@
 package jakarta.xml.ws.handler.soap;
 
 import jakarta.xml.soap.SOAPMessage;
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 import javax.xml.namespace.QName;
 import java.util.Set;
 

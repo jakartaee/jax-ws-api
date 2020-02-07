@@ -19,7 +19,7 @@
  */
 module jakarta.xml.ws {
     requires transitive java.xml;
-    requires transitive java.xml.bind;
+    requires transitive jakarta.xml.bind;
     requires transitive jakarta.xml.soap;
 
     requires java.logging;
@@ -33,7 +33,7 @@ module jakarta.xml.ws {
     exports jakarta.xml.ws.spi.http;
     exports jakarta.xml.ws.wsaddressing;
 
-    opens jakarta.xml.ws.wsaddressing to java.xml.bind;
+    opens jakarta.xml.ws.wsaddressing to jakarta.xml.bind;
 
     uses jakarta.xml.ws.spi.Provider;
 }
