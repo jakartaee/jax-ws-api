@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2017, 2020 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,7 +16,6 @@
     SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 
 -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.eclipse.ee4j</groupId>
@@ -25,10 +24,10 @@
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.eclipse.ee4j.ws</groupId>
-    <artifactId>enterprise-ws-spec</artifactId>
+    <groupId>jakarta.enterprise-web-services</groupId>
+    <artifactId>enterprise-web-services-spec</artifactId>
     <packaging>pom</packaging>
-    <version>2.0-SNAPSHOT</version>
+    <version>1.4-SNAPSHOT</version>
     <name>Jakarta Enterprise Web Services Specification</name>
 
     <properties>
@@ -40,20 +39,18 @@
         <jruby.version>9.2.6.0</jruby.version>
         <!-- status: DRAFT, BETA, etc., or blank for final -->
         <status>DRAFT</status>
-        <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
-        <revisiondate>${maven.build.timestamp}</revisiondate>
     </properties>
 
     <scm>
-        <connection>scm:git:git://github.com/eclipse-ee4j/jax-ws-api.git</connection>
-        <developerConnection>scm:git:git@github.com:eclipse-ee4j/jax-ws-api.git</developerConnection>
-        <url>https://github.com/eclipse-ee4j/jax-ws-api.git</url>
+        <connection>scm:git:git@github.com:eclipse-ee4j/jakarta-enterprise-web-services.git</connection>
+        <developerConnection>scm:git:git@github.com:eclipse-ee4j/jakarta-enterprise-web-services.git</developerConnection>
+        <url>https://github.com/eclipse-ee4j/jakarta-enterprise-web-services</url>
         <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
         <site>
-            <url>scm:git:git@github.com:eclipse-ee4j/jax-ws-api.git</url>
+            <url>scm:git:git@github.com:eclipse-ee4j/jakarta-enterprise-web-services.git</url>
         </site>
     </distributionManagement>
 
@@ -73,7 +70,7 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>(,1.9),[11,)</version>
+                                    <version>[1.8.0,1.9.0)</version>
                                     <message>You need JDK8 or lower</message>
                                 </requireJavaVersion>
                             </rules>
@@ -110,8 +107,7 @@
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
-                            <backend>html5</backend>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-ws-spec-${project.version}.html</outputFile>
+                            <backend>xhtml</backend>
                             <attributes>
                                 <doctype>book</doctype>
                                 <status>${status}</status>
@@ -134,7 +130,6 @@
                         </goals>
                         <configuration>
                             <backend>pdf</backend>
-                            <outputFile>${project.build.directory}/generated-docs/enterprise-ws-spec-${project.version}.pdf</outputFile>
                             <attributes>
                                 <pdf-stylesdir>${project.basedir}/src/theme</pdf-stylesdir>
                                 <pdf-style>jakartaee</pdf-style>
@@ -154,16 +149,6 @@
                         </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <sourceDocumentName>enterprise-ws-spec.adoc</sourceDocumentName>
-                    <sourceHighlighter>coderay</sourceHighlighter>
-                    <attributes>
-                        <revnumber>${project.version}</revnumber>
-                        <revremark>${status}</revremark>
-                        <revdate>${revisiondate}</revdate>
-                    </attributes>
-                </configuration>
-
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -200,7 +185,7 @@
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
-                                <descriptor>${project.basedir}/src/assembly/assembly.xml</descriptor>
+                                <descriptor>assembly.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>
