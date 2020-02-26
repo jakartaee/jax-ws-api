@@ -1,0 +1,410 @@
+== Deployment
+
+This chapter defines the deployment process requirements and
+responsibilities. Deployment tasks are handled by the Java EE deployer
+platform role using tools typically provided by the Web Services for
+Java EE product provider. This includes the generation of container
+specific classes for the Web services and Web service references,
+configuration of the server’s SOAP request listeners for each port,
+publication and location of Web services, as well as the normal
+responsibilities defined by the Java EE specification.
+
+=== Overview
+
+[#anchor-76]##This section describes an illustrative process of
+deployment for Web Services for Java EE. The process itself is not
+required, but there are certain requirements that deployment must meet
+which are detailed in later sections of this chapter. This process
+assumes that there are two general phases for deployment. The first
+phase maps Web services into standard Java EE artifacts and the second
+phase is standard Java EE deployment.
+
+Deployment starts with a service enabled application or module. The
+deployer uses a deployment tool to start the deployment process. In
+general, the deployment tool validates the content as a correctly
+assembled deployment artifact, collects binding information from the
+deployer, deploys the components and Web services defined within the
+modules, publishes the WSDL documents representing the deployed Web
+services, deploys any clients using Web services, configures the server
+and starts the application.
+
+The deployment tool starts the deployment process by examining the
+deployable artifact and determining which modules are Web service
+enabled by looking for Web service metadata annotations or
+webservices.xml deployment descriptor file contained within the module.
+Deployment of services occurs before resolution of service references.
+This is done to allow deployment to update the WSDL port addresses
+before the service references to them are processed.
+
+Validation of the artifact packaging is performed to ensure that:
+
+* Every port in every WSDL defined in the Web services deployment
+descriptor has a corresponding port-component element.
+* JAX-RPC or JAX-WS service components are only packaged within a WAR
+file.
+* Stateless or Singleton session bean Web services are only packaged
+within an EJB-JAR or WAR file.
+* The WSDL bindings used by the WSDL ports are supported by the Web
+Services for Java EE runtime. Bindings that are not supported may be
+declared within the WSDL if no port uses them.
+
+Deployment of each port-component is dependent upon the service
+implementation and container used. Deployment of a JAX-RPC or JAX-WS
+Service Endpoint requires different handling than deployment of a
+session bean service.
+
+If the implementation is a JAX-RPC or JAX-WS Service Endpoint, a servlet
+is generated to handle parsing the incoming SOAP request and dispatch it
+to an instance of the JAX-RPC or JAX-WS service component. The generated
+servlet class is dependent on threading model of the JAX-RPC or JAX-WS
+Service Endpoint. The web.xml deployment descriptor is updated to
+replace the JAX-RPC or JAX-WS Service Endpoint class with the generated
+servlet class. If the JAX-RPC or JAX-WS Service Endpoint was specified
+without a corresponding servlet-mapping, the deployment tool generates
+one. The WSDL port address for the Port component is the combination of
+the web app context-root and url-pattern of the servlet-mapping. If the
+implementation is a stateless or singleton session bean, the deployment
+tool has a variety of options available to it. In general, the
+deployment tool generates a servlet to handle parsing the incoming SOAP
+request, the servlet obtains a reference to an instance of an
+appropriate EJBObject and dispatches the request to the stateless or
+singleton session EJB. How the request is dispatched to the Service
+Implementation Bean is dependent on the deployment tool and deploy time
+binding information supplied by the deployer.
+
+The deployment tool must deploy and publish all the ports of all WSDL
+documents referenced by Web service metadata annotations or described in
+the Web services deployment descriptor. The deployment tool updates or
+generates the WSDL port address for each deployed port-component. The
+updated WSDL documents are then published to a location determined by
+the deployer. It could be as simple as publishing to a file in the
+modules containing the deployed services, a URL location representing
+the deployed services of the server, a UDDI or ebXML registry, or a
+combination of these. This is required for the next step, which is
+resolving references to Web services.
+
+For each service reference annotated with javax.xml.ws.WebServiceRef or
+described in the Web services client deployment descriptors, the
+deployment tool ensures that the client code can access the Web service.
+The deployment tool examines the information provided in the
+WebServiceRef annotation or the client deployment descriptor (the
+Service interface class, the Service Endpoint Interface class, and WSDL
+ports the client wants to access) as well as the JAX-RPC mapping
+information (not required for JAX-WS). In general the procedure includes
+providing an implementation of the JAX-RPC or JAX-WS Service
+interface/class class declared in the deployment descriptor service
+reference, generating stubs for all the service-endpoint-interface
+declarations (if generated Stubs are supported and the deployer decides
+to use them), and binding the Service class implementation into a JNDI
+namespace. The specifics depend on whether or not the service is
+declared as a client managed or container managed access.
+
+When client managed port access is used, the deployment tool must
+provide generated stubs or dynamic proxy access to every port that uses
+either the javax.xml.ws.WebServiceRef annotation or is declared within
+the Web services client deployment descriptor. The choice of generated
+stub or dynamic proxy is deploy time binding information. The container
+must provide an implementation for a Generated Service Interface if
+declared within the deployment descriptor.
+
+When container managed port access to a service is used, the container
+must provide generated stubs or dynamic proxy access to every port
+declared within the deployment descriptor. The choice of generated stub
+or dynamic proxy is deploy time binding information. The deployment
+descriptor may contain a port-component-link to associate the reference
+not only with the Service Endpoint Implementation, but with the WSDL
+that defines it.
+
+Once the Web services enabled deployable artifact has been converted
+into a Java EE deployable artifact, the deployment process continues
+using normal deployment processes.
+
+It is recommended that containers provide logging functionality similar
+to that of the WS-I "Monitor" tool. Such contains would log all incoming
+and outgoing messages in the format defined by the WS-I Testing Tools
+group and would allow capturing SOAP messages exchanged over the HTTPS
+protocol in a way that allows analysis by the WS-I tools.
+
+==== JAX-WS HTTP SPI
+
+JAX-WS 2.2 introduces HTTP SPI that allows a deployment to use any
+available JAX-WS web services runtime for HTTP transport. This allows
+109 implementations to use the JAX-WS 2.2 runtime in a Java SE platform
+when it is available. For more details on the HTTP SPI, see the section
+6.6 of JAX-WS specification.
+
+=== Container Provider requirements
+
+This section details the requirements of the container provider. This
+includes both the container runtime and the deployment tooling.
+
+==== Deployment artifacts
+
+A deployment tool must be capable of deploying an EAR file (containing
+WARs and/or EJB-JARs), WAR file, or EJB-JAR containing Web services
+and/or Web services references.
+
+A deployment tool must be able to deploy a WS-I Basic Profile 1.0
+compliant application. Validating an application for WS-I Basic Profile
+1.0 conformance is considered a value add.
+
+==== Generate Web Service Implementation classes
+
+Generation of any run-time classes the container requires to support a
+JAX-RPC or JAX-WS Service Endpoint or Stateless or Singleton Session
+Bean Service Implementation is provider specific. The behavior of the
+run-time classes must match the information provided by annotations or
+deployment descriptor settings of the component. A JAX-RPC or JAX-WS
+Service Endpoint must match the behavior defined by the <servlet>
+element in the web.xml deployment descriptor. A Stateless Session Bean
+Service Implementation must match the behavior defined by the
+javax.ejb.Stateless annotation or <session> element and the
+<assembly-descriptor> in the ejb-jar.xml deployment descriptor. A
+Singleton Bean Service Implementation must match the behavior defined by
+the _javax.ejb.Singleton_ annotation or _<session>_ element and the
+_<assembly-descriptor>_ in the _ejb-jar.xml_ deployment descriptor.
+
+[#anchor-77]
+==== Generate deployed WSDL
+
+The container must update and/or generate a deployed WSDL document for
+each wsdlLocation element in the Web service annotations (described in
+section 5.3.2.1 and 5.3.2.2) or declared wsdl-file element in the Web
+services deployment descriptor (webservices.xml). If multiple wsdl-file
+elements refer to the same location, a separate WSDL document must be
+generated for each. The container must not update a WSDL file located in
+the document root of a WAR file.
+
+The WSDL document described by the wsdl-file element must contain
+service and port elements and every port-component in the deployment
+descriptor must have a corresponding WSDL port and vice versa. The
+deployment tool must update the WSDL port address element to produce a
+deployed WSDL document. The generated port address information is
+deployment time binding information. In the case of a port-component
+within a web module, the address is partially constrained by the
+context-root of the web application and partially constructed from the
+servlet-mapping (if specified).
+
+[#anchor-53]
+==== Publishing the service-ref WSDL
+
+The deployment tool and/or container must make the WSDL document that a
+service-ref (or a javax.xml.ws.WebServiceRef annotated Web service
+reference) is bound to available via a URL returned by the Service
+Interface getWSDLDocumentLocation() method. This may or may not be the
+same WSDL document packaged in the module. The process of publishing the
+bound service-ref (or a javax.xml.ws.WebServiceRef annotated Web service
+reference) WSDL is analogous to publishing deployed WSDL, but only the
+service-ref (or a javax.xml.ws.WebServiceRef annotated Web service
+reference) that is bound to it is required to have access to it. A Web
+Services for Java EE provider is required to provide a URL that
+maintains the referential integrity of the WSDL document the service-ref
+(or a javax.xml.ws.WebServiceRef annotated Web service reference) is
+bound to if the wsdl-file (wsdlLocation in WebServiceRef) element refers
+to a document located in the wsdl directory or one of its
+subdirectories.
+
+[#anchor-54]
+==== Publishing the deployed WSDL
+
+The deployment tool must publish every deployed WSDL document. The
+deployed WSDL document may be published to a file, URL, or registry.
+File and URL publication must be supported by the provider. File
+publication includes within the generated artifacts of the application.
+Publication to a registry, such as UDDI or ebXML, is encouraged but is
+not required.
+
+If publication to a location other than file or URL is supported, then
+location of a WSDL document containing a service from that location must
+also be supported. As an example, a Web services deployment descriptor
+declares a wsdl-file StockQuoteDescription.wsdl and a port-component
+which declares a port QName within the WSDL document. When deployed, the
+port address in StockQuoteDescription.wsdl is updated to the deployed
+location. This is published to a UDDI registry location. In the same
+application, a service-ref uses a port-component-link to refer to the
+deployed port-component. The provider must support locating the deployed
+WSDL for that port component from the registry it was published to. This
+support must be available to a deployed client that is not bundled with
+the application containing the service.
+
+Publishing to at least one location is required. Publishing to multiple
+locations is allowed, but not required. The choice of where (both
+location and how many places) to publish is deployment time binding
+information.
+
+A Web Services for Java EE provider is required to support publishing a
+deployed WSDL document if the wsdlLocation element in the Web service
+annotations (described in section 5.3.2.1 and 5.3.2.2) or Web services
+deployment descriptor (webservices.xml) wsdl-file element refers to a
+WSDL file contained in the wsdl directory or subdirectory, as described
+in section link:#anchor-52[5.4.1]. A vendor may support publication of
+WSDL files packaged in other locations, but these are considered
+non-portable. A provider may publish the static content (e.g. no JSPs or
+Servlets) of the entire wsdl directory and all its subdirectories if the
+deploy tool cannot compute the minimal set of documents to publish in
+order to maintain referential integrity. The recommended practice is to
+place WSDL files referenced by a wsdlLocation element in the Web service
+annotations or wsdl-file element and their relative imported documents
+under the wsdl directory.
+
+Web Services for Java EE providers are free to organize the published
+WSDL documents however they see fit so long as referential integrity is
+maintained. For example, the wsdl directory tree may be collapsed to a
+flat published directory structure (updating import statements
+appropriately). Clients should not depend on the wsdl directory
+structure being maintained during publication. Access to relatively
+imported documents should only be attempted by traversing the published
+WSDL document at the location chosen by the deployer.
+
+Requirements for publishing WSDL documents to a UDDI V2 directory are
+described by the WS-I Basic Profile 1.0 specification.
+
+==== Service and Generated Service Interface/Class implementation
+
+The container must provide an implementation of the JAX-RPC or JAX-WS
+Service Interface/Class. There is no requirement for a Service
+Implementation to be created during deployment. The container may
+substitute a Generated Service Interface/Class Implementation for a
+generic Service Interface/Class Implementation.
+
+The container must provide an implementation of the JAX-RPC or JAX-WS
+Generated Service Interface/Class if the Web services client deployment
+descriptor defines one. A Generated Service Interface/Class
+Implementation will typically be provided during deployment.
+
+The Service Interface/Class Implementation must provide a static stub
+and/or dynamic proxy for all ports declared by the service element in
+the WSDL description. A container provider must support at least one of
+static stubs or dynamic proxies, but may provide support for both.
+
+The container must make the required Service Interface Implementation
+available at the JNDI namespace location
+java:comp/env/__service-ref-name __where _service-ref-name_ is the name
+declared within the Web services client deployment descriptor using the
+service-ref-name element.
+
+==== Static stub generation
+
+A deployment tool may support generation of static stubs. A container
+provider must support static stub generation if dynamic proxies are not
+supported. Static stubs are provider specific and, in general, a
+developer should avoid packaging them with the application.
+
+Static stubs (and dynamic proxies) must conform to the JAX-RPC
+specification sections 8.2.1 and 8.2.2. JAX-WS specification makes no
+distinction between stubs and dynamic proxies, but talks only about
+proxies and they must conform to JAX-WS specification section 4.2.3.
+
+The container is required to support credential propagation as defined
+in section link:#anchor-34[4.2.6] without client code intervention.
+Whether or not the stub/proxy directly supports this or another part of
+the container does is out of the scope of this specification.
+
+==== Type mappings
+
+Support for type mappings is provider specific. There is no means for
+creating portable type mappings and therefore no means for declaring
+them or deploying them required by this specification.
+
+==== Mapping requirements
+
+For JAX-RPC, the deployment tool must use the mapping meta-data
+requirements defined by the jaxrpc-mapping-file. All mappings must be
+applied before default rules are applied.
+
+==== Deployment failure conditions
+
+Deployment may fail if:
+
+* The webservices.xml deployment descriptor is invalid or Web service
+metadata annotations specified are incorrect
+* The WSDL file, JAX-RPC mapping file (not required with JAX-WS) and
+deployment descriptor or Web service metadata annotations conflict
+* The implementation methods and operations conflict
+* Any Port component cannot be deployed
+
+* Every port in every WSDL defined in the Web services deployment
+descriptor doesn’t have a corresponding port-component element.
+* JAX-RPC or JAX-WS service components are not packaged within a WAR
+file.
+* Stateless or Singleton session bean Web services are not packaged
+within an EJB-JAR or WAR file.
+* The WSDL bindings used by the WSDL ports are not supported by the Web
+Services for Java EE runtime. However, bindings that are not supported
+may be declared within the WSDL if no port uses them.
+* The header QNames returned by a Handler.getHeaders() method are not
+defined in the WSDL for the port-component the Handler is executing on
+behalf of.
+
+=== Deployer responsibilities
+
+The deployer role is responsible for specifying the deployment time
+binding information. This may include deployed WSDL port addresses and
+credential information for requests that do not use a CallbackHandler.
+
+If a service-ref contains a port-component-ref that contains a
+port-component-link, the deployer should bind the container managed Port
+for the SEI to the deployed port address of the port-component referred
+to by the port-component-link. For example, given a webservices.xml file
+containing:
+
+<webservices>
+
+<webservice-description>
+
+<webservice-description-name>JoesServices</webservice-description-name>
+
+<wsdl-file>META-INF/joe.wsdl</wsdl-file>
+
+<jaxrpc-mapping-file>META-INF/joes_mappings.xml</jaxrpc-mapping-file>
+
+<port-component>
+
+<port-component-name>JoePort</port-component-name>
+
+…
+
+<service-impl-bean>
+
+<ejb-link>JoeEJB</ejb-link>
+
+</service-impl-bean>
+
+</port-component>
+
+</webservice-description>
+
+</webservices>
+
+and a module’s deployment descriptor containing:
+
+<service-ref>
+
+<service-ref-name>service/Joe</service-ref-name>
+
+<service-interface>javax.xml.rpc.Service</service-interface>
+
+<wsdl-file>WEB-INF/joe.wsdl</wsdl-file>
+
+…
+
+<port-component-ref>
+
+<service-endpoint-interface>sample.Joe</service-endpoint-interface>
+
+<port-component-link>JoePort</port-component-link>
+
+</port-component-ref>
+
+</service-ref>
+
+During deployment, the deployer must provide a binding for the port
+address of the JoePort port-component. This port address must be defined
+in the published WSDL for JoesServices. The deployer must also provide a
+binding for container managed port access to the sample.Joe Service
+Endpoint Interface. This should be the same binding used for the port
+address of the JoePort port-component.
+
+When providing a binding for a port-component-ref, the deployer must
+ensure that the port-component-ref is compatible with the Port being
+bound to.

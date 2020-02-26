@@ -1,0 +1,1013 @@
+[#anchor-13]
+== Client Programming Model
+
+This chapter defines the client programming model of Web Services for
+Java EE. In general, the client programming model is covered in detail
+by the JAX-RPC or JAX-WS specification. This specification covers the
+use of the JAX-RPC or JAX-WS client programming model in a Java EE
+environment.
+
+Differences between this specification and the JAX-RPC or JAX-WS
+specification will be noted in this style.
+
+[#anchor-19]
+=== Concepts
+
+Clients of Web services are not limited to clients defined within this
+specification, however the client programming model for non-Web Services
+for Java EE clients is not specifically addressed by this specification.
+In general, the WSDL definition of a Web service provides enough
+information for a non-Web Services for Java EE client to be built and
+run, but the programming model for that is undefined. The rest of this
+chapter covers the programming model for Web Services for Java EE
+clients. It makes no assumption on whether the Web service
+implementation invoked by the client is hosted by a Web Services for
+Java EE run-time or some external run-time.
+
+A client uses the Web Services for Java EE run-time to access and invoke
+the methods of a Web service. A client can be any of the following: Java
+EE application client, web component, EJB component, or another Web
+service.
+
+The client view of a Web service is a set of methods that perform
+business logic on behalf of the client. A client cannot distinguish
+whether the methods are being performed locally or remotely, nor can the
+client distinguish how the service is implemented. Lastly, a client must
+assume that the methods of a Web service have no state that is
+persistent across multiple Web service method invocations. A client can
+treat the Web service implementation as stateless.
+
+A client accesses a Web service using a Service Endpoint Interface as
+defined by the JAX-RPC or JAX-WS specification. A reference to the Web
+service implementation should never be passed to another object. A
+client should never access the Web service implementation directly.
+Doing so bypasses the container’s request processing which may open
+security holes or cause anomalous behavior.
+
+A client uses JNDI lookup to access a Service object that implements the
+Service Interface/Class as defined by the JAX-RPC and JAX-WS
+specification. The Service object is a factory used by the client to get
+a stub or proxy that implements the Service Endpoint Interface. The stub
+is the client representation of an instance of the Web service.
+
+The Service Interface can be a generic javax.xml.rpc.Service interface
+or a Generated Service Interface, which extends javax.xml.rpc.Service,
+as defined by JAX-RPC. With JAX-WS, the Service Class can be the generic
+javax.xml.ws.Service class or a Generated Service class, which extends
+javax.xml.ws.Service. Further references in this document to the Service
+Interface/Class refer to either the generic or generated version, unless
+noted otherwise.
+
+The client has no control over the life cycle of the Web service
+implementation on the server. A client does not create or destroy
+instances of a Web service, which is referred to as a Port. The client
+only accesses the Port. The life cycle of the Ports, or instances of a
+Web service implementation, are managed by the run-time that hosts the
+Web service. A Port has no identity. This means that a client cannot
+compare a Port to other Ports to see if they are the same or identical,
+nor can a client access a specific Port instance. A client cannot tell
+if a server crashes and restarts if the crash and restart complete in
+between Web service access.
+
+A client developer starts with the Service Endpoint Interface and
+Service Interface/Class. How a developer obtains these is out of scope,
+but includes having the Web service provider supply them or tools
+generate them from a WSDL definition supplied by the Web service
+provider. These tools operate according to the JAX-RPC or JAX-WS rules
+for WSDL->Java mapping. A client developer does not need to generate
+stubs during development, nor are they encouraged to do so. The client
+should use the interfaces, and not the stubs. Stubs will be generated
+during deployment and will be specific to the vendor’s run-time the
+client will run in.
+
+Each client JNDI lookup of a Web service is by a logical name. A client
+developer chooses the logical name to be used in the client code and
+declares it along with the required Service Interface/Class in a Web
+service client deployment descriptor. The client should use the Service
+interfaces/classes, and not the stubs.
+
+The Service Interface methods can be categorized into two groups:
+stub/proxy and DII. The stub/proxy methods provide both service specific
+(client requires WSDL knowledge) and service agnostic (does not require
+WSDL knowledge) access to Ports. In JAX-RPC, DII methods are used when a
+client needs dynamic, non-stub based communication with the Web service.
+
+A client can use the stub/proxy methods of the Service Interface/Class
+to get a Port stub or dynamic proxy. The WSDL specific methods can be
+used when the full WSDL definition of the service is available to the
+client developer. The WSDL agnostic methods must be used if the client
+developer has a partial WSDL definition that only contains only the
+portType and bindings.
+
+With JAX-WS, a client can also use the Service Class to work at the XML
+message level using Dispatch APIs. Additionally a client can also make
+asynchronous invocations using both stubs and Dispatch APIs.
+
+=== Specification
+
+The following sections define the requirements for Java EE product
+providers that implement Web Services for Java EE and developers for
+creating applications that run in such an environment.
+
+[#anchor-26]
+==== Service Lookup
+
+The client developer is required to define a logical JNDI name for the
+Web service called a service reference. This name is specified in the
+deployment descriptor for the client. It is recommended, but not
+required that all service reference logical names be organized under the
+service subcontext of a JNDI name space. The container must bind the
+Service Interface implementation under the client’s environment context,
+java:comp/env, using the logical name of the service reference. In the
+following examples, the logical service name declared in the client
+deployment descriptor is service/AddressBookService.
+
+The container acts as a mediator on behalf of the client to ensure a
+Service Interface is available via a JNDI lookup. More specifically, the
+container must ensure that an implementation of the required Service
+Interface is bound at a location in the JNDI namespace of the client’s
+choosing as declared by the service reference in the Web services client
+deployment descriptor. This is better illustrated in the following code
+segment:
+
+InitialContext ic = new InitialContext ();
+
+Service abf = (Service)ic.lookup(
+
+"java:comp/env/service/AddressBookService");
+
+In the above example, the container must ensure that an implementation
+of the generic Service Interface, javax.xml.rpc.Service or generic
+Service class, javax.xml.ws.Service, is bound in the JNDI name space at
+a location specified by the developer. A similar code fragment is used
+for access to an object that implements a Generated Service Interface
+such as AddressBookService.
+
+InitialContext ic = new InitialContext ();
+
+AddressBookService abf = (AddressBookService)ic.lookup(
+
+"java:comp/env/service/AddressBookService");
+
+A Java EE product provider is required to provide Service lookup support
+in the web, EJB, and application client containers.
+
+==== javax.xml.ws.WebServiceRef annotation
+
+With JAX-WS, client developer may use the javax.xml.ws.WebServiceRef
+annotation to denote a reference to a Service or a Service endpoint.
+Lookups using JNDI mechanism for both Service or Service endpoint can
+also be used under JAX-WS. Complete definition of
+javax.xml.ws.WebServiceRef annotation is defined in section 7.9 of
+JAX-WS specification. The containers must ensure that the use of this
+annotation is supported.
+
+The annotations (for example, _@javax.xml.ws.soap.Addressing_) annotated
+with meta-annotation _javax.xml.ws.spi.WebServiceFeatureAnnotation_ can
+be used in conjunction with _@WebServiceRef_. The created reference MUST
+be configured with annotation's web service feature. If a JAX-WS
+implementation encounters an unsupported or unrecognized feature
+annotation, an error must be given. JAX-WS doesn't define any standard
+portable web service feature for Service references. But it defines
+_@Addressing_, _@MTOM_, _@RespectBinding_ annotations for SEI proxy
+references.
+
+By using a web service feature annotation explicitly along with a
+_@WebServiceRef_, an application overrides WSDL's indication of that
+feature for the reference. Also, _<enable-mtom>_, _<addressing>_, and
+_<respect-binding>_ deployment descriptor elements can be used to
+override the _@MTOM_, _@Addressing_, and _@RespectBinding_ features
+respectively for a reference.
+
+The following example illustrates the use of this annotation when
+declaring a Service:
+
+_@WebServiceRef(name="java:comp/env/service/AddressBookService"_)
+
+AddressBookService abf;
+
+The same annotation can also be used to declare a SEI proxy reference,
+the injected SEI proxy reference is configured with MTOM feature:
+
+@MTOM
+
+@WebServiceRef(
+
+name="java:comp/env/service/AddressBookService",
+
+AddressBookService.class)
+
+AddressBookPort port;
+
+Address address = port.getAddress(“John Doe”);
+
+A declared reference can be resolved using lookup functionality
+specified by JAX-WS specification. The following example illustrates the
+use of this annotation for looking up a Service:
+
+_@WebServiceRef(lookup="java:comp/env/service/AddressBookService"_)
+
+AddressBookService other;
+
+javax.jws.HandlerChain annotation can be used with this annotation to
+specify handlers on these client side references. More information on
+the HandlerChain annotation can be found in JSR-181 specification and
+also in Chapter 6 of this specification.
+
+If wsdlLocation attribute of WebServiceRef annotation is specified, it
+is always relative to the root of the module. HTTP URL can also be
+specified here. The <wsdl-file> element in client deployment descriptor
+(section 7.2) always overrides the wsdlLocation specified in the
+annotation. If there is no <wsdl-file> element or wsdlLocation specified
+in the annotation, then the wsdlLocation attribute of @WebServiceClient
+annotation on the generated Service class needs to be consulted.
+(section 7.5 of JAX-WS specification).
+
+For co-located clients (where the client and the server are in the same
+Java EE application unit) with generated Service class, the location of
+the final WSDL document is resolved by comparing the Service name on the
+@WebServiceClient annotation on the the generated Service to the Service
+names of all the deployed port components in the Java EE application
+unit. This default behavior can be overridden using the
+<port-component-link> deployment descriptor element. Refer to client
+deployment descriptor schema Section 7.2.5
+
+If the name attribute is not specified in this annotation then default
+naming rules apply as specified in the Java EE specification. (section
+EE.5.2.3)
+
+The following table summarizes the relationship between the deployment
+descriptors for <service-ref> and member attributes of this annotation .
+
+* Table 1 Relationship between the deployment descriptor elements and
+javax.xml.ws.WebServiceRef annotation
+
+[cols=",",]
+|===
+|<service-ref> |One per @WebServiceRef annotation
+
+|<service-ref>/<service-ref-name> |@WebServiceRef.name
+
+|<service-ref>/<wsdl-file> |@WebServiceRef.wsdlLocation
+
+|<service-ref>/<service-interface> a|
+@WebServiceRef.type when @WebServiceRef.value is not specified. In other
+words the annotation is used to declare a Service.
+
+OR
+
+@WebServiceRef.value when @WebServiceRef.type is a Service
+Endpoint.class
+
+The type attribute is implied when this annotation is used on a field.
+Similar to @Resource annotation in JSR-250 Common Annotations for Java
+Platform
+
+|<service-ref>/<port-component-ref>/<service-endpoint-interface>
+|@WebServiceRef.type when @WebServiceRef.value is a Service class.
+
+|<service-ref>/<port-component-ref>/<port-component-link> |Default
+mechanism used for co-located case. The deployment descriptor is used
+only for overriding the default behavior.
+
+|<service-ref>/<service-ref-type> |@WebServiceRef.type
+
+|<service-ref>/<mapped-name> |@WebServiceRef.mappedName
+
+|<service-ref>/<lookup-name> |@WebServiceRef.lookup
+|===
+
+@WebServiceRef reference instances are not guaranteed to be thread safe.
+If the instances are accessed by multiple threads, usual synchronization
+techniques can be used to support multiple threads.
+
+For declaring multiple references to Web services on a single class
+javax.xml.ws.WebServiceRefs annotation may be used. Complete definition
+of javax.xml.ws.WebServiceRefs annotation is defined in section 7.10 of
+JAX-WS specification. The containers must ensure that the use of this
+annotation is supported.
+
+==== Port Lookup
+
+With JAX-WS, the client developer can also use JNDI lookups for a Port.
+This is analogous to using the javax.xml.ws.WebServiceRef annotation for
+Service endpoint. The client side deployment descriptor has been
+modified to introduce a new optional element <service-ref-type> that
+declares the type of <service-ref> returned when a dependency injection
+or JNDI lookup is done. If this element is not specified in the
+deployment descriptor, then the type of <service-ref> is always a
+Service class or a generated Service class.
+
+A Java EE product provider is required to provide Port lookup support in
+the web, EJB, and application client containers.
+
+==== Service API
+
+The Service API is used by a client to get a stub or dynamic proxy or a
+DII Call object for a Port. A container provider is required to support
+all methods of the Service interface/class except for the
+getHandlerRegistry() and getTypeMappingRegistry() methods as described
+in sections link:#anchor-27[4.2.4.8] and link:#anchor-28[4.2.4.9].
+
+A client developer must declare the Service Interface/Class type used by
+the application in the client deployment descriptor. The Service
+Interface/Class represents the deployed WSDL of a service.
+
+[#anchor-29]
+===== Stub/proxy access
+
+With JAX-RPC, the client may use the following Service Interface methods
+to obtain a static stub or dynamic proxy for a Web service:
+
+java.rmi.Remote getPort(QName portName, Class serviceEndpointInterface)
+throws ServiceException;
+
+java.rmi.Remote getPort(java.lang.Class serviceEndpointInterface) throws
+ServiceException;
+
+With JAX-WS, the client may use the following Service class methods to
+obtain a proxy for a Web service:
+
+<T> T getPort(QName portName, Class<T> serviceEndpointInterface);
+
+<T> T getPort(java.lang.Class<T> serviceEndpointInterface);
+
+<T> T getPort(Class<T> serviceEndpointInterface,
+
+WebServiceFeature... features);
+
+<T> T getPort(EndpointReference endpointReference,
+
+Class<T> serviceEndpointInterface,
+
+WebServiceFeature... features);
+
+<T> T getPort(QName portName, Class<T> serviceEndpointInterface,
+
+WebServiceFeature... features);
+
+The client may also use the additional methods of the Generated Service
+Interface/Class to obtain a static stub or dynamic proxy for a Web
+service.
+
+The container must provide at least one of static stub or dynamic proxy
+support for these methods as described in section
+link:#anchor-30[4.2.5]. The container must ensure the stub or dynamic
+proxy is fully configured for use by the client, before it is returned
+to the client. The deployment time choice of whether a stub or dynamic
+proxy is returned by the getPort or get<port name> methods is out of the
+scope of this specification. Container providers are free to offer
+either one or both.
+
+The container provider must provide Port resolution for the
+getPort(java.lang.Class serviceEndpointInterface) method. This is useful
+for resolving multiple WSDL ports that use the same binding or when
+ports are unknown at development time. A client must declare its
+dependency on container Port resolution for a Service Endpoint Interface
+in the client deployment descriptor. If a dependency for resolving the
+interface argument to a port is not declared in the client deployment
+descriptor, the container may provide a default resolution capability or
+throw a ServiceException.
+
+===== Dynamic Port access
+
+With JAX-RPC, a client may use the following DII methods of a Service
+Interface located by a JNDI lookup of the client’s environment to obtain
+a Call object:
+
+Call createCall() throws ServiceException;
+
+Call createCall(QName portName) throws ServiceException;
+
+Call createCall(QName portName, String operationName) throws
+ServiceException;
+
+Call createCall(QName portName, QName operationName) throws
+ServiceException;
+
+Call[] getCalls(QName portName) throws ServiceException;
+
+A DII Call object may or may not be pre-configured for use depending on
+the method used to obtain it. See the JAX-RPC specification for details.
+
+These methods are not supported in JAX-WS. JAX-WS provides Dispatch APIs
+to enable the client to operate at XML message level. See section 4.2.6.
+
+===== ServiceFactory
+
+Use of the JAX-RPC ServiceFactory class is not recommended in a Web
+Services for Java EE product. A Web Services for Java EE client must
+obtain a Service Interface/Class using JNDI lookup as described in
+section link:#anchor-26[4.2.1]. Container providers are not required to
+support managed Service instances created from a ServiceFactory.
+
+ServiceFactory class has been removed from JAX-WS. It has been replaced
+by two static methods Service.create(QName serviceName)and
+Service.create(URL wsdlLocation, QName serviceName) for creating Service
+instances. These methods rely on specific implementations of
+ServiceDelegate Class in any JAX-WS compliant implementation. The use of
+these static methods is not recommended in a Web Services for Java EE
+product. A Web Services for Java EE client must obtain a Service
+Interface/Class using JNDI lookup as described in section
+link:#anchor-26[4.2.1]. Container providers are not required to support
+managed Service instances created using these methods.
+
+[#anchor-31]
+===== Service method use with full WSDL
+
+A client developer may use all methods of the Service Interface (except
+as described in sections link:#anchor-27[4.2.4.8] and
+link:#anchor-28[4.2.4.9]) or class if a full WSDL description and
+JAX-RPC mapping file are declared in the client deployment descriptor.
+If JAX-WS is used, mapping file is not required because all of the data
+binding in JAX-WS is done according to the JAXB specification. The port
+address location attribute of a port using a SOAP/HTTP binding must
+begin with http: or https:.
+
+If a client developer uses the getPort(SEI) method of a Service
+Interface/Class and the WSDL supports multiple ports the SEI could be
+bound to, the developer can indicate to a deployer a binding order
+preference by ordering the ports in the service-ref’s WSDL document.
+
+[#anchor-32]
+===== Service method use with partial WSDL
+
+With JAX-RPC, a client developer may use the following methods of the
+Service Interface if a partial WSDL definition is declared in the client
+deployment descriptor:
+
+Call createCall() throws ServiceException;
+
+java.rmi.Remote getPort(java.lang.Class serviceEndpointInterface) throws
+ServiceException;
+
+javax.xml.namespace.QName getServiceName();
+
+java.util.Iterator getPorts() throws ServiceException;
+
+java.net.URL getWSDLDocumentLocation()
+
+If JAX-WS is used, client developer may use the following methods of the
+Service class:
+
+<T> T getPort(java.lang.Class(T) serviceEndpointInterface);
+
+javax.xml.namespace.QName getServiceName();
+
+java.util.Iterator<javax.xml.namespace.QName> getPorts();
+
+java.net.URL getWSDLDocumentLocation();
+
+<T> Dispatch<T> createDispatch(javax.xml.namespace.QName portName,
+
+java.lang.Class<T> type,
+
+Service.Mode mode);
+
+Dispatch<java.lang.Object> createDispatch(QName portName,
+
+JAXBContext context,
+
+Service.Mode mode);
+
+java.util.concurrent.Executor getExecutor();
+
+void setExecutor(java.util.concurrent.Executor executor);
+
+<T> Dispatch<T> createDispatch(QName portName, Class<T> type,
+
+Service.Mode mode,
+
+WebServiceFeature... features);
+
+Dispatch<Object> createDispatch(QName portName, JAXBContext context,
+
+Service.Mode mode,
+
+WebServiceFeature... features);
+
+<T> Dispatch<T> createDispatch(EndpointReference endpointReference,
+
+Class<T> type, Service.Mode mode,
+
+WebServiceFeature... features);
+
+Dispatch<Object> createDispatch(EndpointReference endpointReference,
+
+JAXBContext context, Service.Mode mode,
+
+WebServiceFeature... features);
+
+A partial WSDL definition is defined as a fully specified WSDL document
+which contains no service or port elements. The JAX-RPC mapping file
+specified by the developer will not include a service-interface-mapping
+in this case. If JAX-WS is used, mapping file is not required and
+ignored if specified, because all of the data binding in JAX-WS is done
+according to the JAXB specification
+
+Use of other methods of the Service Interface/Class is not recommended
+when a developer specifies a partial WSDL definition. The behavior of
+the other methods is unspecified.
+
+The container must provide access to all SEIs declared by the
+port-component-ref elements of the service-ref through the getPort(SEI)
+method.
+
+===== Service method use with no WSDL
+
+With JAX-RPC, a client developer may use the following methods of the
+Service Interface if no WSDL definition is specified in the client
+deployment descriptor:
+
+Call createCall() throws ServiceException;
+
+If the wsdl-file is not specified in the deployment descriptor, the
+jaxrpc-mapping-file must not be specified.
+
+With JAX-WS, a client developer may use the following methods of the
+Service class if no WSDL definition is specified in the client
+deployment descriptor:
+
+<T> Dispatch<T> createDispatch(javax.xml.namespace.QName portName,
+
+java.lang.Class<T> type,
+
+Service.Mode mode);
+
+Dispatch<java.lang.Object> createDispatch(QName portName,
+
+JAXBContext context,
+
+Service.Mode mode);
+
+java.util.concurrent.Executor getExecutor();
+
+void setExecutor(java.util.concurrent.Executor executor);
+
+<T> Dispatch<T> createDispatch(QName portName, Class<T> type,
+
+Service.Mode mode,
+
+WebServiceFeature... features)
+
+Dispatch<Object> createDispatch(QName portName, JAXBContext context,
+
+Service.Mode mode,
+
+WebServiceFeature... features)
+
+<T> Dispatch<T> createDispatch(EndpointReference endpointReference,
+
+Class<T> type, Service.Mode mode,
+
+WebServiceFeature... features)
+
+Dispatch<Object> createDispatch(EndpointReference endpointReference,
+
+JAXBContext context, Service.Mode mode,
+
+WebServiceFeature... features)
+
+Use of other methods of the Service Interface or class is not
+recommended. Their behavior is unspecified.
+
+===== Service Interface method behavior
+
+The following table summarizes the behavior of the methods of the
+Service Interface under various deployment configurations.
+
+* Table 2 Service Interface method behavior with JAX-RPC
+
+[cols=",,,",]
+|===
+|Call createCall() |Normal |Normal |Normal
+
+|Call createCall(QName port) |Normal |Unspecified |Unspecified
+
+|Call createCall(QName port, QName operation) |Normal |Unspecified
+|Unspecified
+
+|Call createCall(QName port, String operation) |Normal |Unspecified
+|Unspecified
+
+|Call[] getCalls(QName port) |Normal |Unspecified |Unspecified
+
+|HandlerRegistry getHandlerRegistry() |Exception^1^ |Exception^1^
+|Exception^1^
+
+|Remote getPort(Class SEI) |Normal |Normal |Unspecified
+
+|Remote getPort(QName port, Class SEI) |Normal |Unspecified |Unspecified
+
+|Iterator getPorts() |Bound ports |Bound ports |Unspecified
+
+|QName getServiceName() |Bound service name |Bound service name
+|Unspecified
+
+|TypeMappingRegistry getTypeMappingRegistry() |Exception^1^
+|Exception^1^ |Exception^1^
+
+|URL getWSDLDocumentLocation() |Bound WSDL location |Bound WSDL location
+|Unspecified
+|===
+
+^1^See sections link:#anchor-27[4.2.4.8] and link:#anchor-28[4.2.4.9].
+
+* Table 3 Service class method behavior with JAX-WS
+
+[cols=",,,",]
+|===
+|void addPort(QName portName, URI bindingId, String endpointAddress)
+|Normal |Normal |Normal
+
+|<T> Dispatch <T> createDispatch(QName portName, Class<T> type,
+Service.Mode mode) |Normal |Normal |Normal
+
+|Dispatch <T> createDispatch(QName portName, JAXBContext context,
+Service.Mode mode) |Normal |Normal |Normal
+
+|Executor getExecutor() |Normal |Normal |Normal
+
+|void setExecutor(Executor executor) |Normal |Normal |Normal
+
+|HandlerResolver getHandlerResolver() |Normal |Normal |Normal
+
+|<T> T getPort(Class<T> SEI) |Normal |Normal |Unspecified
+
+|<T> T getPort(QName port, Class<T> SEI) |Normal |Unspecified
+|Unspecified
+
+|Iterator getPorts() |Bound ports |Bound ports |Unspecified
+
+|QName getServiceName() |Bound service name |Bound service name
+|Unspecified
+
+|void setHandlerResolver(HandlerResolver handlerResolver) |Normal
+|Normal |Normal
+
+|URL getWSDLDocumentLocation() |Bound WSDL location |Bound WSDL location
+|Unspecified
+
+|Dispatch<Object> createDispatch(EndpointReference epr, +
+Class<T> type, Service.Mode mode, WebServiceFeature... features) |Normal
+|Normal |Normal
+
+|<T> Dispatch<T> createDispatch (EndpointReference epr, JAXBContext
+context, Service.Mode mode, +
+WebServiceFeature... features) |Normal |Normal |Normal
+
+|<T> Dispatch<T> createDispatch(QName portName, java.lang.Class<T> type,
+Service.Mode mode) |Normal |Normal |Normal
+
+|<T> Dispatch<T> createDispatch(QName portName, JAXBContext context,
+Service.Mode mode, +
+WebServiceFeature ... features) |Normal |Normal |Normal
+
+|<T>T getPort(Class<T> SEI, +
+WebServiceFeature ... features) |Normal |Normal |Unspecified
+
+|<T>T getPort(EndpointReference epr, Class<T> SEI, WebServiceFeature ...
+features) |Normal |Unspecified |Unspecified
+
+|<T> T getPort(QName portName, Class<T> SEI, WebServiceFeature ...
+features) |Normal |Unspecified |Unspecified
+|===
+
+[#anchor-27]
+===== Handlers
+
+With JAX-RPC components should not use the getHandlerRegistry() method.
+A container provider must throw a
+java.lang.UnsupportedOperationException from the getHandlerRegistry()
+method of the Service Interface. Handler support is documented in
+Chapter link:#anchor-33[6] link:#anchor-33[Handlers].
+
+[#anchor-28]
+===== Type Mapping
+
+With JAX-RPC components should not use the getTypeMappingRegistry()
+method. A container provider must throw a
+java.lang.UnsupportedOperationException from the
+getTypeMappingRegistry() method of the Service Interface.
+
+[#anchor-30]
+==== Port Stub and Dynamic Proxy
+
+The following sections define the requirements for implementing and
+using static Stubs and Dynamic Proxies.
+
+===== Identity
+
+The Port Stub and Dynamic Proxy are a client’s representation of a Web
+service. The Port that a stub or proxy communicates with has no identity
+within the client view. The equals() method cannot be used to compare
+two stubs or proxy instances to determine if they represent the same
+Port. The results of the equals(), hash(), and toString() methods for a
+stub are unspecified. There is no way for the client to ensure that a
+Port Stub, Dynamic Proxy, or Call will access a particular Port instance
+or the same Port instance for multiple invocations.
+
+===== Type narrowing
+
+In JAX-RPC, although the stub and dynamic proxy classes are considered
+Remote objects, a client is not required to use
+PortableRemoteObject.narrow(…). However, clients are encouraged to use
+PortableRemoteObject.narrow(…) to prevent confusion with client use of
+other Remote objects.
+
+In JAX-WS, proxy classes are not Remote Objects. Hence the use of
+PortableRemoteObject.narrow(…) is not required.
+
+[#anchor-34]
+==== JAX_RPC and JAX-WS Properties
+
+The Java EE container environment provides a broader set of operational
+characteristics and constraints for supporting the Stub/proxy properties
+defined within JAX-RPC or JAX-WS. While support of standard properties
+for Stub and Call (only in JAX-RPC) objects is required, their use may
+not work in all cases in a Java EE environment.
+
+The following JAX-RPC properties are not recommended for use in a
+managed context defined by this specification:
+
+* javax.xml.rpc.security.auth.username
+* javax.xml.rpc.security.auth.password
+
+The following JAX-WS properties are not recommended for use in a managed
+context defined by this specification:
+
+* javax.xml.ws.security.auth.username
+* javax.xml.ws.security.auth.password
+
+===== Required properties
+
+A container provider is required to support the
+javax.xml.rpc.service.endpoint.address property in JAX-RPC and
+javax.xml.ws.service.endpoint.address property in JAX-WS to allow
+components to dynamically redirect a Stub/proxy to a different URI.
+
+==== JAX-WS Dispatch APIs
+
+Client developers may use javax.xml.ws.Dispatch APIs defined in JAX-WS
+specification. This is a low level API that requires clients to
+construct messages or message payloads as XML and requires an intimate
+knowledge of the desired message or payload structure. This is useful in
+those situations where the client wants to operate at the XML message
+level.
+
+An instance of javax.xml.ws.Dispatch can be obtained by invoking any one
+of the two createDispatch(...) methods on a Service interface. Details
+on Dispatch API's and its usage can be referenced at section 4.3 of the
+JAX-WS specification
+
+==== JAX-WS Asynchronous Operations
+
+Client developer may use asynchronous invocations as defined by the
+JAX-WS specification. JAX-WS supports asynchronous invocations through
+generated asynchronous methods on the Service Endpoint Interface
+(section 2.3.4 of JAX-WS specification) and javax.xml.ws.Dispatch
+(section 4.3.3 of JAX-WS specification) interface. There are two forms
+of asynchronous invocations in JAX-WS – Polling and Callback.
+
+===== Polling
+
+Client asynchronous polling invocations must be supported by components
+running in Servlet container, EJB container and Application Client
+container, since any of these components can act as JAX-WS clients.
+Client developers can either use the Service Endpoint Interface or
+javax.xml.ws.Dispatch to make asynchronous polling invocations. The
+usage must meet the requirements defined in section 2.3.4 of JAX-WS
+specification for Service Endpoint Interface or section 4.3.3 of JAX-WS
+specification for javax.xml.ws.Dispatch interface.
+
+===== Callback
+
+Client asynchronous callback invocations should only be supported by
+components running in EJB, Servlet container and Application Client
+container. Client developers can either use the Service Endpoint
+Interface or javax.xml.ws.Dispatch to implement asynchronous callback
+invocations. The callback handler must implement
+javax.xml.ws.AsyncHandler interface. The usage should meet the
+requirements defined in section 2.3.4 of JAX-WS specification for
+Service Endpoint Interface or section 4.3.3 of JAX-WS specification for
+javax.xml.ws.Dispatch interface.
+
+It will be the container implementers responsibility to insure that the
+client developer has access to java:comp/env JNDI context for that
+component in the callback handler's handleResponse(...) method. The
+following operations are allowed from within the callback handler:
+
+* JNDI access to java:comp/env
+* Resource manager access
+* Enterprise bean access
+
+The container implementer is also responsible for ensuring that the
+context class loader used for the execution of handleResponse() method
+matches the classloader of the component that made the invokeAsync()
+call.
+
+Lifecycle of the callback handler is undefined.
+
+It is recommended that the developer use a new instance of the callback
+handler for each invokeAsync() call to avoid any multi-threading issues.
+
+The behavior of the execution of the callback handler is undefined if
+the module defining the handler, is undeployed before it is invoked.
+
+Dependency injection is not supported for the callback handler classes.
+Programmatic JNDI lookups must be used for getting access to any of the
+resources.
+
+If no propagated identity is provided for invoking the callback handler,
+then the handler executes under unauthenticated identity as defined by
+the container.
+
+The handleResponse() method of the javax.xml.ws.AsyncHandler executes in
+an unspecified transaction context. If the handleResponse() method of
+the callback handler creates a transaction using the JTA UserTransaction
+interface then this transaction must be committed or rollbacked before
+the return of handleResponse() method.
+
+Requirements for asynchronous callback invocations in the EJB container:
+
+* EJB instance cannot be passed as a callback handler instance. User's
+handler implementation must be a separate class from the Bean class.
+
+* The developer should not attempt to cache the EJBContext of the Bean
+in the handler. The behavior is undefined if the cached EJBContext is
+accessed from within the handler.
+* The developer should not attempt to cache the Bean instance itself in
+the Handler. The behavior is undefined if the cached Bean is accessed
+from within the Handler.
+
+Requirements for asynchronous callback invocations in the Servlet
+container:
+
+* Servlet instance cannot be passed as a callback handler instance.
+User's handler implementation is a separate class from the Servlet
+class.
+
+* The developer should not attempt to cache the Servlet instance itself
+in the callback handler. The behavior is undefined if the cached Servlet
+is accessed from within the handler.
+* It is recommended that the developer not cache the HttpSession and
+HttpRequest objects from the Servlet in the callback handler.
+
+==== JAX-RPC and JAX-WS Interoperability
+
+Interoperability between a JAX-RPC client and JAX-WS endpoint (or
+vice-versa) is governed by the requirements defined by the WS-I Basic
+Profile 1.0. As long as both the client and the server adhere to these
+requirements, they should be able to interoperate.
+
+==== MTOM/XOP support
+
+JAX-WS compliant implementations are required to support MTOM (Message
+Transmission Optimization Mechanism)/XOP (XML-binary Optimized
+Packaging) specifications from W3C. Refer to sections 6.5.2, 7.14.2, and
+10.4.1.1 of JAX-WS specification. Support for SOAP MTOM/XOP mechanism
+for optimizing transmission of binary data types is provided by JAXB
+which is the data binding for JAX-WS. JAX-WS provides the MIME
+processing required to enable JAXB to serialize and deserialize MIME
+based MTOM/XOP packages.
+
+SOAP MTOM/XOP mechanism on the client can be enabled or disabled by any
+one of the following ways:
+
+* Programmatically passing MTOMFeature for a Service method that creates
+a SEI proxy or a Dispatch instance.
+
+* Using <port-component-ref>/<enable-mtom> deployment descriptor element
+for a corresponding SEI proxy instance.
+* Using @MTOM with a @WebServiceRef that creates a SEI proxy instance.
+
+Deployment descriptor mtom elements override the @MTOM annotation for a
+corresponding SEI instance.
+
+Table : Relationship between deployment descriptor elements and @MTOM
+
+[cols=",",]
+|===
+|<service-ref>/<port-component-ref>/<enable-mtom> |@MTOM.enabled
+|<service-ref>/<port-component-ref>/<mtom-threshold> |@MTOM.threshold
+|===
+
+==== JAX-RPC Custom Serializers / Deserializers
+
+The use of JAX-RPC custom serializers / deserializers is out of scope
+for this version of the specification. JAX-RPC customer serializers /
+deserializers are not portable across Web Services for Java EE providers
+and are therefore not included as part of the portable deployment unit.
+It is expected that vendors will provide proprietary solutions to this
+problem until it has been addressed by a future version of JAX-RPC.
+
+==== Packaging
+
+The developer is responsible for packaging, either by containment or
+reference (i.e. by using the MANIFEST ClassPath to refer to other JAR
+files that contain the required classes), the class files for each Web
+service including the: Service Endpoint Interface classes, Generated
+Service Interface class (if used), and their dependent classes. The
+following files must also be packaged in the module: WSDL files, JAX-RPC
+Mapping files (not required with JAX-WS), and a Web services client
+deployment descriptor (not required with JAX-WS if annotations are used)
+in a Java EE module. The location of the Web services client deployment
+descriptor in the module is module specific. WSDL files are located
+relative to the root of the module and are typically located in the wsdl
+directory that is co-located with the module deployment descriptor or a
+subdirectory of it. JAX-RPC Mapping Files (not required with JAX-WS) are
+located relative to the root of the module and are typically co-located
+with the WSDL file. The developer must not package generated stubs.
+
+JAX-WS requires support for a OASIS XML Catalogs 1.1 specification to be
+used when resolving any Web service document that is part of the
+description of a Web service, specifically WSDL and XML Schema
+documents. Refer to section 4.4 of JAX-WS specification. The catalog
+file jax-ws-catalog.xml must be co-located with the module deployment
+descriptor (WEB-INF/jax-ws-catalog.xml for web modules and
+META-INF/jax-ws-catalog.xml for the rest).
+
+==== Web Services Addressing Support
+
+JAX-WS clients are required to support Web Services Addressing 1.0 -
+Core, Web Services Addressing 1.0 - Soap Binding, and Web Services
+Addressing 1.0 - Metadata.
+
+Web Service Addressing requirements for a client can be specified by any
+one of the following ways:
+
+* Using <port-component-ref>/<addressing> deployment descriptor element
+for the corresponding client
+* Using @Addressing annotation with the @WebServiceRef of the client
+* If the service uses WSDL description, the addressing requirements can
+be got from the WSDL as per the WS-Addressing 1.0 - Metadata
+specification.
+
+The above order also defines a precedence order for the addressing
+requirements. For example, the addressing requirements specified by the
+@Addressing are overridden by the same from a corresponding
+<port-component-ref>/<addressing> deployment descriptor element.
+
+Table : Relationship between deployment descriptor elements and
+@Addressing
+
+[cols=",",]
+|===
+|<service-ref>/<port-component-ref>/<addressing>/<enabled>
+|@Addressing.enabled
+
+|<service-ref>/<port-component-ref>/<addressing>/<required>
+|@Addressing.required
+
+|<service-ref>/<port-component-ref>/<addressing>/<responses>
+|@Addressing.responses
+|===
+
+JAX-WS specifies an abstract javax.xml.ws.EndpointReference that
+represents a remote reference to a web service endpoint.
+javax.xml.ws.addressing.W3CEndpointReference class is a concrete
+EndpointReference implementation for WS-Addressing 1.0 - Core addressing
+version. Client applications can use an EndpointReference to get a port
+for an SEI using the getPort methods on javax.xml.ws.Service class. Also
+these EndpointReference objects can appear as SEI method parameters or
+return type and can be passed across the applications.
+
+A port's EndpointReference can be got using its
+javax.xml.ws.BindingProvider's getEndpointReference method.
+Occasionally, it is necessary for one application component to create an
+EndpointReference for another web service endpoint. The
+W3CEndpointReferenceBuilder class provides a standard API for creating
+W3CEndpointReference instances for web service endpoints. When creating
+a W3CEndpointReference for an endpoint published by the same Java EE
+application, a JAX-WS runtime must fill the address(if not set by the
+application) of the endpoint using its service and port names.
+
+==== Respect Binding Support
+
+The javax.xml.ws.RespectBinding annotation or its corresponding
+javax.xml.ws.RespectBindingFeature web service feature is used to
+control whether a JAX-WS implementation must respect/honor the contents
+of the wsdl:binding in the WSDL that is associated with the service. See
+6.5.3 and 7.14.3 sections in JAX-WS 2.2 specification.
+
+RespectBinding web service feature on the client can be enabled or
+disabled by any one of the following ways:
+
+* Programmatically passing RespectBindingFeature for a Service method
+that creates a SEI proxy or a Dispatch instance.
+* Using <port-component-ref>/<respect-binding> deployment descriptor
+element for a corresponding SEI proxy instance.
+* Using @RespectBinding with a @WebServiceRef that creates a SEI proxy
+instance.
+
+Deployment descriptor <respect-binding> element overrides the
+@RespectBinding annotation for a corresponding SEI instance.
+
+Table : Relationship between deployment descriptor elements and
+@RespectBinding
+
+[cols=",",]
+|===
+|<service-ref>/<port-component-ref>/<respect-binding>/<enabled>
+|@RespectBinding.enabled
+|===

@@ -1,0 +1,118 @@
+== Objectives
+
+This section lists the high level objectives of this specification.
+
+* Build on the evolving industry standards for Web services,
+specifically WSDL 1.1, SOAP 1.1 and SOAP 1.2.
+* Leverage existing Java EE technology.
+* Ensure that programmers may implement and package Web services that
+properly deploy onto application servers that comply with Java EE and
+this specification.
+* Ensure that vendor implementations of this specification
+inter-operate, i.e. a Web service client on one vendor’s implementation
+must be able to interact with Web services executing on another vendors
+implementation.
+* Define the minimal set of new concepts, interfaces, file formats, etc.
+necessary to support Web services within Java EE.
+* Clearly and succinctly define functions that Java EE application
+server vendors need to provide.
+* Define the roles that this specification requires, the functions they
+perform and their mapping to Java EE platform roles. Define the
+functions that a Web Services for Java EE product provider must provide
+to support these roles.
+* Support a simple model for defining a new Web service and deploying
+this into a Java EE application server.
+
+=== Client Model Goals
+
+The client programming model should be conformant and compatible with
+the client programming model defined by JAX-RPC or JAX-WS.
+
+Additional goals for the client programming model are to ensure that:
+
+* Programmers can implement Web services client applications conforming
+to this specification that may reside in a Java EE container (e.g. an
+EJB that uses a Web service), or a Java EE Client Container can call a
+Web service running in a Web Services for Java EE container.
+* Client applications conforming to this specification can call any SOAP
+1.1 or SOAP 1.2 based Web service through the HTTP 1.1 or HTTPS SOAP
+Bindings.
+* Programmers using other client environments such as Java 2 Standard
+Edition environment can call a Web service running in a Web Services for
+Java EE container. Programmers using languages other than Java must be
+able to implement SOAP 1.1 or SOAP 1.2 compliant applications that can
+use Web services conforming to this specification. Support the Client
+Development Scenarios described in Chapter 4.
+* Client developers must not have to be aware of how the service
+implementation is realized.
+* Java 2 Micro Edition clients, defined by JSR 172, should be able to
+interoperate using the transport standards declared within WSDL and the
+JAX-RPC or JAX-WS runtime with Web Services for Java EE applications.
+
+=== Service Development Goals
+
+The service development model defines how web service implementations
+are to be developed and deployed into existing Java EE containers and
+includes the following specific goals:
+
+* How the Web service has been implemented should be transparent to the
+Web service client. A client should not have to know if the Web service
+has been deployed in a Java EE or non-Java EE environment.
+* Because the Web service implementation must be deployed in a Java EE
+container, the class implementing the service must conform to some
+defined requirements to ensure that it does not compromise the integrity
+of the application server.
+* JAX-RPC defines three server side run time categories, J2SE based
+JAX-RPC Runtime, Servlet Container Based JAX-RPC Runtime, and Java EE
+Container Based JAX-RPC Runtime. This specification defines the Java EE
+container based (Web and EJB) runtime such that it is consistent with
+the Servlet Container based model defined by the JAX-RPC specification.
+* This specification is amended to define the Java EE container based
+(Web and EJB) runtime such that it is consistent with the programming
+model defined by the JAX-WS specification.
+* Support mapping and dispatching SOAP 1.1 or 1.2 requests to methods on
+Java EE Stateless or Singleton(only JAX-WS) Session Beans.
+* Support mapping and dispatching SOAP 1.1 or 1.2 requests to methods on
+JAX-RPC or JAX-WS Service Endpoint classes in the Web Container.
+
+=== Service Deployment Goals
+
+* Web service deployment is declarative. We do this through extending
+the Java EE model for deployment descriptors and EAR file format. These
+changes are minimized, however.
+* Web service deployment is supported on Java EE environments.
+* Deployment requires that a service be representable by WSDL.
+Deployment requires a WSDL file. The deployment of Web services must
+support:
+
+* those who wish to deploy a Web service as the focus of the deployment
+* those who wish to expose existing, deployed Java EE components as a
+Web service
+
+=== Service Publication Goals
+
+* Service deployment may publish the WSDL to the appropriate service
+registry, repository (if required by the Web service), File, or URL.
+* If a Web service needs to be published by the deployment tools, all of
+the data required to perform the publication must be provided in the
+deployment package or during the deployment process.
+* If any publication to UDDI is performed, the WSDL must also be made
+available at a URL.
+
+=== Web Services Registry Goals
+
+The Web services registry API and programming model is out of the scope
+of this specification. The Web service implementation, Web service
+client, or Web service deployment tool may use any registry API
+including JAX-R. JAX-R does not support WSDL publication directly. It
+does support interaction with UDDI directories. UDDI.org specifies how
+to publish a WSDL described service to a UDDI directory.
+
+This specification defines the service publication responsibilities of
+the deployment tool.
+
+Service definition discovery (finding the WSDL to be implemented) during
+development or deployment of a service implementation is not defined.
+
+Service discovery during development, deployment, or runtime of service
+clients is not defined.

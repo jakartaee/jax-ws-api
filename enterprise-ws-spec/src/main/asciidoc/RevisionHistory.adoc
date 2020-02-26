@@ -1,0 +1,269 @@
+[appendix]
+== Revision History
+
+[arabic]
+.  1.3
+
+* Added Singleton Session EJB requirements (Sections 2.1.2, 3.2, 3.3.1,
+3.10, 3.11, 4.2.14, 5.3.2.1, 5.3.2.2, 5.3.2.3, 5.3.2.3.2, 5.3.2.3.3,
+5.4, 5.4.2, 5.4.3, 7.1.2, 8.1, 8.2.2, 8.2.10)
+* Added addressing feature support (Sections 3.6.2, 4.2.2, 4.2.13,
+5.3.8, 7.1.2, 7.2.2)
+* Added mtom feature support (Sections 4.2.2, 4.2.10, 5.3.7)
+* Added respect binding feature support (Sections 4.2.14, 5.3.9)
+* Updated @WebServiceRef with features, and lookup functionality
+(Section 4.2.2)
+* Added Java EE profiles (Section 3.11)
+* Updated with new JAX-WS Service methods (Sections 4.2.4.1, 4.2.4.5,
+4.2.4.6, 4.2.4.7)
+* Added JSR-299 and Managed Beans requirements for service
+implementation bean (Section 5.3.2)
+* Updated packaging requirements (Sections 5.4, 5.4.2, 5.4.3)
+* Added JSR-299 and Managed Beans requirements for handler classes
+(Section 6.2.2)
+* Updated inline schemas with the links (Sections 7.1.5, 7.2.5, 7.3.5)
+
+[arabic]
+. Version 1.2 Proposed Draft 2
+
+* Clarified transaction propagation (Section 3.10)
+* Clarified that the use of @WebServiceRef not required with JAX-WS
+(Section 4.2.2)
+* Mapping for <service-ref-type> client descriptor specified (Section
+4.2.2)
+* Clarification on usage of @WebServiceRefs was added (Section 4.2.2)
+* Added section on JNDI lookups for Ports (Section 4.2.3)
+* Clarification on JAX-RPC mapping file (Section 4.2.4.5)
+* Added support for JAX-WS Asynchronous callback operations from EJBs
+(Section 4.2.8.2)
+* Added a section clarifying interoperability between JAX-RPC and JAX-WS
+clients (Section 4.2.9)
+* Added support for enabling/disabling MTOM/XOP mechanism in the client
+(Section 4.2.10)
+* Added clarification in Packaging section (4.2.12)
+* Clarified uniqueness requirement for @WebService.name in Java EE
+module (Section 5.3.2.1)
+* Clarified mapping for <ejb-link> and <servlet-link>(Section 5.3.2.1,
+Section 5.3.2.2)
+* Clarified mapping rules for Servlet endpoints with no web.xml (Section
+5.3.2.1, Section 5.3.2.2)
+* Clarified mapping between <service-endpoint-interface> and
+@WebService.endpointInterface (Section 5.3.2.1)
+* Clarified mapping relationship between <port-component> and
+@WebService (Section 5.3.2.1)
+* Clarified mapping relationship between <port-component> and
+@WebServiceProvider (Section 5.3.2.2)
+* Clarified that a WSDL file must be packaged with a Provider
+implementation (Section 5.3.2.2)
+* Clarified the usage of WebServiceContext with Stateless Session bean
+(Section 5.3.2.3.2)
+* Clarified the usage of WebServiceContext with Servlets (Section
+5.3.2.4.2.2)
+* Disallowed the publishing of Endpoints (Section 5.3.3)
+* Added support for new BindingTypes from JAX-WS (Section 5.3.6)
+* Corrected the MTOM deployment descriptor element name and clarified
+its usage (Section 5.3.7)
+* Clarifications in Packaging (Section 5.4)
+* Clarifications in packaging regarding mixing of JAX-RPC and JAX-WS
+components in a module (Section 5.4)
+* Added clarification on use of TransactionAttribute annotation (Section
+5.5)
+* Clarified order of invocation for Handlers and EJB interceptors
+(Section 6.2.4)
+* Clarification for alignment between Handlers and EJB interceptors for
+EJB endpoints (Section 6.2.4)
+* Clarified that deployment descriptors were optional (Section 7.1.1 and
+7.1.2)
+* Added new protocol binding tokens (Section 7.1.2)
+* Changes in section on Web Services Deployment Descriptor XML Schema
+(Section 7.1.5)
+* Clarified that deployment descriptors were optional (Section 7.2.1)
+* Added <service-ref-type> deployment descriptor element (Section 7.2.2)
+* Added <enable-mtom> deployment descriptor element (Section 7.2.2)
+* Changes in section on Web Services Client Service Reference XML Schema
+(Section 7.2.5)
+* Clarified that JAX-WS specification makes no distinction between stubs
+and proxies (Section 8.2.7)
+* Relevant references to deployment descriptor elements or file
+webservices.xml were fixed to include Web services metadata annotations
+allowed by JAX-WS
+* Restriction on use of Mandatory transaction attribute was removed
+(Section 8.1 and 8.2.10)
+
+[arabic]
+. Version 1.2 Proposed Draft
+
+* Relevant occurrences of J2EE in the entire specification were changed
+to Java EE
+* Relevant occurrences of JAX-RPC in the entire specification were
+changed to add JAX-WS to it.
+* Relevant occurrences of SOAP 1.1 in the entire specification were
+changed to add SOAP 1.2 to it.
+* Added support for client side @WebServiceRef annotation to access Web
+Service (Section 4.2.2)
+* Changes to support javax.xml.ws.Service Class in JAX-WS (Section
+4.2.3)
+* Changes for JAX-WS properties (Section 4.2.5)
+* Use of javax.xml.ws.Dispatch APIs (Section 4.2.6)
+* Support for JAX-WS Asynchronous operations (Section 4.2.7)
+* Support for OASIS XML Catalogs specification (Section 4.2.9)
+* Clarification on use of Service Endpoint Interface with JAX-WS
+(Section 5.3.1)
+* Added support for @WebService annotation on Service Implementation
+Bean (Section 5.3.2.1)
+* Added support for @WebServiceProvider annotation on Service
+Implementation Bean (Section 5.3.2.2)
+* Changes in EJB container programming model related to JAX-WS (Section
+5.2.3.3)
+* Web container programming model for JAX-WS (Section 5.3.2.4.2)
+* Added support for specifying protocol binding (Section 5.3.5)
+* Added support for enabling/disabling MTOM/XOP (Section 5.3.6)
+* Added support for Catalog packaging (Section 5.4.4)
+* Changes in JAX-WS Handler Programming Model (Section 6.2.2)
+* Added new section on Handler Lifecycle with JAX-WS (Section 6.2.2.2)
+* Added new section on @HandlerChain annotation (Section 6.2.2.3)
+* Clarification in section on Security (Section 6.2.2.4)
+* Changes in section on Developer Responsibilities related to JAX-WS
+(Section 6.2.3)
+* Changes in section on Container Provider Responsibilities related to
+JAX-WS (Section 6.2.4)
+* Changes in section on Packaging related to handlerchain file (Section
+6.3)
+* Added description of new deployment descriptor elements like
+<wsdl-service>, <enable-mtom>, <protocol-binding>, <handler-chains>
+(Section 7.1.2)
+* Removed the old schema and added new updated server side schema
+(Section 7.1.5)
+* Removed the old schema and added new updated client side schema
+(Section 7.2.5)
+* Clarified that the JAX-RPC mapping file is not required in JAX-WS
+(Section 7.3)
+
+[arabic]
+. Version 1.1 Final Release
+
+* Clarified anonymous type qname-scope use
+* Clarified parsing of anonymous type qnames
+* Clarified portable anonymous type array forms
+* Added missing mapping in anonymous type mapping example
+
+[arabic]
+. Version 1.1 Proposed Final Draft
+
+* Updated XML schemas.
+* Holder and Handler support are now required for the EJB container.
+* Corrected port address requirements.
+* Clarified handler access of resources.
+* Clarified mappings for xsd:any and anonymous types.
+* Updated to support WS-I Basic Profile 1.0. Clarified interoperability
+requirements.
+
+[arabic]
+. Version 1.1 Public Draft 3
+
+* Removed section on exposing an existing EJB.
+* Clarified WSDL packaging and publishing requirements when dealing with
+relative imports.
+
+[arabic]
+. Version 1.1 Public Draft
+
+* Removed J2EE 1.3 deployment requirements. Appendix B added describing
+optional support for J2EE 1.3 based deployment.
+* Replaced DTD deployment descriptors with XML schema deployment
+descriptors.
+
+[arabic]
+. Version 1.0 Final Release
+
+* Updated JAX-RPC mapping DTD to support doc/lit wrapped element.
+
+[arabic]
+. Version 0.95 Final Draft
+
+* Updated license to be the required Specification License Agreement
+* Clarified package by reference to be MANIFEST ClassPath use.
+* Clarified developer responsibilities for setting the servlet-mapping
+are for the web.xml descriptor. Described deployment tool responsibility
+for generating one if it doesn’t exist
+* Clarified container requirements for credential configuration of a
+service reference.
+* Minor editorial changes.
+
+[arabic]
+. Version 0.94
+
+* Clarified binding preference order for container resolution of Port.
+* Clarified the Service Interface to be a view of the deployed WSDL the
+service is bound to.
+* JAX-RPC mapping deployment descriptor updated to address void return
+methods and one-way operations.
+* Recommend .xml suffix for mapping deployment descriptor file name.
+
+[arabic]
+. Version 0.93
+
+* Aligned Stub property support with JAX-RPC requirements.
+* Clarified port-component to service-impl-bean relationship cardinality
+is 1-1.
+* Clarified requirement for deployment to honor servlet-mapping for
+JAX-RPC Service Endpoint.
+* Clarified publishing of deployed WSDL requirements.
+
+[arabic]
+. Version 0.92
+
+* Removed requirement for not providing HandlerChain class.
+* Clarified exception thrown to client if Handler inappropriately
+changes message.
+* Clarified use of java:comp/env in Handler methods.
+* Clarified use of container services in the web container endpoint.
+* DTD DOCTYPEs corrected.
+* Editorial cleanup
+
+[arabic]
+. Version 0.8
+
+* Updated JAX-RPC mapping file format
+
+[arabic]
+. Version 0.7
+
+* Completely revised JAX-RPC mapping file to handle missing mapping
+cases. Support minimal mappings crafted by developed.
+
+[arabic]
+. Version 0.6
+
+* Consolidated client access modes to a modeless Service object. Updated
+chapter 4 to reflect this and chapter 7 client deployment descriptor.
+* Revised platform role responsibilities of chapter 7 for client
+deployment descriptor to clarify partial WSDL use.
+* Added requirements in chapter 6 and 8 for Headers to be defined in the
+WSDL if they are declared as handled by a Handler.
+* Changed the exception thrown if a Handler modifies the request in a
+way that it shouldn’t.
+* Clarified use of custom serializers / deserializers as out of scope
+for this version.
+
+[arabic]
+. Version 0.5
+
+* Added JAX-RPC Mapping deployment descriptor
+* Clarified platform role responsibilities
+* Clarified deployment
+* Terminology changes to sync up with JAX-RPC
+
+[arabic]
+. Version 0.4 Expert Group Draft
+
+* Clarified service development goals.
+* Clarified Web services registry goals.
+* Clarified container requirements for providing a stub/proxy to the
+client.
+* Changed HandlerRegistry and TypeMappingRegistry access from optional
+to not supported.
+* Clarified use of JAX-RPC Stub properties.
+* Added client packaging requirements.
+* Strengthened the requirements for exposing an EJB as a Web service.
+* Added Handler chapter.

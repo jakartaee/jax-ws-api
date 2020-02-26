@@ -1,0 +1,89 @@
+== Introduction
+
+This specification defines the Web Services for Java EE (WSEE)
+architecture. This is a service architecture that leverages the Java EE
+component architecture to provide a client and server programming model
+which is portable and interoperable across application servers, provides
+a scalable secure environment, and yet is familiar to Java EE
+developers.
+
+=== Target Audience
+
+This specification is intended to be used by:
+
+* Java EE Vendors implementing support for Web services compliant with
+this specification
+* Developers of Web service implementations to be deployed into Java EE
+application servers
+* Developers of Web service clients to be deployed into Java EE
+application servers
+* Developers of Web service clients that access Web service
+implementations deployed into Java EE application servers
+
+This specification assumes that the reader is familiar with the Java EE
+platform and specifications. It also assumes that the reader is familiar
+with Web services, specifically the JAX-RPC and JAX-WS Specification and
+WSDL documents.
+
+=== Acknowledgments
+
+This specification’s origins are based on the vision of Donald F.
+Ferguson, IBM Fellow. It has been refined by an industry wide expert
+group. The expert group included active representation from the
+following companies: IBM, Sun, Oracle, BEA, Sonic Software, SAP, HP,
+Silverstream, IONA. We would like to thank those companies along with
+other members of the JSR 109 expert group: EDS, Macromedia, Interwoven,
+Rational Software, Developmentor, interKeel, Borland, Cisco Systems,
+ATG, WebGain, Sybase, Motorola, and WebMethods. We particularly
+appreciate the amount of input and support provided by Mark Hapner
+(Sun).
+
+The JSR 109 expert group had to coordinate with other JSR expert groups
+in order to define a consistent programming model for Web Service for
+J2EE. We would like to especially thank Rahul Sharma and the JSR 101
+(JAX-RPC) expert group, Farukh Najmi and the JSR 093 (JAX-R) expert
+group, and Linda G. DeMichiel and the JSR 153 (EJB 2.1) expert group.
+
+We would also like to acknowledge Roberto Chinnici (JSR-224
+Specification Lead), Bill Shannon (JSR-244 Java EE Specification Lead),
+Rajiv Mordani (JSR-250 Specification Lead), Jitendra Kotamraju, Doug
+Kohlert, Vivek Pandey, Jerome Dochez, Vijay Ramachandran, Mahesh Kannan
+and Kenneth Saks (all from Sun Microsystems) for providing invaluable
+technical input for the maintenance release (version 1.2) of JSR-109
+specification.
+
+We would like to thank Roberto Chinnici (Java EE 6 Specification Lead),
+Bill Shannon (Java EE 6 Specification Lead), Kenneth Saks (EJB 3.1
+Specification Lead), Bhakti Mehta and Rama Pulavarthi (all from Sun
+Microsystems) for providing invaluable input for the 1.3 maintenance
+release.
+
+=== Specification Organization
+
+The next two chapters of this specification outline the requirements and
+conceptual architecture for Web services support in Java EE
+environments. Each of the major integration points for Web services in
+Java EE, the client model, the server model, the deployment model, WSDL
+bindings, and security have their own chapter. Each of these chapters
+consists of two topics: Concepts and Specification. The concepts section
+discusses how Web services are used, issues, considerations, and the
+scenarios that are supported. The specification section is normative and
+defines what implementers of this specification must support.
+
+=== Document conventions.
+
+In the interest of consistency, this specification follows the document
+conventions used by the Enterprise JavaBeans specification.
+
+The regular Times font is used for information that is prescriptive by
+this specification.
+
+The italic Times font is used for paragraphs that contain descriptive
+information, such as notes describing typical use, or notes clarifying
+the text with prescriptive specification.
+
+The Courier font is used for code examples.
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are to be interpreted as described in RFC 2119.
