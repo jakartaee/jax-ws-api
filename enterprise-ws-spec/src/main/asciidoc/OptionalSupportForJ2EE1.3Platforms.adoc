@@ -1,0 +1,9 @@
+[appendix]
+== Optional support for J2EE 1.3 platforms
+
+Web Services for J2EE Version 1.1 does not require support for
+applications built according to the Web Services for J2EE Version 1.0
+specification. A vendor may optionally support Web Services for J2EE 1.0
+by implementing that version of the specification. See the Web Services
+Version 1.0 Change Log for more details on the differences between the
+two specifications.

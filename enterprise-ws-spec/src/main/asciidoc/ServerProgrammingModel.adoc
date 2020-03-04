@@ -1,0 +1,987 @@
+[#anchor-10]
+== Server Programming Model
+
+This chapter defines the server programming model for Web Services for
+Java EE. A WSDL document defines the interoperability of Web services
+and includes the specification of transport and wire format
+requirements. In general, WSDL places no requirement on the programming
+model of the client or the server. Web Services for Java EE defines two
+methods of implementing a Web service. It requires the JAX-RPC Servlet
+container based Java class programming model for implementing Web
+services that run in the web container and it requires the Stateless
+Session EJB programming model for implementing Web services that run in
+the EJB container. With JAX-WS, the Servlet based programming model for
+implementing Web Services is similar to one defined by JAX-RPC. These
+two implementation methods provide a means for defining a Port component
+to bring portable applications into the Web Services programming
+paradigm. This specification also requires that a developer be able to
+start simple and grow up to use more complex qualities of service. The
+following sections define the requirements for Port components.
+
+=== Goals
+
+Port components address the following goals:
+
+* Provide a portable Web services programming model
+* Provide a server programming model which maintains a consistent client
+view. The client must not be required to know how the service is
+implemented.
+* Provide path to start simple and grow to more complex run-time service
+requirements
+* Leverage existing Java EE container functionality
+* Leverage familiar programming models
+
+=== Concepts
+
+A Port component (sometimes referred to as Port) defines the server view
+of a Web service. Each Port services a location defined by the WSDL port
+address. A Port component services the operation requests defined by a
+WSDL PortType. JAX-RPC requires that every Port component has a Service
+Endpoint Interface and a Service Implementation Bean. JAX-WS along with
+JSR-181 mandates the existence of javax.jws.WebService annotated Service
+Implementation Bean in a Port component. Service Implementation Bean may
+optionally reference a Service Endpoint Interface but is not required to
+do so. The Service Endpoint Interface is a Java mapping of the WSDL
+PortType and binding associated with a WSDL port. The Service
+Implementation Bean can vary based on the container the Port is deployed
+in, but in general it is a Java class which may implement the methods
+defined by the Service Endpoint Interface. WSDL ports, which differ only
+in address, are mapped to separate Port components, each with its own
+potentially unique but probably shared Service Implementation Bean.
+link:#anchor-36[Figure 5] illustrates this below.
+
+{empty}[#anchor-37]##[#anchor-38]##image:5.png[image,width=374,height=259]
+
+* [#anchor-36]##Figure 5 container
+
+A Port’s life cycle is specific to and completely controlled by the
+container, but in general follows the same life cycle of the container
+itself. A Port is created and initialized by the container before the
+first request received at the WSDL port address can be serviced. A Port
+is destroyed by the container whenever the container feels it is
+necessary to do so, such as when the container is shutting down.
+
+The implementation of a Port and the container it runs in are tied. A
+JAX-RPC Service Implementation Bean always runs in a web container. A
+JAX-WS Service Implementation Bean may also run in a web container. An
+EJB Service Implementation Bean always runs in an EJB container.
+
+The Port component associates a WSDL port address with a Service
+Implementation Bean. In general the Port component defers container
+service requirement definition to the Java EE component’s deployment
+descriptor. This is discussed further in Chapters link:#anchor-39[6.3]
+and link:#anchor-40[7.3]. A container provides a listener for the WSDL
+port address and a means of dispatching the request to the Service
+Implementation. A container also provides run-time services such as
+security constraints and logical to physical mappings for references to
+distributed objects and resources.
+
+=== Port Component Model Specification
+
+A Port component defines the programming model artifacts that make the
+Web Service a portable server application. The association of a Port
+component with a WSDL port provides for interoperability. The
+programming model artifacts include:
+
+WSDL document – Although not strictly a programming model artifact, the
+WSDL document provides a canonical description of a Web service that may
+be published to third parties. A WSDL document and the Service Endpoint
+Interface are related by the JAX-RPC/JAX-WS WSDL<->Java mapping rules.
+
+Service Endpoint Interface (SEI) - This interface defines the methods
+that are implemented by the Service Implementation Bean.
+
+Service Implementation Bean - The Service Implementation Bean is a Java
+class that provides the business logic of the Web service. In addition,
+it defines the Port component contract for the container, which allows
+the business logic to interact with container services. It implements
+the same methods and signatures of the SEI, but is not required to
+implement the SEI itself.
+
+Security Role References - The Port may declare logical role names in
+the deployment descriptor. These logical role names are reconciled
+across the modules by the assembler and mapped to physical roles at
+deployment time and allow the service to provide instance level security
+checks.
+
+____
+____
+
+A developer declares a Port component within a Web services deployment
+descriptor. The deployment descriptor includes the WSDL document that
+describes the PortType and binding of the Web service. When using
+JAX-WS, a developer is not required to have a Web services deployment
+descriptor . Most of the information in the deployment descriptor is
+captured in the annotated Service Implementation Bean. A deployment
+descriptor may be used to override or enhance the information provided
+in the Service Implementation Bean annotation. A deployer and the deploy
+tool handles the mapping of the Port into a container.
+
+[#anchor-41]
+==== Service Endpoint Interface
+
+The Service Endpoint Interface (SEI) must follow the JAX-RPC or JAX-WS
+rules for WSDL<->Java mapping. The SEI is related to the WSDL PortType
+and WSDL bindings by these rules.
+
+When JAX-RPC is used, the SEI is required for use by the deployment
+tools and parallel client development. The Port component developer is
+responsible for providing both the WSDL document with a minimum of the
+PortType and binding defined and the SEI and for keeping the two in sync
+with each other.
+
+When JAX-WS is used, the SEI may be required for client side development
+only. The Port component developer is not required to provide the SEI or
+the WSDL document.
+
+==== Service Implementation Bean
+
+A service implementation bean for a web service can be implemented as
+follows:
+
+* A JAX-RPC or JAX-WS service endpoint running in a web container
+* Stateless Session EJB as a JAX-RPC or JAX-WS web service
+* Singleton Session EJB as a JAX-WS web service
+
+The programming models are fully defined in sections
+link:#anchor-43[5.3.2.3] and link:#anchor-44[5.3.2.4].
+
+A container may use any bean instance to service request.
+
+In a product that also supports JSR-299, an implementation must support
+use of 299-style managed beans as JAX-WS web service classes in an
+application. JAX-WS annotations may be directly applied to these beans.
+JSR-299 specifies the requirements for these container-managed bean
+instances w.r.t instantiation, injection and other services. JSR-299
+defines @Dependent pseudo-scope, web service classes must be in that
+scope. Additionally, a JAX-WS service using singleton session EJB can
+also be in @ApplicationScoped scope. It is an error if the service class
+has a scope other than the required one.
+
+In a product that also supports Managed Beans, an implementation must
+support use of managed beans as JAX-WS web service classes in an
+application. JAX-WS annotations may be directly applied to managed
+beans. Managed Beans specification specifies the requirements for these
+container-managed bean instances w.r.t instantiation, injection and
+other services.
+
+JAX-WS along with JSR-181 places additional requirements on Service
+Implementation Beans detailed in sections 5.3.2.1 and 5.3.2.2.
+
+The developer is only required to provide the javax.jws.WebService
+annotated Service Implementation Bean. The deployment tools could then
+be used to generate the WSDL document and the SEI using JAX-WS rules for
+Java <-> WSDL mapping.
+
+===== _javax.jws.WebService_ annotation
+
+JAX-WS along with JSR-181 requires that the Service Implementation Beans
+must include javax.jws.WebService class-level annotation to indicate
+that it implements a Web Service. Detail requirements and definition of
+the javax.jws.WebService annotation can be found in JSR-181
+specification (section 4.1). If member attributes of the annotation are
+not specified then server side deployment descriptors (see section 7.1)
+are used. The member attributes of the annotation can also be overridden
+by server side deployment descriptors .
+
+A Service Implementation Bean using this annotation is not required to
+specify a wsdlLocation. If wsdlLocation attribute is specified in the
+javax.jws.WebService annotation, it must follow the packaging rules for
+the WSDL file detailed in section 5.4. If wsdlLocation attribute is
+specified, then the WSDL file must exist at that location or can be
+resolved using the catalog facility specified in section 5.4.4.
+
+The following table shows the relationship between the deployment
+descriptor elements and this annotation.
+
+Table 1 Relationship between the deployment descriptor elements and
+javax.jws.WebService annotation
+
+[cols=",",]
+|===
+|<webservices>/<webservice-description> |One per WSDL document
+
+|<webservices>/<webservice-description>/<port-component> |One per
+@WebService annotation
+
+|<webservices>/<webservice-description>/<webservice-description-name>
+|This is implementation specific
+
+|<webservices>/<webservice-description>/<wsdl-file>
+|@WebService.wsdlLocation
+
+|<webservices>/<webservice-description>/<port-component>/<port-component-name>
+a|
+@WebService.name (if not specified then its default value as specified
+in JSR-181), only if it is unique in the module
+
+If the above is not unique then fully qualified name of the Bean class
+is used to guarantee uniqueness
+
+|<webservices>/<webservice-description>/<port-component>/<wsdl-service>
+|@WebService.serviceName
+
+|<webservices>/<webservice-description>/<port-component>/<wsdl-port>
+|@WebService.portName
+
+|<webservices>/<webservice-description>/<port-component>/<service-endpoint-interface>
+|@WebService.endpointInterface
+|===
+
+For Stateless or Singleton Session EJBs using this annotation, the name
+attribute of the javax.ejb.Stateless or javax.ejb.Singleton annotation
+on the Service Implementation Bean class must be used as the <ejb-link>
+element in the deployment descriptor to map the Port component to the
+actual EJB. If name attribute in javax.ejb.Stateless or
+javax.ejb.Singleton annotation is not specified, then the default value
+is used as defined in the section 4.4.1 of EJB 3.1.
+
+For Servlet based endpoints using this annotation, fully qualified name
+of the Service Implementation Bean class must be used as the
+<servlet-link> element in the deployment descriptor to map the Port
+component to the actual Servlet.
+
+Following default mapping rules apply for Web modules that contain
+Servlet based endpoints that use this annotation but do not package a
+web.xml or a partial web.xml:
+
+* fully qualified name of the Service Implementation Bean class maps to
+<servlet-name> element in web.xml.
+* fully qualified name of the Service Implementation Bean class maps to
+<servlet-class> element in web.xml (also specified in section 7.1.2)
+* serviceName attribute of javax.jws.WebService annotation prefixed with
+"/" maps to <url-pattern> element in web.xml. If the serviceName
+attribute in javax.jws.WebService annotation is not specified, then the
+default value as specified in JSR-181 specification is used.
+
+The <service-endpoint-interface> element in the deployment descriptor
+for an implementation bean must match @WebService.endpointInterface
+member attribute if it is specified for the bean. Any other value is
+ignored.
+
+If <wsdl-service> element is provided in the deployment descriptor, then
+the namespace used in this element overrides the targetNamespace member
+attribute in this annotation. The namespace in <wsdl-port> element if
+specified, must match the effective target namespace.
+
+javax.jws.WebService annotated Service Implementation Beans can be run
+either as a Stateless or Singleton Session EJB in an EJB container or as
+a JAX-WS service endpoint in a web container. The two programming models
+are fully defined in sections link:#anchor-43[5.3.2.3] and
+link:#anchor-44[5.3.2.4].
+
+===== javax.xml.ws.Provider interface and _javax.xml.ws.WebServiceProvider_ annotation
+
+Service Endpoint Interfaces (SEI) provides a high level Java-centric
+abstraction that hides the details of converting between Java objects
+and their XML representations for use in XML-based messages. However, in
+some cases it is desirable for services to be able to operate at the XML
+message level. The javax.xml.ws.Provider interface in JAX-WS (section
+5.1) offers an alternative to SEIs and may be implemented by Service
+Implementation Beans wishing to work at the XML message level.
+
+JAX-WS requires that these Service Implementation Beans must include
+javax.xml.ws.WebServiceProvider annotation on the class, indicating that
+it implements the javax.xml.ws.Provider interface. Details on the
+javax.xml.ws.WebServiceProvider annotation can be found in JAX-WS
+specification (section 7.7). If member attributes of the annotation are
+not specified then server side deployment descriptors (see section 7.1)
+are used. The member attributes of the annotation can also be overridden
+by server side deployment descriptors .
+
+. A WSDL file is required to be packaged with a Provider implementation.
+If wsdlLocation attribute is specified in the
+javax.xml.ws.WebServiceProvider annotation, it must follow the packaging
+rules detailed in section 5.4. If wsdlLocation attribute is specified,
+then the WSDL file must exist at that location or can be resolved using
+the catalog facility specified in section 5.4.4.
+
+The following table shows the relationship between the deployment
+descriptor elements and this annotation.
+
+Table 2 Relationship between the deployment descriptor elements and
+javax.xml.ws.WebServiceProvider annotation
+
+[cols=",",]
+|===
+|<webservices>/<webservice-description> |One per WSDL document
+
+|<webservices>/<webservice-description>/<port-component> |One per
+@WebServiceProvider annotation
+
+|<webservices>/<webservice-description>/<webservice-description-name>
+|This is implementation specific
+
+|<webservices>/<webservice-description>/<wsdl-file>
+|@WebServiceProvider.wsdlLocation
+
+|<webservices>/<webservice-description>/<port-component>/<port-component-name>
+|Fully qualified name of the Service Implementation Bean is used to
+guarantee uniqueness
+
+|<webservices>/<webservice-description>/<port-component>/<wsdl-service>
+|@WebServiceProvider.serviceName
+
+|<webservices>/<webservice-description>/<port-component>/<wsdl-port>
+|@WebServiceProvider.portName
+
+|<webservices>/<webservice-description>/<port-component>/<service-endpoint-interface>
+|This deployment descriptor is not required to be specified for Service
+Implementation Beans that are annotated with @WebServiceProvider
+|===
+
+For Stateless or Singleton Session EJBs using this annotation, the name
+attribute of the javax.ejb.Stateless or javax.ejb.Singleton annotation
+on the Service Implementation Bean class must be used as the <ejb-link>
+element in the deployment descriptor to map the Port component to the
+actual EJB. If name attribute in javax.ejb.Stateless or
+javax.ejb.Singleton annotation is not specified, then the default value
+is used as defined in the section 4.4.1 of EJB 3.1.
+
+For Servlet based endpoints using this annotation, fully qualified name
+of the Service Implementation Bean class must be used as the
+<servlet-link> element in the deployment descriptor to map the Port
+component to the actual Servlet.
+
+Following default mapping rules apply for Web modules that contain
+Servlet based endpoints that use this annotation but do not package a
+web.xml or a partial web.xml:
+
+* fully qualified name of the Service Implementation Bean class maps to
+<servlet-name> element in web.xml.
+* fully qualified name of the Service Implementation Bean class maps to
+<servlet-class> element in web.xml. (also specified in section 7.1.2)
+* serviceName attribute of javax.xml.ws.WebServiceProvider annotation
+prefixed with "/" maps to <url-pattern> element in web.xml.
+
+If <wsdl-service> element is provided in the deployment descriptor, then
+the namespace used in this element overrides the targetNamespace member
+attribute in this annotation. The namespace in <wsdl-port> element if
+specified, must match the effective target namespace.
+
+javax.xml.ws.WebServiceProvider annotated Service Implementation Beans
+can be run either as a Stateless or Singleton Session EJB in an EJB
+container or as a JAX-WS service endpoint in a web container. The two
+programming models are fully defined in sections
+link:#anchor-43[5.3.2.3] and link:#anchor-44[5.3.2.4].
+
+[#anchor-43]
+===== EJB container programming model
+
+A Stateless Session Bean, as defined by the Enterprise JavaBeans
+specification, can be used to implement a Web service to be deployed in
+the EJB container. A Singleton Session Bean, as defined by the EJB 3.1
+specification, can be used to implement a JAX-WS Web service to be
+deployed in the EJB container.
+
+A Stateless Session Bean does not have to worry about multi-threaded
+access. The EJB container is required to serialize request flow through
+any particular instance of a Service Implementation Bean. A Singleton
+Session Bean is intended to be shared and supports concurrent access.
+The access rules are specified in the 4.8.5 section of EJB 3.1.
+
+The requirements for creating a Service Implementation Bean as a
+Stateless or Singleton Session EJB are repeated in part here.
+
+* With JAX-WS, the Service Implementation Bean class must be annotated
+with either javax.jws.WebService or javax.xml.ws.WebServiceProvider
+annotation. See section 5.3.2.1 and 5.3.2.2
+* For developers starting from Java using JAX-WS, javax.jws.WebService
+annotation on Service Implementation Bean may optionally reference an
+SEI but is not required to do so. If SEI is not specified, the Service
+Implementation Bean class implicitly defines a SEI as required by
+section 3.3 of JAX-WS specification. The Service Implementation Bean
+methods are not required to throw javax.rmi.RemoteException. The
+business methods of the bean must be public and must not be final or
+static. Only those methods that are annotated with @WebMethod in the
+Service Implementation Bean, are exposed to the client.
+* For developers starting from WSDL using JAX-WS, the SEI generated from
+the WSDL must be annotated with javax.jws.WebService annotation. Refer
+to section 2.2 of JAX-WS specification. The Service Implementation Bean
+must be annotated with javax.jws.WebService annotation and the
+endpointInterface member attribute must refer to this generated SEI.
+Service Implementation Bean may implement the Service Endpoint
+Interface, but it is not required to do so. The bean must implement all
+the method signatures of the SEI. The Service Implementation Bean
+methods are not required to throw javax.rmi.RemoteException. The
+business methods of the bean must be public and must not be final or
+static. It may implement other methods in addition to those defined by
+the SEI.
+* The Service Implementation Bean must have a default public
+constructor.
+* When JAX-RPC is used, the Service Implementation Bean may implement
+the Service Endpoint Interface, but it is not required to do so. The
+bean must implement all the method signatures of the SEI. The Service
+Implementation Bean methods are not required to throw
+javax.rmi.RemoteException. The business methods of the bean must be
+public and must not be final or static. It may implement other methods
+in addition to those defined by the SEI.
+* A Service Implementation Bean of a Stateless EJB must be a stateless
+object. A Service Implementation Bean must not save client specific
+state across method calls either within the bean instance’s data members
+or external to the instance.
+* A Service Implementation Bean of Singleton EJB can have a shared
+state. The singleton session bean instance lives for the duration of the
+application in which it is created. It maintains its state between
+client invocations.
+* The class must be public, must not be final and must not be abstract.
+* The class must not define the finalize() method.
+* Currently, it may use javax.annotation.PostConstruct or
+javax.annotation.PreDestroy annotation on methods for lifecycle event
+callbacks. See Enterprise JavaBeans specification section 4.1.4 and 10.7
+for more details on this.
+
+====== javax.ejb.Stateless annotation
+
+Currently, a Stateless Session Bean must be annotated with the
+_javax.ejb.Stateless_ annotation or denoted in the deployment descriptor
+as a stateless session bean. The bean class no longer implements the
+_javax.ejb.SessionBean_ interface.
+
+The full requirements for Stateless Session Bean are defined in the
+Enterprise JavaBeans specification (EJB Core Contracts and Requirements)
+section 4.1
+
+====== Allowed access to container services
+
+The Enterprise JavaBeans specification (EJB Core Contracts and
+Requirements) section 4.4.1 defines the allowed container service access
+requirements.
+
+A stateless session bean that implements a web service endpoint using
+the JAX-RPC APIs access the JAX-RPC javax.xml.rpc.handler.MessageContext
+interface by means of the SessionContext.getMessageContext method. Refer
+to section 4.3.6 of the Enterprise JavaBeans specification (EJB Core
+Contracts and Requirements)
+
+A stateless or singleton session bean that implements a web service
+endpoint using the JAX-WS APIs should use the
+javax.xml.ws.WebServiceContext, which can be injected by use of the
+@Resource annotation (see section 2.2 of JSR-250 Common Annotations for
+Java Platform specification), to access message context and security
+information relative to the request being served. The WebServiceContext
+interface allows the stateless or singleton session bean instance to get
+access to the javax.xml.ws.handler.MessageContext. Usage of a
+WebServiceContext must meet the requirements defined by the JAX-WS
+specification section 5.3.
+
+====== javax.ejb.Singleton annotation
+
+EJB 3.1 introduces Singleton session bean component that provides an
+easy access to shared state. A Singleton session bean is instantiated
+once per application. A Singleton session bean must be annotated with
+the _javax.ejb.Singleton_ annotation or denoted in the deployment
+descriptor as a singleton session bean.
+
+The full requirements for Singleton Session Bean are defined in the
+section 4.8 of EJB 3.1 specification.
+
+[#anchor-46]
+===== Web container programming model
+
+====== Web container programming model for JAX-RPC
+
+The term JAX-RPC Service Endpoint used within the JAX-RPC specification
+is somewhat confusing since both Service Implementation Beans require
+the use of a JAX-RPC run time. However, in this case it refers to the
+programming model defined within the JAX-RPC specification that is used
+to create Web services that run within the web container. The
+requirements are repeated here with clarification. Changes from the
+JAX-RPC defined programming model are required for running in a Java EE
+container-managed environment.
+
+A JAX-RPC Service Endpoint can be single or multi-threaded. The
+concurrency requirement is declared as part of the programming model. A
+JAX-RPC Service Endpoint must implement javax.servlet.SingleThreadModel
+if single threaded access is required by the component. A container must
+serialize method requests for a Service Implementation Bean that
+implements the SingleThreadModel interface. Note, the SingleThreadModel
+interface has been deprecated in the Servlet 2.4 specification.
+
+The Service Implementation Bean must follow the Service Developer
+requirements outlined in the JAX-RPC specification and are listed below
+except as noted.
+
+* The Service Implementation Bean must have a default public
+constructor.
+
+* The Service Implementation Bean may implement the Service Endpoint
+Interface as defined by the JAX-RPC Servlet model. The bean must
+implement all the method signatures of the SEI. In addition, a Service
+Implementation Bean may be implemented that does not implement the SEI.
+This additional requirement provides the same SEI implementation
+flexibility as provided by EJB service endpoints. The business methods
+of the bean must be public and must not be static. If the Service
+Implementation Bean does not implement the SEI, the business methods
+must not be final. The Service Implementation Bean may implement other
+methods in addition to those defined by the SEI, but only the SEI
+methods are exposed to the client.
+
+* A Service Implementation must be a stateless object. A Service
+Implementation Bean must not save client specific state across method
+calls either within the bean instance’s data members or external to the
+instance. A container may use any bean instance to service a request.
+
+* The class must be public, must not be final and must not be abstract.
+* The class must not define the finalize() method.
+
+======= The optional ServiceLifecycle Interface
+
+A Service Implementation Bean for the web container may implement the
+java.xml.rpc.server.ServiceLifeCycle interface:
+
+package javax.xml.rpc.server;
+
+public interface *ServiceLifecycle *\{
+
+void init(Object context) throws ServiceException;
+
+void destroy();
+
+}
+
+The ServiceLifeCycle interface allows the web container to notify a
+Service Implementation Bean instance of impending changes in its state.
+The bean may use the notification to prepare its internal state for the
+transition. If the bean implements the ServiceLifeCycle interface, the
+container is required to call the init and destroy methods as described
+below.
+
+The container must call the init method before it can start dispatching
+requests to the SEI methods of the bean. The init method parameter value
+provided by the container is described by the JAX-RPC specification. The
+bean may use the container notification to ready its internal state for
+receiving requests.
+
+The container must notify the bean of its intent to remove the bean
+instance from the container’s working set by calling the destroy method.
+A container may not call the destroy method while a request is being
+processed by the bean instance. The container may not dispatch
+additional requests to the SEI methods of the bean after the destroy
+method is called.
+
+[#anchor-47]
+======= Allowed access to container services
+
+The container provides certain services based on the life cycle state of
+the Service Implementation Bean. Access to services provided by a web
+container in a Java EE environment (e.g. transactions, JNDI access to
+the component’s environment, etc.) must follow the requirements defined
+by the Servlet and Java EE specifications. Access to a
+ServletEndpointContext must meet the requirements defined by the JAX-RPC
+specification section 10.1.3.
+
+====== Web container programming model for JAX-WS
+
+JAX-WS Service Endpoint that run within the web container must follow
+the requirements repeated here.
+
+A JAX-WS Service Endpoint can be single or multi-threaded. A JAX-WS
+Service Endpoint must implement javax.servlet.SingleThreadModel if
+single threaded access is required by the component. A container must
+serialize method requests for a Service Implementation Bean that
+implements the SingleThreadModel interface. Note, the SingleThreadModel
+interface has been deprecated in the Servlet 2.4 specification.
+
+The Service Implementation Bean must follow these requirements:
+
+* The Service Implementation Bean class must be annotated with either
+javax.jws.WebService or javax.xml.ws.WebServiceProvider annotation. See
+section 5.3.2.1 and 5.3.2.2
+* For developers starting from Java using JAX-WS, javax.jws.WebService
+annotation on Service Implementation Bean may optionally reference an
+SEI but is not required to do so. If SEI is not specified, the Service
+Implementation Bean class implicitly defines a SEI as required by
+section 3.3 of JAX-WS specification. The business methods of the bean
+must be public and must not be final or static. Only those methods that
+are annotated with @WebMethod in the Service Implementation Bean, are
+exposed to the client.
+* For developers starting from WSDL using JAX-WS, the SEI generated from
+the WSDL must be annotated with javax.jws.WebService annotation. Refer
+to section 2.2 of JAX-WS specification. The Service Implementation Bean
+must be annotated with javax.jws.WebService annotation and the
+endpointInterface member attribute must refer to this generated SEI.
+Service Implementation Bean may implement the Service Endpoint
+Interface, but it is not required to do so. The bean must implement all
+the method signatures of the SEI. The business methods of the bean must
+be public and must not be final or static. It may implement other
+methods in addition to those defined by the SEI.
+* The Service Implementation Bean must have a default public
+constructor.
+
+* A Service Implementation must be a stateless object. A Service
+Implementation Bean must not save client specific state across method
+calls either within the bean instance’s data members or external to the
+instance. A container may use any bean instance to service a request.
+* The class must be public, must not be final and must not be abstract.
+* The class must not define the finalize() method.
+
+======= The optional @PostConstruct or @PreDestroy annotations
+
+A Service Implementation Bean may use javax.annotation.PostConstruct or
+javax.annotation.PreDestroy annotation on methods for lifecycle event
+callbacks.
+
+The methods annotated with javax.annotation.PostConstruct or
+javax.annotation.PreDestroy annotation allow the web container to notify
+a Service Implementation Bean instance of impending changes in its
+state. The bean may use the notification to prepare its internal state
+for the transition. If the bean implements methods that are annotated
+with javax.annotation.PostConstruct or javax.annotation.PreDestroy
+annotations then the container is required to call them in the manner
+described below.
+
+The container must call the method annotated with
+javax.annotation.PostConstruct before it can start dispatching requests
+to the methods exposed as Web Service operations of the bean. The bean
+may use the container notification to ready its internal state for
+receiving requests.
+
+The container must notify the bean of its intent to remove the bean
+instance from the container’s working set by calling the method
+annotated with javax.annotation.PreDestroy annotation. A container may
+not call this method while a request is being processed by the bean
+instance. The container may not dispatch additional requests to the
+methods exposed as Web Service operations of the bean after this method
+is called.
+
+[#anchor-48]
+======= Allowed access to container services
+
+The container provides certain services based on the life cycle state of
+the Service Implementation Bean. Access to services provided by a web
+container in a Java EE environment (e.g. transactions, JNDI access to
+the component’s environment, etc.) must follow the requirements defined
+by the Servlet and Java EE specifications.
+
+A Servlet that implements a web service endpoint using the JAX-WS APIs
+should use the javax.xml.ws.WebServiceContext, which can be injected by
+use of the @Resource annotation (see section 2.2 of JSR-250 Common
+Annotations for Java Platform specification), to access message context
+and security information relative to the request being served.Usage of a
+WebServiceContext must meet the requirements defined by the JAX-WS
+specification section 5.3. At runtime, the methods in WebServiceContext
+serve the same purpose as the methods with the same name defined in
+ServletEndpointContext in JAX-RPC or
+javax.servlet.http.HttpServletRequest. Service Implementation Beans can
+get access to HTTPSession and ServletContext using table 9.4 of section
+9.4.1.1 of JAX-WS specification.
+
+==== Publishing Endpoints – javax.xml.ws.Endpoint
+
+JAX-WS provides functionality for creating and publishing Web Service
+endpoints dynamically using javax.xml.ws.Endpoint API. The use of this
+functionality is considered non-portable in a managed environment. It is
+required that both the Servlet and the EJB container disallow the
+publishing of the Endpoint dynamically, by not granting the
+publishEndpoint security permission. Please refer to details on this in
+Section 5.2 of the JAX-WS specification.
+
+==== Service Implementation Bean Life Cycle
+
+The life cycle of a Service Implementation Bean is controlled by the
+container and is illustrated in link:#anchor-49[Figure 6]. The methods
+called by the container are container/bean specific, but in general are
+quite similar. link:#anchor-49[Figure 6] illustrates the life cycle in
+the web container. The EJB container life cycle can be referenced from
+Enterprise JavaBeans specification section 4.3.
+
+{empty}[#anchor-50]##image:6.png[image,width=280,height=194]
+
+* [#anchor-49]##Figure 6 Service Implementation Bean life cycle in the
+web container
+
+The container services requests defined by a WSDL port. It does this by
+creating a listener for the WSDL port address, receiving requests and
+dispatching them on a Service Implementation Bean. Before a request can
+be serviced, the container must instantiate a Service Implementation
+Bean and ready it for method requests.
+
+A container readies a bean instance by first calling newInstance on the
+Service Implementation Bean class to create an instance. The container
+then calls the life cycle methods on the Service Implementation Bean
+that are specific to the container. For the web container with JAX-RPC
+runtime, it calls the init method on the instance if the Service
+Implementation Bean class implements the ServiceLifecycle interface. For
+web containers with JAX-WS runtime, it calls the method annotated with
+javax.annotation.PostConstruct annotation. For the EJB container, it
+calls the method annotated with javax.annotation.PostConstruct
+annotation . The javax.annotation.PostConstruct callback occurs after
+any dependency injection has been performed by the container and before
+the first business method invocation on the bean.
+
+A Service Implementation Bean instance has no identity.
+
+A container may pool method ready instances of a Service Implementation
+Bean and dispatch a method request on any instance in a method ready
+state.
+
+The container notifies a Service Implementation Bean instance that it is
+about to be removed from Method Ready state by calling container/bean
+specific life cycle methods on the instance. For the web container with
+JAX-RPC runtime, the destroy method is called. For the web container
+with JAX-WS runtime, the method annotated with
+javax.annotation.PreDestroy is called. For the EJB container, the method
+annotated with javax.annotation.PreDestroy is called.
+
+==== JAX-RPC Custom Serializers / Deserializers
+
+The use of JAX-RPC custom serializers / deserializers is out of scope
+for this version of the specification. JAX-RPC customer serializers /
+deserializers are not portable across Web Services for Java EE providers
+and are therefore not included as part of the portable deployment unit.
+It is expected that vendors will provide proprietary solutions to this
+problem until it has been addressed by a future version of JAX-RPC.
+
+==== Protocol Binding and javax.xml.ws.BindingType annotation
+
+JAX-WS specification requires that a developer be able to specify the
+protocol binding on a Web Service endpoint by using
+javax.xml.ws.BindingType annotation. JAX-WS also requires support for
+the following protocol bindings:
+
+* SOAP1.2 over HTTP - SOAP1.2/HTTP
+* SOAP1.1 over HTTP - SOAP1.1/HTTP
+* XML over HTTP - XML/HTTP
+* SOAP1.1 over HTTP with MTOM enabled
+* SOAP1.2 over HTTP with MTOM enabled
+
+Support for overriding the protocol binding specified by BindingType
+annotation is provided by <protocol-binding> deployment descriptor
+element for a port component. Refer to section 7.1.2 for details on this
+deployment descriptor element.
+
+In the event this element is not specified in the deployment descriptors
+and no BindingType annotation is used, the default binding is used for
+the endpoint (SOAP1.1/HTTP).
+
+==== MTOM/XOP support
+
+JAX-WS compliant implementations are required to support MTOM (Message
+Transmission Optimization Mechanism)/XOP (XML-binary Optimized
+Packaging) specifications from W3C. Refer to sections 6.5.2, 7.14.2, and
+10.4.1.1 of JAX-WS specification. Support for SOAP MTOM/XOP mechanism
+for optimizing transmission of binary data types is provided by JAXB
+which is the data binding for JAX-WS. JAX-WS provides the MIME
+processing required to enable JAXB to serialize and deserialize MIME
+based MTOM/XOP packages.
+
+SOAP MTOM/XOP mechanism on the service can be enabled or disabled by any
+one of the following ways:
+
+* Using <port-component>/<enable-mtom> deployment descriptor element for
+a corresponding service
+* Using @MTOM with a @WebService that creates a service
+
+Deployment descriptor mtom elements override the @MTOM annotation for a
+corresponding service. These elements also override if MTOM enabled
+protocol binding is used. In other words, if MTOM enabled protocol
+binding is used along with <enable-mtom> set to false, then this feature
+is disabled. This deployment descriptor must be specified in order to be
+applied to the protocol binding to enable or disable MTOM. Note that
+JAX-WS recommends the use of MTOM feature instead of mtom enabled
+bindings: SOAPBinding.SOAP11HTTP_MTOM_BINDING,
+SOAPBinding.SOAP12HTTP_MTOM_BINDING.
+
+Table : Relationship between deployment descriptor elements and @MTOM
+
+[cols=",",]
+|===
+|<service>/<port-component>/<enable-mtom> |@MTOM.enabled
+|<service>/<port-component>/<mtom-threshold> |@MTOM.threshold
+|===
+
+==== Web Services Addressing support
+
+JAX-WS services are required to support Web Services Addressing 1.0 -
+Core, Web Services Addressing 1.0 - Soap Binding, and Web Services
+Addressing 1.0 - Metadata.
+
+Web Service Addressing requirements for a service can be specified by
+any one of the following ways:
+
+* Using <port-component>/<addressing> deployment descriptor element for
+the corresponding service
+* Using @Addressing annotation with the service implementation class
+* If the service uses WSDL description, the addressing requirements can
+be specified in the WSDL as per the WS-Addressing 1.0 - Metadata
+specification.
++
+The above order also defines a precedence order for the addressing
+requirements. For example, the addressing requirements specified by the
+@Addressing are overridden by the same from a corresponding
+<port-component>/<addressing> deployment descriptor element.
+
+Table : Relationship between deployment descriptor elements
+and@Addressing
+
+[cols=",",]
+|===
+|<service>/<port-component>/<addressing>/<enabled> |@Addressing.enabled
+
+|<service>/<port-component>/<addressing>/<required>
+|@Addressing.required
+
+|<service>/<port-component>/<addressing>/<responses>
+|@Addressing.responses
+|===
+
+A service's EndpointReference can be got using WebServiceContext's
+getEndpointReference method during service invocation. Occasionally, it
+is necessary for one application component to create an
+EndpointReference for another web service endpoint. The
+W3CEndpointReferenceBuilder class provides a standard API for creating
+W3CEndpointReference instances for web service endpoints. When creating
+a W3CEndpointReference for an endpoint published by the same Java EE
+application, a JAX-WS runtime must fill the address(if not set by the
+application) of the endpoint using its service and port names.
+
+==== RespectBinding support
+
+The javax.xml.ws.RespectBinding annotation or its corresponding
+javax.xml.ws.RespectBindingFeature web service feature is used to
+control whether a JAX-WS implementation must respect/honor the contents
+of the wsdl:binding in the WSDL that is associated with the service. See
+6.5.3 and 7.14.3 sections in JAX-WS 2.2 specification.
+
+RespectBinding web service feature on a service can be enabled or
+disabled by any one of the following ways:
+
+* Using <port-component>/<respect-binding> deployment descriptor element
+for the corresponding service
+* Using @RespectBinding annotation with the service implementation class
++
+Deployment descriptor <respect-binding> element overrides the
+@RespectBinding annotation for the corresponding service.
+
+Table : Relationship between deployment descriptor elements and
+@RespectBinding
+
+[cols=",",]
+|===
+|<service>/<port-component>/<respect-binding>/<enabled>
+|@RespectBinding.enabled
+|===
+
+[#anchor-51]
+=== Packaging
+
+Port components may be packaged in a WAR file, or EJB JAR file. Port
+components packaged in a WAR file must use a JAX-RPC/JAX-WS Service
+Endpoint or a Stateless/Singleton session bean as a JAX-WS Service
+Endpoint for the Service Implementation Bean. Port components packaged
+in a EJB-JAR file must use a Stateless or Singleton Session Bean for the
+Service Implementation Bean.
+
+The developer is responsible for packaging, either by containment or
+reference, the WSDL file (not required with JAX-WS when annotations are
+used), Service Endpoint Interface class (optional with JAX-WS), Service
+Implementation Bean class, and their dependent classes, JAX-WS generated
+portable artifacts, JAX-RPC mapping file (not required with JAX-WS and
+ignored if specified) along with a Web services deployment descriptor
+(not required with JAX-WS when annotations are used) in a Java EE
+module. The location of the Web services deployment descriptor in the
+module is module specific. WSDL files are located relative to the root
+of the module and are typically located in the wsdl directory that is
+co-located with the module deployment descriptor or a subdirectory of
+it. Mapping files (not required with JAX-WS and ignored if specified)
+are located relative to the root of the module and are typically
+co-located with the WSDL file. JAX-WS generated portable artifacts (when
+starting from Java) include zero or more JavaBean classes to aide in
+marshaling of method invocations and responses, as well as
+service-specific exceptions.
+
+Annotated JAX-WS components may be mixed with deployment descriptor
+based JAX-RPC components in a module. It is not required that JAX-WS
+components have a deployment descriptor entry in such cases. However,
+all port components in a module that are classified under the same
+<webservice-description> element in the deployment descriptor, must be
+based on the same runtime (either JAX-RPC or JAX-WS).
+
+[#anchor-52]
+==== The wsdl directory
+
+The wsdl directory is a well-known location that contains WSDL files and
+any relative content the WSDL files may reference. WSDL files and their
+relative references will be published during deployment. See sections
+link:#anchor-53[8.2.4] and link:#anchor-54[8.2.5] for more details.
+
+[#anchor-55]
+==== EJB Module Packaging
+
+Stateless or Singleton Session EJB Service Implementation Beans are
+packaged in an EJB-JAR that contains the class files and WSDL files. The
+packaging rules follow those defined by the Enterprise JavaBeans
+specification. In addition, the Web services deployment descriptor
+location within the EJB-JAR file is META-INF/webservices.xml. The wsdl
+directory is located at META-INF/wsdl. See 5.4.3 section for packaging
+Stateless or Singleton session beans in a WAR file.
+
+[#anchor-56]
+==== Web App Module Packaging
+
+JAX-RPC/JAX-WS Service Endpoints and Stateless/Singleton EJB as JAX-WS
+Service endpoints can be packaged in a WAR file that contains the class
+files and WSDL files. The packaging rules for the WAR file are those
+defined by the Servlet specification. The packaging rules for Stateless
+or Singleton EJB within a WAR are defined by the EJB specification. In
+addition, a Web services deployment descriptor is located in a WAR at
+WEB-INF/webservices.xml and the wsdl directory is located at
+WEB-INF/wsdl.
+
+==== Catalog packaging
+
+JAX-WS requires support for a OASIS XML Catalogs 1.1 specification to be
+used when resolving any Web service document that is part of the
+description of a Web service, specifically WSDL and XML Schema
+documents. Refer to section 4.4 of JAX-WS specification. The catalog
+file jax-ws-catalog.xml must be co-located with the module deployment
+descriptor (WEB-INF/jax-ws-catalog.xml for web modules and
+META-INF/jax-ws-catalog.xml for EJB modules).
+
+==== Assembly within an EAR file
+
+Assembly of modules containing port components into an EAR file follows
+the requirements defined by the Java EE specification.
+
+=== Transactions
+
+The methods of a Service Implementation Bean run under a transaction
+context specific to the container. The web container runs the methods
+under an unspecified transaction context. The EJB container runs the
+methods under the transaction context defined by the
+container-transaction element of the EJB deployment descriptor or
+javax.ejb.TransactionAttribute annotation.
+
+[#anchor-57]
+=== Container Provider Responsibilities
+
+In addition to the container requirements described above a container
+provider must provide a JAX-RPC or JAX-WS runtime.
+
+It is the responsibility of the container provider to support processing
+JAX-RPC or JAX-WS compliant requests and invoking Ports as described
+above. The application server must support deployment of these Ports.
+This specification prescribes the use of the JAX-RPC or JAX-WS
+Java<->WSDL and Java<->XML Serialization framework for all XML Protocol
+based Web service bindings. For JAX-RPC or JAX-WS inbound messages, the
+container will act as the JAX-RPC or JAX-WS server side runtime. It is
+responsible for:
+
+[arabic]
+. Listening on a well known port or on the URI of the Web service
+implementation (as defined in the service’s WSDL after deployment) for
+SOAP/HTTP bindings.
+. Parsing the inbound message according to the Service binding.
+. Mapping the message to the implementation class and method according
+to the Service deployment data.
+. Creating the appropriate Java objects from the SOAP envelope according
+to the JAX-RPC or JAX-WS specification.
+. Invoking the Service Implementation Bean handlers and instance method
+with the appropriate Java parameters.
+. Capturing the response to the invocation if the style is
+request-response
+. Mapping the Java response objects into SOAP message according to the
+JAX-RPC or JAX-WS specification.
+. Creating the message envelope appropriate for the transport
+. Sending the message to the originating Web service client.
