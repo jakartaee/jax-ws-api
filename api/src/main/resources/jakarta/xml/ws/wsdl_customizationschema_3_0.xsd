@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2020 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -12,14 +12,14 @@
 -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+           xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
            elementFormDefault="qualified"
-           targetNamespace="http://java.sun.com/xml/ns/jaxws"
+           targetNamespace="http://xmlns.jakarta.ee/xml/ns/jaxws"
            attributeFormDefault="unqualified">
   <xs:annotation>
     <xs:documentation>
 
-      Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
+      Copyright (c) 2020 Oracle and/or its affiliates. All rights reserved.
 
       This program and the accompanying materials are made available under the
       terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -32,7 +32,7 @@
 
     <xs:annotation>
         <xs:documentation>
-            Schema for JAX-WS 2.0 WSDL customization.
+            Schema for Jakarta XML Web Services 3.0 WSDL customization.
         </xs:documentation>
     </xs:annotation>
 
@@ -109,8 +109,8 @@
                         <jaxws:bindings wsdlLocation="..."
                                         xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                        xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                        xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+                                        xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
                             <jaxws:bindings
                                     node="wsdl:definitions/wsdl:types/xs:schema[@targetNamespace='urn:test:types']">
                                 <jaxb:schemaBindings>
@@ -127,12 +127,12 @@
                 </xs:annotation>
             </xs:attribute>
 
-            <xs:attribute name="version" type="xs:token" default="2.0">
+            <xs:attribute name="version" type="xs:token" default="3.0">
                 <xs:annotation>
                     <xs:documentation>
                         Used to indicate the version of WSDL customization declarations. Only valid on root level
                         bindings element.
-                        If this is absent, it will implicitly be assumed to be 2.0.
+                        If this is absent, it will implicitly be assumed to be 3.0.
                     </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
@@ -151,7 +151,7 @@
         <xs:annotation>
             <xs:documentation>
                 If absent, the default package name is computed from the targetNamespace of the WSDL in scope. The rules
-                of targetNamespace to Java package name is described in the JAXB specification.
+                of targetNamespace to Java package name is described in the Jakarta XML Binding specification.
 
                 Appears in the context of a WSDL document, either as an extension to the wsdl:definitions element or in
                 an external binding file at a place where there is a WSDL document in scope.
@@ -164,8 +164,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
                     <jaxws:package></jaxws:package>
                 </jaxws:bindings>
                 -->
@@ -196,8 +196,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
                     <!-- Turn off wrapper style Java method signature generation -->
                     <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
                 </jaxws:bindings>
@@ -221,8 +221,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
                     <!-- Generate async methods in the generated Java endpoint interface for all the portTypes and
                     operations in the WSDL's scope.  -->
                     <jaxws:enableAsyncMapping>false</jaxws:enableAsyncMapping>
@@ -244,8 +244,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
 
                     <!-- Enables MIME content for all the bindings in the WSDL's scope.  -->
                     <jaxws:enableMIMEContent>false</jaxws:enableMIMEContent>
@@ -269,8 +269,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
 
                     <!-- Customize the generated SEI class name -->
                     <jaxws:bindings node="wsdl:definitions/wsdl:portType[@name='Hello']">
@@ -313,8 +313,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
 
                     <!-- Renames Java method from hello() to helloWorld() -->
                     <jaxws:bindings node="wsdl:definitions/wsdl:portType[@name='Hello']/wsdl:operation[@name='Hello']">
@@ -354,8 +354,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb"
                                 xmlns:types1="urn:test:types">
 
                     <!-- Rename a wrapper child parameter 'argument' to 'helloArgument'-->
