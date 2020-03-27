@@ -32,7 +32,29 @@
 
     <xs:annotation>
         <xs:documentation>
-            Schema for Jakarta XML Web Services 3.0 WSDL customization.
+            This is the XML Schema for the Jakarta XML Web Services
+            WSDL customization descriptor.
+            All WSDL customization descriptors must indicate
+            the descriptor schema by using the Jakarta XML Web Services namespace:
+
+            http://jakarta.ee/xml/ns/jaxws
+
+            and by indicating the version of the schema by
+            using the version element as shown below:
+
+              <bindings xmlns="http://jakarta.ee/xml/ns/jaxws"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://jakarta.ee/xml/ns/jaxws
+                      http://jakarta.ee/xml/ns/jaxws/wsdl_customizationschema_3_0.xsd"
+                  version="3.0">
+                ...
+              </bindings>
+
+            The instance documents may indicate the published version of
+            the schema using the xsi:schemaLocation attribute for Jakarta XML
+            Web Services namespace with the following location:
+
+            http://jakarta.ee/xml/ns/jaxws/wsdl_customizationschema_3_0.xsd
         </xs:documentation>
     </xs:annotation>
 
