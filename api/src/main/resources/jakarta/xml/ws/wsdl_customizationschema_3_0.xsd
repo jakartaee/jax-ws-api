@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2020 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -12,27 +12,36 @@
 -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+           xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
            elementFormDefault="qualified"
-           targetNamespace="http://java.sun.com/xml/ns/jaxws"
+           targetNamespace="https://jakarta.ee/xml/ns/jaxws"
            attributeFormDefault="unqualified">
-  <xs:annotation>
-    <xs:documentation>
-
-      Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved.
-
-      This program and the accompanying materials are made available under the
-      terms of the Eclipse Distribution License v. 1.0, which is available at
-      http://www.eclipse.org/org/documents/edl-v10.php.
-
-      SPDX-License-Identifier: BSD-3-Clause
-
-    </xs:documentation>
-  </xs:annotation>
 
     <xs:annotation>
         <xs:documentation>
-            Schema for JAX-WS 2.0 WSDL customization.
+            This is the XML Schema for the Jakarta XML Web Services
+            WSDL customization descriptor.
+            All WSDL customization descriptors must indicate
+            the descriptor schema by using the Jakarta XML Web Services namespace:
+
+            https://jakarta.ee/xml/ns/jaxws
+
+            and by indicating the version of the schema by
+            using the version element as shown below:
+
+              <bindings xmlns="https://jakarta.ee/xml/ns/jaxws"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://jakarta.ee/xml/ns/jaxws
+                      https://jakarta.ee/xml/ns/jaxws/wsdl_customizationschema_3_0.xsd"
+                  version="3.0">
+                ...
+              </bindings>
+
+            The instance documents may indicate the published version of
+            the schema using the xsi:schemaLocation attribute for Jakarta XML
+            Web Services namespace with the following location:
+
+            https://jakarta.ee/xml/ns/jaxws/wsdl_customizationschema_3_0.xsd
         </xs:documentation>
     </xs:annotation>
 
@@ -105,12 +114,11 @@
                         used as the child of jaxws:bindings.
 
                         Example:
-                        <!--
                         <jaxws:bindings wsdlLocation="..."
                                         xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                        xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                        xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
+                                        xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
                             <jaxws:bindings
                                     node="wsdl:definitions/wsdl:types/xs:schema[@targetNamespace='urn:test:types']">
                                 <jaxb:schemaBindings>
@@ -121,18 +129,17 @@
                                 </jaxb:bindings>
                             </jaxws:bindings>
                         </jaxws:bindings>
-                        -->
                         NOTE: It MUST NOT be present if the jaxws:bindings appears inside a WSDL document.
                     </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
 
-            <xs:attribute name="version" type="xs:token" default="2.0">
+            <xs:attribute name="version" type="xs:token" default="3.0">
                 <xs:annotation>
                     <xs:documentation>
                         Used to indicate the version of WSDL customization declarations. Only valid on root level
                         bindings element.
-                        If this is absent, it will implicitly be assumed to be 2.0.
+                        If this is absent, it will implicitly be assumed to be 3.0.
                     </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
@@ -151,7 +158,7 @@
         <xs:annotation>
             <xs:documentation>
                 If absent, the default package name is computed from the targetNamespace of the WSDL in scope. The rules
-                of targetNamespace to Java package name is described in the JAXB specification.
+                of targetNamespace to Java package name is described in the Jakarta XML Binding specification.
 
                 Appears in the context of a WSDL document, either as an extension to the wsdl:definitions element or in
                 an external binding file at a place where there is a WSDL document in scope.
@@ -160,15 +167,13 @@
                 wsd;definitions
 
                 Example:
-                <!--
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
                     <jaxws:package></jaxws:package>
                 </jaxws:bindings>
-                -->
             </xs:documentation>
         </xs:annotation>
 
@@ -196,8 +201,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
                     <!-- Turn off wrapper style Java method signature generation -->
                     <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
                 </jaxws:bindings>
@@ -221,8 +226,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
                     <!-- Generate async methods in the generated Java endpoint interface for all the portTypes and
                     operations in the WSDL's scope.  -->
                     <jaxws:enableAsyncMapping>false</jaxws:enableAsyncMapping>
@@ -244,8 +249,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
 
                     <!-- Enables MIME content for all the bindings in the WSDL's scope.  -->
                     <jaxws:enableMIMEContent>false</jaxws:enableMIMEContent>
@@ -269,8 +274,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
 
                     <!-- Customize the generated SEI class name -->
                     <jaxws:bindings node="wsdl:definitions/wsdl:portType[@name='Hello']">
@@ -313,8 +318,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb">
+                                xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb">
 
                     <!-- Renames Java method from hello() to helloWorld() -->
                     <jaxws:bindings node="wsdl:definitions/wsdl:portType[@name='Hello']/wsdl:operation[@name='Hello']">
@@ -354,8 +359,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-                                xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+                                xmlns:jaxws="https://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
                                 xmlns:types1="urn:test:types">
 
                     <!-- Rename a wrapper child parameter 'argument' to 'helloArgument'-->
