@@ -12,9 +12,9 @@
 -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
+           xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
            elementFormDefault="qualified"
-           targetNamespace="http://xmlns.jakarta.ee/xml/ns/jaxws"
+           targetNamespace="http://jakarta.ee/xml/ns/jaxws"
            attributeFormDefault="unqualified">
   <xs:annotation>
     <xs:documentation>
@@ -105,12 +105,11 @@
                         used as the child of jaxws:bindings.
 
                         Example:
-                        <!--
                         <jaxws:bindings wsdlLocation="..."
                                         xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                        xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
-                                        xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
+                                        xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
+                                        xmlns:jaxb="http://jakarta.ee/xml/ns/jaxb">
                             <jaxws:bindings
                                     node="wsdl:definitions/wsdl:types/xs:schema[@targetNamespace='urn:test:types']">
                                 <jaxb:schemaBindings>
@@ -121,7 +120,6 @@
                                 </jaxb:bindings>
                             </jaxws:bindings>
                         </jaxws:bindings>
-                        -->
                         NOTE: It MUST NOT be present if the jaxws:bindings appears inside a WSDL document.
                     </xs:documentation>
                 </xs:annotation>
@@ -160,15 +158,13 @@
                 wsd;definitions
 
                 Example:
-                <!--
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
-                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
+                                xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://jakarta.ee/xml/ns/jaxb">
                     <jaxws:package></jaxws:package>
                 </jaxws:bindings>
-                -->
             </xs:documentation>
         </xs:annotation>
 
@@ -196,8 +192,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
-                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
+                                xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://jakarta.ee/xml/ns/jaxb">
                     <!-- Turn off wrapper style Java method signature generation -->
                     <jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
                 </jaxws:bindings>
@@ -221,8 +217,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
-                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
+                                xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://jakarta.ee/xml/ns/jaxb">
                     <!-- Generate async methods in the generated Java endpoint interface for all the portTypes and
                     operations in the WSDL's scope.  -->
                     <jaxws:enableAsyncMapping>false</jaxws:enableAsyncMapping>
@@ -244,8 +240,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
-                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
+                                xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://jakarta.ee/xml/ns/jaxb">
 
                     <!-- Enables MIME content for all the bindings in the WSDL's scope.  -->
                     <jaxws:enableMIMEContent>false</jaxws:enableMIMEContent>
@@ -269,8 +265,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
-                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
+                                xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://jakarta.ee/xml/ns/jaxb">
 
                     <!-- Customize the generated SEI class name -->
                     <jaxws:bindings node="wsdl:definitions/wsdl:portType[@name='Hello']">
@@ -313,8 +309,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
-                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb">
+                                xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://jakarta.ee/xml/ns/jaxb">
 
                     <!-- Renames Java method from hello() to helloWorld() -->
                     <jaxws:bindings node="wsdl:definitions/wsdl:portType[@name='Hello']/wsdl:operation[@name='Hello']">
@@ -354,8 +350,8 @@
                 <jaxws:bindings wsdlLocation="..."
                                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                                 xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-                                xmlns:jaxws="http://xmlns.jakarta.ee/xml/ns/jaxws"
-                                xmlns:jaxb="http://xmlns.jakarta.ee/xml/ns/jaxb"
+                                xmlns:jaxws="http://jakarta.ee/xml/ns/jaxws"
+                                xmlns:jaxb="http://jakarta.ee/xml/ns/jaxb"
                                 xmlns:types1="urn:test:types">
 
                     <!-- Rename a wrapper child parameter 'argument' to 'helloArgument'-->
