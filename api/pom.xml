@@ -121,7 +121,7 @@
         <legal.doc.source>${project.basedir}/..</legal.doc.source>
 
         <jaxb-api.version>3.0.0-RC2</jaxb-api.version>
-        <soap-api.version>2.0.0-RC1</soap-api.version>
+        <soap-api.version>2.0.0-RC2</soap-api.version>
         <jws-api.version>3.0.0-rc1</jws-api.version>
     </properties>
 
