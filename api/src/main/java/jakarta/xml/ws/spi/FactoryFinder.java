@@ -22,7 +22,7 @@ import jakarta.xml.ws.WebServiceException;
 
 class FactoryFinder {
 
-    private static final Logger logger = Logger.getLogger("javax.xml.ws");
+    private static final Logger logger = Logger.getLogger("jakarta.xml.ws");
 
     private static final ServiceLoaderUtil.ExceptionHandler<WebServiceException> EXCEPTION_HANDLER =
             new ServiceLoaderUtil.ExceptionHandler<WebServiceException>() {

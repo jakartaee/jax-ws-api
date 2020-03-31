@@ -59,12 +59,12 @@ public abstract class Endpoint {
     /** Standard property: name of WSDL service.
      *  <p>Type: javax.xml.namespace.QName
      **/
-    public static final String WSDL_SERVICE = "javax.xml.ws.wsdl.service";
+    public static final String WSDL_SERVICE = "jakarta.xml.ws.wsdl.service";
 
     /** Standard property: name of WSDL port.
      *  <p>Type: javax.xml.namespace.QName
      **/
-    public static final String WSDL_PORT = "javax.xml.ws.wsdl.port";
+    public static final String WSDL_PORT = "jakarta.xml.ws.wsdl.port";
 
     /**
      * Creates an endpoint with the specified implementor object. If there is
