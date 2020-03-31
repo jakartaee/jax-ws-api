@@ -28,7 +28,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  *  @since 1.6, JAX-WS 2.0
  *
- *  @see javax.xml.ws.WebServiceClient
+ *  @see jakarta.xml.ws.WebServiceClient
 **/
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

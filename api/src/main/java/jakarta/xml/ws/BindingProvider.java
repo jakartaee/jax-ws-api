@@ -62,11 +62,11 @@ public interface BindingProvider {
     /**
      * Standard property for SOAPAction. This boolean property
      * indicates whether or not the value of the
-     * {@code javax.xml.ws.soap.http.soapaction.uri} property
+     * {@code jakarta.xml.ws.soap.http.soapaction.uri} property
      * is used for the value of the SOAPAction. The
      * default value of this property is {@code false} indicating
      * that the
-     * {@code javax.xml.ws.soap.http.soapaction.uri} property
+     * {@code jakarta.xml.ws.soap.http.soapaction.uri} property
      * is not used for the value of the SOAPAction, however,
      * if WS-Addressing is enabled, the default value is
      * {@code true}.
@@ -78,7 +78,7 @@ public interface BindingProvider {
 
     /**
      * Standard property for SOAPAction. Indicates the SOAPAction
-     * URI if the {@code javax.xml.ws.soap.http.soapaction.use}
+     * URI if the {@code jakarta.xml.ws.soap.http.soapaction.use}
      * property is set to {@code true}. If WS-Addressing
      * is enabled, this value will also be used for the value of the
      * WS-Addressing Action header.  If this property is not set,

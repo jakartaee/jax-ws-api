@@ -20,7 +20,7 @@ import jakarta.xml.ws.Service;
  * with any other binding is undefined.
  * <p>
  * This feature can be used during the creation of SEI proxy, and
- * {@link javax.xml.ws.Dispatch} instances on the client side and {@link Endpoint}
+ * {@link jakarta.xml.ws.Dispatch} instances on the client side and {@link Endpoint}
  * instances on the server side. This feature cannot be used for {@link Service}
  * instance creation on the client side.
  * <p>

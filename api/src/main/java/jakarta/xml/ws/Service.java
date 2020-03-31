@@ -22,7 +22,7 @@ import jakarta.xml.ws.spi.Provider;
  * <p>{@code Service} acts as a factory of the following:
  * <ul>
  * <li>Proxies for a target service endpoint.</li>
- * <li>Instances of {@link javax.xml.ws.Dispatch} for
+ * <li>Instances of {@link jakarta.xml.ws.Dispatch} for
  *     dynamic message-oriented invocation of a remote
  *     operation.
  * </li>
@@ -44,8 +44,8 @@ import jakarta.xml.ws.spi.Provider;
  *
  * @since 1.6, JAX-WS 2.0
  *
- * @see javax.xml.ws.spi.Provider
- * @see javax.xml.ws.handler.HandlerResolver
+ * @see jakarta.xml.ws.spi.Provider
+ * @see jakarta.xml.ws.handler.HandlerResolver
  * @see java.util.concurrent.Executor
  **/
 public class Service {
@@ -676,7 +676,7 @@ public class Service {
      * @param handlerResolver The {@code HandlerResolver} to use
      *        for all subsequently created proxy/dispatch objects.
      *
-     * @see javax.xml.ws.handler.HandlerResolver
+     * @see jakarta.xml.ws.handler.HandlerResolver
      **/
     public void setHandlerResolver(HandlerResolver handlerResolver) {
         delegate.setHandlerResolver(handlerResolver);
