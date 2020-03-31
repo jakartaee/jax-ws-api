@@ -25,4 +25,4 @@ install:
 
 script:
   - cd api
-  - mvn -B -V -U -C -Poss-release clean verify org.glassfish.copyright:glassfish-copyright-maven-plugin:copyright -Dgpg.skip=true
+  - mvn -B -V -U -C -Poss-release,staging clean verify -Dgpg.skip=true
