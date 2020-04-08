@@ -1,7 +1,7 @@
 == Overview
 
 This chapter provides an overview of Web services in general and how Web
-Services for Java EE fits into the Java EE platform.
+Services for Jakarta EE fits into the Jakarta EE platform.
 
 === Web Services Architecture Overview
 
@@ -40,12 +40,12 @@ with the following characteristics:
 
 * A service implementation implements the methods of an interface that
 is describable by WSDL. The methods are implemented using a
-Stateless/Singleton Session EJB or JAX-RPC/JAX-WS web component.
+Stateless/Singleton Session EJB or JAX-WS web component.
 * A Web service may have its interface published in one or more
 registries for Web services during deployment.
 * A Web Service implementation, which uses only the functionality
 described by this specification, can be deployed in any Web Services for
-Java EE compliant application server.
+Jakarta EE compliant application server.
 * A service instance, called a Port, is created and managed by a
 container.
 * Run-time service requirements, such as security attributes, are
@@ -53,12 +53,12 @@ separate from the service implementation. Tools can define these
 requirements during assembly or deployment.
 * A container mediates access to the service.
 
-JAX-RPC and JAX-WS define a programming model mapping of a WSDL document
+JAX-WS defines a programming model mapping of a WSDL document
 to Java which provides a factory (Service) for selecting which
 aggregated Port a client wishes to use. See link:#anchor-5[Figure 2] for
 a logical diagram. In general, the transport, encoding, and address of
 the Port are transparent to the client. The client only needs to make
-method calls on the Service Endpoint Interface, as defined by JAX-RPC or
+method calls on the Service Endpoint Interface, as defined by
 JAX-WS, (i.e. PortType) to access the service. See Chapter
 link:#anchor-6[4] for more details.
 
@@ -66,36 +66,38 @@ image:2.png[image,width=277,height=135]
 
 * [#anchor-5]##Figure 2 Client view
 
-=== Web Services for _*Java EE*_ Overview
+=== Web Services for _*Jakarta EE*_ Overview
 
-The Web Services for Java EE specification defines the required
+The Web Services for Jakarta EE specification defines the required
 architectural relationships as shown in link:#anchor-7[Figure 3]. This
 is a logical relationship and does not impose any requirements on a
 container provider for structuring containers and processes. The
-additions to the Java EE platform include a port component that depends
+additions to the Jakarta EE platform include a port component that depends
 on container functionality provided by the web and EJB containers, and
 the SOAP/HTTP transport.
 
+//TODO: image 3.png mentions J2EE - should be replaced with Jakarta EE?
+
 image:3.png[image,width=371,height=280]
 
-* [#anchor-7]##Figure 3 Java EE architecture diagram
+* [#anchor-7]##Figure 3 Jakarta EE architecture diagram
 
-Web Services for Java EE requires that a Port be referencable from the
+Web Services for Jakarta EE requires that a Port be referencable from the
 client, web, and EJB containers. This specification does not require
 that a Port be accessible from the applet container.
 
-This specification adds additional artifacts to those defined by JAX-RPC
-or JAX-WS that may be used to implement Web services, a role based
-development methodology, portable packaging and Java EE container
+This specification adds additional artifacts to those defined by
+JAX-WS that may be used to implement Web services, a role based
+development methodology, portable packaging and Jakarta EE container
 services to the Web services architecture. These are described in later
 sections.
 
 ==== Web Service Components
 
 This specification defines two means for implementing a Web service,
-which runs in a Java EE environment, but does not restrict Web service
+which runs in a Jakarta EE environment, but does not restrict Web service
 implementations to just those means. The first is a container based
-extension of the JAX-RPC or JAX-WS programming model which defines a Web
+extension of the JAX-WS programming model which defines a Web
 service as a Java class running in the web container. The second uses a
 constrained implementation of a stateless session EJB or singleton
 session EJB(only for JAX-WS services) in the EJB container. Other
@@ -107,29 +109,29 @@ specification.
 The container provides for life cycle management of the service
 implementation, concurrency management of method invocations, and
 security services. A container provides the services specific to
-supporting Web services in a Java EE environment. This specification
-does not require that a new container be implemented. Existing Java EE
+supporting Web services in a Jakarta EE environment. This specification
+does not require that a new container be implemented. Existing Jakarta EE
 containers may be used and indeed are expected to be used to host Web
 services. Web service instance life cycle and concurrency management is
 dependent on which container the service implementation runs in. A
-JAX-RPC or JAX-WS Service Endpoint implementation in a web container
+JAX-WS Service Endpoint implementation in a web container
 follows standard servlet life cycle and concurrency requirements and an
 EJB implementation in an EJB container follows standard EJB life cycle
 and concurrency requirements.
 
 === Platform Roles
 
-This specification defines the responsibilities of the existing Java EE
-platform roles. There are no new roles defined by this specification.
-There are two roles specific to Web Services for Java EE used within
-this specification, but they can be mapped onto existing Java EE
-platform roles. The Web Services for Java EE product provider role can
-be mapped to a Java EE product provider role and the Web services
+This specification defines the responsibilities of the existing Jakarta 
+EE platform roles. There are no new roles defined by this specification.
+There are two roles specific to Web Services for Jakarta EE used within
+this specification, but they can be mapped onto existing Jakarta EE
+platform roles. The Web Services for Jakarta EE product provider role can
+be mapped to a Jakarta EE product provider role and the Web services
 container provider role can be mapped to a container provider role
-within the Java EE specification.
+within the Jakarta EE specification.
 
 In general, the developer role is responsible for the service
-definition, implementation, and packaging within a Java EE module. The
+definition, implementation, and packaging within a Jakarta EE module. The
 assembler role is responsible for assembling the module into an
 application, and the deployer role is responsible for publishing the
 deployed services and resolving client references to services. More
@@ -140,9 +142,9 @@ details on role responsibilities can be found in later sections.
 A standard packaging format, declarative deployment model, and standard
 run-time services provide portability of applications developed using
 Web services. A Web services specific deployment descriptor included in
-a standard Java EE module defines the Web service use of that module.
+a standard Jakarta EE module defines the Web service use of that module.
 More details on Web services deployment descriptors can be found in
-later chapters. Deployment tools supporting Web Services for Java EE are
+later chapters. Deployment tools supporting Web Services for Jakarta EE are
 required to be able to deploy applications packaged according to this
 specification.
 
@@ -152,18 +154,11 @@ at the possible expense of application portability.
 
 === Standard Services
 
-The Java EE platform defines a set of standard services a Java EE
-provider must supply. The Web Services for Java EE specification
+The Jakarta EE platform defines a set of standard services a Jakarta EE
+provider must supply. The Web Services for Jakarta EE specification
 identifies an additional set of run-time services that are required.
 
-==== JAX-RPC1.1
-
-JAX-RPC 1.1 provides run-time services for marshalling and demarshalling
-Java data and objects to and from XML SOAP messages. In addition,
-JAX-RPC defines the WSDL to Java mappings for a Service Endpoint
-Interface and a Service class.
-
-==== JAX-WS 2.2
+==== JAX-WS 3.0
 
 JAX-WS 2.0 is a follow-on specification to JAX-RPC 1.1. In addition to
 providing all the run-time services, it improves upon JAX-RPC 1.1
@@ -175,22 +170,25 @@ JAX-WS 2.2 adds a complete Web Services addressing support as specified
 in Web Services Addressing 1.0 - Core, Web Services Addressing 1.0 -
 Soap Binding, and Web Services Addressing 1.0 - Metadata.
 
+JAX-WS 3.0 renames the JAX-WS API packages from `javax.*` to `jakarta.*`. 
+Beginning in Java™ 11, the JAX-WS APIs are no longer available as part
+of the Java SE class library.
+
 === Interoperability
 
-This specification extends the interoperability requirements of the Java
+This specification extends the interoperability requirements of the Jakarta
 EE platform by defining interoperability requirements for products that
-implement this specification on top of Java EE™. The interoperability
+implement this specification on top of Jakarta EE. The interoperability
 requirements rely on the interoperability of existing standards that
 this specification depends on.
 
 The specification builds on the evolving work of the following JSRs and
 specifications:
 
-* Java™ API for XML-based RPC (JAX-RPC) 1.1
-* Java™ API for XML-based Web Services (JAX-WS) 2.2
-* Java Enterprise Edition Specification
-* Enterprise JavaBeans Specification
-* Java Servlet Specification
+* Jakarta API for XML-based Web Services (JAX-WS) 3.0
+* Jakarta Enterprise Edition Specification
+* Jakarta Enterprise Beans Specification
+* Jakarta Servlet Specification
 * WS-I Basic Profile 1.0
 
 === Scope
@@ -218,8 +216,8 @@ SOAP, WSDL, and UDDI are assumed to be the versions defined above.
 ==== Not in Scope
 
 * The most glaring deficiency of SOAP over HTTP is basic reliable
-message semantics. Despite this deficiency, this JSR does not consider
-Message Reliability or Message Integrity to be in scope. Other JSRs,
+message semantics. Despite this deficiency, this specification does not
+consider Message Reliability or Message Integrity to be in scope. Other JSRs,
 like the evolution and convergence of JAX-M and JMS, as well as
 activities in W3C and other standard bodies will define these
 capabilities.
@@ -232,10 +230,10 @@ to this specification.
 === Web Service Client View
 
 The client view of a Web service is quite similar to the client view of
-an Enterprise JavaBean. A client of a Web service can be another Web
-service, a Java EE component, including a Java EE application client, or
+a Jakarta Enterprise Bean. A client of a Web service can be another Web
+service, a Jakarta EE component, including a Jakarta EE application client, or
 an arbitrary Java application. A non-Java application or non-Web
-Services for Java EE application can also be a client of Web service,
+Services for Jakarta EE application can also be a client of Web service,
 but the client view for such applications is out of scope of this
 specification.
 
@@ -248,7 +246,7 @@ Web service. This includes the following:
 * Service interface or class
 * Service Endpoint interface
 
-The JAX-RPC or JAX-WS Handler interface is considered a container SPI
+The JAX-WS Handler interface is considered a container SPI
 and is therefore not part of the client view.
 
 image:4.png[image,width=282,height=139]
@@ -258,11 +256,11 @@ Figure 4 Web Service Client View
 The Service Interface/Class defines the methods a client may use to
 access a Port of a Web service. A client does not create or remove a
 Port. It uses the Service Interface/Class to obtain access to a Port.
-The Service interface/class is defined by the JAX-RPC or JAX-WS
-specification, but its behavior is defined by a WSDL document supplied
+The Service interface/class is defined by the JAX-WS specification, but 
+its behavior is defined by a WSDL document supplied
 by the Web service provider. The container’s deployment tools provide an
 implementation of the methods of the Service Interface/Class or the
-JAX-RPC or JAX-WS Generated Service Interface.
+JAX-WS Generated Service Interface.
 
 A client locates a Service Interface by using JNDI APIs. This is
 explained further in Chapter link:#anchor-8[4].
@@ -272,10 +270,7 @@ Endpoint Interface. The Service Endpoint Interface is specified by the
 service provider. The deployment tools and container run-time provide
 server side classes which dispatch a SOAP request to a Web service
 implementation which implements the methods of the Service Endpoint
-Interface. The Service Endpoint Interface extends the java.rmi.Remote
-interface and is fully defined by the JAX-RPC specification. JAX-WS
-specification does not require Service Endpoint Interface to extend the
-java.rmi.Remote interface
+Interface.
 
 A Port has no identity within the client view and is considered a
 stateless object.
@@ -288,8 +283,8 @@ defines the general requirements for the service provider.
 
 The service provider defines the WSDL PortType, WSDL binding, and
 Service Endpoint Interface of a Web service. The PortType and Service
-Endpoint Interface must follow the JAX-RPC or JAX-WS rules for
-WSDL->Java and Java->WSDL mapping.
+Endpoint Interface must follow the JAX-WS rules for WSDL->Java and 
+Java->WSDL mapping.
 
 The service provider defines the WSDL service and aggregation of ports
 in the WSDL document.
@@ -301,21 +296,21 @@ in one of two different ways:
 . A Stateless Session Bean: The service provider implements the Web
 service business logic by creating a stateless session Bean that
 implements the methods of the Service Endpoint Interface as described in
-the Enterprise JavaBeans 3.0 specification.
+the Jakarta Enterprise Beans 4.0 specification.
 . A Java class: The service provider implements the Web service business
-logic according to the requirements defined by the JAX-RPC or JAX-WS
+logic according to the requirements defined by the JAX-WS
 Servlet based service implementation model.
 . A Singleton Session Bean: The service provider implements the JAX-WS
 Web service business logic by creating a singleton session bean that
 implements the methods of the Service Endpoint Interface as described in
-the EJB 3.1 specification.
+the Jakarta Enterprise Bean 4.0 specification.
 
 The life cycle management of a Web service is specific to the service
 implementation methodology.
 
 The service provider implements the container callback methods specific
-to the service implementation methodology used. See the JAX-RPC, JAX-WS
-specification and Enterprise JavaBeans specification for details on the
+to the service implementation methodology used. See the JAX-WS
+specification and Jakarta Enterprise Beans specification for details on the
 container callback methods.
 
 The container manages the run-time services required by the Web service,
@@ -327,31 +322,27 @@ transaction propagation (e.g. using WS-AtomicTransaction) as long as the
 transactional behavior is consistent for local and remote invocations.
 
 Service providers must avoid programming practices that interfere with
-container operation. These restrictions are defined by the Java EE,
+container operation. These restrictions are defined by the Jakarta EE,
 Servlet, and EJB specifications.
 
-Packaging of a Web service in a Java EE module is specific to the
-service implementation methodology, but follows the Java EE requirements
-for an EJB-JAR file or WAR file. It contains the Java class files of the
+Packaging of a Web service in a Jakarta EE module is specific to the
+service implementation methodology, but follows the Jakarta EE requirements
+for an EJB-JAR file or WAR file. It contains the Jakarta class files of the
 Service Endpoint Interface and WSDL documents for the Web service. In
 addition it contains an XML deployment descriptor which defines the Web
 service Ports and their structure. Packaging requirements are described
 in Section link:#anchor-11[5.4] link:#anchor-12[Packaging].
 
-=== Java EE profiles
+=== Jakarta EE profiles
 
-The Java EE 6 platform specification introduces "profiles" to target
-specific class of applications. See chapter 9 of Java EE 6 specification
-for more details.
+The Jakarta EE platform specification defines "profiles" to target
+specific class of applications.
 
-The Java EE 6 platform marks JAX-RPC as a proposed optional technology
-that may be pruned in a future release. Therefore, requirements in this
-specification related to JAX-RPC should also be considered proposed
-optional. Such requirements may be made optional in a future release of
-this specification.
+The Jakarta EE 9 platform removes JAX-RPC from all profiles, and it
+includes JAX-WS in the full profile.
 
 This specification gives choices for the vendors that want to support
-only certain containers for JAX-WS web services. A JSR-109
+only certain containers for JAX-WS web services. An Enterprise Web Service
 implementation must support at least one of the following configurations
 for JAX-WS web services:
 
