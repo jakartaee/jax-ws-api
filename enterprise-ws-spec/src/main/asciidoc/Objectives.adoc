@@ -26,7 +26,7 @@ this into a Jakarta EE application server.
 === Client Model Goals
 
 The client programming model should be conformant and compatible with
-the client programming model defined by JAX-WS.
+the client programming model defined by Jakarta XML Web Services.
 
 Additional goals for the client programming model are to ensure that:
 
@@ -61,11 +61,11 @@ defined requirements to ensure that it does not compromise the integrity
 of the application server.
 * This specification defines the Jakarta EE container based (Web and EJB)
 runtime such that it is consistent with the programming model defined by
-the JAX-WS specification.
+the Jakarta XML Web Services specification.
 * Support mapping and dispatching SOAP 1.1 or 1.2 requests to methods on
-Jakarta EE Stateless or Singleton(only JAX-WS) Session Beans.
+Jakarta EE Stateless or Singleton Session Beans.
 * Support mapping and dispatching SOAP 1.1 or 1.2 requests to methods on
-JAX-WS Service Endpoint classes in the Web Container.
+Jakarta XML Web Services Service Endpoint classes in the Web Container.
 
 === Service Deployment Goals
 

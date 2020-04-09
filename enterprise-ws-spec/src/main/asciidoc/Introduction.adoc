@@ -22,7 +22,8 @@ implementations deployed into Jakarta EE application servers
 
 This specification assumes that the reader is familiar with the Jakarta EE
 platform and specifications. It also assumes that the reader is familiar
-with Web services, specifically the JAX-WS Specification and WSDL documents.
+with Web services, specifically the Jakarta XML Web Services Specification
+and WSDL documents.
 
 === Acknowledgments
 
