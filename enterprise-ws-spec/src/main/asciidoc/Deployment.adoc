@@ -1,23 +1,23 @@
 == Deployment
 
 This chapter defines the deployment process requirements and
-responsibilities. Deployment tasks are handled by the Java EE deployer
+responsibilities. Deployment tasks are handled by the Jakarta EE deployer
 platform role using tools typically provided by the Web Services for
-Java EE product provider. This includes the generation of container
+Jakarta EE product provider. This includes the generation of container
 specific classes for the Web services and Web service references,
-configuration of the server’s SOAP request listeners for each port,
+configuration of the server's SOAP request listeners for each port,
 publication and location of Web services, as well as the normal
-responsibilities defined by the Java EE specification.
+responsibilities defined by the Jakarta EE specification.
 
 === Overview
 
 [#anchor-76]##This section describes an illustrative process of
-deployment for Web Services for Java EE. The process itself is not
+deployment for Web Services for Jakarta EE. The process itself is not
 required, but there are certain requirements that deployment must meet
 which are detailed in later sections of this chapter. This process
 assumes that there are two general phases for deployment. The first
-phase maps Web services into standard Java EE artifacts and the second
-phase is standard Java EE deployment.
+phase maps Web services into standard Jakarta EE artifacts and the second
+phase is standard Jakarta EE deployment.
 
 Deployment starts with a service enabled application or module. The
 deployer uses a deployment tool to start the deployment process. In
@@ -40,26 +40,26 @@ Validation of the artifact packaging is performed to ensure that:
 
 * Every port in every WSDL defined in the Web services deployment
 descriptor has a corresponding port-component element.
-* JAX-RPC or JAX-WS service components are only packaged within a WAR
+* Jakarta XML Web Services service components are only packaged within a WAR
 file.
 * Stateless or Singleton session bean Web services are only packaged
 within an EJB-JAR or WAR file.
 * The WSDL bindings used by the WSDL ports are supported by the Web
-Services for Java EE runtime. Bindings that are not supported may be
+Services for Jakarta EE runtime. Bindings that are not supported may be
 declared within the WSDL if no port uses them.
 
 Deployment of each port-component is dependent upon the service
-implementation and container used. Deployment of a JAX-RPC or JAX-WS
+implementation and container used. Deployment of a Jakarta XML Web Services 
 Service Endpoint requires different handling than deployment of a
 session bean service.
 
-If the implementation is a JAX-RPC or JAX-WS Service Endpoint, a servlet
-is generated to handle parsing the incoming SOAP request and dispatch it
-to an instance of the JAX-RPC or JAX-WS service component. The generated
-servlet class is dependent on threading model of the JAX-RPC or JAX-WS
+If the implementation is a Jakarta XML Web Services Service Endpoint, 
+a servlet is generated to handle parsing the incoming SOAP request and dispatch it
+to an instance of the Jakarta XML Web Services service component. The generated
+servlet class is dependent on threading model of the Jakarta XML Web Services 
 Service Endpoint. The web.xml deployment descriptor is updated to
-replace the JAX-RPC or JAX-WS Service Endpoint class with the generated
-servlet class. If the JAX-RPC or JAX-WS Service Endpoint was specified
+replace the Jakarta XML Web Services Service Endpoint class with the generated
+servlet class. If the Jakarta XML Web Services Service Endpoint was specified
 without a corresponding servlet-mapping, the deployment tool generates
 one. The WSDL port address for the Port component is the combination of
 the web app context-root and url-pattern of the servlet-mapping. If the
@@ -83,15 +83,14 @@ the deployed services of the server, a UDDI or ebXML registry, or a
 combination of these. This is required for the next step, which is
 resolving references to Web services.
 
-For each service reference annotated with javax.xml.ws.WebServiceRef or
+For each service reference annotated with jakarta.xml.ws.WebServiceRef or
 described in the Web services client deployment descriptors, the
 deployment tool ensures that the client code can access the Web service.
 The deployment tool examines the information provided in the
 WebServiceRef annotation or the client deployment descriptor (the
 Service interface class, the Service Endpoint Interface class, and WSDL
-ports the client wants to access) as well as the JAX-RPC mapping
-information (not required for JAX-WS). In general the procedure includes
-providing an implementation of the JAX-RPC or JAX-WS Service
+ports the client wants to access). In general the procedure includes
+providing an implementation of the Jakarta XML Web Services Service
 interface/class class declared in the deployment descriptor service
 reference, generating stubs for all the service-endpoint-interface
 declarations (if generated Stubs are supported and the deployer decides
@@ -101,7 +100,7 @@ declared as a client managed or container managed access.
 
 When client managed port access is used, the deployment tool must
 provide generated stubs or dynamic proxy access to every port that uses
-either the javax.xml.ws.WebServiceRef annotation or is declared within
+either the jakarta.xml.ws.WebServiceRef annotation or is declared within
 the Web services client deployment descriptor. The choice of generated
 stub or dynamic proxy is deploy time binding information. The container
 must provide an implementation for a Generated Service Interface if
@@ -116,22 +115,21 @@ not only with the Service Endpoint Implementation, but with the WSDL
 that defines it.
 
 Once the Web services enabled deployable artifact has been converted
-into a Java EE deployable artifact, the deployment process continues
+into a Jakarta EE deployable artifact, the deployment process continues
 using normal deployment processes.
 
 It is recommended that containers provide logging functionality similar
-to that of the WS-I "Monitor" tool. Such contains would log all incoming
+to that of the WS-I "Monitor" tool. Such containers would log all incoming
 and outgoing messages in the format defined by the WS-I Testing Tools
 group and would allow capturing SOAP messages exchanged over the HTTPS
 protocol in a way that allows analysis by the WS-I tools.
 
-==== JAX-WS HTTP SPI
+==== Jakarta XML Web Services HTTP SPI
 
-JAX-WS 2.2 introduces HTTP SPI that allows a deployment to use any
-available JAX-WS web services runtime for HTTP transport. This allows
-109 implementations to use the JAX-WS 2.2 runtime in a Java SE platform
-when it is available. For more details on the HTTP SPI, see the section
-6.6 of JAX-WS specification.
+Jakarta XML Web Services introduces HTTP SPI that allows a deployment to use any
+available Jakarta XML Web Services runtime for HTTP transport. This allows 109 implementations 
+to use the Jakarta XML Web Services runtime in a Jakarta SE platform when it is available. 
+For more details on the HTTP SPI, see the Jakarta XML Web Services specification.
 
 === Container Provider requirements
 
@@ -151,17 +149,17 @@ compliant application. Validating an application for WS-I Basic Profile
 ==== Generate Web Service Implementation classes
 
 Generation of any run-time classes the container requires to support a
-JAX-RPC or JAX-WS Service Endpoint or Stateless or Singleton Session
+Jakarta XML Web Services Service Endpoint or Stateless or Singleton Session
 Bean Service Implementation is provider specific. The behavior of the
 run-time classes must match the information provided by annotations or
-deployment descriptor settings of the component. A JAX-RPC or JAX-WS
+deployment descriptor settings of the component. A Jakarta XML Web Services
 Service Endpoint must match the behavior defined by the <servlet>
 element in the web.xml deployment descriptor. A Stateless Session Bean
 Service Implementation must match the behavior defined by the
-javax.ejb.Stateless annotation or <session> element and the
+jakarta.ejb.Stateless annotation or <session> element and the
 <assembly-descriptor> in the ejb-jar.xml deployment descriptor. A
 Singleton Bean Service Implementation must match the behavior defined by
-the _javax.ejb.Singleton_ annotation or _<session>_ element and the
+the _jakarta.ejb.Singleton_ annotation or _<session>_ element and the
 _<assembly-descriptor>_ in the _ejb-jar.xml_ deployment descriptor.
 
 [#anchor-77]
@@ -189,17 +187,17 @@ servlet-mapping (if specified).
 ==== Publishing the service-ref WSDL
 
 The deployment tool and/or container must make the WSDL document that a
-service-ref (or a javax.xml.ws.WebServiceRef annotated Web service
+service-ref (or a jakarta.xml.ws.WebServiceRef annotated Web service
 reference) is bound to available via a URL returned by the Service
 Interface getWSDLDocumentLocation() method. This may or may not be the
 same WSDL document packaged in the module. The process of publishing the
-bound service-ref (or a javax.xml.ws.WebServiceRef annotated Web service
+bound service-ref (or a jakarta.xml.ws.WebServiceRef annotated Web service
 reference) WSDL is analogous to publishing deployed WSDL, but only the
-service-ref (or a javax.xml.ws.WebServiceRef annotated Web service
+service-ref (or a jakarta.xml.ws.WebServiceRef annotated Web service
 reference) that is bound to it is required to have access to it. A Web
-Services for Java EE provider is required to provide a URL that
+Services for Jakarta EE provider is required to provide a URL that
 maintains the referential integrity of the WSDL document the service-ref
-(or a javax.xml.ws.WebServiceRef annotated Web service reference) is
+(or a jakarta.xml.ws.WebServiceRef annotated Web service reference) is
 bound to if the wsdl-file (wsdlLocation in WebServiceRef) element refers
 to a document located in the wsdl directory or one of its
 subdirectories.
@@ -232,7 +230,7 @@ locations is allowed, but not required. The choice of where (both
 location and how many places) to publish is deployment time binding
 information.
 
-A Web Services for Java EE provider is required to support publishing a
+A Web Services for Jakarta EE provider is required to support publishing a
 deployed WSDL document if the wsdlLocation element in the Web service
 annotations (described in section 5.3.2.1 and 5.3.2.2) or Web services
 deployment descriptor (webservices.xml) wsdl-file element refers to a
@@ -247,7 +245,7 @@ place WSDL files referenced by a wsdlLocation element in the Web service
 annotations or wsdl-file element and their relative imported documents
 under the wsdl directory.
 
-Web Services for Java EE providers are free to organize the published
+Web Services for Jakarta EE providers are free to organize the published
 WSDL documents however they see fit so long as referential integrity is
 maintained. For example, the wsdl directory tree may be collapsed to a
 flat published directory structure (updating import statements
@@ -261,13 +259,12 @@ described by the WS-I Basic Profile 1.0 specification.
 
 ==== Service and Generated Service Interface/Class implementation
 
-The container must provide an implementation of the JAX-RPC or JAX-WS
-Service Interface/Class. There is no requirement for a Service
-Implementation to be created during deployment. The container may
-substitute a Generated Service Interface/Class Implementation for a
-generic Service Interface/Class Implementation.
+The container must provide an implementation of the Jakarta XML Web Services
+Service Interface/Class. There is no requirement for a Service Implementation to be 
+created during deployment. The container may substitute a Generated Service Interface/Class 
+Implementation for a generic Service Interface/Class Implementation.
 
-The container must provide an implementation of the JAX-RPC or JAX-WS
+The container must provide an implementation of the Jakarta XML Web Services
 Generated Service Interface/Class if the Web services client deployment
 descriptor defines one. A Generated Service Interface/Class
 Implementation will typically be provided during deployment.
@@ -290,10 +287,9 @@ provider must support static stub generation if dynamic proxies are not
 supported. Static stubs are provider specific and, in general, a
 developer should avoid packaging them with the application.
 
-Static stubs (and dynamic proxies) must conform to the JAX-RPC
-specification sections 8.2.1 and 8.2.2. JAX-WS specification makes no
-distinction between stubs and dynamic proxies, but talks only about
-proxies and they must conform to JAX-WS specification section 4.2.3.
+Jakarta XML Web Services specification makes no distinction between stubs and 
+dynamic proxies, but talks only about proxies and they must conform to 
+Jakarta XML Web Services specification.
 
 The container is required to support credential propagation as defined
 in section link:#anchor-34[4.2.6] without client code intervention.
@@ -306,31 +302,23 @@ Support for type mappings is provider specific. There is no means for
 creating portable type mappings and therefore no means for declaring
 them or deploying them required by this specification.
 
-==== Mapping requirements
-
-For JAX-RPC, the deployment tool must use the mapping meta-data
-requirements defined by the jaxrpc-mapping-file. All mappings must be
-applied before default rules are applied.
-
 ==== Deployment failure conditions
 
 Deployment may fail if:
 
 * The webservices.xml deployment descriptor is invalid or Web service
 metadata annotations specified are incorrect
-* The WSDL file, JAX-RPC mapping file (not required with JAX-WS) and
-deployment descriptor or Web service metadata annotations conflict
 * The implementation methods and operations conflict
 * Any Port component cannot be deployed
 
 * Every port in every WSDL defined in the Web services deployment
-descriptor doesn’t have a corresponding port-component element.
-* JAX-RPC or JAX-WS service components are not packaged within a WAR
-file.
+descriptor doesn't have a corresponding port-component element.
+* Jakarta XML Web Services service components are not packaged 
+within a WAR file.
 * Stateless or Singleton session bean Web services are not packaged
 within an EJB-JAR or WAR file.
 * The WSDL bindings used by the WSDL ports are not supported by the Web
-Services for Java EE runtime. However, bindings that are not supported
+Services for Jakarta EE runtime. However, bindings that are not supported
 may be declared within the WSDL if no port uses them.
 * The header QNames returned by a Handler.getHeaders() method are not
 defined in the WSDL for the port-component the Handler is executing on
@@ -362,7 +350,7 @@ containing:
 
 <port-component-name>JoePort</port-component-name>
 
-…
+...
 
 <service-impl-bean>
 
@@ -376,17 +364,17 @@ containing:
 
 </webservices>
 
-and a module’s deployment descriptor containing:
+and a module's deployment descriptor containing:
 
 <service-ref>
 
 <service-ref-name>service/Joe</service-ref-name>
 
-<service-interface>javax.xml.rpc.Service</service-interface>
+<service-interface>jakarta.xml.rpc.Service</service-interface>
 
 <wsdl-file>WEB-INF/joe.wsdl</wsdl-file>
 
-…
+...
 
 <port-component-ref>
 

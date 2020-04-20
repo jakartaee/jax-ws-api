@@ -2,14 +2,13 @@
 == Handlers
 
 This chapter defines the programming model for handlers in Web Services
-for Java EE. Handlers define a means for an application to access the
+for Jakarta EE. Handlers define a means for an application to access the
 raw message of a request. This access is provided on both the client and
 server. Handlers are not part of the WSDL specification and are
 therefore not described in it. See section link:#anchor-39[6.3] for
-declaration of handlers within deployment descriptors. The JAX-RPC
-specification defines the Handler APIs in chapter 12. The JAX-WS
-specification defines the Handler framework in chapter 9. This
-specification defines Handler use within a Java EE environment.
+declaration of handlers within deployment descriptors.  
+The Jakarta XML Web Services specification defines the Handler framework.
+This specification defines Handler use within a Jakarta EE environment.
 
 === Concepts
 
@@ -20,26 +19,22 @@ potentially modify the response after the component has processed the
 request. Handlers can also run on the client before the request is sent
 to the remote host and after the client receives a response.
 
-JAX-RPC Handlers are specific to SOAP requests only and cannot be used
-for other non-SOAP Web services. Handlers may be transport independent.
-For instance, a Handler as defined by JAX-RPC may be usable for SOAP/JMS
-in addition to SOAP/HTTP if a JMS protocol binding was available.
-
-JAX-WS specification defines Logical Handlers and Protocol Handlers.
-Logical Handlers are protocol agnostic and are unable to affect protocol
-specific parts of a message. Protocol Handlers operate on message
-context properties and protocol specific messages. Protocol handlers are
-specific to a particular protocol and may access and change protocol
-specific aspects of a message.
+Jakarta XML Web Services specification defines Logical Handlers and 
+Protocol Handlers.  Logical Handlers are protocol agnostic and are 
+unable to affect protocol specific parts of a message. Protocol Handlers 
+operate on message context properties and protocol specific messages. 
+Protocol handlers are specific to a particular protocol and may access 
+and change protocol specific aspects of a message.
 
 Handlers are service specific and therefore associated with a particular
 Port component or port of a Service interface. This association is
 defined in the deployment descriptors in section link:#anchor-66[7.1]
 and link:#anchor-67[7.2] respectively. They are processed in an ordered
 fashion called a HandlerChain, which is defined by the deployment
-descriptors. JSR-181 defines the javax.jws.HandlerChain annotation,
-which can be used with JAX-WS in the implementation code to declare
-HandlerChains associated with a Port component or a Service.
+descriptors. Jakarta Web Services Metadata specification defines the 
+jakarta.jws.HandlerChain annotation, which can be used with Jakarta XML 
+Web Services in the implementation code to declare HandlerChains associated 
+with a Port component or a Service.
 
 There are several scenarios for which Handlers may be considered. These
 include application specific SOAP header processing, logging, and
@@ -52,14 +47,6 @@ part maps to a SOAPElement. In this case, a value within the SOAPElement
 may be encrypted as long as the encryption of that value does not change
 the structure of the SOAPElement.
 
-Some Handler scenarios described within the JAX-RPC specification are
-not supported by this specification. For example, auditing cannot be
-fully supported because there is no means for a Handler to obtain the
-Principal. The secure stock quote example cannot be supported as stated
-because encrypting the body would prevent the container from determining
-which Port component the request should be directed to and therefore
-which Handler should decrypt the body.
-
 A Handler always runs under the execution context of the application
 logic. On the client side, the Stub/proxy controls Handler execution.
 Client side Handlers run after the Stub/proxy has marshaled the message,
@@ -70,7 +57,7 @@ message to the endpoint. Handlers can access the java:comp/env context
 for accessing resources and environment entries defined by the Port
 component the Handler is associated with.
 
-Handlers are constrained by the Java EE managed environment. Handlers
+Handlers are constrained by the Jakarta EE managed environment. Handlers
 are not able to re-target a request to a different component. Handlers
 cannot change the WSDL operation nor can Handlers change the message
 part types and number of parts. On the server, Handlers can only
@@ -86,7 +73,7 @@ The life cycle of a Handler is controlled by the container.
 Handlers are associated with the Port component on the server and
 therefore run in both the web and EJB containers.
 
-Java EE applications that define one or more port components or service
+Jakarta EE applications that define one or more port components or service
 references include WSDL descriptions for each of them as well as
 application logic and (optionally) message handlers associated with
 them. In order for such applications to behave predictably, all three
@@ -101,11 +88,9 @@ document either in its business logic or in message handlers.
 
 === Specification
 
-This section defines the requirements for JAX-RPC or JAX-WS Handlers
-running in Web Services for Java EE. Chapter 12 of the JAX-RPC
-specification and Chapter 9 of the JAX-WS specification defines the
-programming model requirements. Differences between this specification
-and the JAX-RPC or JAX-WS specification are noted in boxed paragraphs.
+This section defines the requirements for Jakarta XML Web Services Handlers 
+running in Web Services for Jakarta EE. Differences between this specification 
+and the Jakarta XML Web Services specification are noted in boxed paragraphs.
 
 ==== Scenarios
 
@@ -125,138 +110,87 @@ Common scenarios are logging, metering, and accounting.
 
 ==== Programming Model
 
-A Web Services for Java EE provider is required to provide all
-interfaces and classes of the javax.xml.rpc.handler package and
-javax.xml.ws.handler package. When JAX-RPC is being used, the
-HandlerInfo setHandlerConfig() and getHandlerConfig() methods do not
-affect the container’s Handler request processing.
+A Web Services for Jakarta EE provider is required to provide all
+interfaces and classes of the jakarta.xml.ws.handler package. 
 
-A JAX-RPC Web Services for Java EE provider is not required to provide
-an implementation of HandlerRegistry. This functionality is specific to
-the container.
-
-A JAX-WS Web Services for Java EE provider is required to provide an
+A Jakarta XML Web Services for Jakarta EE provider is required to provide an
 implementation of HandlerResolver that returns the Handler Chain with
 Handlers specified in the deployment descriptor or the
-javax.jws.HandlerChain annotation. The ordering of the Handlers in the
-HandlerChain must follow the requirements specified in JAX-WS
-specification section 9.2.1.2. In addition to this, the ordering of any
-given type of Handler (logical or protocol) in the deployment descriptor
-must be maintained
+jakarta.jws.HandlerChain annotation. The ordering of the Handlers in the
+HandlerChain must follow the requirements specified in Jakarta XML Web Services
+specification. In addition to this, the ordering of any given type of Handler 
+(logical or protocol) in the deployment descriptor must be maintained
 
-A Web Services for Java EE provider is required to provide an
+A Web Services for Jakarta EE provider is required to provide an
 implementation of MessageContext.
 
-A Web Services for Java EE provider is required to provide all the
-interfaces of the javax.xml.rpc.handler.soap and
-javax.xml.ws.handler.soap package. The provider must also provide an
-implementation of the SOAPMessageContext interface.
+A Web Services for Jakarta EE provider is required to provide all the
+interfaces of the jakarta.xml.ws.handler.soap package. The provider must 
+also provide an implementation of the SOAPMessageContext interface.
 
 The programming model of a Port component can be single-threaded or
 multi-threaded as defined in sections link:#anchor-45[5.3.2.3] and
-link:#anchor-44[5.3.2.4]. The concurrency of a JAX-RPC or JAX-WS Handler
-must match the concurrency of the business logic it is associated with.
-Client handlers may need to support multi-threaded execution depending
-on the business logic which is accessing the Port.
+link:#anchor-44[5.3.2.4]. The concurrency of a Jakarta XML Web Services 
+Handler must match the concurrency of the business logic it is associated 
+with.  Client handlers may need to support multi-threaded execution 
+depending on the business logic which is accessing the Port.
 
 Handlers must be loaded using the same class loader the application code
 was loaded with. The class loading rules follow the rules defined for
 the container the Handler is running in.
 
-In a product that also supports JSR-299, an implementation must support
-use of 299-style managed beans as JAX-WS handler classes in an
-application. JSR-299 specifies the requirements for these
-container-managed bean instances w.r.t instantiation, injection and
-other services. JSR-299 defines @Dependent pseudo-scope, handler classes
-must be specified in that scope. It is an error if the handler class has
-a scope other than the required one.
+In a product that also supports Jakarta Contexts and Dependency Injection, 
+an implementation must support use of 299-style managed beans as Jakarta 
+XML Web Services handler classes in an application. Jakarta Contexts and 
+Dependency Injection specifies the requirements for these container-managed 
+bean instances w.r.t instantiation, injection and other services. 
+Jakarta Contexts and Dependency Injection specification defines @Dependent pseudo-scope, 
+handler classes must be specified in that scope. It is an error if the 
+handler class has a scope other than the required one.
 
 In a product that also supports Managed Beans, an implementation must
-support use of managed beans as JAX-WS handler classes in an
+support use of managed beans as Jakarta XML Web Services handler classes in an
 application. Managed Beans specification specifies the requirements for
 these container-managed bean instances w.r.t instantiation, injection
 and other services.
 
-===== Handler Life Cycle with JAX-RPC
+===== Handler Life Cycle with Jakarta XML Web Services
 
-The life cycle of a Handler is controlled by the container and is
-illustrated in link:#anchor-68[Figure 7].
+The Jakarta XML Web Services based container manages the lifecycle of handlers 
+by invoking any methods of the handler class annotated as lifecycle methods 
+before and after dispatching requests to the handler itself.
 
-image:7.png[image,width=301,height=188]
+The lifecycle of a handler instance begins when the container creates a new instance 
+of the handler class.
 
-* [#anchor-68]##Figure 7 Handler life cycle
+* The handler instance is initialized by invoking the lifecycle method annotated with 
+jakarta.annotation.PostConstruct (defined by Jakarta Annotations specification).
+Once the handler instance is created and initialized it is placed into the Ready state. 
+While in the Ready state the Jakarta XML Web Services runtime may invoke other handler 
+methods as required.
 
-The init and destroy methods of the Handler interface allows the
-container to notify a Handler instance of impending changes in its
-state. The Handler may use the notification to prepare its internal
-state for the transition. The container is required to call the init and
-destroy methods as described below.
+* The lifecycle of a handler instance ends when the container stops using the handler 
+for processing inbound or outbound messages and invokes the lifecycle method annotated
+with jakarta.annotation.PreDestroy.
 
-The container must call the init method before it can start dispatching
-requests to the handleRequest(), handleResponse(), and handleFault()
-methods of the Handler. The Handler may use the container notification
-to ready its internal state for receiving requests.
-
-The container must notify the Handler of its intent to remove the
-instance from the container’s working set by calling the destroy method.
-A container must not call the destroy method while a request is being
-processed by the Handler instance. The container must not dispatch
-additional requests to the Handler interface methods after the destroy
-method is called.
-
-As defined by JAX-RPC, a RuntimeException (other than
-SOAPFaultException) thrown from any method of the Handler results in the
-destroy method being invoked and transition to the “Does Not Exist”
-state.
-
-Pooling of Handler instances is allowed, but is not required. If Handler
-instances are pooled, they must be pooled by Port component. This is
-because Handlers may retain non-client specific state across method
-calls that are specific to the Port component. For instance, a Handler
-may initialize internal data members with Port component specific
-environment values. These values may not be consistent when a single
-Handler type is associated with multiple Port components. Any pooled
-instance of a Port component’s Handler in a Method Ready state may be
-used to service the handleRequest(), handleResponse(), and handleFault()
-methods. It is not required that the same Handler instance service both
-the handleRequest() and handleResponse() or handleFault() method
-invocations of any given request.
-
-===== Handler Life Cycle with JAX-WS
-
-With JAX-WS the Handler lifecycle is similar to JAX-RPC illustration
-shown in the previous section with the following differences:
-
-* The init() method is now replaced by a method carrying a
-javax.annotation.PostConstruct annotation (defined by JSR-250
-specification, Section 2.4). This method is only called after all
-injections requested by the Handler are completed.
-* The destroy() method is replaced by a method carrying a
-javax.annotation.PreDestroy annotation (defined by JSR-250
-specification, Section 2.5).
-* Methods handleRequest() and handleResponse() are replaced by
-handleMessage().
-
-The lifecycle methods annotated with javax.annotation.PostConstruct and
-javax.annotation.PreDestroy in the Handler implementation allows the
+The lifecycle methods annotated with jakarta.annotation.PostConstruct and
+jakarta.annotation.PreDestroy in the Handler implementation allows the
 container to notify a Handler instance of impending changes in its
 state. Detailed requirements for Handler lifecycle are described in
-section 9.3.1 JAX-WS specification. The Handler may use the notification
+Jakarta XML Web Services specification. The Handler may use the notification
 to prepare its internal state for the transition. The container is
-required to call lifecycle methods annotated with
-javax.annotation.PostConstruct and javax.annotation.PreDestroy as
-described below.
+required to call lifecycle methods annotated with jakarta.annotation.PostConstruct 
+and jakarta.annotation.PreDestroy as described below.
 
 The container must carry out any injections (if any) requested by the
-handler, typically via the @Resource annotation (see section 2.2 of
-JSR-250 Common Annotations for Java Platform specification). After all
-the injections have been carried out, the container must invoke the
-method carrying a javax.annotation.PostConstruct annotation. This method
+handler, typically via the @Resource annotation (see Jakarta Annotations specification)
+After all the injections have been carried out, the container must invoke the
+method carrying a jakarta.annotation.PostConstruct annotation. This method
 must have a void return type and take zero arguments. The handler
 instance is then ready for use and other handler methods may be invoked.
 
 The container must call the lifecycle method annotated with
-javax.annotation.PreDestroy annotation on any Handler instances which it
+jakarta.annotation.PreDestroy annotation on any Handler instances which it
 instantiated, before releasing a handler instance from its working set.
 A container must not call this method while a request is being processed
 by the Handler instance. The container must not dispatch additional
@@ -264,7 +198,7 @@ requests to the Handler after the this method is called.
 
 The requirements for processing any RuntimeException or
 ProtocolException thrown from handle<action>() method of the handler are
-defined in sections 9.3.2.1 and 9.3.2.2 of the JAX-WS specification.
+defined in the Jakarta XML Web Services specification.
 
 Pooling of Handler instances is allowed, but is not required. If Handler
 instances are pooled, they must be pooled by Port component. This is
@@ -273,27 +207,26 @@ calls that are specific to the Port component. For instance, a Handler
 may initialize internal data members with Port component specific
 environment values. These values may not be consistent when a single
 Handler type is associated with multiple Port components. Any pooled
-instance of a Port component’s Handler in a Method Ready state may be
-used to service handle<action>() methods in a JAX-WS based container. It
-is not required that the same Handler instance service handleMessage()
-or handleFault() method invocation of any given request in the JAX-WS
-based container.
+instance of a Port component's Handler in a Method Ready state may be
+used to service handle<action>() methods in a Jakarta XML Web Services 
+based container. It is not required that the same Handler instance service 
+handleMessage() or handleFault() method invocation of any given request 
+in the Jakarta XML Web Services based container.
 
-===== _javax.jws.HandlerChain_ annotation
+===== _jakarta.jws.HandlerChain_ annotation
 
-The javax.jws.HandlerChain annotation from JSR-181 (imported by JAX-WS)
-may be declared on Web Service endpoints (those declared with the
-javax.jws.WebService or javax.xml.ws.WebServiceProvider annotation) or
-on Web Service references (those declared with the
-javax.xml.ws.WebServiceRef annotation). This annotation is used to
-specify the handler chain to be applied on the declared port component
-or Service reference. Details on the javax.jws.HandlerChain annotation
-can be found in section 4.6 of JSR-181 specification. If this annotation
-is used, the handler chain file for this must be packaged with the
-application unit according to the packaging rules in Section 6.3.
+The jakarta.jws.HandlerChain annotation from Jakarta Web Services Metadata specification 
+(imported by Jakarta XML Web Services) may be declared on Web Service endpoints 
+(those declared with the jakarta.jws.WebService or jakarta.xml.ws.WebServiceProvider annotation) 
+or on Web Service references (those declared with the jakarta.xml.ws.WebServiceRef annotation). 
+This annotation is used to specify the handler chain to be applied on the declared port component
+or Service reference. Details on the jakarta.jws.HandlerChain annotation can be found in 
+Jakarta Web Services Metadata specification. If this annotation is used, the handler chain 
+file for this must be packaged with the application unit according to the packaging rules 
+in Section 6.3.
 
 The deployment descriptors on port component or Service reference
-override the javax.jws.HandlerChain annotation specified in the
+override the jakarta.jws.HandlerChain annotation specified in the
 implementation.
 
 The <handler-chains> element in the deployment descriptor is used for
@@ -306,21 +239,21 @@ handler chain could be specific to a Service name pattern or Port name
 pattern. Refer to Chapter 7 for details on the deployment schema for
 handlers.
 
-JAX-WS based container provider is required to support this annotation.
-They are also required to provide an implementation of HandlerResolver
-that returns a handler chain with handlers specified in the deployment
-descriptor or the javax.jws.HandlerChain annotation. The ordering of the
-handlers in the handler chain must follow the requirements specified in
-JAX-WS specification section 9.2.1.2. In addition to this, the ordering
-of any given type of Handler (logical or protocol) in the deployment
-descriptor must be maintained
+Jakarta XML Web Services based container provider is required to support 
+this annotation.  They are also required to provide an implementation of 
+HandlerResolver that returns a handler chain with handlers specified in 
+the deployment descriptor or the jakarta.jws.HandlerChain annotation. 
+The ordering of the handlers in the handler chain must follow the requirements 
+specified in Jakarta XML Web Services specification.  In addition to this, 
+the ordering of any given type of Handler (logical or protocol) in the 
+deployment descriptor must be maintained
 
 ===== Security
 
 Handlers associated with a Port component run after authorization has
 occurred and before the business logic method of the Service
-Implementation bean is dispatched to. For JAX-RPC or JAX-WS Service
-endpoints, Handlers run after the container has performed the security
+Implementation bean is dispatched to. For Jakarta XML Web Services 
+Service endpoints, Handlers run after the container has performed the security
 constraint checks associated with the servlet element that defines the
 Port component. For EJB based service implementations, Handlers run
 after method level authorization has occurred.
@@ -340,7 +273,7 @@ EJB containers may have different permissions associated with them. If
 the provider allows defining permissions on a per application basis,
 permissions granted to a Handler are defined by the permissions granted
 to the application code it is packaged with. See section EE.6.2.3 of the
-Java EE specification for more details.
+Jakarta EE specification for more details.
 
 [#anchor-69]
 ===== Transactions
@@ -349,7 +282,7 @@ Handlers run under the transaction context of the component they are
 associated with.
 
 Handlers must not demarcate transactions using the
-javax.transaction.UserTransaction interface.
+jakarta.transaction.UserTransaction interface.
 
 ==== Developer Responsibilities
 
@@ -364,88 +297,59 @@ A Handler is implemented as a stateless instance. A Handler does not
 maintain any message processing (client specific) related state in its
 instance variables across multiple invocations of the handle method.
 
-A Handler class using JAX-RPC must implement the
-java.xml.rpc.handler.Handler interface. With JAX-WS a Handler class must
-implement the javax.xml.ws.handler.Handler interface or one of its
-subinterfaces.
+A Handler class must implement the jakarta.xml.ws.handler.Handler interface 
+or one of its subinterfaces.
 
-With JAX-RPC, a Handler.handle<action>() method may access the
-component’s environment entries by using JNDI lookup of the
-“java:comp/env” context and accessing the env-entry-names defined in the
-deployment descriptor by performing a JNDI lookup. See chapter 15 of the
-Enterprise JavaBeans specification - _Enterprise JavaBeans Core
-Contracts and Requirements_ for details. The container may throw a
-java.lang.IllegalStateException if the environment is accessed from any
-other Handler method and the environment is not available. In addition,
-the Handler may use HandlerInfo.getHandlerConfig() method to access the
-Handler’s init-params declared in the deployment descriptor.
-
-With JAX-WS, the handler allows for resources to be injected, typically
-by using the @Resource annotation. So a Handler.handle<action>() method
-may access the component’s context and environment entries by using any
+With Jakarta XML Web Services, the handler allows for resources to be injected, 
+typically by using the @Resource annotation. So a Handler.handle<action>() method
+may access the component's context and environment entries by using any
 resources that were injected. It can also use JNDI lookup of the
-“java:comp/env” context and accessing the env-entry-names defined in the
+"java:comp/env" context and accessing the env-entry-names defined in the
 deployment descriptor by performing a JNDI lookup. See chapter 15 of the
-Enterprise JavaBeans specification - _Enterprise JavaBeans Core
+Jakarta Enterprise Beans specification - _Jakarta Enterprise Beans Core
 Contracts and Requirements_ for details. The container may throw a
 java.lang.IllegalStateException if the environment is accessed from any
 other Handler method and the environment is not available. The element
-init-params in the deployment descriptors is no longer used for JAX-WS
-based container. If needed, the developer should use the environment
+init-params in the deployment descriptors is no longer used for Jakarta XML 
+Web Services based container. If needed, the developer should use the environment
 entry elements (<env-entry>) declared in the application component's
 deployment descriptor for this purpose. These can be injected into the
 handler using the @Resource annotation or looked up using JNDI.
 
-When JAX-RPC is used, the Handler.init() method must retain the
-information defined by HandlerInfo.getHeaders(). With JAX-WS, Handler
-implementation that implements the javax.xml.ws.handler.soap.SOAPHandler
-interface must contain all the headers information needed by it.
-Additionally, in this case the soap-header element declared in the
-deployment descriptor is not required since that information is embedded
-in the implementation of the Handler class.
 
-With JAX-RPC, a Handler implementation must implement the getHeaders()
-method to return the results of the HandlerInfo.getHeaders() method. The
-headers that a Handler declares it will process (i.e. those returned by
-the Handler.getHeaders() method must be defined in the WSDL definition
-of the service.
+A Handler implementation that implements the jakarta.xml.ws.handler.soap.SOAPHandler 
+interface must contain all the headers information needed by it.  Additionally, 
+in this case the soap-header element declared in the deployment descriptor is 
+not required since that information is embedded in the implementation of the Handler class.
 
-With JAX-WS, only a Handler implementation that implements the
-javax.xml.ws.handler.soap.SOAPHandler interface must implement the
-getHeaders() method. The headers that a Handler declares it will process
-(i.e. those returned by the Handler.getHeaders() method) must be defined
+Only a Handler implementation that implements the jakarta.xml.ws.handler.soap.SOAPHandler 
+interface must implement the getHeaders() method. The headers that a Handler declares it 
+will process (i.e. those returned by the Handler.getHeaders() method) must be defined
 in the WSDL definition of the service.
 
-A Handler implementation should test the type of the MessageContext
-passed to the Handler in the handle<action>() methods. Although this
-specification only requires support for SOAP messages and the container
-will pass a SOAPMessageContext in this case, some providers may provide
-extensions that allow other message types and MessageContext types to be
-used. A Handler implementation should be ready to accept and ignore
-message types which it does not understand.
+A Handler implementation should test the type of the MessageContext passed to the Handler 
+in the handle<action>() methods. Although this specification only requires support for 
+SOAP messages and the container will pass a SOAPMessageContext in this case, some providers 
+may provide extensions that allow other message types and MessageContext types to be
+used. A Handler implementation should be ready to accept and ignore message types which 
+it does not understand.
 
 A Handler implementation must use the MessageContext to pass information
 to other Handler implementations in the same Handler chain and, in the
-case of the JAX-RPC or JAX-WS service endpoint, to the Service
+case of Jakarta XML Web Services service endpoint, to the Service
 Implementation Bean. A container is not required to use the same thread
 for invoking each Handler or for invoking the Service Implementation
 Bean.
 
-With JAX-RPC, a Handler may access the env-entrys of the component it is
-associated with by using JNDI to lookup an appropriate subcontext of
-java:comp/env. Access to the java:comp/env contexts must be supported
-from the init() and handle<action>() methods. Access may not be
-supported within the destroy() method.
+A Handler may access the env-entrys of the component it is associated with 
+by using JNDI to lookup an appropriate subcontext of java:comp/env. It may 
+also access these if they are injected using the @Resource annotation. 
+Access to the java:comp/env contexts must be supported from the method 
+annotated with jakarta.annotation.PostConstruct and handle<action>() methods. 
+Access may not be supported within the method annotated with 
+jakarta.annotation.PreDestroy annotation.
 
-With JAX-WS, a Handler may access the env-entrys of the component it is
-associated with by using JNDI to lookup an appropriate subcontext of
-java:comp/env. It may also access these if they are injected using the
-@Resource annotation. Access to the java:comp/env contexts must be
-supported from the method annotated with javax.annotation.PostConstruct
-and handle<action>() methods. Access may not be supported within the
-method annotated with javax.annotation.PreDestroy annotation.
-
-A Handler may access transactional resources defined by a component’s
+A Handler may access transactional resources defined by a component's
 resource-refs. Resources are accessed under a transaction context
 according to section link:#anchor-69[6.2.2.5].
 
@@ -466,73 +370,53 @@ with, but are not required to do so.
 
 ==== Container Provider Responsibilities
 
-In a JAX-RPC based container, a Handler chain is processed according to
-the JAX-RPC specification section 12.2.2. The process order defaults to
-the order the handlers are defined in the deployment descriptor and
-follow the JAX-RPC specification section 12.1.4 processing order.
-
-In a JAX-WS based container, a Handler chain is processed according to
-the JAX-WS specification section 9.2.1.2. In addition to this, the
-ordering of any given type of Handler (logical or protocol) in the
-deployment descriptor or in the handler configuration file specified in
-the javax.jws.HandlerChain annotation, must be maintained.
+In a Jakarta XML Web Services based container, a Handler chain is processed 
+according to the Jakarta XML Web Services specification.  In addition to this, 
+the ordering of any given type of Handler (logical or protocol) in the 
+deployment descriptor or in the handler configuration file specified in the 
+jakarta.jws.HandlerChain annotation, must be maintained.
 
 The container must ensure that for EJB based Web Service endpoints with
 both Handlers and EJB Interceptors present, the Handlers must be invoked
 before any EJB business method interceptor methods.
 
-A JAX-RPC based container is required to provide an instance of a
-java.util.Map object in the HandlerInfo instance. The
-HandlerInfo.getHeaders() method must return the set of soap-headers
-defined in the deployment descriptor. The Map object must provide access
-to each of the Handler’s init-param name/value pairs declared in the
-deployment descriptor as java.lang.String values. The container must
-provide a unique HandlerInfo instance and Map config instance for each
-Handler instance. A unique Handler instance must be provided for each
-Port component declared in the deployment descriptor.
-
-A JAX-WS based container must carry out any injections (if any)
+A Jakarta XML Web Services based container must carry out any injections (if any)
 requested by the handler, typically via the @Resource annotation (see
-section 2.2 of JSR-250 Common Annotations for Java Platform
-specification). A JAX-WS handler should use the
-javax.xml.ws.WebServiceContext, which is an injectable resource, to
+Jakarta Annotations specification).  A Jakarta XML Web Services handler should 
+use the jakarta.xml.ws.WebServiceContext, which is an injectable resource, to
 access message context and security information relative to the request
 being served. A unique Handler instance must be provided for each Port
 component declared in the deployment descriptor or annotated by
-javax.jws.WebService or javax.xml.ws.WebServiceProvider annotations.
+jakarta.jws.WebService or jakarta.xml.ws.WebServiceProvider annotations.
 
-The container provider must ensure that for a JAX-WS based EJB endpoint
-executing in the EJB container, with both Handlers and EJB Interceptors
-present, the java.util.Map<String,Object> instance returned by invoking
-WebServiceContext.getMessageContext() method in the JAX-WS Handler, is
-the same Map instance that is obtained by invoking
-InvocationContext.getContextData() in the EJB Interceptor. This common
-Map instance would allow for sharing of data (if required) between the
-Handlers and Interceptors.
+The container provider must ensure that for a Jakarta XML Web Services 
+based EJB endpoint executing in the EJB container, with both Handlers 
+and EJB Interceptors present, the java.util.Map<String,Object> instance 
+returned by invoking WebServiceContext.getMessageContext() method in the 
+Jakarta XML Web Services Handler, is the same Map instance that is obtained 
+by invoking InvocationContext.getContextData() in the EJB Interceptor. 
+This common Map instance would allow for sharing of data (if required) 
+between the Handlers and Interceptors.
 
-A JAX-RPC based container must call the init() method within the context
-of a Port component’s environment. The container must ensure the Port
-component’s env-entrys are setup for the init method to access.
-
-A JAX-WS based container must call the lifecycle method annotated with
-javax.annotation.PostConstruct within the context of a Port component’s
-environment. The container must ensure the Port component’s env-entrys
-are setup for this lifecycle method to access.
+A Jakarta XML Web Services based container must call the lifecycle method 
+annotated with jakarta.annotation.PostConstruct within the context of a 
+Port component's environment. The container must ensure the Port component's 
+env-entrys are setup for this lifecycle method to access.
 
 The container must provide a MessageContext type unique to the request
 type. For example, the container must provide a SOAPMessageContext to
-the handle<action>() methods of a JAX-RPC Handler or a JAX-WS
-SOAPHandler in a handler chain when processing a SOAP request. The
-SOAPMessageContext must contain the complete SOAP message.
+the handle<action>() methods of a Jakarta XML Web Services SOAPHandler 
+in a handler chain when processing a SOAP request. The SOAPMessageContext 
+must contain the complete SOAP message.
 
 The container must share the same MessageContext instance across all
 Handler instances and the target endpoint that are invoked during a
 single request and response or fault processing on a specific node.
 
-The container must setup the Port component’s execution environment
+The container must setup the Port component's execution environment
 before invoking the handle<action>() methods of a handler chain.
 Handlers run under the same execution environment as the Port
-component’s business methods. This is required so that handlers have
+component's business methods. This is required so that handlers have
 access to the Port component's java:comp/env context.
 
 [#anchor-39]
@@ -544,16 +428,16 @@ deployment descriptor information that references the Handler classes. A
 developer is responsible for defining the handler chain information in
 the deployment descriptor.
 
-The handler chain file in the javax.jws.HandlerChain annotation is
+The handler chain file in the jakarta.jws.HandlerChain annotation is
 required to be packaged in the module. It must follow the requirements
-for location as specified in section 4.6.1 of JSR-181 specification (Web
-Services Metadata for the Java Platform). Additionally, the handler
-chain file can also be packaged and specified in the annotation such
-that, it is accessible as a resource from the ClassPath. At runtime,
-container providers must first try to access the handler chain file as
-per the locations specified in JSR-181 specification. Failing that, they
-must try to access it as a resource from the ClassPath. If more than one
-resources are returned from the ClassPath, then the first one is used.
+for location as specified in Jakarta Web Services Metadata specification.
+Additionally, the handler chain file can also be packaged and specified 
+in the annotation such that, it is accessible as a resource from the 
+ClassPath. At runtime, container providers must first try to access the 
+handler chain file as per the locations specified in Jakarta Web Services 
+Metadata specification specification. Failing that, they must try to 
+access it as a resource from the ClassPath. If more than one resources 
+are returned from the ClassPath, then the first one is used.
 
 === Object Interaction Diagrams
 

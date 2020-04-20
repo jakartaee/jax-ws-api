@@ -1,7 +1,7 @@
 == Deployment Descriptors
 
 This chapter describes the various deployment descriptors used for Web
-Services for Java EE and the roles responsible for defining the
+Services for Jakarta EE and the roles responsible for defining the
 information within the deployment descriptors.
 
 [#anchor-66]
@@ -13,12 +13,12 @@ within modules, roles and responsibilities, and the format.
 ==== Overview
 
 The webservices.xml deployment descriptor file defines the set of Web
-services that are to be deployed in a Web Services for Java EE enabled
-container. With JAX-WS the use of webservices.xml is optional since the
-annotations can be used to specify most of the information specified in
-this deployment descriptor file. The deployment descriptors are only
-used to override or augment the annotation member attributes. The
-packaging of the webservices.xml deployment descriptor file is defined
+services that are to be deployed in a Web Services for Jakarta EE enabled
+container. With Jakarta XML Web Services the use of webservices.xml is 
+optional since the annotations can be used to specify most of the information 
+specified in this deployment descriptor file. The deployment descriptors 
+are only used to override or augment the annotation member attributes. 
+The packaging of the webservices.xml deployment descriptor file is defined
 in sections link:#anchor-55[5.4.2] and link:#anchor-56[5.4.3]. Web
 services are defined by WSDL documents as described by section
 link:#anchor-4[3.2]. The deployment descriptor defines the WSDL port to
@@ -36,48 +36,46 @@ a stateless or singleton session bean may use EJB annotations with no
 deployment descriptor file. If the EJB annotations are not specified
 then the stateless or singleton session bean must be defined in the
 ejb-jar.xml deployment descriptor file using the session element.
-Service Implementations using a JAX-RPC Service Endpoint must be defined
-in the web.xml deployment descriptor file using the servlet-class
-element. Servlet based web service endpoints using JAX-WS are not
-required to provide the web.xml deployment descriptor file (see section
-5.3.2.1). See the Enterprise JavaBeans and Servlet specifications for
-additional details on developer requirements for defining deployment
-descriptors. The developer is also required to provide structural
-information that defines the Port components within the webservices.xml
-deployment descriptor file. The developer is responsible for providing
-the set of WSDL documents that describe the Web services to be deployed,
-the Java classes that represent the Web services, and the mapping that
-correlates the two.
+Servlet based web service endpoints using Jakarta XML Web Services
+are not required to provide the web.xml deployment descriptor file 
+(see section 5.3.2.1). See the Jakarta Enterprise Beans and Servlet 
+specifications for additional details on developer requirements for 
+defining deployment descriptors. The developer is also required to 
+provide structural information that defines the Port components within 
+the webservices.xml deployment descriptor file. The developer is 
+responsible for providing the set of WSDL documents that describe the 
+Web services to be deployed, the Java classes that represent the 
+Web services, and the mapping that correlates the two.
 
 The developer is responsible for providing the following information in
 the webservices.xml deployment descriptor:
 
-* **Port’s name. **A logical name for the port must be specified by the
+* **Port's name. **A logical name for the port must be specified by the
 developer using the port-component-name element. This name bears no
 relationship to the WSDL port name. This name must be unique amongst all
 port component names in a module.
-* **Port’s bean class. **The developer declares the implementation of
+* **Port's bean class. **The developer declares the implementation of
 the Web service using the service-impl-bean element of the deployment
 descriptor. The bean declared in this element must refer to a class that
-implements the methods of the Port’s Service Endpoint Interface. This
-element allows a choice of implementations. For a JAX-RPC or JAX-WS
-Service Endpoint, the servlet-link element associates the port-component
-with a JAX-RPC or JAX-WS Service Endpoint class defined in the web.xml
-by the servlet-class element. For a stateless or singleton session bean
-implementation, the ejb-link element associates the port-component with
-a session element in the ejb-jar.xml. The ejb-link element may not refer
-to a session element defined in another module. A servlet must only be
-linked to by a single port-component. A session EJB must only be linked
-to by a single port-component.
-* **Port’s Service Endpoint Interface. **The developer must specify the
+implements the methods of the Port's Service Endpoint Interface. This
+element allows a choice of implementations. For a Jakarta XML Web Services 
+Service Endpoint, the servlet-link element associates the port-component 
+with Jakarta XML Web Services Service Endpoint class defined 
+in the web.xml by the servlet-class element. For a stateless or singleton 
+session bean implementation, the ejb-link element associates the port-component 
+with a session element in the ejb-jar.xml. The ejb-link element may not refer 
+to a session element defined in another module. A servlet must only be linked 
+to by a single port-component. A session EJB must only be linked to by a 
+single port-component.
+* **Port's Service Endpoint Interface. **The developer must specify the
 fully qualified class name of the Service Endpoint Interface in the
 service-endpoint-interface element. The Service Endpoint Interface
 requirements may be found in section link:#anchor-42[5.3.1]. If the
 Service Implementation is a stateless session EJB, the developer must
 also specify the Service Endpoint Interface in the EJB deployment
-descriptor using the service-endpoint element. See the Enterprise
-JavaBeans 3.0 specification for more details.
-* *Port’s WSDL definition.* The wsdl-file element specifies a location
+descriptor using the service-endpoint element. See the Jakarta Enterprise
+Beans specification for more details.
+* *Port's WSDL definition.* The wsdl-file element specifies a location
 of the WSDL description of a set of Web services. The location is
 relative to the root of the module and must be specified by the
 developer. The WSDL file may reference (e.g. import) other files
@@ -88,63 +86,56 @@ Imported files may import other files as well using relative locations
 or explicit URLs. It is recommended that the WSDL file and relative
 referenced files be packaged in the wsdl directory as described in
 section link:#anchor-52[5.4.1]. Relative references must not start with
-a “/”.
+a "/".
 * **Service QName. **In addition to specifying the WSDL document, the
 developer may also specify the WSDL Service QName in the wsdl-service
-element for each Port defined in the deployment descriptor when JAX-WS
-based runtime is used. This element is required if the port-component
-being defined is a Provider Interface defined by JAX-WS.
-* *Port’s QName.* In addition to specifying the WSDL document, the
+element for each Port defined in the deployment descriptor when Jakarta 
+XML Web Services based runtime is used. This element is required if the 
+port-component being defined is a Provider Interface defined by Jakarta 
+XML Web Services.
+* *Port's QName.* In addition to specifying the WSDL document, the
 developer must also specify the WSDL port QName in the wsdl-port element
 for each Port defined in the deployment descriptor.
 * **MTOM/XOP support. **The developer may specify if MTOM/XOP support
 for the port-component is enabled or disabled by using enable-mtom
-element when JAX-WS based runtime is used.
+element when Jakarta XML Web Services based runtime is used.
 * **Addressing support. **The developer may specify an addressing
-support for the port-component by using addressing element when JAX-WS
-based runtime is used.
+support for the port-component by using addressing element when 
+Jakarta XML Web Services based runtime is used.
 * **RespectBindingg support. **The developer may specify a respect
 binding support for the port-component by using respect-binding element
-when JAX-WS based runtime is used.
+when Jakarta XML Web Services based runtime is used.
 * **Protocol Binding. **The developer may override the protocol binding
 specified by BindingType annotation by specifying the URI or a
 pre-defined token (like ##SOAP11_HTTP, ##SOAP12_HTTP, ##XML_HTTP etc.)
-in the protocol-binding element when JAX-WS based runtime is used. The
-default protocol binding is ##SOAP11_HTTP. If this element is not
-specified then the default value is assumed. The pre-defined tokens
-essentially act as alias for the actual URI for the protocol binding.
+in the protocol-binding element when Jakarta XML Web Services based 
+runtime is used. The default protocol binding is ##SOAP11_HTTP. If this 
+element is not specified then the default value is assumed. The pre-defined 
+tokens essentially act as alias for the actual URI for the protocol binding.
 The URIs for these pre-defined tokens are listed below:
 * ##SOAP11_HTTP - "http://schemas.xmlsoap.org/wsdl/soap/http"
 * ##SOAP12_HTTP - "http://www.w3.org/2003/05/soap/bindings/HTTP/"
 * ##SOAP11_HTTP_MTOM -
 "http://schemas.xmlsoap.org/wsdl/soap/http?mtom=true"
-* ##SOAP12_HTTP_MTOM –
+* ##SOAP12_HTTP_MTOM -
 "http://www.w3.org/2003/05/soap/bindings/HTTP/?mtom=true"
 * ##XML_HTTP - "http://www.w3.org/2004/08/wsdl/http"
-* *JAX-RPC Mapping.* The developer must specify the correlation of the
-WSDL definition to the interfaces using the jaxrpc-mapping-file element.
-This element is only required when JAX-RPC based runtime is used. Its
-not required with JAX-WS and ignored if specified. The requirements for
-specifying information in the jaxrpc-mapping-file are covered in section
-link:#anchor-70[7.3]. The same mapping file must be used for all
-interfaces associated with a wsdl-file.
 * *Handlers.* A developer may optionally specify handlers associated
-with the port-component using either the handler element when JAX-RPC
-based runtime is used or the handler-chains element when JAX-WS based
-runtime is used. With JAX-WS, the soap-header element declared in the
-deployment descriptor is not required since that information is embedded
-in the implementation of the Handler class. With JAX-WS, init-params
-element in the deployment descriptors is no longer used. If needed, the
+with the port-component using handler-chains element when Jakarta XML 
+Web Services based runtime is used. With Jakarta XML Web Services, 
+the soap-header element declared in the deployment descriptor is not 
+required since that information is embedded in the implementation of 
+the Handler class. With Jakarta XML Web Services, init-params element 
+in the deployment descriptors is no longer used. If needed, the
 developer should use the environment entry elements (<env-entry>)
 declared in the application component's deployment descriptor for this
 purpose. These can be injected into the handler using the @Resource
 annotation or looked up using JNDI.
-* **Servlet Mapping. **A developer may optionally specify a
-servlet-mapping, in the web.xml deployment descriptor, for a JAX-RPC or
-JAX-WS Service Endpoint. No more than one servlet-mapping may be
-specified for a servlet that is linked to by a port-component. The
-url-pattern of the servlet-mapping must be an exact match pattern (i.e.
-it must not contain an asterisk (“*”)).
+* **Servlet Mapping. **A developer may optionally specify a servlet-mapping, 
+in the web.xml deployment descriptor.  No more than one servlet-mapping 
+may be specified for a servlet that is linked to by a port-component. 
+The url-pattern of the servlet-mapping must be an exact match pattern 
+(i.e.  it must not contain an asterisk ("*")).
 
 Note that if the WSDL specifies an address statement within the port,
 its URI address is ignored. This address is generated and replaced
@@ -155,9 +146,9 @@ link:#anchor-71[7.2.2].
 
 ==== Assembler responsibilities
 
-The assembler’s responsibilities for Web Services for Java EE are an
-extension of the assembler responsibilities as defined by the Enterprise
-JavaBeans, Servlet, and Java EE specifications. The assembler creates a
+The assembler's responsibilities for Web Services for Jakarta EE are an
+extension of the assembler responsibilities as defined by the Jakarta Enterprise
+Beans, Servlet, and Jakarta EE specifications. The assembler creates a
 deployable artifact by composing multiple modules, resolving
 cross-module dependencies, providing annotation overrides and producing
 an EAR file.
@@ -169,19 +160,17 @@ file:
 * *Description fields.* The assembler may change existing or create new
 description elements.
 * *Handlers.* The assembler may change values of existing param-value
-elements, may add new init-param elements, may change or add soap-header
-elements with JAX-RPC, may change or add soap-role elements, or may add
-new handler elements or new handler-chain elements. With JAX-WS, Handler
-implementation must contain all the soap-header information needed by
-it.
+elements, may add new init-param elements, may change or add soap-role elements, 
+or may add new handler elements or new handler-chain elements. With Jakarta XML Web Services, 
+Handler implementation must contain all the soap-header information needed by it.
 
 See also the assembler responsibilities defined in
 sectionlink:#anchor-72[7.2.3].
 
 ==== Deployer responsibilities
 
-The deployer responsibilities are defined by the Java EE, Enterprise
-JavaBeans, and Servlet specifications.
+The deployer responsibilities are defined by the Jakarta EE, Jakarta Enterprise
+Beans, and Servlet specifications.
 
 In addition, the deployer must resolve the following information:
 
@@ -206,13 +195,13 @@ for defining instance data, and the format.
 
 The Service Reference XML schema defines the schema for service
 reference entries. These entries declare references to Web services used
-by a Java EE component in the web, EJB, or application client container.
-With JAX-WS, these entries are not required if
-javax.xml.ws.WebServiceRef annotation is used. If the Web services
-client is a Java EE component, then it uses a logical name for the Web
+by a Jakarta EE component in the web, EJB, or application client container.
+With Jakarta XML Web Services, these entries are not required if
+jakarta.xml.ws.WebServiceRef annotation is used. If the Web services
+client is a Jakarta EE component, then it uses a logical name for the Web
 service called a service reference to look up the service. Any component
 that uses a Web service reference must declare a dependency on the Web
-service reference in a module’s deployment descriptor file.
+service reference in a module'ss deployment descriptor file.
 
 [#anchor-71]
 ==== Developer responsibilities
@@ -225,13 +214,13 @@ the following information:
 reference that is used in the client source code. It is recommended, but
 not required that the name begin with service/.
 * *Service type:* The service-interface element defines the fully
-qualified name of the JAX-RPC or JAX-WS Service Interface/Class class
-returned by the JNDI lookup.
+qualified name of the Jakarta XML Web Services Service Interface/Class 
+class returned by the JNDI lookup.
 * *Service Reference type:* The service-ref-type element declares the
 type of the service-ref element that is injected or returned when a JNDI
 lookup is done. This must be either a fully qualified name of Service
 class or the fully qualified name of Service endpoint interface class.
-This is an optional element and used only with JAX-WS.
+This is an optional element and used only with Jakarta XML Web Services.
 * *Ports.* The developer declares requirements for container managed
 port resolution using the port-component-ref element. The
 port-component-ref elements are resolved to a WSDL port by the
@@ -239,13 +228,13 @@ container. See Chapter link:#anchor-18[4] for a discussion of container
 managed port access.
 * *MTOM/XOP support.* The developer may specify if MTOM/XOP support for
 the port-component-ref is enabled or disabled by using enable-mtom
-element when JAX-WS based runtime is used.
+element when Jakarta XML Web Services based runtime is used.
 * *Addressing support.* The developer may specify an addressing support
-for the port-component-ref by using _addressing_ element when JAX-WS
-based runtime is used.
+for the port-component-ref by using _addressing_ element when Jakarta 
+XML Web Services based runtime is used.
 * *RespectBinding support.* The developer may specify a respect binding
 support for the _port-component-ref_ by using _respect-binding_ element
-when JAX-WS based runtime is used.
+when Jakarta XML Web Services based runtime is used.
 
 The developer may specify the following information:
 
@@ -267,46 +256,36 @@ using relative references. It may also reference other files external to
 the module using an explicit URL. Relative imports are declared relative
 to the file defining the import. Imported files may import other files
 as well using relative locations or explicit URLs. Relative references
-must not start with a “/”.
+must not start with a "/".
 * *Service Port.* If the specified wsdl-file has more than one service
 element, the developer must specify the service-qname.
-* **JAX-RPC Mapping. **The developer specifies the correlation of the
-WSDL definition to the interfaces using the jaxrpc-mapping-file element.
-This element is only required when JAX-RPC based runtime is used. Its
-not required with JAX-WS. The location is relative to the root of the
-module. The same mapping file must be used for all interfaces associated
-with a wsdl-file. The developer must specify the jaxrpc-mapping-file if
-the wsdl-file is specified.
-* *Handlers.* A developer may optionally specify handlers associated
-with the service-ref using the handler element when JAX-RPC based
-runtime is used. The developer may optionally use the handler-chains
+* *Handlers.* The developer may optionally use the handler-chains
 element when specifying handler chains associated with the service-ref
-under JAX-WS based runtime.
+under Jakarta XML Web Services based runtime.
 
 [#anchor-72]
 ==== Assembler responsibilities
 
-In addition to the responsibilities defined within the Java EE
+In addition to the responsibilities defined within the Jakarta EE
 specification, the assembler may define the following information:
 
 * *Binding of service references*. The assembler may link a Web service
-reference to a component within the Java EE application unit using the
-port-component-link element. It is the assembler’s responsibility to
+reference to a component within the Jakarta EE application unit using the
+port-component-link element. It is the assembler's responsibility to
 ensure there are no detailed differences in the SEI and target bindings
 that would cause stub generation or runtime problems.
 
 The assembler may modify any of the following information that has been
-specified by the developer in the service-ref element of the module’s
+specified by the developer in the service-ref element of the module's
 deployment descriptor file:
 
 * *Description fields.* The assembler may change existing or create new
 description elements.
 * *Handlers.* The assembler may change values of existing param-value
-elements, may add new init-param elements, may change or add soap-header
-elements with JAX-RPC, may change or add soap-role elements, or may add
-new handler elements or new handler-chain elements. With JAX-WS, Handler
-implementation must contain all the soap-header information needed by
-it.
+elements, may add new init-param elements, may change or add soap-role 
+elements, or may add new handler elements or new handler-chain elements. 
+With Jakarta XML Web Services, Handler implementation must contain all 
+the soap-header information needed by it.  
 * *WSDL definition.* The assembler may replace the WSDL definition with
 a new WSDL that resolves missing service and port elements or missing
 port address attributes. The assembler may update the port address
@@ -314,7 +293,7 @@ attribute__.__
 
 ==== Deployer responsibilities
 
-In addition to the normal duties a Java EE deployer platform role has,
+In addition to the normal duties a Jakarta EE deployer platform role has,
 the deployer must also provide deploy time binding information to
 resolve the WSDL document to be used for each service-ref. If a partial
 WSDL document was specified and service and port elements are needed by
@@ -326,496 +305,9 @@ resolve port access declared by the port-component-ref element.
 
 [#anchor-74]##This section defines the XML Schema for the service-ref at
 http://xmlns.jcp.org/xml/ns/javaee/javaee_web_services_client_1_4.xsd.
-This schema is imported into the common Java EE schema and is used by
+This schema is imported into the common Jakarta EE schema and is used by
 the application client, web, and EJB module deployment descriptor
-schemas to declare service-refs. See the Java EE 7 and corresponding
+schemas to declare service-refs. See the Jakarta EE 7 and corresponding
 versions of Servlet and EJB specifications for more details on
 specifying a service-ref in the deployment descriptors.
 
-[#anchor-40]
-=== JAX-RPC Mapping Deployment Descriptor
-
-This section defines the content of the JAX-RPC mapping file, location
-within modules, roles and responsibilities, and the format. It applies
-only to JAX-RPC based runtime. This mapping file is not required in
-JAX-WS since it uses JAXB specification for all its data binding needs.
-
-==== Overview
-
-The JAX-RPC mapping deployment descriptor has no standard file name,
-though it is recommended that the file use a .xml suffix. There is a 1-1
-correspondence between WSDL files and mapping files within a module. The
-JAX-RPC mapping deployment descriptor contains information that
-correlates the mapping between the Java interfaces and WSDL definition.
-A deployment tool uses this information along with the WSDL file to
-generate stubs and TIEs for the deployed services and service-refs.
-
-==== Developer responsibilities
-
-A developer creates the mapping file at the same time that the WSDL
-and/or Java interfaces are created. A developer may specify only the
-package-mapping if the following conditions are met:
-
-* The WSDL file must contain exactly one service element.
-* The service element must define exactly one port.
-* The set of service name, binding name, portType name, and all root
-WSDL type (e.g. complexType, simpleType, etc.) names must be unique.
-* The port’s binding must be a soap 1.1 binding with style="rpc"; all
-its operations must specify use="encoded", encodingStyle="_<the SOAP 1.1
-encoding>_" for their input, output, and fault messages and either omit
-the parts attribute or include it such that all the parts of both the
-input and output message are mapped to the soap body. Also, no soap
-headers or header faults can be specified in the binding.
-* Each operation must:
-* Have a unique name (in the context of the portType it belongs to) that
-follows the Java conventions for method names.
-* Have exactly one input message.
-* Have at most one output message.
-* Have zero or more fault messages.
-* Either have no parameterOrder attribute or the value of that attribute
-must be a complete listing of all parts in the input message in the
-order they appear therein.
-* Faults must map to an exception such that it:
-* Directly or indirectly inherits from java.lang.Exception, but must not
-inherit from RuntimeException nor RemoteException.
-* Has at most a single property called “message” of type
-java.lang.String with corresponding single String argument constructor.
-* Must be SOAP encoded.
-* Each input message may have 0 or more parts
-* Each output message must have either 0 or 1 parts. If present, the
-part must have a name different from that of any parts in the input
-message.
-* Each part must be of this form:
-
-* <part name="..." type="_T_"/>
-
-* Each type __T __must be one of the following valid types:
-* A simple type defined in table 4-1, section 4.2.1 of the JAX-RPC
-specification.
-* A complex type using either the sequence compositor:
-
-<xsd:complexType name="_T_">
-
-____
-<xsd:sequence>
-____
-
-<xsd:element name="..." type="_Tprime_"/>
-
-____
-</xsd:sequence>
-____
-
-</xsd:complexType>
-
-* Or the all compositor:
-
-<xsd:complexType name="_T_">
-
-____
-<xsd:all>
-____
-
-<xsd:element name="..." type="_Tprime_"/>
-
-____
-</xsd:all>
-____
-
-</xsd:complexType>
-
-* In either case, the element declarations can appear one or more times
-and each type _Tprime_ must be valid. All element names are mapped as
-JavaBeans properties and element names follow the standard JavaBeans
-property name convention of lower case for the first character and the
-complexType name follows the Java standard class name conventions of
-upper case first letter.
-
-* A SOAP array of the form:
-
-<xsd:complexType name="...">
-
-____
-<xsd:restriction base="soapenc:Array"/>
-____
-
-<xsd:attribute ref="soapenc:arrayType"
-
-____
-wsdl:arrayType="_Tprime_[]"/>
-____
-
-____
-</xsd:restriction>
-____
-
-</xsd:complexType>
-
-* where Tprime is a valid type and is not a SOAP array type.
-
-If the conditions are not met, a full mapping must be specified. There
-must be a java-xml-type-mapping for every global type definition that is
-reachable from the port types (and its attributes like operations,
-faults, messages etc.) in the WSDL file.. An exception-mapping must be
-created for each WSDL fault. There must be a service-interface-mapping
-for every service element in the WSDL file that has a Generated Service
-Interface used by the developer. There must be a
-service-endpoint-interface-mapping for every combination of portType and
-binding in the WSDL file. There must be a package-mapping for every
-namespace defined in the WSDL file.
-
-Web Services for Java EE providers may support partial mapping
-specifications (e.g. not providing a method-param-parts-mapping for
-every method) regardless of the WSDL content by using standard JAX-RPC
-WSDL to Java mapping rules to resolve the mappings. If mappings are
-specified, they take precedence over the mapping rules. Applications
-that use partial mappings are therefore non-portable.
-
-For INOUT parameters, only the mapping for the input message is
-required.
-
-The developer must define the jaxrpc-mapping-file element of the
-webservices.xml or module deployment descriptor (if a service-ref is
-used) to be the location of the mapping file.
-
-The developer must package the mapping file in the module with the WSDL
-file.
-
-===== Mapping xsd:any
-
-Mapping for xsd:any is described by the JAX-RPC specification. JAX-RPC
-defines this as a mapping to/from javax.xml.soap.SoapElement or an array
-of type SoapElement.
-
-===== Mapping anonymous types
-
-Anonymous types require some special handling in order to provide a
-mapping. Anonymous types have no QName, but dealing with mappings,
-serializers, and deserializers becomes much easier if they are assigned
-QNames. Anonymous types are treated as root WSDL types with special
-QNames and are mapped using the java-xml-type-mapping. In order to
-achieve some portability in determining what anonymous type a
-java-xml-type-mapping refers to, the following rules must be used.
-
-[arabic]
-. For type T, the qname-scope is either complexType or simpleType
-depending on the type of T and the localname of T is determined as
-follows:
-
-[loweralpha]
-. If T has a name attribute, then its name is the value of the name
-attribute and is entered as a root-type-qname.
-. If T has no name attribute, then its name is “>E” where E is the name
-of its enclosing element. The name is entered as an
-_anonymous-type-qname_.
-
-[arabic]
-. For element E, the qname-scope is element and the localname of E is:
-
-[loweralpha]
-. If E is at the root level, then the name is “N” where N is the value
-of the name attribute. The name is entered as a root-type-qname.
-. If E is not at the root level, then the name “T>N” where T is the name
-of the enclosing type and N is the value of the name attribute. The name
-is entered as an anonymous-type-qname.
-
-[arabic]
-. [#anchor-75]##If element E has a maxOccurs attribute greater than 1,
-then it also has a 'hidden' anonymous type called A. A is an array of
-the enclosed type. The qname-scope of A is complexType and the name of A
-is...
-
-[loweralpha]
-. If E has a name attribute, then the name of A is
-"E[<minOccursValue>,<maxOccursValue>]" where E is the value of E’s name
-attribute. The name is entered as an anonymous-type-qname.
-. If E has no name attribute, then the name of A is
-"R[<minOccursValue>,<maxOccursValue>]" where R is the name of the
-referent element. The name is entered as an anonymous-type-qname.
-
-* {blank}
-+
-____
-In the interest of portability, vendors must accept both a null string
-and a value of ‘1’ for <minOccursValue>. For example, E[,10] and E[1,10]
-are equivalent names.
-____
-
-Note that only root level types and elements have a namespace, so all
-anonymous types acquire their namespaces from the enclosing root level
-element or type. An anonymous type QName is not a valid QName, therefore
-the namespace should be fully specified rather than relying on XML
-Schema namespace prefix resolution. This is the only supported form for
-portability. In this case, the namespace is parsed to include all the
-characters up to the right-most ‘:’ (colon). The right-most colon serves
-as a delimiter between the namespace and localpart.
-
-Hidden anonymous array types, as defined in rule
-link:#anchor-75[7.3.2.2], are declared in a param-type element as the
-name of the Java type of type T appended with “[]” if the mapping is to
-a Java array. This is the only supported and portable mapping for hidden
-anonymous array types at this time.
-
-The following example will help illustrate anonymous types and their
-mappings. Example name rule uses are underlined:
-
-<schema … targetNamespace=”X”>
-
-<__complexType__^_1_^ name=”root”>
-
-<sequence>
-
-<element name="data" type="string" />
-
-</sequence>
-
-</complexType>
-
-<__element__^_2_^ name="root" __minOccurs="0"
-maxOccurs="unbounded"__^_3_^>
-
-<__complexType__^_4_^>
-
-<sequence>
-
-<__element__^_5_^ name="inside" __maxOccurs="10"__^_6_^>
-
-<__complexType__^_7_^>
-
-<sequence>
-
-<element name="data2" type="string" />
-
-</sequence>
-
-</complexType>
-
-</element>
-
-<element ref="someOtherElement" __maxOccurs="20"__^_8_^/>
-
-</sequence>
-
-</complexType>
-
-</element>
-
-<__ element__^_9_^ name=”someOtherElement” type=”xsd:int”>
-
-There are 9 named types. Their names are defined as:
-
-[cols=",,",]
-|===
-|Use case |Rule based name |Based on rule
-|1 |X:root |Rule 1.a
-|2 |X:root |Rule 2.a
-|3 |X:root[0,unbounded] |^_2_^ and rule 3.a
-|4 |X:>root |^_2_^ and rule 1.b
-|5 |X:>root>inside |^_4_^ and rule 2.b
-|6 |X:>root>inside[,10] |^_5_^ and rule 3.a
-|7 |X:>>root>inside |^_5_^ and rule 1.b
-|8 |X:someOtherElement[,20] |^_9_^ and rule 3.b
-|9 |X:someOtherElement |Rule 2.a
-|===
-
-Given the above use case, an example mapping file fragment would look
-like:
-
-<package-mapping>
-
-<package-type>X</package-type>
-
-<namespaceURI>X</namespaceURI>
-
-</package-mapping>
-
-<!-- CASE 1 RULE 1A -->
-
-<java-xml-type-mapping>
-
-<java-type>X.Root</java-type>
-
-<root-type-qname>X:root</root-type-qname>
-
-<qname-scope>complexType</qname-scope>
-
-<variable-mapping>
-
-<java-variable-name>data</java-variable-name>
-
-<xml-element-name>data</xml-element-name>
-
-</variable-mapping>
-
-</java-xml-type-mapping>
-
-<!-- CASE 2 RULE 2A -->
-
-<java-xml-type-mapping>
-
-<java-type>X.Root[]</java-type>
-
-<root-type-qname>X:root</root-type-qname>
-
-<qname-scope>element</qname-scope>
-
-</java-xml-type-mapping>
-
-<!-- CASE 3 RULE 3A -->
-
-<java-xml-type-mapping>
-
-<java-type>X.Root[]</java-type>
-
-<anonymous-type-qname>
-
-X:root[0,unbounded]
-
-</anonymous-type-qname>
-
-<qname-scope>complexType</qname-scope>
-
-</java-xml-type-mapping>
-
-<!-- CASE 4 RULE 1b -->
-
-<java-xml-type-mapping>
-
-<java-type>X.Root</java-type>
-
-<anonymous-type-qname>
-
-X:&gt;root
-
-</anonymous-type-qname>
-
-<qname-scope>complexType</qname-scope>
-
-<variable-mapping>
-
-<java-variable-name>inside</java-variable-name>
-
-<xml-element-name>inside</xml-element-name>
-
-</variable-mapping>
-
-<variable-mapping>
-
-<java-variable-name>someOtherElement</java-variable-name>
-
-<xml-element-name>someOtherElement</xml-element-name>
-
-</variable-mapping>
-
-</java-xml-type-mapping>
-
-<!-- CASE 5 RULE 2B -->
-
-<java-xml-type-mapping>
-
-<java-type>X.Inside</java-type>
-
-<anonymous-type-qname>
-
-X:&gt;root&gt;inside
-
-</anonymous-type-qname>
-
-<qname-scope>element</qname-scope>
-
-</java-xml-type-mapping>
-
-<!-- CASE 6 RULE 3A -->
-
-<java-xml-type-mapping>
-
-<java-type>X.Inside[]</java-type>
-
-<anonymous-type-qname>
-
-X:&gt;root&gt;inside[,10]
-
-</anonymous-type-qname>
-
-<qname-scope>complexType</qname-scope>
-
-</java-xml-type-mapping>
-
-<!-- CASE 9 RULE 2A -->
-
-<java-xml-type-mapping>
-
-<java-type>int</java-type>
-
-<root-type-qname>
-
-X:someOtherElement
-
-</root-type-qname>
-
-<qname-scope>element</qname-scope>
-
-</java-xml-type-mapping>
-
-<!-- CASE 8 RULE 3B -->
-
-<java-xml-type-mapping>
-
-<java-type>int[]</java-type>
-
-<anonymous-type-qname>
-
-X:someOtherElement[,20]
-
-</anonymous-type-qname>
-
-<qname-scope>element</qname-scope>
-
-</java-xml-type-mapping>
-
-<!-- CASE 7 RULE 1B-->
-
-<java-xml-type-mapping>
-
-<java-type>X.Inside</java-type>
-
-<anonymous-type-qname>
-
-X:&gt;&gt;root&gt;inside
-
-</anonymous-type-qname>
-
-<qname-scope>complexType</qname-scope>
-
-<variable-mapping>
-
-<java-variable-name>data2</java-variable-name>
-
-<xml-element-name>data2</xml-element-name>
-
-</variable-mapping>
-
-</java-xml-type-mapping>
-
-===== Mapping multiple output params
-
-The mapping for OUT and IN/OUT parameters must be the Java class-type
-representation of the WSDL type. This is true even when multiple OUT or
-IN/OUT parts exist within a WSDL message. In this case, the Holder type
-is inferred based on the specified class-type.
-
-==== Assembler responsibilities
-
-The assembler must not change the JAX-RPC Mapping file.
-
-==== Deployer responsibilities
-
-The deployer uses deployment tools to deploy the services and
-service-refs contained inside a module. The deployment tool must use the
-JAX-RPC mapping file to generate stubs and TIEs for the services and
-service-refs.
-
-==== JAX-RPC Mapping Schema
-
-This XML Schema for the JAX-RPC mapping files is described at
-http://java.sun.com/xml/ns/j2ee/j2ee_jaxrpc_mapping_1_1.xsd
