@@ -78,11 +78,11 @@ document conventions used by other Jakarta EE specifications.
 The regular Times font is used for information that is prescriptive by
 this specification.
 
-The italic Times font is used for paragraphs that contain descriptive
+The _italic Times font_ is used for paragraphs that contain descriptive
 information, such as notes describing typical use, or notes clarifying
 the text with prescriptive specification.
 
-The Courier font is used for code examples.
+The `Courier font` is used for code examples.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this

@@ -42,7 +42,7 @@ running in a Web Services for Jakarta EE container. Programmers using
 languages other than Java must be able to implement SOAP 1.1 or SOAP 1.2
 compliant applications that can use Web services conforming to this
 specification. Support the Client Development Scenarios described in
-Chapter 4.
+<<ClientProgrammingModel.adoc#anchor-13, Chapter 4>>.
 * Client developers must not have to be aware of how the service
 implementation is realized.
 
@@ -77,8 +77,8 @@ changes are minimized, however.
 Deployment requires a WSDL file. The deployment of Web services must
 support:
 
-* those who wish to deploy a Web service as the focus of the deployment
-* those who wish to expose existing, deployed Jakarta EE components as a
+** those who wish to deploy a Web service as the focus of the deployment
+** those who wish to expose existing, deployed Jakarta EE components as a
 Web service
 
 === Service Publication Goals
@@ -91,20 +91,3 @@ deployment package or during the deployment process.
 * If any publication to UDDI is performed, the WSDL must also be made
 available at a URL.
 
-=== Web Services Registry Goals
-
-The Web services registry API and programming model is out of the scope
-of this specification. The Web service implementation, Web service
-client, or Web service deployment tool may use any registry API
-including JAX-R. JAX-R does not support WSDL publication directly. It
-does support interaction with UDDI directories. UDDI.org specifies how
-to publish a WSDL described service to a UDDI directory.
-
-This specification defines the service publication responsibilities of
-the deployment tool.
-
-Service definition discovery (finding the WSDL to be implemented) during
-development or deployment of a service implementation is not defined.
-
-Service discovery during development, deployment, or runtime of service
-clients is not defined.

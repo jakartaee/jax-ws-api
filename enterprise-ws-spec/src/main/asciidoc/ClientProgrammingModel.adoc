@@ -49,8 +49,8 @@ specification. The Service object is a factory used by the client to get
 a stub or proxy that implements the Service Endpoint Interface. The stub
 is the client representation of an instance of the Web service.
 
-The Service Class can be the generic javax.xml.ws.Service class or a Generated
-Service class, which extends javax.xml.ws.Service. Further references in this
+The Service Class can be the generic jakarta.xml.ws.Service class or a Generated
+Service class, which extends jakarta.xml.ws.Service. Further references in this
 document to the ServiceInterface/Class refer to either the generic or generated
 version, unless noted otherwise.
 
@@ -90,7 +90,7 @@ A client can use the stub/proxy methods of the Service Interface/Class
 to get a Port stub or dynamic proxy. The WSDL specific methods can be
 used when the full WSDL definition of the service is available to the
 client developer. The WSDL agnostic methods must be used if the client
-developer has a partial WSDL definition that only contains only the
+developer has a partial WSDL definition that only contains the
 portType and bindings.
 
 With Jakarta XML Web Services, a client can also use the Service Class to work
@@ -131,7 +131,7 @@ Service abf = (Service)ic.lookup(
 "java:comp/env/service/AddressBookService");
 
 In the above example, the container must ensure that an implementation
-of the generic Service Interface, jakarta.xml.ws.Service, is bound in the
+of the generic Service class, jakarta.xml.ws.Service, is bound in the
 JNDI name space at a location specified by the developer. A similar code
 fragment is used for access to an object that implements a Generated Service
 Interface such as AddressBookService.
@@ -205,7 +205,7 @@ AddressBookService other;
 jakarta.jws.HandlerChain annotation can be used with this annotation to
 specify handlers on these client side references. More information on
 the HandlerChain annotation can be found in Jakarta Web Services Metadata
-specification and also in Chapter 6 of this specification.
+specification and also in <<Handlers.adoc#anchor-58, Chapter 6>> of this specification.
 
 If wsdlLocation attribute of WebServiceRef annotation is specified, it
 is always relative to the root of the module. HTTP URL can also be
@@ -223,19 +223,19 @@ the final WSDL document is resolved by comparing the Service name on the
 names of all the deployed port components in the Jakarta EE application
 unit. This default behavior can be overridden using the
 <port-component-link> deployment descriptor element. Refer to client
-deployment descriptor schema Section 7.2.5
+deployment descriptor schema 
+<<DeploymentDescriptors.adoc#section7.2.5,Section 7.2.5>>.
 
 If the name attribute is not specified in this annotation then default
 naming rules apply as specified in the Jakarta EE specification.
 
 The following table summarizes the relationship between the deployment
-descriptors for <service-ref> and member attributes of this annotation .
+descriptors for <service-ref> and member attributes of this annotation.
 
-* Table 1 Relationship between the deployment descriptor elements and
-jakarta.xml.ws.WebServiceRef annotation
-
+[[table1]]
 [cols=",",]
 |===
+| Deployment Descriptor elements | jakarta.xml.ws.WebServiceRef annotation
 |<service-ref> |One per @WebServiceRef annotation
 
 |<service-ref>/<service-ref-name> |@WebServiceRef.name
@@ -268,6 +268,9 @@ only for overriding the default behavior.
 |<service-ref>/<lookup-name> |@WebServiceRef.lookup
 |===
 
+* Table 1 Relationship between the deployment descriptor elements and
+jakarta.xml.ws.WebServiceRef annotation
+
 @WebServiceRef reference instances are not guaranteed to be thread safe.
 If the instances are accessed by multiple threads, usual synchronization
 techniques can be used to support multiple threads.
@@ -281,7 +284,7 @@ use of this annotation is supported.
 ==== Port Lookup
 
 With Jakarta XML Web Services, the client developer can also use JNDI lookups
-for a Port. This is analogous to using the javax.xml.ws.WebServiceRef
+for a Port. This is analogous to using the jakarta.xml.ws.WebServiceRef
 annotation for Service endpoint. The client side deployment descriptor has
 been modified to introduce a new optional element <service-ref-type> that
 declares the type of <service-ref> returned when a dependency injection
@@ -331,13 +334,12 @@ Interface/Class to obtain a static stub or dynamic proxy for a Web
 service.
 
 The container must provide at least one of static stub or dynamic proxy
-support for these methods as described in section
-link:#anchor-30[4.2.5]. The container must ensure the stub or dynamic
-proxy is fully configured for use by the client, before it is returned
-to the client. The deployment time choice of whether a stub or dynamic
-proxy is returned by the getPort or get<port name> methods is out of the
-scope of this specification. Container providers are free to offer
-either one or both.
+support for these methods as described in <<anchor-30,section 4.2.5>>. The
+container must ensure the stub or dynamic proxy is fully configured for use
+by the client, before it is returned to the client. The deployment time
+choice of whether a stub or dynamic proxy is returned by the getPort or
+get<port name> methods is out of the scope of this specification. Container
+providers are free to offer either one or both.
 
 The container provider must provide Port resolution for the
 getPort(java.lang.Class serviceEndpointInterface) method. This is useful
@@ -349,18 +351,17 @@ interface argument to a port is not declared in the client deployment
 descriptor, the container may provide a default resolution capability or
 throw a ServiceException.
 
-===== ServiceFactory
+===== Service Factory
 
-ServiceFactory class has been removed from Jakarta XML Web Services. It has
-been replaced by two static methods Service.create(QName serviceName) and
+Two static factory methods Service.create(QName serviceName) and
 Service.create(URL wsdlLocation, QName serviceName) for creating Service
-instances. These methods rely on specific implementations of
-ServiceDelegate Class in any Jakarta XML Web Services compliant implementation.
-The use of these static methods is not recommended in a Web Services for
-Jakarta EE product. A Web Services for Jakarta EE client must obtain a Service
-Interface/Class using JNDI lookup as described in section
-link:#anchor-26[4.2.1]. Container providers are not required to support
-managed Service instances created using these methods.
+instances rely on specific implementations of ServiceDelegate Class in any
+Jakarta XML Web Services compliant implementation. The use of these static
+methods is not recommended in a Web Services for Jakarta EE product. A Web
+Services for Jakarta EE client must obtain a Service Interface/Class using
+JNDI lookup as described in <<anchor-26, section 4.2.1>>. Container providers
+are not required to support managed Service instances created using these
+methods.
 
 [#anchor-31]
 ===== Service method use with full WSDL
@@ -368,9 +369,9 @@ managed Service instances created using these methods.
 A client developer may use all methods of the Service Interface or class if a
 full WSDL description is declared in the client deployment descriptor.  A
 mapping file is not required because all of the data binding in Jakarta XML
-Web Services is done according to the JAXB specification. The port address
-location attribute of a port using a SOAP/HTTP binding must begin with http:
-or https:.
+Web Services is done according to the Jakarta XML Binding specification. The
+port address location attribute of a port using a SOAP/HTTP binding must begin
+with "http:" or "https:".
 
 If a client developer uses the getPort(SEI) method of a Service
 Interface/Class and the WSDL supports multiple ports the SEI could be
@@ -434,7 +435,7 @@ WebServiceFeature... features);
 A partial WSDL definition is defined as a fully specified WSDL document
 which contains no service or port elements. A mapping file is not required
 and ignored if specified, because all of the data binding in Jakarta XML Web
-Services is done according to the JAXB specification.
+Services is done according to the Jakarta XML Binding specification.
 
 Use of other methods of the Service Interface/Class is not recommended
 when a developer specifies a partial WSDL definition. The behavior of
@@ -498,11 +499,10 @@ recommended. Their behavior is unspecified.
 The following table summarizes the behavior of the methods of the
 Service Interface under various deployment configurations.
 
-
-* Table 2 Service class method behavior with Jakarta XML Web Services
-
+[[table2]]
 [cols=",,,",]
 |===
+|Method |Full WSDL |Partial WSDL |No WSDL
 |void addPort(QName portName, URI bindingId, String endpointAddress)
 |Normal |Normal |Normal
 
@@ -559,6 +559,8 @@ features) |Normal |Unspecified |Unspecified
 features) |Normal |Unspecified |Unspecified
 |===
 
+* Table 2 Service class method behavior with Jakarta XML Web Services
+
 [#anchor-30]
 ==== Port Stub and Dynamic Proxy
 
@@ -599,12 +601,12 @@ in a managed context defined by this specification:
 ===== Required properties
 
 A container provider is required to support the
-javax.xml.ws.service.endpoint.address property to allow
+jakarta.xml.ws.service.endpoint.address property to allow
 components to dynamically redirect a Stub/proxy to a different URI.
 
 ==== Jakarta XML Web Services Dispatch APIs
 
-Client developers may use javax.xml.ws.Dispatch APIs defined in Jakarta XML
+Client developers may use jakarta.xml.ws.Dispatch APIs defined in Jakarta XML
 Web Services specification. This is a low level API that requires clients to
 construct messages or message payloads as XML and requires an intimate
 knowledge of the desired message or payload structure. This is useful in
@@ -614,7 +616,7 @@ level.
 An instance of jakarta.xml.ws.Dispatch can be obtained by invoking any one
 of the two createDispatch(...) methods on a Service interface. Details
 on Dispatch API's and its usage can be referenced at section 4.3 of the
-Jakarta XML Web Services specification
+Jakarta XML Web Services specification.
 
 ==== Jakarta XML Web Services Asynchronous Operations
 
@@ -622,7 +624,7 @@ Client developer may use asynchronous invocations as defined by the
 Jakarta XML Web Services specification. This supports asynchronous invocations
 through generated asynchronous methods on the Service Endpoint Interface
 (section 2.3.4 of Jakarta XML Web Services specification) and
-javax.xml.ws.Dispatch (section 4.3.3 of Jakarta XML Web Services specification)
+jakarta.xml.ws.Dispatch (section 4.3.3 of Jakarta XML Web Services specification)
 interface. There are two forms of asynchronous invocations in Jakarta XML Web
 Services – Polling and Callback.
 
@@ -632,22 +634,22 @@ Client asynchronous polling invocations must be supported by components
 running in Servlet container, EJB container and Application Client
 container, since any of these components can act as Jakarta XML Web Services
 clients. Client developers can either use the Service Endpoint Interface or
-javax.xml.ws.Dispatch to make asynchronous polling invocations. The
+jakarta.xml.ws.Dispatch to make asynchronous polling invocations. The
 usage must meet the requirements defined in section 2.3.4 of Jakarta XML Web
 Services specification for Service Endpoint Interface or section 4.3.3 of
-Jakarta XML Web Services specification for javax.xml.ws.Dispatch interface.
+Jakarta XML Web Services specification for jakarta.xml.ws.Dispatch interface.
 
 ===== Callback
 
 Client asynchronous callback invocations should only be supported by
 components running in EJB, Servlet container and Application Client
 container. Client developers can either use the Service Endpoint
-Interface or javax.xml.ws.Dispatch to implement asynchronous callback
+Interface or jakarta.xml.ws.Dispatch to implement asynchronous callback
 invocations. The callback handler must implement
-javax.xml.ws.AsyncHandler interface. The usage should meet the
+jakarta.xml.ws.AsyncHandler interface. The usage should meet the
 requirements defined in section 2.3.4 of Jakarta XML Web Services specification
 for Service Endpoint Interface or section 4.3.3 of Jakarta XML Web Services
-specification for javax.xml.ws.Dispatch interface.
+specification for jakarta.xml.ws.Dispatch interface.
 
 It will be the container implementers responsibility to insure that the
 client developer has access to java:comp/env JNDI context for that
@@ -679,11 +681,11 @@ If no propagated identity is provided for invoking the callback handler,
 then the handler executes under unauthenticated identity as defined by
 the container.
 
-The handleResponse() method of the javax.xml.ws.AsyncHandler executes in
+The handleResponse() method of the jakarta.xml.ws.AsyncHandler executes in
 an unspecified transaction context. If the handleResponse() method of
-the callback handler creates a transaction using the JTA UserTransaction
-interface then this transaction must be committed or rollbacked before
-the return of handleResponse() method.
+the callback handler creates a transaction using the Jakarta Transactions
+UserTransaction interface then this transaction must be committed or
+rollbacked before the return of handleResponse() method.
 
 Requirements for asynchronous callback invocations in the EJB container:
 
@@ -745,6 +747,7 @@ Table : Relationship between deployment descriptor elements and @MTOM
 
 [cols=",",]
 |===
+|Deployment Descriptor elements |@MTOM
 |<service-ref>/<port-component-ref>/<enable-mtom> |@MTOM.enabled
 |<service-ref>/<port-component-ref>/<mtom-threshold> |@MTOM.threshold
 |===
@@ -798,6 +801,7 @@ Table : Relationship between deployment descriptor elements and
 
 [cols=",",]
 |===
+|Deployment Descriptor elements |@Addressing
 |<service-ref>/<port-component-ref>/<addressing>/<enabled>
 |@Addressing.enabled
 
@@ -833,7 +837,7 @@ The jakarta.xml.ws.RespectBinding annotation or its corresponding
 jakarta.xml.ws.RespectBindingFeature web service feature is used to
 control whether a Jakarta XML Web Services implementation must respect/honor
 the contents of the wsdl:binding in the WSDL that is associated with the
-service. See 6.5.3 and 7.14.3 sections in Jakarta XML Web Services 2.2
+service. See 6.5.3 and 7.14.3 sections in the Jakarta XML Web Services
 specification.
 
 RespectBinding web service feature on the client can be enabled or
@@ -854,6 +858,7 @@ Table : Relationship between deployment descriptor elements and
 
 [cols=",",]
 |===
+|Deployment Descriptor elements |@RespectBinding
 |<service-ref>/<port-component-ref>/<respect-binding>/<enabled>
 |@RespectBinding.enabled
 |===
