@@ -126,10 +126,10 @@ protocol in a way that allows analysis by the WS-I tools.
 
 ==== Jakarta XML Web Services HTTP SPI
 
-Jakarta XML Web Services introduces HTTP SPI that allows a deployment to use any
+Jakarta XML Web Services includes HTTP SPI that allows a deployment to use any
 available Jakarta XML Web Services runtime for HTTP transport. This allows 109 implementations 
 to use the Jakarta XML Web Services runtime in a Jakarta SE platform when it is available. 
-For more details on the HTTP SPI, see the Jakarta XML Web Services specification.
+For more details on the HTTP SPI, see the section 6.6 of Jakarta XML Web Services specification.
 
 === Container Provider requirements
 
@@ -167,11 +167,11 @@ _<assembly-descriptor>_ in the _ejb-jar.xml_ deployment descriptor.
 
 The container must update and/or generate a deployed WSDL document for
 each wsdlLocation element in the Web service annotations (described in
-section 5.3.2.1 and 5.3.2.2) or declared wsdl-file element in the Web
-services deployment descriptor (webservices.xml). If multiple wsdl-file
-elements refer to the same location, a separate WSDL document must be
-generated for each. The container must not update a WSDL file located in
-the document root of a WAR file.
+section link:#anchor-45[5.3.2.1] and link:#anchor-46[5.3.2.2]) or 
+declared wsdl-file element in the Web services deployment descriptor 
+(webservices.xml). If multiple wsdl-file elements refer to the same location, 
+a separate WSDL document must be generated for each. The container must not 
+update a WSDL file located in the document root of a WAR file.
 
 The WSDL document described by the wsdl-file element must contain
 service and port elements and every port-component in the deployment
@@ -232,14 +232,14 @@ information.
 
 A Web Services for Jakarta EE provider is required to support publishing a
 deployed WSDL document if the wsdlLocation element in the Web service
-annotations (described in section 5.3.2.1 and 5.3.2.2) or Web services
-deployment descriptor (webservices.xml) wsdl-file element refers to a
-WSDL file contained in the wsdl directory or subdirectory, as described
-in section link:#anchor-52[5.4.1]. A vendor may support publication of
-WSDL files packaged in other locations, but these are considered
-non-portable. A provider may publish the static content (e.g. no JSPs or
-Servlets) of the entire wsdl directory and all its subdirectories if the
-deploy tool cannot compute the minimal set of documents to publish in
+annotations (described in section link:#anchor-45[5.3.2.1] and link:#anchor-46[5.3.2.2]) 
+or Web services deployment descriptor (webservices.xml) wsdl-file element 
+refers to a WSDL file contained in the wsdl directory or subdirectory, 
+as described in section link:#anchor-52[5.4.1]. A vendor may support 
+publication of WSDL files packaged in other locations, but these are 
+considered non-portable. A provider may publish the static content 
+(e.g. no JSPs or Servlets) of the entire wsdl directory and all its subdirectories 
+if the deploy tool cannot compute the minimal set of documents to publish in
 order to maintain referential integrity. The recommended practice is to
 place WSDL files referenced by a wsdlLocation element in the Web service
 annotations or wsdl-file element and their relative imported documents
@@ -289,7 +289,7 @@ developer should avoid packaging them with the application.
 
 Jakarta XML Web Services specification makes no distinction between stubs and 
 dynamic proxies, but talks only about proxies and they must conform to 
-Jakarta XML Web Services specification.
+Jakarta XML Web Services specification section 4.2.3.
 
 The container is required to support credential propagation as defined
 in section link:#anchor-34[4.2.6] without client code intervention.
@@ -370,7 +370,7 @@ and a module's deployment descriptor containing:
 
 <service-ref-name>service/Joe</service-ref-name>
 
-<service-interface>jakarta.xml.rpc.Service</service-interface>
+<service-interface>javax.xml.rpc.Service</service-interface>
 
 <wsdl-file>WEB-INF/joe.wsdl</wsdl-file>
 

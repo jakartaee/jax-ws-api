@@ -47,31 +47,30 @@ Port components, each with its own potentially unique but probably shared
 Service Implementation Bean.
 link:#anchor-36[Figure 5] illustrates this below.
 
-{empty}[#anchor-37]##[#anchor-38]##image:5.png[image,width=374,height=259]
+image:5.png[image,width=374,height=259]
 
 * [#anchor-36]##Figure 5 container
 
-A Port’s life cycle is specific to and completely controlled by the
+A Port's life cycle is specific to and completely controlled by the
 container, but in general follows the same life cycle of the container
 itself. A Port is created and initialized by the container before the
 first request received at the WSDL port address can be serviced. A Port
 is destroyed by the container whenever the container feels it is
 necessary to do so, such as when the container is shutting down.
 
-The implementation of a Port and the container it runs in are tied. A
-A Jakarta XML Web Services Service Implementation Bean runs in a web 
-container and an EJB Service Implementation Bean always runs in an 
-EJB container.
+The implementation of a Port and the container it runs in are tied.
+A Jakarta XML Web Services Service Implementation Bean may run in a 
+web container and an EJB Service Implementation Bean always runs in 
+an EJB container.
 
 The Port component associates a WSDL port address with a Service
 Implementation Bean. In general the Port component defers container
-service requirement definition to the Jakarta EE component’s deployment
-descriptor. This is discussed further in Chapters link:#anchor-39[6.3]
-and link:#anchor-40[7.3]. A container provides a listener for the WSDL
-port address and a means of dispatching the request to the Service
-Implementation. A container also provides run-time services such as
-security constraints and logical to physical mappings for references to
-distributed objects and resources.
+service requirement definition to the Jakarta EE component's deployment
+descriptor. This is discussed further in Chapter link:#anchor-39[6.3].
+A container provides a listener for the WSDL port address and a means 
+of dispatching the request to the Service Implementation. A container 
+also provides run-time services such as security constraints and logical 
+to physical mappings for references to distributed objects and resources.
 
 === Port Component Model Specification
 
@@ -80,7 +79,7 @@ Web Service a portable server application. The association of a Port
 component with a WSDL port provides for interoperability. The
 programming model artifacts include:
 
-WSDL document – Although not strictly a programming model artifact, the
+WSDL document - Although not strictly a programming model artifact, the
 WSDL document provides a canonical description of a Web service that may
 be published to third parties. A WSDL document and the Service Endpoint
 Interface are related by the Jakarta XML Web Services WSDL<->Java mapping rules.
@@ -100,9 +99,6 @@ the deployment descriptor. These logical role names are reconciled
 across the modules by the assembler and mapped to physical roles at
 deployment time and allow the service to provide instance level security
 checks.
-
-____
-____
 
 A developer declares a Port component within a Web services deployment
 descriptor. The deployment descriptor includes the WSDL document that
@@ -151,47 +147,50 @@ a Jakarta XML Web Services service using singleton session EJB can also be in
 @ApplicationScoped scope. It is an error if the service class has a scope 
 other than the required one.
 
-In a product that also supports Managed Beans, an implementation must
+In a product that also supports Jakarta Managed Beans, an implementation must
 support use of managed beans as web service classes in an application. 
 Jakarta XML Web Services annotations may be directly applied to managed beans. 
-Managed Beans specification specifies the requirements for these container-managed 
-bean instances w.r.t instantiation, injection and other services.
+Jakarta Managed Beans specification specifies the requirements for these 
+container-managed bean instances w.r.t instantiation, injection and other services.
 
 Jakarta XML Web Services along with Jakarta Web Services Metadata specification 
 places additional requirements on Service Implementation Beans detailed 
-in sections 5.3.2.1 and 5.3.2.2.
+in sections link:#anchor-45[5.3.2.1] and link:#anchor-46[5.3.2.2].
 
 The developer is only required to provide the jakarta.jws.WebService
 annotated Service Implementation Bean. The deployment tools could then
 be used to generate the WSDL document and the SEI using Jakarta XML 
 Web Services rules for Java <-> WSDL mapping.
 
-===== _jakarta.jws.WebService_ annotation
+[#anchor-45]
+===== jakarta.jws.WebService annotation
 
 Jakarta XML Web Services along with Jakarta Web Services Metadata specification 
 requires that the Service Implementation Beans must include jakarta.jws.WebService 
 class-level annotation to indicate that it implements a Web Service. Detail 
 requirements and definition of the jakarta.jws.WebService annotation 
-can be found in Jakarta Web Services Metadata specification. If member attributes 
-of the annotation are not specified then server side deployment descriptors 
-(see section 7.1) are used. The member attributes of the annotation can 
-also be overridden by server side deployment descriptors .
+can be found in Jakarta Web Services Metadata specification (section 4.1).  
+If member attributes of the annotation are not specified then server side deployment 
+descriptors (see section link:#anchor-66[7.1]) are used. The member attributes of 
+the annotation can also be overridden by server side deployment descriptors.
 
 A Service Implementation Bean using this annotation is not required to
 specify a wsdlLocation. If wsdlLocation attribute is specified in the
 jakarta.jws.WebService annotation, it must follow the packaging rules for
-the WSDL file detailed in section 5.4. If wsdlLocation attribute is
+the WSDL file detailed in section link:#anchor-51[5.4]. If wsdlLocation attribute is
 specified, then the WSDL file must exist at that location or can be
-resolved using the catalog facility specified in section 5.4.4.
+resolved using the catalog facility specified in section link:#anchor-59[5.4.4].
 
 The following table shows the relationship between the deployment
 descriptor elements and this annotation.
 
-Table 1 Relationship between the deployment descriptor elements and
+Table 1: Relationship between the deployment descriptor elements and
 jakarta.jws.WebService annotation
 
-[cols=",",]
+[cols="1,1", options="header"]
 |===
+|Deployment Descriptor element |jakarta.jws.WebService annotation
+
 |<webservices>/<webservice-description> |One per WSDL document
 
 |<webservices>/<webservice-description>/<port-component> |One per
@@ -227,7 +226,7 @@ on the Service Implementation Bean class must be used as the <ejb-link>
 element in the deployment descriptor to map the Port component to the
 actual EJB. If name attribute in jakarta.ejb.Stateless or
 jakarta.ejb.Singleton annotation is not specified, then the default value
-is used as defined in the Jakarta Enterprise Beans 4.0 specification.
+is used as defined in the section 4.4.1 of Jakarta Enterprise Beans specification.
 
 For Servlet based endpoints using this annotation, fully qualified name
 of the Service Implementation Bean class must be used as the
@@ -241,7 +240,7 @@ web.xml or a partial web.xml:
 * fully qualified name of the Service Implementation Bean class maps to
 <servlet-name> element in web.xml.
 * fully qualified name of the Service Implementation Bean class maps to
-<servlet-class> element in web.xml (also specified in section 7.1.2)
+<servlet-class> element in web.xml (also specified in section link:#anchor-68[7.1.2])
 * serviceName attribute of jakarta.jws.WebService annotation prefixed with
 "/" maps to <url-pattern> element in web.xml. If the serviceName
 attribute in jakarta.jws.WebService annotation is not specified, then the
@@ -263,7 +262,8 @@ a Jakarta XML Web Services service endpoint in a web container. The two
 programming models are fully defined in sections link:#anchor-43[5.3.2.3] 
 and link:#anchor-44[5.3.2.4].
 
-===== jakarta.xml.ws.Provider interface and _jakarta.xml.ws.WebServiceProvider_ annotation
+[#anchor-46]
+===== jakarta.xml.ws.Provider interface and jakarta.xml.ws.WebServiceProvider annotation
 
 Service Endpoint Interfaces (SEI) provides a high level Java-centric
 abstraction that hides the details of converting between Java objects
@@ -279,24 +279,26 @@ indicating that it implements the jakarta.xml.ws.Provider interface.
 Details on the jakarta.xml.ws.WebServiceProvider annotation can be found 
 in Jakarta XML Web Services specification. If member attributes of the 
 annotation are not specified then server side deployment descriptors 
-(see section 7.1) are used. The member attributes of the annotation can 
+(see section link:#anchor-66[7.1]) are used. The member attributes of the annotation can 
 also be overridden by server side deployment descriptors .
 
 A WSDL file is required to be packaged with a Provider implementation.
 If wsdlLocation attribute is specified in the jakarta.xml.ws.WebServiceProvider 
-annotation, it must follow the packaging rules detailed in section 5.4. 
+annotation, it must follow the packaging rules detailed in section link:#anchor-51[5.4]. 
 If wsdlLocation attribute is specified, then the WSDL file must exist at 
 that location or can be resolved using the catalog facility specified in 
-section 5.4.4.
+section link:#anchor-59[5.4.4].
 
 The following table shows the relationship between the deployment
 descriptor elements and this annotation.
 
-Table 2 Relationship between the deployment descriptor elements and
+Table 2: Relationship between the deployment descriptor elements and
 jakarta.xml.ws.WebServiceProvider annotation
 
-[cols=",",]
+[cols="1,1", options="header"]
 |===
+|Deployment Descriptor element |jakarta.xml.ws.WebServiceProvider annotation
+
 |<webservices>/<webservice-description> |One per WSDL document
 
 |<webservices>/<webservice-description>/<port-component> |One per
@@ -329,7 +331,7 @@ on the Service Implementation Bean class must be used as the <ejb-link>
 element in the deployment descriptor to map the Port component to the
 actual EJB. If name attribute in jakarta.ejb.Stateless or
 jakarta.ejb.Singleton annotation is not specified, then the default value
-is used as defined in the Jakarta Enterprise Beans 4.0 specification.
+is used as defined in the section 4.4.1 of Jakarta Enterprise Beans specification.
 
 For Servlet based endpoints using this annotation, fully qualified name
 of the Service Implementation Bean class must be used as the
@@ -343,7 +345,7 @@ web.xml or a partial web.xml:
 * fully qualified name of the Service Implementation Bean class maps to
 <servlet-name> element in web.xml.
 * fully qualified name of the Service Implementation Bean class maps to
-<servlet-class> element in web.xml. (also specified in section 7.1.2)
+<servlet-class> element in web.xml. (also specified in section link:#anchor-68[7.1.2])
 * serviceName attribute of jakarta.xml.ws.WebServiceProvider annotation
 prefixed with "/" maps to <url-pattern> element in web.xml.
 
@@ -361,9 +363,9 @@ link:#anchor-43[5.3.2.3] and link:#anchor-44[5.3.2.4].
 [#anchor-43]
 ===== EJB container programming model
 
-A Stateless Session Bean, as defined by the Jakarta Enterprise Beans 4.0 specification, 
+A Stateless Session Bean, as defined by the Jakarta Enterprise Beans specification, 
 can be used to implement a Web service to be deployed in the EJB container. 
-A Singleton Session Bean, as defined by the Jakarta Enterprise Beans 4.0 specification, 
+A Singleton Session Bean, as defined by the Jakarta Enterprise Beans specification, 
 can be used to implement a Jakarta XML Web Services Web service to be deployed 
 in the EJB container.
 
@@ -371,20 +373,20 @@ A Stateless Session Bean does not have to worry about multi-threaded
 access. The EJB container is required to serialize request flow through
 any particular instance of a Service Implementation Bean. A Singleton
 Session Bean is intended to be shared and supports concurrent access.
-The access rules are specified in the Jakarta Enterprise Beans 4.0 specification.
+The access rules are specified in the Jakarta Enterprise Beans specification.
 
 The requirements for creating a Service Implementation Bean as a
 Stateless or Singleton Session EJB are repeated in part here.
 
 * The Service Implementation Bean class must be annotated with either 
 jakarta.jws.WebService or jakarta.xml.ws.WebServiceProvider annotation. 
-See section 5.3.2.1 and 5.3.2.2
+See section link:#anchor-45[5.3.2.1] and link:#anchor-46[5.3.2.2].
 * For developers starting from Java, jakarta.jws.WebService annotation 
 on Service Implementation Bean may optionally reference an SEI but is 
 not required to do so. If SEI is not specified, the Service Implementation 
 Bean class implicitly defines a SEI as required by section 3.3 of 
 Jakarta XML Web Services specification. The Service Implementation Bean
-methods are not required to throw jakarta.rmi.RemoteException. The
+methods are not required to throw javax.rmi.RemoteException. The
 business methods of the bean must be public and must not be final or
 static. Only those methods that are annotated with @WebMethod in the
 Service Implementation Bean, are exposed to the client.
@@ -395,7 +397,7 @@ jakarta.jws.WebService annotation and the endpointInterface member attribute
 must refer to this generated SEI.  Service Implementation Bean may implement 
 the Service Endpoint Interface, but it is not required to do so. The bean must 
 implement all the method signatures of the SEI. The Service Implementation Bean
-methods are not required to throw jakarta.rmi.RemoteException. The business 
+methods are not required to throw javax.rmi.RemoteException. The business 
 methods of the bean must be public and must not be final or static. It may 
 implement other methods in addition to those defined by the SEI.
 * The Service Implementation Bean must have a default public
@@ -412,7 +414,7 @@ client invocations.
 * The class must not define the finalize() method.
 * Currently, it may use jakarta.annotation.PostConstruct or
 jakarta.annotation.PreDestroy annotation on methods for lifecycle event
-callbacks. See Jakarta Enterprise Beans 4.0 specification for more details on this.
+callbacks. See Jakarta Enterprise Beans specification for more details on this.
 
 ====== jakarta.ejb.Stateless annotation
 
@@ -422,11 +424,11 @@ as a stateless session bean. The bean class no longer implements the
 _jakarta.ejb.SessionBean_ interface.
 
 The full requirements for Stateless Session Bean are defined in the
-Jakarta Enterprise Beans 4.0 specification (EJB Core Contracts and Requirements).
+Jakarta Enterprise Beans specification (EJB Core Contracts and Requirements).
 
 ====== Allowed access to container services
 
-The Jakarta Enterprise Beans 4.0 specification (EJB Core Contracts and
+The Jakarta Enterprise Beans specification (EJB Core Contracts and
 Requirements) defines the allowed container service access requirements.
 
 A stateless or singleton session bean that implements a web service
@@ -441,17 +443,17 @@ Jakarta XML Web Services specification.
 
 ====== jakarta.ejb.Singleton annotation
 
-EJB 3.1 introduces Singleton session bean component that provides an
-easy access to shared state. A Singleton session bean is instantiated
-once per application. A Singleton session bean must be annotated with
-the _jakarta.ejb.Singleton_ annotation or denoted in the deployment
-descriptor as a singleton session bean.
+Singleton session bean component, as defined by Jakarta Enterprise Beans specification, 
+provides an easy access to shared state. A Singleton session bean is instantiated 
+once per application. A Singleton session bean must be annotated with the 
+_jakarta.ejb.Singleton_ annotation or denoted in the deployment descriptor as a 
+singleton session bean.
 
-The full requirements for Singleton Session Bean are defined in the
-section 4.8 of EJB 3.1 specification.
+The full requirements for Singleton Session Bean are defined by the
+Jakarta Enterprise Beans specification.
 
-[#anchor-46]
-====== Web container programming model for Jakarta XML Web Services
+[#anchor-44]
+===== Web container programming model
 
 Jakarta XML Web Services Service Endpoint that run within the web container 
 must follow the requirements repeated here.
@@ -468,6 +470,7 @@ The Service Implementation Bean must follow these requirements:
 
 * The Service Implementation Bean class must be annotated with either
 jakarta.jws.WebService or jakarta.xml.ws.WebServiceProvider annotation. 
+See section link:#anchor-45[5.3.2.1] and link:#anchor-46[5.3.2.2].
 * For developers starting from Java, jakarta.jws.WebService annotation 
 on Service Implementation Bean may optionally reference an SEI but is 
 not required to do so. If SEI is not specified, the Service Implementation 
@@ -486,7 +489,6 @@ methods of the bean must be public and must not be final or static.
 It may implement other methods in addition to those defined by the SEI.
 * The Service Implementation Bean must have a default public
 constructor.
-
 * A Service Implementation must be a stateless object. A Service
 Implementation Bean must not save client specific state across method
 calls either within the bean instance's data members or external to the
@@ -557,16 +559,9 @@ the Jakarta XML Web Services specification.
 ==== Service Implementation Bean Life Cycle
 
 The life cycle of a Service Implementation Bean is controlled by the
-container and is illustrated in link:#anchor-49[Figure 6]. The methods
-called by the container are container/bean specific, but in general are
-quite similar. link:#anchor-49[Figure 6] illustrates the life cycle in
-the web container. The EJB container life cycle can be referenced from
-Jakarta Enterprise Beans 4.0 specification.
-
-{empty}[#anchor-50]##image:6.png[image,width=280,height=194]
-
-* [#anchor-49]##Figure 6 Service Implementation Bean life cycle in the
-web container
+container. The methods called by the container are container/bean specific, 
+but in general are quite similar. The EJB container life cycle can be 
+referenced from Jakarta Enterprise Beans specification.
 
 The container services requests defined by a WSDL port. It does this by
 creating a listener for the WSDL port address, receiving requests and
@@ -613,7 +608,7 @@ requires support for the following protocol bindings:
 
 Support for overriding the protocol binding specified by BindingType
 annotation is provided by <protocol-binding> deployment descriptor
-element for a port component. Refer to section 7.1.2 for details on this
+element for a port component. Refer to section link:#anchor-68[7.1.2] for details on this
 deployment descriptor element.
 
 In the event this element is not specified in the deployment descriptors
@@ -626,9 +621,10 @@ Jakarta XML Web Services compliant implementations are required to support MTOM
 (Message Transmission Optimization Mechanism)/XOP (XML-binary Optimized Packaging) 
 specifications from W3C. Refer to Jakarta XML Web Services specification for more
 information. Support for SOAP MTOM/XOP mechanism for optimizing transmission of 
-binary data types is provided by JAXB which is the data binding for Jakarta XML 
-Web Services. Jakarta XML Web Services provides the MIME processing required to 
-enable JAXB to serialize and deserialize MIME based MTOM/XOP packages.
+binary data types is provided by Jakarta XML Binding which is the data binding 
+for Jakarta XML Web Services. Jakarta XML Web Services provides the MIME processing 
+required to enable Jakarta XML Binding to serialize and deserialize MIME based 
+MTOM/XOP packages.
 
 SOAP MTOM/XOP mechanism on the service can be enabled or disabled by any
 one of the following ways:
@@ -647,10 +643,12 @@ Jakarta XML Web Services recommends the use of MTOM feature instead of
 mtom enabled bindings: SOAPBinding.SOAP11HTTP_MTOM_BINDING,
 SOAPBinding.SOAP12HTTP_MTOM_BINDING.
 
-Table : Relationship between deployment descriptor elements and @MTOM
+Table 3: Relationship between deployment descriptor elements and @MTOM
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
+|Deployment Descriptor element |@MTOM
+
 |<service>/<port-component>/<enable-mtom> |@MTOM.enabled
 |<service>/<port-component>/<mtom-threshold> |@MTOM.threshold
 |===
@@ -676,11 +674,13 @@ requirements. For example, the addressing requirements specified by the
 @Addressing are overridden by the same from a corresponding
 <port-component>/<addressing> deployment descriptor element.
 
-Table : Relationship between deployment descriptor elements
-and@Addressing
+Table 4: Relationship between deployment descriptor elements
+and @Addressing
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
+|Deployment Descriptor element |@Addressing
+
 |<service>/<port-component>/<addressing>/<enabled> |@Addressing.enabled
 
 |<service>/<port-component>/<addressing>/<required>
@@ -719,11 +719,13 @@ for the corresponding service
 Deployment descriptor <respect-binding> element overrides the
 @RespectBinding annotation for the corresponding service.
 
-Table : Relationship between deployment descriptor elements and
+Table 5: Relationship between deployment descriptor elements and
 @RespectBinding
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
+|Deployment Descriptor element |@RespectBinding
+
 |<service>/<port-component>/<respect-binding>/<enabled>
 |@RespectBinding.enabled
 |===
@@ -766,7 +768,7 @@ link:#anchor-53[8.2.4] and link:#anchor-54[8.2.5] for more details.
 
 Stateless or Singleton Session EJB Service Implementation Beans are
 packaged in an EJB-JAR that contains the class files and WSDL files. The
-packaging rules follow those defined by the Jakarta Enterprise Beans 4.0
+packaging rules follow those defined by the Jakarta Enterprise Beans
 specification. In addition, the Web services deployment descriptor
 location within the EJB-JAR file is META-INF/webservices.xml. The wsdl
 directory is located at META-INF/wsdl. See 5.4.3 section for packaging
@@ -783,6 +785,7 @@ for Stateless or Singleton EJB within a WAR are defined by the EJB specification
 In addition, a Web services deployment descriptor is located in a WAR at
 WEB-INF/webservices.xml and the wsdl directory is located at WEB-INF/wsdl.
 
+[#anchor-59]
 ==== Catalog packaging
 
 Jakarta XML Web Services requires support for a OASIS XML Catalogs 1.1 

@@ -25,6 +25,7 @@ link:#anchor-4[3.2]. The deployment descriptor defines the WSDL port to
 Port component relationship. Port components are defined in Chapter
 link:#anchor-35[5].
 
+[#anchor-68]
 ==== Developer responsibilities
 
 The developer is responsible not only for the implementation of a Web
@@ -38,7 +39,7 @@ then the stateless or singleton session bean must be defined in the
 ejb-jar.xml deployment descriptor file using the session element.
 Servlet based web service endpoints using Jakarta XML Web Services
 are not required to provide the web.xml deployment descriptor file 
-(see section 5.3.2.1). See the Jakarta Enterprise Beans and Servlet 
+(see section link:#anchor-45[5.3.2.1]). See the Jakarta Enterprise Beans and Servlet 
 specifications for additional details on developer requirements for 
 defining deployment descriptors. The developer is also required to 
 provide structural information that defines the Port components within 
@@ -70,7 +71,7 @@ single port-component.
 * **Port's Service Endpoint Interface. **The developer must specify the
 fully qualified class name of the Service Endpoint Interface in the
 service-endpoint-interface element. The Service Endpoint Interface
-requirements may be found in section link:#anchor-42[5.3.1]. If the
+requirements may be found in section link:#anchor-41[5.3.1]. If the
 Service Implementation is a stateless session EJB, the developer must
 also specify the Service Endpoint Interface in the EJB deployment
 descriptor using the service-endpoint element. See the Jakarta Enterprise
@@ -165,7 +166,7 @@ or may add new handler elements or new handler-chain elements. With Jakarta XML 
 Handler implementation must contain all the soap-header information needed by it.
 
 See also the assembler responsibilities defined in
-sectionlink:#anchor-72[7.2.3].
+section link:#anchor-72[7.2.3].
 
 ==== Deployer responsibilities
 
@@ -201,7 +202,7 @@ jakarta.xml.ws.WebServiceRef annotation is used. If the Web services
 client is a Jakarta EE component, then it uses a logical name for the Web
 service called a service reference to look up the service. Any component
 that uses a Web service reference must declare a dependency on the Web
-service reference in a module'ss deployment descriptor file.
+service reference in a module's deployment descriptor file.
 
 [#anchor-71]
 ==== Developer responsibilities
@@ -245,7 +246,7 @@ partial WSDL, but must at least include the portType and binding
 elements. The WSDL description provided by the developer is considered a
 template that must be preserved by the assembly/deployment process. In
 other words, the WSDL description contains a declaration of the
-application’s dependency on portTypes, bindings, and QNames. The WSDL
+application's dependency on portTypes, bindings, and QNames. The WSDL
 document must be fully specified, including the service and port
 elements, if the application is dependent on port QNames (e.g. uses the
 Service.getPort(QName,Class) method). The developer must specify the
@@ -289,7 +290,7 @@ the soap-header information needed by it.
 * *WSDL definition.* The assembler may replace the WSDL definition with
 a new WSDL that resolves missing service and port elements or missing
 port address attributes. The assembler may update the port address
-attribute__.__
+attribute.
 
 ==== Deployer responsibilities
 

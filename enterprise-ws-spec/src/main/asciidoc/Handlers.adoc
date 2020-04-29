@@ -89,7 +89,7 @@ document either in its business logic or in message handlers.
 === Specification
 
 This section defines the requirements for Jakarta XML Web Services Handlers 
-running in Web Services for Jakarta EE. Differences between this specification 
+running Jakarta Enterprise Web Services. Differences between this specification 
 and the Jakarta XML Web Services specification are noted in boxed paragraphs.
 
 ==== Scenarios
@@ -118,8 +118,8 @@ implementation of HandlerResolver that returns the Handler Chain with
 Handlers specified in the deployment descriptor or the
 jakarta.jws.HandlerChain annotation. The ordering of the Handlers in the
 HandlerChain must follow the requirements specified in Jakarta XML Web Services
-specification. In addition to this, the ordering of any given type of Handler 
-(logical or protocol) in the deployment descriptor must be maintained
+specification section 9.2.1.2. In addition to this, the ordering of any given 
+type of Handler (logical or protocol) in the deployment descriptor must be maintained.
 
 A Web Services for Jakarta EE provider is required to provide an
 implementation of MessageContext.
@@ -129,7 +129,7 @@ interfaces of the jakarta.xml.ws.handler.soap package. The provider must
 also provide an implementation of the SOAPMessageContext interface.
 
 The programming model of a Port component can be single-threaded or
-multi-threaded as defined in sections link:#anchor-45[5.3.2.3] and
+multi-threaded as defined in sections link:#anchor-43[5.3.2.3] and
 link:#anchor-44[5.3.2.4]. The concurrency of a Jakarta XML Web Services 
 Handler must match the concurrency of the business logic it is associated 
 with.  Client handlers may need to support multi-threaded execution 
@@ -140,7 +140,7 @@ was loaded with. The class loading rules follow the rules defined for
 the container the Handler is running in.
 
 In a product that also supports Jakarta Contexts and Dependency Injection, 
-an implementation must support use of 299-style managed beans as Jakarta 
+an implementation must support use of CDI-style managed beans as Jakarta 
 XML Web Services handler classes in an application. Jakarta Contexts and 
 Dependency Injection specifies the requirements for these container-managed 
 bean instances w.r.t instantiation, injection and other services. 
@@ -148,9 +148,9 @@ Jakarta Contexts and Dependency Injection specification defines @Dependent pseud
 handler classes must be specified in that scope. It is an error if the 
 handler class has a scope other than the required one.
 
-In a product that also supports Managed Beans, an implementation must
+In a product that also supports Jakarta Managed Beans, an implementation must
 support use of managed beans as Jakarta XML Web Services handler classes in an
-application. Managed Beans specification specifies the requirements for
+application. Jakarta Managed Beans specification specifies the requirements for
 these container-managed bean instances w.r.t instantiation, injection
 and other services.
 
@@ -165,6 +165,7 @@ of the handler class.
 
 * The handler instance is initialized by invoking the lifecycle method annotated with 
 jakarta.annotation.PostConstruct (defined by Jakarta Annotations specification).
+This method is only called after all injections requested by the Handler are completed.
 Once the handler instance is created and initialized it is placed into the Ready state. 
 While in the Ready state the Jakarta XML Web Services runtime may invoke other handler 
 methods as required.
@@ -177,13 +178,14 @@ The lifecycle methods annotated with jakarta.annotation.PostConstruct and
 jakarta.annotation.PreDestroy in the Handler implementation allows the
 container to notify a Handler instance of impending changes in its
 state. Detailed requirements for Handler lifecycle are described in
-Jakarta XML Web Services specification. The Handler may use the notification
-to prepare its internal state for the transition. The container is
-required to call lifecycle methods annotated with jakarta.annotation.PostConstruct 
-and jakarta.annotation.PreDestroy as described below.
+section 9.3.1 of Jakarta XML Web Services specification. The Handler may 
+use the notification to prepare its internal state for the transition. 
+The container is required to call lifecycle methods annotated with 
+jakarta.annotation.PostConstruct and jakarta.annotation.PreDestroy as 
+described below.
 
 The container must carry out any injections (if any) requested by the
-handler, typically via the @Resource annotation (see Jakarta Annotations specification)
+handler, typically via the @Resource annotation (see Jakarta Annotations specification).
 After all the injections have been carried out, the container must invoke the
 method carrying a jakarta.annotation.PostConstruct annotation. This method
 must have a void return type and take zero arguments. The handler
@@ -196,9 +198,9 @@ A container must not call this method while a request is being processed
 by the Handler instance. The container must not dispatch additional
 requests to the Handler after the this method is called.
 
-The requirements for processing any RuntimeException or
-ProtocolException thrown from handle<action>() method of the handler are
-defined in the Jakarta XML Web Services specification.
+The requirements for processing any RuntimeException or ProtocolException 
+thrown from handle<action>() method of the handler are defined in 
+sections 9.3.2.1 and 9.3.2.2 of the Jakarta XML Web Services specification.
 
 Pooling of Handler instances is allowed, but is not required. If Handler
 instances are pooled, they must be pooled by Port component. This is
@@ -213,7 +215,7 @@ based container. It is not required that the same Handler instance service
 handleMessage() or handleFault() method invocation of any given request 
 in the Jakarta XML Web Services based container.
 
-===== _jakarta.jws.HandlerChain_ annotation
+===== jakarta.jws.HandlerChain annotation
 
 The jakarta.jws.HandlerChain annotation from Jakarta Web Services Metadata specification 
 (imported by Jakarta XML Web Services) may be declared on Web Service endpoints 
@@ -221,9 +223,9 @@ The jakarta.jws.HandlerChain annotation from Jakarta Web Services Metadata speci
 or on Web Service references (those declared with the jakarta.xml.ws.WebServiceRef annotation). 
 This annotation is used to specify the handler chain to be applied on the declared port component
 or Service reference. Details on the jakarta.jws.HandlerChain annotation can be found in 
-Jakarta Web Services Metadata specification. If this annotation is used, the handler chain 
-file for this must be packaged with the application unit according to the packaging rules 
-in Section 6.3.
+section 4.6 of Jakarta Web Services Metadata specification. If this annotation is used, 
+the handler chain file for this must be packaged with the application unit according to the 
+packaging rules in Section 6.3.
 
 The deployment descriptors on port component or Service reference
 override the jakarta.jws.HandlerChain annotation specified in the
@@ -244,9 +246,9 @@ this annotation.  They are also required to provide an implementation of
 HandlerResolver that returns a handler chain with handlers specified in 
 the deployment descriptor or the jakarta.jws.HandlerChain annotation. 
 The ordering of the handlers in the handler chain must follow the requirements 
-specified in Jakarta XML Web Services specification.  In addition to this, 
-the ordering of any given type of Handler (logical or protocol) in the 
-deployment descriptor must be maintained
+specified in section 9.2.1.2 of Jakarta XML Web Services specification.  
+In addition to this, the ordering of any given type of Handler 
+(logical or protocol) in the deployment descriptor must be maintained.
 
 ===== Security
 
@@ -316,7 +318,6 @@ entry elements (<env-entry>) declared in the application component's
 deployment descriptor for this purpose. These can be injected into the
 handler using the @Resource annotation or looked up using JNDI.
 
-
 A Handler implementation that implements the jakarta.xml.ws.handler.soap.SOAPHandler 
 interface must contain all the headers information needed by it.  Additionally, 
 in this case the soap-header element declared in the deployment descriptor is 
@@ -371,9 +372,9 @@ with, but are not required to do so.
 ==== Container Provider Responsibilities
 
 In a Jakarta XML Web Services based container, a Handler chain is processed 
-according to the Jakarta XML Web Services specification.  In addition to this, 
-the ordering of any given type of Handler (logical or protocol) in the 
-deployment descriptor or in the handler configuration file specified in the 
+according to the Jakarta XML Web Services specification section 9.2.1.2.
+In addition to this, the ordering of any given type of Handler (logical or protocol) 
+in the deployment descriptor or in the handler configuration file specified in the 
 jakarta.jws.HandlerChain annotation, must be maintained.
 
 The container must ensure that for EJB based Web Service endpoints with
@@ -382,7 +383,7 @@ before any EJB business method interceptor methods.
 
 A Jakarta XML Web Services based container must carry out any injections (if any)
 requested by the handler, typically via the @Resource annotation (see
-Jakarta Annotations specification).  A Jakarta XML Web Services handler should 
+section 2.2 of Jakarta Annotations specification).  A Jakarta XML Web Services handler should 
 use the jakarta.xml.ws.WebServiceContext, which is an injectable resource, to
 access message context and security information relative to the request
 being served. A unique Handler instance must be provided for each Port
