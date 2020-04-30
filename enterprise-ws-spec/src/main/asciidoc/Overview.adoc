@@ -177,8 +177,8 @@ JAX-WS 2.2 adds a complete Web Services addressing support as specified
 in Web Services Addressing 1.0 - Core, Web Services Addressing 1.0 -
 Soap Binding, and Web Services Addressing 1.0 - Metadata.
 
-Jakarta XML Web Services 3.0 is a next version of renames the JAX-WS 2.2
-specification. It mvoes existing APIs from javax.xml.ws packages to
+Jakarta XML Web Services 3.0 is a next version of the JAX-WS 2.2
+specification. It moves existing APIs from javax.xml.ws packages to
 jakarta.xml.ws packages.
 
 === Interoperability
@@ -209,9 +209,9 @@ covered by this specification.
 * The scope of this specification is limited to Web service standards
 that are widely documented and accepted in the industry. These include:
 
-* SOAP 1.1, SOAP 1.2 and SOAP with Attachments
-* WSDL 1.1
-* UDDI 1.0
+** SOAP 1.1, SOAP 1.2 and SOAP with Attachments
+** WSDL 1.1
+** UDDI 1.0
 
 * This specification is limited to defining support for SOAP over HTTP
 1.1 or HTTPS protocols and communication APIs for Web services (vendors

@@ -224,7 +224,7 @@ names of all the deployed port components in the Jakarta EE application
 unit. This default behavior can be overridden using the
 <port-component-link> deployment descriptor element. Refer to client
 deployment descriptor schema 
-<<DeploymentDescriptors.adoc#section7.2.5,Section 7.2.5>>.
+<<DeploymentDescriptors.adoc#section725,Section 7.2.5>>.
 
 If the name attribute is not specified in this annotation then default
 naming rules apply as specified in the Jakarta EE specification.
@@ -575,7 +575,7 @@ within the client view. The equals() method cannot be used to compare
 two stubs or proxy instances to determine if they represent the same
 Port. The results of the equals(), hash(), and toString() methods for a
 stub are unspecified. There is no way for the client to ensure that a
-Port Stub, Dynamic Proxy, or Call will access a particular Port instance
+Port Stub or Dynamic Proxy will access a particular Port instance
 or the same Port instance for multiple invocations.
 
 ===== Type narrowing
@@ -725,10 +725,10 @@ Jakarta XML Web Services compliant implementations are required to support
 MTOM (Message Transmission Optimization Mechanism)/XOP (XML-binary Optimized
 Packaging) specifications from W3C. Refer to sections 6.5.2, 7.14.2, and
 10.4.1.1 of Jakarta XML Web Services specification. Support for SOAP MTOM/XOP
-mechanism for optimizing transmission of binary data types is provided by JAXB
-which is the data binding for Jakarta XML Web Services. Jakarta XML Web
-Services provides the MIME processing required to enable JAXB to serialize and
-deserialize MIME based MTOM/XOP packages.
+mechanism for optimizing transmission of binary data types is provided by
+Jakarta XML Binding which is the data binding for Jakarta XML Web Services.
+Jakarta XML Web Services provides the MIME processing required to enable 
+Jakarta XML Binding to serialize and deserialize MIME based MTOM/XOP packages.
 
 SOAP MTOM/XOP mechanism on the client can be enabled or disabled by any
 one of the following ways:

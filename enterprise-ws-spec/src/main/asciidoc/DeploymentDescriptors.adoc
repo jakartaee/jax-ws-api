@@ -190,7 +190,6 @@ every webservice-description wsdl-file with the correct port address
 attribute value to access the service.
 * the value of the port address attribute for deployed services.
 
-[#section7.2.5]
 ==== Web Services Deployment Descriptor XML Schema
 
 The XML Schema for the Web service deployment descriptor is described at
@@ -323,6 +322,7 @@ a vendor to resolve the binding, they may be generated. The deployer is
 also responsible for providing deploy time binding information to
 resolve port access declared by the port-component-ref element.
 
+[#section725]
 ==== Web Services Client Service Reference XML Schema
 
 [#anchor-74]##This section defines the XML Schema for the service-ref at
