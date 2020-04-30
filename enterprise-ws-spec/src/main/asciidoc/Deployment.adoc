@@ -9,9 +9,10 @@ configuration of the server's SOAP request listeners for each port,
 publication and location of Web services, as well as the normal
 responsibilities defined by the Jakarta EE specification.
 
+[#anchor-76]
 === Overview
 
-[#anchor-76]##This section describes an illustrative process of
+This section describes an illustrative process of
 deployment for Web Services for Jakarta EE. The process itself is not
 required, but there are certain requirements that deployment must meet
 which are detailed in later sections of this chapter. This process
@@ -127,9 +128,10 @@ protocol in a way that allows analysis by the WS-I tools.
 ==== Jakarta XML Web Services HTTP SPI
 
 Jakarta XML Web Services includes HTTP SPI that allows a deployment to use any
-available Jakarta XML Web Services runtime for HTTP transport. This allows 109 implementations 
-to use the Jakarta XML Web Services runtime in a Jakarta SE platform when it is available. 
-For more details on the HTTP SPI, see the section 6.6 of Jakarta XML Web Services specification.
+available Jakarta XML Web Services runtime for HTTP transport. This allows 109 
+implementations to use the Jakarta XML Web Services runtime in a Jakarta SE platform 
+when it is available. For more details on the HTTP SPI, see the section 6.6 of 
+Jakarta XML Web Services specification.
 
 === Container Provider requirements
 
@@ -159,8 +161,8 @@ Service Implementation must match the behavior defined by the
 jakarta.ejb.Stateless annotation or <session> element and the
 <assembly-descriptor> in the ejb-jar.xml deployment descriptor. A
 Singleton Bean Service Implementation must match the behavior defined by
-the _jakarta.ejb.Singleton_ annotation or _<session>_ element and the
-_<assembly-descriptor>_ in the _ejb-jar.xml_ deployment descriptor.
+the jakarta.ejb.Singleton annotation or <session> element and the
+<assembly-descriptor> in the ejb-jar.xml deployment descriptor.
 
 [#anchor-77]
 ==== Generate deployed WSDL
@@ -276,7 +278,7 @@ static stubs or dynamic proxies, but may provide support for both.
 
 The container must make the required Service Interface Implementation
 available at the JNDI namespace location
-java:comp/env/__service-ref-name __where _service-ref-name_ is the name
+java:comp/env/service-ref-name where service-ref-name is the name
 declared within the Web services client deployment descriptor using the
 service-ref-name element.
 

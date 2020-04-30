@@ -73,8 +73,8 @@ The life cycle of a Handler is controlled by the container.
 Handlers are associated with the Port component on the server and
 therefore run in both the web and EJB containers.
 
-Jakarta EE applications that define one or more port components or service
-references include WSDL descriptions for each of them as well as
+Jakarta EE applications that define one or more port components or 
+service references include WSDL descriptions for each of them as well as
 application logic and (optionally) message handlers associated with
 them. In order for such applications to behave predictably, all three
 elements (description, handlers and application logic) must be well
@@ -225,7 +225,7 @@ This annotation is used to specify the handler chain to be applied on the declar
 or Service reference. Details on the jakarta.jws.HandlerChain annotation can be found in 
 section 4.6 of Jakarta Web Services Metadata specification. If this annotation is used, 
 the handler chain file for this must be packaged with the application unit according to the 
-packaging rules in Section 6.3.
+packaging rules in Section link:#anchor-39[6.3].
 
 The deployment descriptors on port component or Service reference
 override the jakarta.jws.HandlerChain annotation specified in the
@@ -238,8 +238,8 @@ that all handlers in a handler chain could be specific to a Service
 name, a Port name or a list of protocol bindings. Patterns on Service
 names and Port names are also allowed, where in the handlers in a
 handler chain could be specific to a Service name pattern or Port name
-pattern. Refer to Chapter 7 for details on the deployment schema for
-handlers.
+pattern. Refer to Chapter link:#anchor-65[7] for details on the deployment schema 
+for handlers.
 
 Jakarta XML Web Services based container provider is required to support 
 this annotation.  They are also required to provide an implementation of 

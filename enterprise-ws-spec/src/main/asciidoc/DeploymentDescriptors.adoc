@@ -1,3 +1,4 @@
+[#anchor-65]
 == Deployment Descriptors
 
 This chapter describes the various deployment descriptors used for Web
@@ -148,9 +149,9 @@ link:#anchor-71[7.2.2].
 ==== Assembler responsibilities
 
 The assembler's responsibilities for Web Services for Jakarta EE are an
-extension of the assembler responsibilities as defined by the Jakarta Enterprise
-Beans, Servlet, and Jakarta EE specifications. The assembler creates a
-deployable artifact by composing multiple modules, resolving
+extension of the assembler responsibilities as defined by the Jakarta 
+Enterprise Beans, Servlet, and Jakarta EE specifications. The assembler 
+creates a deployable artifact by composing multiple modules, resolving
 cross-module dependencies, providing annotation overrides and producing
 an EAR file.
 

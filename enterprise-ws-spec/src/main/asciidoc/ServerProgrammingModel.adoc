@@ -3,11 +3,11 @@
 
 This chapter defines the server programming model for Web Services for
 Jakarta EE. A WSDL document defines the interoperability of Web services
-and includes the specification of transport and wire format
-requirements. In general, WSDL places no requirement on the programming
-model of the client or the server. Web Services for Jakarta EE defines two
-methods of implementing a Web service. It requires the Jakarta XML Web Services 
-Servlet container based Java class programming model for implementing Web services 
+and includes the specification of transport and wire format requirements. 
+In general, WSDL places no requirement on the programming model of the 
+client or the server. Web Services for Jakarta EE defines two methods of 
+implementing a Web service. It requires the Jakarta XML Web Services Servlet 
+container based Java class programming model for implementing Web services 
 that run in the web container and it requires the Stateless Session EJB 
 programming model for implementing Web services that run in the EJB container. 
 These two implementation methods provide a means for defining a Port component 
