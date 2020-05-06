@@ -1,29 +1,29 @@
 == Introduction
 
-This specification defines the Web Services for Java EE (WSEE)
-architecture. This is a service architecture that leverages the Java EE
+This specification defines the Web Services for Jakarta EE (WSEE)
+architecture. This is a service architecture that leverages the Jakarta EE
 component architecture to provide a client and server programming model
 which is portable and interoperable across application servers, provides
-a scalable secure environment, and yet is familiar to Java EE
+a scalable secure environment, and yet is familiar to Jakarta EE
 developers.
 
 === Target Audience
 
 This specification is intended to be used by:
 
-* Java EE Vendors implementing support for Web services compliant with
+* Jakarta EE Vendors implementing support for Web services compliant with
 this specification
-* Developers of Web service implementations to be deployed into Java EE
+* Developers of Web service implementations to be deployed into Jakarta EE
 application servers
-* Developers of Web service clients to be deployed into Java EE
+* Developers of Web service clients to be deployed into Jakarta EE
 application servers
 * Developers of Web service clients that access Web service
-implementations deployed into Java EE application servers
+implementations deployed into Jakarta EE application servers
 
-This specification assumes that the reader is familiar with the Java EE
+This specification assumes that the reader is familiar with the Jakarta EE
 platform and specifications. It also assumes that the reader is familiar
-with Web services, specifically the JAX-RPC and JAX-WS Specification and
-WSDL documents.
+with Web services, specifically the Jakarta XML Web Services Specification
+and WSDL documents.
 
 === Acknowledgments
 
@@ -61,9 +61,9 @@ release.
 === Specification Organization
 
 The next two chapters of this specification outline the requirements and
-conceptual architecture for Web services support in Java EE
+conceptual architecture for Web services support in Jakarta EE
 environments. Each of the major integration points for Web services in
-Java EE, the client model, the server model, the deployment model, WSDL
+Jakarta EE, the client model, the server model, the deployment model, WSDL
 bindings, and security have their own chapter. Each of these chapters
 consists of two topics: Concepts and Specification. The concepts section
 discusses how Web services are used, issues, considerations, and the
@@ -72,17 +72,17 @@ defines what implementers of this specification must support.
 
 === Document conventions.
 
-In the interest of consistency, this specification follows the document
-conventions used by the Enterprise JavaBeans specification.
+In the interest of consistency, this specification attempts to follow the
+document conventions used by other Jakarta EE specifications.
 
 The regular Times font is used for information that is prescriptive by
 this specification.
 
-The italic Times font is used for paragraphs that contain descriptive
+The _italic Times font_ is used for paragraphs that contain descriptive
 information, such as notes describing typical use, or notes clarifying
 the text with prescriptive specification.
 
-The Courier font is used for code examples.
+The `Courier font` is used for code examples.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this

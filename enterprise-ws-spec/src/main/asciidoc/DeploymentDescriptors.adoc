@@ -322,6 +322,7 @@ a vendor to resolve the binding, they may be generated. The deployer is
 also responsible for providing deploy time binding information to
 resolve port access declared by the port-component-ref element.
 
+[#section725]
 ==== Web Services Client Service Reference XML Schema
 
 [#anchor-74]##This section defines the XML Schema for the service-ref at
