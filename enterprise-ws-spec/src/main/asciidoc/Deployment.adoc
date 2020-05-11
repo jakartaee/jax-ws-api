@@ -351,9 +351,7 @@ containing:
 <port-component>
 
 <port-component-name>JoePort</port-component-name>
-
 ...
-
 <service-impl-bean>
 
 <ejb-link>JoeEJB</ejb-link>
@@ -375,9 +373,7 @@ and a module's deployment descriptor containing:
 <service-interface>javax.xml.rpc.Service</service-interface>
 
 <wsdl-file>WEB-INF/joe.wsdl</wsdl-file>
-
 ...
-
 <port-component-ref>
 
 <service-endpoint-interface>sample.Joe</service-endpoint-interface>
@@ -395,6 +391,5 @@ binding for container managed port access to the sample.Joe Service
 Endpoint Interface. This should be the same binding used for the port
 address of the JoePort port-component.
 
-When providing a binding for a port-component-ref, the deployer must
-ensure that the port-component-ref is compatible with the Port being
-bound to.
+When providing a binding for a port-component-ref, the deployer must ensure 
+that the port-component-ref is compatible with the Port being bound to.

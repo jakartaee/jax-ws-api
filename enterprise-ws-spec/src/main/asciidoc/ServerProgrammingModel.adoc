@@ -49,7 +49,8 @@ link:#anchor-36[Figure 5] illustrates this below.
 
 image:5.png[image,width=374,height=259]
 
-* [#anchor-36]##Figure 5 container
+[#anchor-36]
+* Figure 5 container
 
 A Port's life cycle is specific to and completely controlled by the
 container, but in general follows the same life cycle of the container
@@ -366,8 +367,7 @@ link:#anchor-43[5.3.2.3] and link:#anchor-44[5.3.2.4].
 A Stateless Session Bean, as defined by the Jakarta Enterprise Beans specification, 
 can be used to implement a Web service to be deployed in the EJB container. 
 A Singleton Session Bean, as defined by the Jakarta Enterprise Beans specification, 
-can be used to implement a Jakarta XML Web Services Web service to be deployed 
-in the EJB container.
+can be used to implement a Web service to be deployed in the EJB container.
 
 A Stateless Session Bean does not have to worry about multi-threaded
 access. The EJB container is required to serialize request flow through
@@ -385,21 +385,19 @@ See section link:#anchor-45[5.3.2.1] and link:#anchor-46[5.3.2.2].
 on Service Implementation Bean may optionally reference an SEI but is 
 not required to do so. If SEI is not specified, the Service Implementation 
 Bean class implicitly defines a SEI as required by section 3.3 of 
-Jakarta XML Web Services specification. The Service Implementation Bean
-methods are not required to throw javax.rmi.RemoteException. The
-business methods of the bean must be public and must not be final or
-static. Only those methods that are annotated with @WebMethod in the
-Service Implementation Bean, are exposed to the client.
+Jakarta XML Web Services specification. The business methods of the bean 
+must be public and must not be final or static. Only those methods that are 
+annotated with @WebMethod in the Service Implementation Bean, are exposed 
+to the client.
 * For developers starting from WSDL, the SEI generated from the WSDL must be 
 annotated with jakarta.jws.WebService annotation. Refer to Jakarta XML Web Services 
 specification. The Service Implementation Bean must be annotated with 
 jakarta.jws.WebService annotation and the endpointInterface member attribute 
 must refer to this generated SEI.  Service Implementation Bean may implement 
 the Service Endpoint Interface, but it is not required to do so. The bean must 
-implement all the method signatures of the SEI. The Service Implementation Bean
-methods are not required to throw javax.rmi.RemoteException. The business 
-methods of the bean must be public and must not be final or static. It may 
-implement other methods in addition to those defined by the SEI.
+implement all the method signatures of the SEI.  The business methods of the 
+bean must be public and must not be final or static. It may implement other 
+methods in addition to those defined by the SEI.
 * The Service Implementation Bean must have a default public
 constructor.
 * A Service Implementation Bean of a Stateless EJB must be a stateless
@@ -496,7 +494,7 @@ instance. A container may use any bean instance to service a request.
 * The class must be public, must not be final and must not be abstract.
 * The class must not define the finalize() method.
 
-======= The optional @PostConstruct or @PreDestroy annotations
+====== The optional @PostConstruct or @PreDestroy annotations
 
 A Service Implementation Bean may use jakarta.annotation.PostConstruct or
 jakarta.annotation.PreDestroy annotation on methods for lifecycle event
@@ -526,7 +524,7 @@ methods exposed as Web Service operations of the bean after this method
 is called.
 
 [#anchor-48]
-======= Allowed access to container services
+====== Allowed access to container services
 
 The container provides certain services based on the life cycle state of
 the Service Implementation Bean. Access to services provided by a web

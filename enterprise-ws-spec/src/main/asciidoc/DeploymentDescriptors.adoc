@@ -240,7 +240,8 @@ when Jakarta XML Web Services based runtime is used.
 
 The developer may specify the following information:
 
-* [#anchor-73]##**WSDL definition.** The wsdl-file element specifies a
+[#anchor-73]
+* *WSDL definition.* The wsdl-file element specifies a
 location of the WSDL description of the service. The location is
 relative to the root of the module. The WSDL description may be a
 partial WSDL, but must at least include the portType and binding
@@ -305,7 +306,8 @@ resolve port access declared by the port-component-ref element.
 
 ==== Web Services Client Service Reference XML Schema
 
-[#anchor-74]##This section defines the XML Schema for the service-ref at
+[#anchor-74]
+This section defines the XML Schema for the service-ref at
 http://xmlns.jcp.org/xml/ns/javaee/javaee_web_services_client_1_4.xsd.
 This schema is imported into the common Jakarta EE schema and is used by
 the application client, web, and EJB module deployment descriptor
