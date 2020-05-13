@@ -94,7 +94,6 @@
             <groupId>jakarta.jws</groupId>
             <artifactId>jakarta.jws-api</artifactId>
             <version>${jws-api.version}</version>
-            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
