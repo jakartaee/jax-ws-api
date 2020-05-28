@@ -269,7 +269,7 @@ environment values. A Handler cannot perform role based programmatic
 authorization checks nor can a Handler access the Principal associated
 with the request.
 
-The Java 2 security permissions of a Handler follow the permissions
+The Java security permissions of a Handler follow the permissions
 defined by the container it runs in. The application client, web, and
 EJB containers may have different permissions associated with them. If
 the provider allows defining permissions on a per application basis,
