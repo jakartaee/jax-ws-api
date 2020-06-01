@@ -2,10 +2,9 @@
 
 This section defines the security requirements for Web Services for Jakarta
 EE. A conceptual overview of security and how it applies to Web services
-is covered in the link:#anchor-78[Concepts] section. The
-link:#anchor-79[Goals] section defines what this specification attempts
-to address and the link:#anchor-80[Specification] section covers the
-requirements.
+is covered in the link:#anchor-78[Concepts] section. The link:#anchor-79[Goals] 
+section defines what this specification attempts to address and the 
+link:#anchor-80[Specification] section covers the requirements.
 
 [#anchor-78]
 === Concepts
