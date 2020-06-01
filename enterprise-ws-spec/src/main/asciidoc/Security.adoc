@@ -118,8 +118,9 @@ be beneficial to carry identity information within SOAP message itself
 (e.g., as a SOAP header). This can help address situations where Web
 services need to be supported where inherent security support of
 underlying transport and protocols may not be sufficient (e.g., JMS).
-JSR-109 does not require any support for credential propagation within
-SOAP messages and considers this functionality as future work.
+Jakarta Enterprise Web Services specification does not require any 
+support for credential propagation within SOAP messages and considers 
+this functionality as future work.
 
 ==== Authorization
 
