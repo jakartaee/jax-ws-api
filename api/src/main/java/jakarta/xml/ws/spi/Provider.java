@@ -32,7 +32,7 @@ public abstract class Provider {
      **/
     // Using two strings so that package renaming doesn't change it
     private static final String DEFAULT_JAXWSPROVIDER =
-            "com.sun"+".xml.internal.ws.spi.ProviderImpl";
+            "com.sun"+".xml.ws.spi.ProviderImpl";
 
     /**
      * Creates a new instance of Provider
