@@ -27,14 +27,6 @@ import org.w3c.dom.Element;
 public abstract class Provider {
 
     /**
-     * A constant representing the name of the default
-     * {@code Provider} implementation class.
-     **/
-    // Using two strings so that package renaming doesn't change it
-    private static final String DEFAULT_JAXWSPROVIDER =
-            "com.sun"+".xml.ws.spi.ProviderImpl";
-
-    /**
      * Creates a new instance of Provider
      */
     protected Provider() {
@@ -50,20 +42,15 @@ public abstract class Provider {
      *  <li> Use the service-provider loading facilities, defined by the {@link java.util.ServiceLoader} class,
      *  to attempt to locate and load an implementation of {@link jakarta.xml.ws.spi.Provider} service using
      *  the {@linkplain java.util.ServiceLoader#load(java.lang.Class) default loading mechanism}.
-     *  <li>Use the configuration file "jaxws.properties". The file is in standard
-     *  {@link java.util.Properties} format and typically located in the
-     *  {@code conf} directory of the Java installation. It contains the fully qualified
-     *  name of the implementation class with the key {@code jakarta.xml.ws.spi.Provider}.
      *  <li> If a system property with the name {@code jakarta.xml.ws.spi.Provider}
      *  is defined, then its value is used as the name of the implementation class.
-     *  <li> Finally, a platform default implementation is used.
      * </ul>
      *
      * @return provider object
      */
     public static Provider provider() {
         try {
-            return FactoryFinder.find(Provider.class, DEFAULT_JAXWSPROVIDER);
+            return FactoryFinder.find(Provider.class);
         } catch (WebServiceException ex) {
             throw ex;
         } catch (Exception ex) {
