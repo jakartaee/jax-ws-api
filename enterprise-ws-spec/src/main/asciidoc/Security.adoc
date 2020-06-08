@@ -104,7 +104,7 @@ how it handles other HTTP requests.
 
 Two forms of authentication are available for use within Web Services
 for Jakarta EE based on existing Jakarta EE functionality. These are HTTP
-BASIC-AUTH and Symmetric HTTP, which are defined by the Servlet
+BASIC-AUTH and Symmetric HTTP, which are defined by the Jakarta Servlet
 specification.
 
 Using the authentication models above, the container can also perform a
@@ -205,8 +205,7 @@ The Quality of Service (QoS) of a secure Web service container is based
 on the QoS requirements and functionality of the underlying Jakarta EE
 application server itself (e.g., integrity).
 
-The server relies on HTTPS and RMI-IIOP over SSL for hop-by-hop
-confidentiality and integrity .
+The server relies on HTTPS for hop-by-hop confidentiality and integrity .
 
 [#anchor-80]
 === Specification
