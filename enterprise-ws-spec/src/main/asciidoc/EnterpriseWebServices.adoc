@@ -18,8 +18,6 @@ include::Security.adoc[]
 
 include::RelationshipToOtherJavaStandards.adoc[]
 
-include::OptionalSupportForJ2EE1.3Platforms.adoc[]
-
 include::References.adoc[]
 
 include::RevisionHistory.adoc[]
