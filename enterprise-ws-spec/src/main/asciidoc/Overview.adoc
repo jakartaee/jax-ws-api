@@ -13,7 +13,7 @@ service implementation and client use may be decoupled in a variety of
 ways. Client and server implementations can be decoupled in programming
 model. Concrete implementations may be decoupled in logic and transport.
 
-image:1.png[image,width=397,height=298]
+image:images/1.png[image,width=397,height=298]
 
 * Figure 1 Service oriented architecture
 
@@ -64,7 +64,7 @@ Jakarta XML Web Services, (i.e. PortType) to access the service. See
 
 
 [#figure2]
-image:2.png[image,width=277,height=135]
+image:images/2.png[image,width=277,height=135]
 
 * Figure 2 Client view
 
@@ -78,9 +78,9 @@ additions to the Jakarta EE platform include a port component that depends
 on container functionality provided by the web and EJB containers, and
 the SOAP/HTTP transport.
 
-//TODO: image 3.png mentions J2EE - should be replaced with Jakarta EE?
+//TODO: image images/3.png mentions J2EE - should be replaced with Jakarta EE?
 [#figure3]
-image:3.png[image,width=371,height=280]
+image:images/3.png[image,width=371,height=280]
 
 * Figure 3 Jakarta EE architecture diagram
 
@@ -257,7 +257,7 @@ Web service. This includes the following:
 The Jakarta XML Web Services Handler interface is considered a container SPI
 and is therefore not part of the client view.
 
-image:4.png[image,width=282,height=139]
+image:images/4.png[image,width=282,height=139]
 
 Figure 4 Web Service Client View
 

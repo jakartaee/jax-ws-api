@@ -90,7 +90,7 @@ service, then they must be referenced and used.
 
 * Figure 11 security flow overview
 
-image:11.png[image,width=382,height=216]
+image:images/11.png[image,width=382,height=216]
 
 Consider a scenario where incoming SOAP/WSDL messages flow over HTTP(S).
 The figure above provides a simple overview of the security flow.

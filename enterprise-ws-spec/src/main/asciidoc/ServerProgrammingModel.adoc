@@ -47,7 +47,7 @@ Port components, each with its own potentially unique but probably shared
 Service Implementation Bean.
 link:#anchor-36[Figure 5] illustrates this below.
 
-image:5.png[image,width=374,height=259]
+image:images/5.png[image,width=374,height=259]
 
 [#anchor-36]
 * Figure 5 container
