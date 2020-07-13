@@ -1,31 +1,43 @@
 [appendix]
 == Relationship to other Java Standards
 
-Java APIs for XML
+*Jakarta APIs for XML*
 
-The only required API from this list is JAX-RPC, JAX-WS, JSR-181 and
-JSR-250. The rest are listed as being of potential interest. These APIs
-may become required in a future specification.
+The only required APIs from this list are Jakarta XML Web Services,
+Jakarta Web Services Metadata and Jakarta Annotations. The rest are listed
+as being of potential interest. These APIs may become required in a future specification.
 
-JAX-M (JSR 00067) focuses on XML messaging and the Java language.
+Jakarta XML Web Services is a follow-on to Jakarta XML-RPC and extends it.
 
-JAX-R (JSR 00093) defines the Java interfaces to XML registries, like
+Jakarta Web Services Metadata defines Web Services Metadata using
+annotations to simplify the programming model for Web Services
+
+Jakarta Annotations defines Common Annotations for the Java Platform
+
+Jakarta Enterprise Beans defines the programming model for implementing
+Web services which run in the EJB container.
+
+Jakarta Servlet defines the packaging and container service model for
+implementing Web services which run in the servlet container.
+
+Jakarta XML-RPC focuses on XML RPC and the Java language, including
+representing XML based interface definitions in Java, Java definitions
+in XML based interface definition languages (e.g. SOAP) and marshalling.
+
+Jakarta XML Registries defines the Java interfaces to XML registries, like
 JNDI, ebXML and UDDI. These interfaces provide the mechanism through
 which client applications find Web services and Web services (and
 servers) publish their interfaces.
 
+
+*Java APIs for XML*
+
+These APIs are listed as being of potential interest. They
+may become required in a future specification.
+
+JAX-M (JSR 00067) focuses on XML messaging and the Java language.
+
 JAX-P (JSR 00005 and 00063) defines APIs for parsing XML
-
-JAX-RPC (JSR 00101) focuses on XML RPC and the Java language, including
-representing XML based interface definitions in Java, Java definitions
-in XML based interface definition languages (e.g. SOAP) and marshalling.
-
-JAX-WS (JSR 224) is a follow-on to JAX-RPC and extends it.
-
-JSR-181 defines Web Services Metadata using annotations to simplify the
-programming model for Web Services
-
-JSR-250 defines Common Annotations for the Java Platform
 
 XML Trust (JSR00104) defines APIs and protocol for a “Trust Service” to
 minimize the complexity required for using XML Signatures.
@@ -38,11 +50,3 @@ fragments.
 
 Java APIs for WSDL (JSR00110) defines the APIs for manipulating WSDL
 documents.
-
-Java EE APIs
-
-Enterprise JavaBeans 3.0 defines the programming model for implementing
-Web services which run in the EJB container.
-
-Servlet 2.5 defines the packaging and container service model for
-implementing Web services which run in the servlet container.

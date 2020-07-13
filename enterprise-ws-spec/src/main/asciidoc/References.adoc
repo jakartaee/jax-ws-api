@@ -1,54 +1,49 @@
 [appendix]
 == References
 
-_JAX-WS 2.0 Specification. 2005._ http://jcp.org/en/jsr/detail?id=224
+. Jakarta XML Web Services 3.0
+https://jakarta.ee/specifications/xml-web-services/3.0/
 
-_JAX-WS 2.2 Specification. 2009._ http://jcp.org/en/jsr/detail?id=224
+. Jakarta XML Binding 3.0
+https://jakarta.ee/specifications/xml-binding/3.0/
 
-_JAXB 2.0 Specification. 2005._ http://jcp.org/en/jsr/detail?id=222
+. Jakarta Web Services Metadata
+https://jakarta.ee/specifications/web-services-metadata/3.0/
 
-_JAXB 2.2 Specification. 2009._ http://jcp.org/en/jsr/detail?id=222
+. Jakarta Annotations 2.0
+https://jakarta.ee/specifications/annotations/2.0/
 
-Web Services Metadata for the Java(JSR-181). 2005.
-http://jcp.org/en/jsr/detail?id=181
+. Jakarta XML-RPC 1.1
+https://jakarta.ee/specifications/xml-rpc/1.1/
 
-Common Annotations for the Java (JSR-250)
-2005.http://jcp.org/en/jsr/detail?id=250[
-]http://jcp.org/en/jsr/detail?id=250
+. Jakarta XML Registries 1.0
+https://jakarta.ee/specifications/xml-registries/1.0/
 
-_JAX-RPC 1.1 Specification._ 2003.
-http://java.sun.com/xml/[_http://java.sun.com/xml/_]
+. SOAP 1.1 W3C Note, 2000
+http://www.w3.org/TR/2000/NOTE-SOAP-20000508
 
-__JAX-R Specification. __2002. http://java.sun.com/xml/
+. SOAP 1.2 W3C specification, 2003 http://www.w3.org/TR/soap12/
 
-_SOAP 1.1 W3C Note._ 2000.
-http://www.w3.org/TR/2000/NOTE-SOAP-20000508[_http://www.w3.org/TR/2000/NOTE-SOAP-20000508_]
+. WSDL 1.1 W3C Note, 2001 http://www.w3.org/TR/2001/NOTE-wsdl-20010315
 
-_SOAP 1.2 W3C specification. 2003._ http://www.w3.org/TR/soap12/
+. MTOM/XOP W3C Recommendation, 2005 http://www.w3.org/TR/soap12-mtom/
 
-_WSDL 1.1 W3C Note._ 2001. http://www.w3.org/TR/2001/NOTE-wsdl-20010315
+. Jakarta Servlet 5.0
+https://jakarta.ee/specifications/servlet/5.0/
 
-_MTOM/XOP W3C Recommendation. 2005._ http://www.w3.org/TR/soap12-mtom/
+. Jakarta EE 9
+https://jakarta.ee/specifications/platform/9/
 
-_Servlet 2.5 Specification._ 2005. http://java.sun.com/javaee
+. Jakarta Enterprise Beans 4.0
+https://jakarta.ee/specifications/enterprise-beans/4.0/
 
-__Java EE 5 Specification. __2005. http://java.sun.com/javaee
+. Jakarta Context Dependency Injection 3.0 https://jakarta.ee/specifications/cdi/3.0/
 
-_EJB 3.0 Specification._ 2005. http://java.sun.com/javaee
-
-__Java EE 6 Specification. __2009. http://java.sun.com/javaee
-
-_Java EE 7 Specification._ 2013. http://jcp.org/en/jsr/detail?id=342
-
-_EJB 3.1 Specification._ 2009. http://java.sun.com/javaee
-
-_JSR 299 Specification._ 2009. http://jcp.org/en/jsr/detail?id=299
-
-Web Services Addressing 1.0 - Core. W3C Recommendation. 2006.
+. Web Services Addressing 1.0 - Core. W3C Recommendation. 2006.
 http://www.w3.org/TR/2006/REC-ws-addr-core-20060509/
 
-Web Services Addressing 1.0 – Soap Binding. W3C Recommendation. 2006.
-http://www.w3.org/TR/20http://www.w3.org/TR/2006/REC-ws-addr-soap-20060509/[06/-REC-ws-addr-soap-20060509/]
+. Web Services Addressing 1.0 – Soap Binding. W3C Recommendation. 2006.
+http://www.w3.org/TR/2006/REC-ws-addr-soap-20060509/
 
-Web Services Addressing 1.0 - Metadata. W3C Recommendation. 2007.
+. Web Services Addressing 1.0 - Metadata. W3C Recommendation. 2007.
 http://www.w3.org/TR/2007/REC-ws-addr-metadata-20070904

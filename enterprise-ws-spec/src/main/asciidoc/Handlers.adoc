@@ -448,16 +448,16 @@ illustrative.
 
 ==== Client Web service method access
 
-image:8.png[image,width=331,height=336]
+image:images/8.png[image,width=331,height=336]
 
 * Figure 8 Client method invoke handler OID
 
 ==== EJB Web service method invocation
 
-image:9.png[image,width=517,height=345]
+image:images/9.png[image,width=517,height=345]
 
 * Figure 9 EJB Web service method invocation handler processing part 1
 
-image:10.png[image,width=504,height=174]
+image:images/10.png[image,width=504,height=174]
 
 * Figure 10 EJB Web service method invocation handler processing part 2

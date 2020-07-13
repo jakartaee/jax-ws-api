@@ -109,19 +109,19 @@ binding support for the port-component by using respect-binding element
 when Jakarta XML Web Services based runtime is used.
 * **Protocol Binding. **The developer may override the protocol binding
 specified by BindingType annotation by specifying the URI or a
-pre-defined token (like SOAP11_HTTP, SOAP12_HTTP, XML_HTTP etc.)
+pre-defined token (like \##SOAP11_HTTP, ##SOAP12_HTTP, \##XML_HTTP etc.)
 in the protocol-binding element when Jakarta XML Web Services based 
-runtime is used. The default protocol binding is SOAP11_HTTP. If this 
+runtime is used. The default protocol binding is ##SOAP11_HTTP. If this 
 element is not specified then the default value is assumed. The pre-defined 
 tokens essentially act as alias for the actual URI for the protocol binding.
 The URIs for these pre-defined tokens are listed below:
-** SOAP11_HTTP - "http://schemas.xmlsoap.org/wsdl/soap/http"
-** SOAP12_HTTP - "http://www.w3.org/2003/05/soap/bindings/HTTP/"
-** SOAP11_HTTP_MTOM -
+** ##SOAP11_HTTP - "http://schemas.xmlsoap.org/wsdl/soap/http"
+** ##SOAP12_HTTP - "http://www.w3.org/2003/05/soap/bindings/HTTP/"
+** ##SOAP11_HTTP_MTOM -
 "http://schemas.xmlsoap.org/wsdl/soap/http?mtom=true"
-** SOAP12_HTTP_MTOM -
+** ##SOAP12_HTTP_MTOM -
 "http://www.w3.org/2003/05/soap/bindings/HTTP/?mtom=true"
-** XML_HTTP - "http://www.w3.org/2004/08/wsdl/http"
+** ##XML_HTTP - "http://www.w3.org/2004/08/wsdl/http"
 * *Handlers.* A developer may optionally specify handlers associated
 with the port-component using handler-chains element when Jakarta XML 
 Web Services based runtime is used. With Jakarta XML Web Services, 
@@ -184,7 +184,7 @@ attribute value to access the service.
 ==== Web Services Deployment Descriptor XML Schema
 
 The XML Schema for the Web service deployment descriptor is described at
-http://xmlns.jcp.org/xml/ns/javaee/javaee_web_services_1_4.xsd
+https://jakarta.ee/xml/ns/jakartaee/jakartaee_web_services_2_0.xsd
 
 [#anchor-67]
 === Service Reference Deployment Descriptor Information
@@ -309,7 +309,7 @@ resolve port access declared by the port-component-ref element.
 
 [#anchor-74]
 This section defines the XML Schema for the service-ref at
-http://xmlns.jcp.org/xml/ns/javaee/javaee_web_services_client_1_4.xsd.
+https://jakarta.ee/xml/ns/jakartaee/jakartaee_web_services_client_2_0.xsd.
 This schema is imported into the common Jakarta EE schema and is used by
 the application client, web, and EJB module deployment descriptor
 schemas to declare service-refs. See the Jakarta EE 7 and corresponding

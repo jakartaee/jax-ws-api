@@ -6,9 +6,6 @@ Java EE. In general, the client programming model is covered in detail
 by the Jakarta XML Web Services specification. This specification covers the
 use of the client programming model in a Jakarta EE environment.
 
-Differences between this specification and the Jakarta XML Web Services
-specification will be noted in this style.
-
 [#anchor-19]
 === Concepts
 
@@ -124,11 +121,12 @@ choosing as declared by the service reference in the Web services client
 deployment descriptor. This is better illustrated in the following code
 segment:
 
+[source, java]
+----
 InitialContext ic = new InitialContext ();
-
 Service abf = (Service)ic.lookup(
-
-"java:comp/env/service/AddressBookService");
+    "java:comp/env/service/AddressBookService");
+----
 
 In the above example, the container must ensure that an implementation
 of the generic Service class, jakarta.xml.ws.Service, is bound in the
@@ -136,11 +134,12 @@ JNDI name space at a location specified by the developer. A similar code
 fragment is used for access to an object that implements a Generated Service
 Interface such as AddressBookService.
 
+[source, java]
+----
 InitialContext ic = new InitialContext ();
-
 AddressBookService abf = (AddressBookService)ic.lookup(
-
-"java:comp/env/service/AddressBookService");
+    "java:comp/env/service/AddressBookService");
+----
 
 A Jakarta EE product provider is required to provide Service lookup support
 in the web, EJB, and application client containers.
@@ -175,32 +174,35 @@ respectively for a reference.
 The following example illustrates the use of this annotation when
 declaring a Service:
 
-_@WebServiceRef(name="java:comp/env/service/AddressBookService"_)
-
+[source, java]
+----
+@WebServiceRef(name="java:comp/env/service/AddressBookService")
 AddressBookService abf;
+----
 
 The same annotation can also be used to declare a SEI proxy reference,
 the injected SEI proxy reference is configured with MTOM feature:
 
+[source, java]
+----
 @MTOM
-
 @WebServiceRef(
-
-name="java:comp/env/service/AddressBookService",
-
-AddressBookService.class)
-
+    name="java:comp/env/service/AddressBookService",
+    AddressBookService.class)
 AddressBookPort port;
 
 Address address = port.getAddress(“John Doe”);
+----
 
 A declared reference can be resolved using lookup functionality
 specified by Jakarta XML Web Services specification. The following example
 illustrates the use of this annotation for looking up a Service:
 
-_@WebServiceRef(lookup="java:comp/env/service/AddressBookService"_)
-
+[source, java]
+----
+@WebServiceRef(lookup="java:comp/env/service/AddressBookService")
 AddressBookService other;
+----
 
 jakarta.jws.HandlerChain annotation can be used with this annotation to
 specify handlers on these client side references. More information on
@@ -233,9 +235,9 @@ The following table summarizes the relationship between the deployment
 descriptors for <service-ref> and member attributes of this annotation.
 
 [[table1]]
-[cols=",",]
+[cols="2,1", options="header"]
 |===
-| Deployment Descriptor elements | jakarta.xml.ws.WebServiceRef annotation
+|Deployment Descriptor elements | jakarta.xml.ws.WebServiceRef annotation
 |<service-ref> |One per @WebServiceRef annotation
 
 |<service-ref>/<service-ref-name> |@WebServiceRef.name
@@ -311,23 +313,20 @@ Interface/Class represents the deployed WSDL of a service.
 The client may use the following Service class methods to
 obtain a proxy for a Web service:
 
-<T> T getPort(QName portName, Class<T> serviceEndpointInterface);
-
+[source, java]
+----
+<T> T getPort(QName portName,
+              Class<T> serviceEndpointInterface);
 <T> T getPort(java.lang.Class<T> serviceEndpointInterface);
-
 <T> T getPort(Class<T> serviceEndpointInterface,
-
-WebServiceFeature... features);
-
+              WebServiceFeature... features);
 <T> T getPort(EndpointReference endpointReference,
-
-Class<T> serviceEndpointInterface,
-
-WebServiceFeature... features);
-
-<T> T getPort(QName portName, Class<T> serviceEndpointInterface,
-
-WebServiceFeature... features);
+              Class<T> serviceEndpointInterface,
+              WebServiceFeature... features);
+<T> T getPort(QName portName,
+              Class<T> serviceEndpointInterface,
+              WebServiceFeature... features);
+----
 
 The client may also use the additional methods of the Generated Service
 Interface/Class to obtain a static stub or dynamic proxy for a Web
@@ -384,53 +383,37 @@ preference by ordering the ports in the service-ref’s WSDL document.
 A client developer may use the following methods of the
 Service class:
 
-<T> T getPort(java.lang.Class(T) serviceEndpointInterface);
-
+[source, java]
+----
+<T> T getPort(java.lang.Class<T> serviceEndpointInterface);
 javax.xml.namespace.QName getServiceName();
-
 java.util.Iterator<javax.xml.namespace.QName> getPorts();
-
 java.net.URL getWSDLDocumentLocation();
-
 <T> Dispatch<T> createDispatch(javax.xml.namespace.QName portName,
-
-java.lang.Class<T> type,
-
-Service.Mode mode);
-
+                               java.lang.Class<T> type,
+                               Service.Mode mode);
 Dispatch<java.lang.Object> createDispatch(QName portName,
-
-JAXBContext context,
-
-Service.Mode mode);
-
+                                          JAXBContext context,
+                                          Service.Mode mode);
 java.util.concurrent.Executor getExecutor();
-
 void setExecutor(java.util.concurrent.Executor executor);
-
-<T> Dispatch<T> createDispatch(QName portName, Class<T> type,
-
-Service.Mode mode,
-
-WebServiceFeature... features);
-
-Dispatch<Object> createDispatch(QName portName, JAXBContext context,
-
-Service.Mode mode,
-
-WebServiceFeature... features);
-
+<T> Dispatch<T> createDispatch(QName portName,
+                               Class<T> type,
+                               Service.Mode mode,
+                               WebServiceFeature... features);
+Dispatch<Object> createDispatch(QName portName,
+                                JAXBContext context,
+                                Service.Mode mode,
+                                WebServiceFeature... features);
 <T> Dispatch<T> createDispatch(EndpointReference endpointReference,
-
-Class<T> type, Service.Mode mode,
-
-WebServiceFeature... features);
-
+                               Class<T> type,
+                               Service.Mode mode,
+                               WebServiceFeature... features);
 Dispatch<Object> createDispatch(EndpointReference endpointReference,
-
-JAXBContext context, Service.Mode mode,
-
-WebServiceFeature... features);
+                                JAXBContext context,
+                                Service.Mode mode,
+                                WebServiceFeature... features);
+----
 
 A partial WSDL definition is defined as a fully specified WSDL document
 which contains no service or port elements. A mapping file is not required
@@ -451,45 +434,33 @@ A client developer may use the following methods of the
 Service class if no WSDL definition is specified in the client
 deployment descriptor:
 
+[source, java]
+----
 <T> Dispatch<T> createDispatch(javax.xml.namespace.QName portName,
-
-java.lang.Class<T> type,
-
-Service.Mode mode);
-
+                               java.lang.Class<T> type,
+                               Service.Mode mode);
 Dispatch<java.lang.Object> createDispatch(QName portName,
-
-JAXBContext context,
-
-Service.Mode mode);
-
+                                          JAXBContext context,
+                                          Service.Mode mode);
 java.util.concurrent.Executor getExecutor();
-
 void setExecutor(java.util.concurrent.Executor executor);
-
-<T> Dispatch<T> createDispatch(QName portName, Class<T> type,
-
-Service.Mode mode,
-
-WebServiceFeature... features)
-
-Dispatch<Object> createDispatch(QName portName, JAXBContext context,
-
-Service.Mode mode,
-
-WebServiceFeature... features)
-
+<T> Dispatch<T> createDispatch(QName portName,
+                               Class<T> type,
+                               Service.Mode mode,
+                               WebServiceFeature... features)
+Dispatch<Object> createDispatch(QName portName,
+                                JAXBContext context,
+                                Service.Mode mode,
+                                WebServiceFeature... features)
 <T> Dispatch<T> createDispatch(EndpointReference endpointReference,
-
-Class<T> type, Service.Mode mode,
-
-WebServiceFeature... features)
-
+                               Class<T> type,
+                               Service.Mode mode,
+                               WebServiceFeature... features)
 Dispatch<Object> createDispatch(EndpointReference endpointReference,
-
-JAXBContext context, Service.Mode mode,
-
-WebServiceFeature... features)
+                                JAXBContext context,
+                                Service.Mode mode,
+                                WebServiceFeature... features)
+----
 
 Use of other methods of the Service Interface or class is not
 recommended. Their behavior is unspecified.
@@ -500,7 +471,7 @@ The following table summarizes the behavior of the methods of the
 Service Interface under various deployment configurations.
 
 [[table2]]
-[cols=",,,",]
+[cols=",,,", options="header"]
 |===
 |Method |Full WSDL |Partial WSDL |No WSDL
 |void addPort(QName portName, URI bindingId, String endpointAddress)
@@ -745,7 +716,7 @@ corresponding SEI instance.
 
 Table : Relationship between deployment descriptor elements and @MTOM
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor elements |@MTOM
 |<service-ref>/<port-component-ref>/<enable-mtom> |@MTOM.enabled
@@ -799,7 +770,7 @@ requirements. For example, the addressing requirements specified by the
 Table : Relationship between deployment descriptor elements and
 @Addressing
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor elements |@Addressing
 |<service-ref>/<port-component-ref>/<addressing>/<enabled>
@@ -856,7 +827,7 @@ Deployment descriptor <respect-binding> element overrides the
 Table : Relationship between deployment descriptor elements and
 @RespectBinding
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor elements |@RespectBinding
 |<service-ref>/<port-component-ref>/<respect-binding>/<enabled>

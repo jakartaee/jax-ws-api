@@ -338,51 +338,39 @@ for the SEI to the deployed port address of the port-component referred
 to by the port-component-link. For example, given a webservices.xml file
 containing:
 
+[source, xml]
+----
 <webservices>
-
-<webservice-description>
-
-<webservice-description-name>JoesServices</webservice-description-name>
-
-<wsdl-file>META-INF/joe.wsdl</wsdl-file>
-
-<jaxrpc-mapping-file>META-INF/joes_mappings.xml</jaxrpc-mapping-file>
-
-<port-component>
-
-<port-component-name>JoePort</port-component-name>
-...
-<service-impl-bean>
-
-<ejb-link>JoeEJB</ejb-link>
-
-</service-impl-bean>
-
-</port-component>
-
-</webservice-description>
-
+  <webservice-description>
+    <webservice-description-name>JoesServices</webservice-description-name>
+    <wsdl-file>META-INF/joe.wsdl</wsdl-file>
+    <jaxrpc-mapping-file>META-INF/joes_mappings.xml</jaxrpc-mapping-file>
+    <port-component>
+      <port-component-name>JoePort</port-component-name>
+      ...
+      <service-impl-bean>
+        <ejb-link>JoeEJB</ejb-link>
+      </service-impl-bean>
+    </port-component>
+  </webservice-description>
 </webservices>
+----
 
 and a module's deployment descriptor containing:
 
+[source, xml]
+----
 <service-ref>
-
-<service-ref-name>service/Joe</service-ref-name>
-
-<service-interface>javax.xml.rpc.Service</service-interface>
-
-<wsdl-file>WEB-INF/joe.wsdl</wsdl-file>
-...
-<port-component-ref>
-
-<service-endpoint-interface>sample.Joe</service-endpoint-interface>
-
-<port-component-link>JoePort</port-component-link>
-
-</port-component-ref>
-
+  <service-ref-name>service/Joe</service-ref-name>
+  <service-interface>javax.xml.rpc.Service</service-interface>
+  <wsdl-file>WEB-INF/joe.wsdl</wsdl-file>
+  ...
+  <port-component-ref>
+    <service-endpoint-interface>sample.Joe</service-endpoint-interface>
+    <port-component-link>JoePort</port-component-link>
+  </port-component-ref>
 </service-ref>
+----
 
 During deployment, the deployer must provide a binding for the port
 address of the JoePort port-component. This port address must be defined

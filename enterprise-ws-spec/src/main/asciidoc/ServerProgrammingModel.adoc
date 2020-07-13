@@ -47,7 +47,7 @@ Port components, each with its own potentially unique but probably shared
 Service Implementation Bean.
 link:#anchor-36[Figure 5] illustrates this below.
 
-image:5.png[image,width=374,height=259]
+image:images/5.png[image,width=374,height=259]
 
 [#anchor-36]
 * Figure 5 container
@@ -188,7 +188,7 @@ descriptor elements and this annotation.
 Table 1: Relationship between the deployment descriptor elements and
 jakarta.jws.WebService annotation
 
-[cols="1,1", options="header"]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor element |jakarta.jws.WebService annotation
 
@@ -296,7 +296,7 @@ descriptor elements and this annotation.
 Table 2: Relationship between the deployment descriptor elements and
 jakarta.xml.ws.WebServiceProvider annotation
 
-[cols="1,1", options="header"]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor element |jakarta.xml.ws.WebServiceProvider annotation
 
