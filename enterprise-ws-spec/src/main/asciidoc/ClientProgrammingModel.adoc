@@ -6,9 +6,6 @@ Java EE. In general, the client programming model is covered in detail
 by the Jakarta XML Web Services specification. This specification covers the
 use of the client programming model in a Jakarta EE environment.
 
-Differences between this specification and the Jakarta XML Web Services
-specification will be noted in this style.
-
 [#anchor-19]
 === Concepts
 
