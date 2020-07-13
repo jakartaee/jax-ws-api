@@ -238,9 +238,9 @@ The following table summarizes the relationship between the deployment
 descriptors for <service-ref> and member attributes of this annotation.
 
 [[table1]]
-[cols=",",]
+[cols="2,1", options="header"]
 |===
-| Deployment Descriptor elements | jakarta.xml.ws.WebServiceRef annotation
+|Deployment Descriptor elements | jakarta.xml.ws.WebServiceRef annotation
 |<service-ref> |One per @WebServiceRef annotation
 
 |<service-ref>/<service-ref-name> |@WebServiceRef.name
@@ -474,7 +474,7 @@ The following table summarizes the behavior of the methods of the
 Service Interface under various deployment configurations.
 
 [[table2]]
-[cols=",,,",]
+[cols=",,,", options="header"]
 |===
 |Method |Full WSDL |Partial WSDL |No WSDL
 |void addPort(QName portName, URI bindingId, String endpointAddress)
@@ -719,7 +719,7 @@ corresponding SEI instance.
 
 Table : Relationship between deployment descriptor elements and @MTOM
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor elements |@MTOM
 |<service-ref>/<port-component-ref>/<enable-mtom> |@MTOM.enabled
@@ -773,7 +773,7 @@ requirements. For example, the addressing requirements specified by the
 Table : Relationship between deployment descriptor elements and
 @Addressing
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor elements |@Addressing
 |<service-ref>/<port-component-ref>/<addressing>/<enabled>
@@ -830,7 +830,7 @@ Deployment descriptor <respect-binding> element overrides the
 Table : Relationship between deployment descriptor elements and
 @RespectBinding
 
-[cols=",",]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor elements |@RespectBinding
 |<service-ref>/<port-component-ref>/<respect-binding>/<enabled>

@@ -188,7 +188,7 @@ descriptor elements and this annotation.
 Table 1: Relationship between the deployment descriptor elements and
 jakarta.jws.WebService annotation
 
-[cols="1,1", options="header"]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor element |jakarta.jws.WebService annotation
 
@@ -296,7 +296,7 @@ descriptor elements and this annotation.
 Table 2: Relationship between the deployment descriptor elements and
 jakarta.xml.ws.WebServiceProvider annotation
 
-[cols="1,1", options="header"]
+[cols="2,1", options="header"]
 |===
 |Deployment Descriptor element |jakarta.xml.ws.WebServiceProvider annotation
 
