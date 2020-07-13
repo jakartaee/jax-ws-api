@@ -184,7 +184,7 @@ attribute value to access the service.
 ==== Web Services Deployment Descriptor XML Schema
 
 The XML Schema for the Web service deployment descriptor is described at
-http://xmlns.jcp.org/xml/ns/javaee/javaee_web_services_1_4.xsd
+https://jakarta.ee/xml/ns/jakartaee/jakartaee_web_services_2_0.xsd
 
 [#anchor-67]
 === Service Reference Deployment Descriptor Information
@@ -309,7 +309,7 @@ resolve port access declared by the port-component-ref element.
 
 [#anchor-74]
 This section defines the XML Schema for the service-ref at
-http://xmlns.jcp.org/xml/ns/javaee/javaee_web_services_client_1_4.xsd.
+https://jakarta.ee/xml/ns/jakartaee/jakartaee_web_services_client_2_0.xsd.
 This schema is imported into the common Jakarta EE schema and is used by
 the application client, web, and EJB module deployment descriptor
 schemas to declare service-refs. See the Jakarta EE 7 and corresponding
