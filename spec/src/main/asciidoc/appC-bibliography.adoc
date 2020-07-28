@@ -1,0 +1,134 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+
+[bibliography]
+== Bibliography
+
+- [[[bib1,1]]] Tim Bray, Jean Paoli, C. M. Sperberg-McQueen, and Eve Maler. Extensible Markup Language
+(XML) 1.0 (Second Edition). Recommendation, W3C, October 2000. See
+http://www.w3.org/TR/2000/REC-xml-20001006.
+
+- [[[bib2,2]]] Don Box, David Ehnebuske, Gopal Kakivaya, Andrew Layman, Noah Mendelsohn, Henrik Nielsen,
+Satish Thatte, and Dave Winer. Simple Object Access Protocol (SOAP) 1.1. Note, W3C, May 2000.
+See http://www.w3.org/TR/SOAP/.
+
+- [[[bib3,3]]] Martin Gudgin, Marc Hadley, Noah Mendelsohn, Jean-Jacques Moreau, and Henrik Frystyk Nielsen.
+SOAP Version 1.2 Part 1: Messaging Framework. Recommendation, W3C, June 2003. See
+http://www.w3.org/TR/2003/REC-soap12-part1-20030624.
+
+- [[[bib4,4]]] Martin Gudgin, Marc Hadley, Noah Mendelsohn, Jean-Jacques Moreau, and Henrik Frystyk Nielsen.
+SOAP Version 1.2 Part 2: Adjuncts. Recommendation, W3C, June 2003. See
+http://www.w3.org/TR/2003/REC-soap12-part2-20030624.
+
+- [[[bib5,5]]] Erik Christensen, Francisco Curbera, Greg Meredith, and Sanjiva Weerawarana. Web Services
+Description Language (WSDL) 1.1. Note, W3C, March 2001. See
+http://www.w3.org/TR/2001/NOTE-wsdl-20010315.
+
+- [[[bib6,6]]] Rahul Sharma. The Java API for XML Based RPC (JAX-RPC) 1.0. JSR, JCP, June 2002. See
+http://jcp.org/en/jsr/detail?id=101.
+
+- [[[bib7,7]]] Roberto Chinnici. The Java API for XML Based RPC (JAX-RPC) 1.1. Maintenance JSR, JCP,
+August 2003. See http://jcp.org/en/jsr/detail?id=101.
+
+- [[[bib8,8]]] Keith Ballinger, David Ehnebuske, Martin Gudgin, Mark Nottingham, and Prasad Yendluri. Basic
+Profile Version 1.0. Final Material, WS-I, April 2004. See
+http://www.ws-i.org/Profiles/BasicProfile-1.0-2004-04-16.html.
+
+- [[[bib9,9]]] Joseph Fialli and Sekhar Vajjhala. The Java Architecture for XML Binding (JAXB). JSR, JCP,
+January 2003. See http://jcp.org/en/jsr/detail?id=31.
+
+- [[[bib10,10]]] Joseph Fialli and Sekhar Vajjhala. The Java Architecture for XML Binding (JAXB) 2.0. JSR, JCP,
+August 2003. See http://jcp.org/en/jsr/detail?id=222.
+
+- [[[bib11,11]]] Kohsuke Kawaguchi. The Java Architecture for XML Binding (JAXB) 2.1. JSR, JCP, August 2003.
+See http://jcp.org/en/jsr/detail?id=222.
+
+- [[[bib12,12]]] Kohsuke Kawaguchi. The Java Architecture for XML Binding (JAXB) 2.2. JSR, JCP, August 2009.
+See http://jcp.org/en/jsr/detail?id=222.
+
+- [[[bib13,13]]] Kohsuke Kawaguchi. The Java Architecture for XML Binding (JAXB) 2.3. JSR, JCP, July 2017. See
+http://jcp.org/en/jsr/detail?id=222.
+
+- [[[bib14,14]]] Roberto Chinnici, Martin Gudgin, Jean-Jacques Moreau, Jeffrey Schlimmer, and Sanjiva
+Weerawarana. Web Services Description Language (WSDL) Version 2.0 Part 1: Core Language.
+Working Draft, W3C, August 2004. See http://www.w3.org/TR/2004/WD-wsdl20-20040803.
+
+- [[[bib15,15]]] Joshua Bloch. A Metadata Facility for the Java Programming Language. JSR, JCP, August 2003. See
+http://jcp.org/en/jsr/detail?id=175.
+
+- [[[bib16,16]]] Jim Trezzo. Web Services Metadata for the Java Platform. JSR, JCP, August 2003. See
+http://jcp.org/en/jsr/detail?id=181.
+
+- [[[bib17,17]]] Jim Knutson and Heather Kreger. Web Services for J2EE. JSR, JCP, September 2002. See
+http://jcp.org/en/jsr/detail?id=109.
+
+- [[[bib18,18]]] Nataraj Nagaratnam. Web Services Message Security APIs. JSR, JCP, April 2002. See
+http://jcp.org/en/jsr/detail?id=183.
+
+- [[[bib19,19]]] Farrukh Najmi. Java API for XML Registries 1.0 (JAXR). JSR, JCP, June 2002. See
+http://www.jcp.org/en/jsr/detail?id=93.
+
+- [[[bib20,20]]] Keith Ballinger, David Ehnebuske, Chris Ferris, Martin Gudgin, Canyang Kevin Liu, Mark
+Nottingham, Jorgen Thelin, and Prasad Yendluri. Basic Profile Version 1.1. Final Material, WS-I,
+August 2004. See http://www.ws-i.org/Profiles/BasicProfile-1.1-2004-08-24.html.
+
+- [[[bib21,21]]] T. Berners-Lee, R. Fielding, and L. Masinter. RFC 2396: Uniform Resource Identifiers (URI):
+Generic Syntax. RFC, IETF, March 1997. See http://www.ietf.org/rfc/rfc2396.txt.
+
+- [[[bib22,22]]] S. Bradner. RFC 2119: Keywords for use in RFCs to Indicate Requirement Levels. RFC, IETF,
+March 1997. See http://www.ietf.org/rfc/rfc2119.txt.
+
+- [[[bib23,23]]] John Cowan and Richard Tobin. XML Information Set. Recommendation, W3C, October 2001. See
+http://www.w3.org/TR/2001/REC-xml-infoset-20011024/.
+
+- [[[bib24,24]]] Henry S. Thompson, David Beech, Murray Maloney, and Noah Mendelsohn. XML Schema Part 1:
+Structures. Recommendation, W3C, May 2001. See
+http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/.
+
+- [[[bib25,25]]] Paul V. Biron and Ashok Malhotra. XML Schema Part 2: Datatypes. Recommendation, W3C, May
++2001. See http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/.
+
+- [[[bib26,26]]] Tony Rogers Marting Gudgin, Marc Hadley. Web services addressing 1.0 - core. Recommendation,
+W3C, May 2006. See http://www.w3.org/TR/2006/REC-ws-addr-core-20060509/.
+
+- [[[bib27,27]]] Marting Gudgin, Marc Hadley, Tony Rogers, and Umit Yalcinalp. Web Services Addressing 1.0 -
+Metadata. Recommendation, W3C, September 2007. See
+http://www.w3.org/TR/2007/REC-ws-addr-metadata-20070904.
+
+- [[[bib28,28]]] Asir S Vedamuthu, David Orchard, Frederick Hirsch, Maryann Hondo, Prasad Yendluri, Toufic
+Boubez, and Umit Yalcinalp. Web Services Services Policy 1.5 - Framework. Recommendation,
+W3C, September 2007. See http://www.w3.org/TR/2007/REC-ws-policy-20070904.
+
+- [[[bib29,29]]] James Gosling, Bill Joy, Guy Steele, and Gilad Bracha. The Java Language Specification - second
+edition. Book, Sun Microsystems, Inc, 2000.
+http://java.sun.com/docs/books/jls/second edition/html/j.title.doc.html.
+
+- [[[bib30,30]]] Martin Gudgin, Noah Mendelsohn, Mark Nottingham, and Herve Ruellan. SOAP Message
+Transmission Optimization Mechanism. Recommendation, W3C, January 2005.
+http://www.w3.org/TR/soap12-mtom/.
+
+- [[[bib31,31]]] Martin Gudgin, Noah Mendelsohn, Mark Nottingham, and Herve Ruellan. XML-binary Optimized
+Packaging. Recommendation, W3C, January 2005. http://www.w3.org/TR/xop10/.
+
+- [[[bib32,32]]] Mark Nottingham. Simple SOAP Binding Profile Version 1.0. Working Group Draft, WS-I, August
++2004. See http://www.ws-i.org/Profiles/SimpleSoapBindingProfile-1.0-2004-08-24.html.
+
+- [[[bib33,33]]] Chris Ferris, Anish Karmarkar, and Canyang Kevin Liu. Attachments Profile Version 1.0. Final
+Material, WS-I, August 2004. See
+http://www.ws-i.org/Profiles/AttachmentsProfile-1.0-2004-08-24.html.
+
+- [[[bib34,34]]] Norm Walsh. XML Catalogs 1.1. OASIS Committee Specification, OASIS, July 2005. See
+http://www.oasis-open.org/committees/download.php/14041/xml-catalogs.html.
+
+- [[[bib35,35]]] Rajiv Mordani. Common Annotations for the Java Platform. JSR, JCP, July 2005. See
+http://jcp.org/en/jsr/detail?id=250.
+
+- [[[bib36,36]]] Bill Shannon. Java Platform Enterprise Edition 5 Specification. JSR, JCP, August 2005. See
+http://jcp.org/en/jsr/detail?id=244.
+
+- [[[bib37,37]]] Tony Rogers Marting Gudgin, Marc Hadley. Web services addressing 1.0 - soap binding.
+Recommendation, W3C, May 2006. See http://www.w3.org/TR/2006/REC-ws-addr-soap-20060509/.
+
+- [[[bib38,38]]] John Barton, Satish Thatte, and Henrik Frystyk Nielsen. SOAP Messages With Attachments. Note,
+W3C, December 2000. http://www.w3.org/TR/SOAP-attachments.

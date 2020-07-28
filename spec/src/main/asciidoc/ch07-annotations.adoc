@@ -1,0 +1,760 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+
+[[metadata]]
+== Annotations
+
+This chapter describes the annotations used by JAX-WS.
+
+For simplicity, when describing an annotation we use the term
+``property'' in lieu of the more correct ``annotation elements''. Also,
+for each property we list the default value, which is the default as it
+appears in the declaration of the annotation type. Often properties have
+logical defaults which are computed based on contextual information and,
+for this reason, cannot be captured using the annotation element default
+facility built into the language. In this case, the text describes what
+the logical default is and how it is computed.
+
+JAX-WS 2.0 uses annotations extensively. For an annotation to be
+correct, besides being syntactically correct, e.g. placed on a program
+element of the appropriate type, it must obey a set of constraints
+detailed in this specification. For annotations defined by JSR-181, the
+annotation in question must also obey the constraints in the relevant
+specification (see <<bib16>>).
+
+_♦ Conformance (Correctness of annotations):_ An implementation MUST check at runtime
+that the annotations pertaining to a method being invoked, either on the
+client or on the server, as well as any containing program elements
+(i.e. classes, packages) is in conformance with the specification for
+that annotation
+
+_♦ Conformance (Handling incorrect annotations):_ If an incorrect or inconsistent
+annotation is detected:
+
+* In a client setting, an implementation MUST NOT invoke the remote
+operation being invoked, if any. Instead, it MUST throw a
+`WebServiceException`, setting its cause to an exception approximating
+the cause of the error (e.g. an `IllegalArgumentException` or a
+`ClassNotFoundException`).
+* In a server setting, annotation, an implementation MUST NOT dispatch
+to an endpoint implementation object. Rather, it MUST generate a fault
+appropriate to the binding in use.
+
+_♦ Conformance (Unsupported `WebServiceFeatureAnnotation`):_ If an unrecongnized or
+unsupported annotation annotated with the `WebServiceFeatureAnnotation`
+meta-annotation:
+
+* In a client setting, an implementation MUST NOT invoke the remote
+operation being invoked, if any. Instead, it MUST throw a
+`WebServiceException`, setting its cause to an exception approximating
+the cause of the error (e.g. an `IllegalArgumentException` or a
+`ClassNotFoundException`).
+* In a server setting, annotation, an implementation MUST NOT dispatch
+to an endpoint implementation object. Rather, it MUST generate a fault
+appropriate to the binding in use.
+
+An implementation may check for correctness in a lazy way, at the time a
+method is invoked or a request is about to be dispatched to an endpoint,
+or more aggressively, e.g. when creating a proxy. In a container
+environment, an implementation may perform any correctness checks at
+deployment time.
+
+[[mdservicemode]]
+=== javax.xml.ws.ServiceMode
+
+The `ServiceMode` annotation is used to specify the mode for a provider
+class, i.e. whether a provider wants to have access to protocol message
+payloads (e.g. a SOAP body) or the entire protocol messages (e.g. a SOAP
+envelope).
+
+
+[id="Table 7.1"]
+Table 7.1: `ServiceMode` properties.
+|==================================
+|Property   |Description    |Default
+|`value`      |The service mode, one of
+javax.xml.ws.Service.Mode. MESSAGE or
+javax.xml.ws.Service.Mode.PAYLOAD.
+MESSAGE means that the whole protocol
+message will be handed to the provider
+instance, PAYLOAD that only the payload of
+the protocol message will be handed to the
+provider instance.
+|javax.xml.ws.Service.Mode.PAYLOAD
+|==================================
+
+The `ServiceMode` annotation type is marked `@Inherited`, so the
+annotation will be inherited from the superclass.
+
+[[mdwebfault]]
+=== javax.xml.ws.WebFault
+
+The `WebFault` annotation is used when mapping WSDL faults to Java
+exceptions, see section <<faulttoexceptmap>>. It is used to capture the
+name of the fault element used when marshalling the JAXB type generated
+from the global element referenced by the WSDL fault message. It can
+also be used to customize the mapping of service specific exceptions to
+WSDL faults.
+
+[id="Table 7.2"]
+Table 7.2: `WebFault` properties.
+|==================================
+|Property   |Description                        |Default
+|`name`     |The local name of the element      |””
+|`targetNamespace`  |The namespace name of the element  |””
+|`faultBean`    |The fully qualified name of the fault bean class   |””
+|`messageName`  |The name of the wsdl:message   |””
+|==================================
+
+
+[[mdrequestWrapper]]
+=== javax.xml.ws.RequestWrapper
+
+The `RequestWrapper` annotation is applied to the methods of an SEI. It
+is used to capture the JAXB generated request wrapper bean and the
+element name and namespace for marshalling / unmarshalling the bean. The
+default value of `localName` element is the `operationName` as defined
+in `WebMethod` annotation and the default value for the
+`targetNamespace` element is the target namespace of the SEI. When
+starting from Java, this annotation is used to resolve overloading
+conflicts in document literal mode. Only the `className` element is
+required in this case.
+
+[id="Table 7.3"]
+Table 7.3: `RequestWrapper` properties.
+|==================================
+|Property   |Description        |Default
+|`localName`    |The local name of the element  |””
+|`targetNamespace`  |The namespace name of the element  |””
+|`className`    |The name of the wrapper class  |””
+|`partName`     |The name of the wsdl:part  |””
+|==================================
+
+[[mdresponseWrapper]]
+=== javax.xml.ws.ResponseWrapper
+
+The `ResponseWrapper` annotation is applied to the methods of an SEI. It
+is used to capture the JAXB generated response wrapper bean and the
+element name and namespace for marshalling / unmarshalling the bean. The
+default value of the `localName` element is the `operationName` as
+defined in the `WebMethod` appended with ``Response'' and the default
+value of the `targetNamespace` element is the target namespace of the
+SEI. When starting from Java, this annotation is used to resolve
+overloading conflicts in document literal mode. Only the `className`
+element is required in this case.
+
+[id="Table 7.4"]
+Table 7.4: `ResponseWrapper` properties.
+|==================================
+|Property   |Description    |Default
+|`localName`    |The local name of the element  |””
+|`targetNamespace`  |The namespace name of the element  |””
+|`className`    |The name of the wrapper class  |””
+|`partName`     |The name of the wsdl:part  |””
+|==================================
+
+
+[[mdwebsvcclient]]
+=== javax.xml.ws.WebServiceClient
+
+The `WebServiceClient` annotation is specified on a generated service
+class (see <<gensvcif>>). It is used to associate a class with a specific
+Web service, identify by a URL to a WSDL document and the qualified name
+of a `wsdl:service` element.
+
+[id="Table 7.5"]
+Table 7.5: `ResponseWrapper` properties.
+|==================================
+|Property   |Description    |Default
+|`name`     |The local name of the service  |””
+|`targetNamespace`  |The namespace name of the service  |””
+|`wsdlLocation` |The URL for the WSDL description of the service |””
+|==================================
+
+When resolving the URI specified as the `wsdlLocation` element or any
+document it may transitively reference, a JAX-WS implementation MUST use
+the catalog facility defined in section <<catalogfacility>>.
+
+[[mdwebendpoint]]
+=== javax.xml.ws.WebEndpoint
+
+The `WebEndpoint` annotation is specified on the `get`_PortName_`()`
+methods of a generated service class (see <<gensvcif>>). It is used to
+associate a get method with a specific `wsdl:port`, identified by its
+local name (a `NCName`).
+
+[id="Table 7.6"]
+Table 7.6: `WebEndpoint` properties.
+|==================================
+|Property   |Description    |Default
+|`name`     |The local name of the port  |””
+|==================================
+
+[[example-5]]
+==== Example
+
+The following shows a WSDL extract and the resulting generated service
+class.
+
+[source,java,numbered]
+-------------
+<!-- WSDL extract -->
+<wsdl:service name="StockQuoteService">
+    <wsdl:port name="StockQuoteHTTPPort" binding="StockQuoteHTTPBinding"/>
+    <wsdl:port name="StockQuoteSMTPPort" binding="StockQuoteSMTPBinding"/>
+</wsdl:service>
+
+// Generated Service Class
+@WebServiceClient(name="StockQuoteService",
+                  targetNamespace="...",
+                  wsdlLocation="...")
+public class StockQuoteService extends javax.xml.ws.Service {
+    public StockQuoteService() {
+        super(wsdlLocation_fromAnnotation, serviceName_fromAnnotation);
+    }
+
+    public StockQuoteService(String wsdlLocation, QName serviceName) {
+        super(wsdlLocation, serviceName);
+    }
+
+    // Other StockQuoteService constructors
+    ...
+
+    @WebEndpoint(name="StockQuoteHTTPPort")
+    public StockQuoteProvider getStockQuoteHTTPPort() {
+        return super.gePort(portName, StockQuoteProvider.class);
+    }
+
+    @WebEndpoint(name="StockQuoteHTTPPort")
+    public StockQuoteProvider getStockQuoteHTTPPort(WebServiceFeature... f) {
+        return super.gePort(portName, StockQuoteProvider.class, f);
+    }
+
+    @WebEndpoint(name="StockQuoteSMTPPort")
+    public StockQuoteProvider getStockQuoteSMTPPort() {
+        return super.getPort(portName, StockQuoteProvider.class);
+    }
+
+    @WebEndpoint(name="StockQuoteSMTPPort")
+    public StockQuoteProvider getStockQuoteSMTPPort(WebServiceFeature... f) {
+        return super.getPort(portName, StockQuoteProvider.class, f);
+    }
+}
+-------------
+
+[[mdwebsvcprovider]]
+=== javax.xml.ws.WebServiceProvider
+
+The `WebServiceProvider` annotation is specified on classes that
+implement a strongly typed `javax.xml.ws.Provider`. It is used to
+declare that a class that satisfies the requirements for a provider (see
+<<providersvcapi>>) does indeed define a Web service endpoint, much like
+the `WebService` annotation does for SEI-based endpoints.
+
+The `WebServiceProvider` and `WebService` annotations are mutually
+exclusive.
+
+_♦ Conformance (WebServiceProvider and WebService):_ A class annotated with the
+`WebServiceProvider` annotation MUST NOT carry a `WebService`
+annotation.
+
+[id="Table 7.7"]
+Table 7.7: `WebServiceProvider` properties.
+|==================================
+|Property   |Description    |Default
+|`wsdlLocation` |The URL for the WSDL description   |””
+|`serviceName`  |The name of the service        |””
+|`portName`     |The name of the port       |””
+|`targetNamespace`  |The target namespace for the service   |””
+|==================================
+
+When resolving the URL specified as the `wsdlLocation` element or any
+document it may transitively reference, a JAX-WS implementation MUST use
+the catalog facility defined in section <<catalogfacility>>.
+
+[[mdbindingtype]]
+=== javax.xml.ws.BindingType
+
+The `BindingType` annotation is applied to an endpoint implementation
+class. It specifies the binding to use when publishing an endpoint of
+this type.
+
+[id="Table 7.8"]
+Table 7.8: `BindingType` properties.
+|==================================
+|Property   |Description    |Default
+|`value` |The binding ID (a URI)   |””
+|==================================
+
+The default binding for an endpoint is the SOAP 1.1/HTTP one (see
+chapter <<soapbindchap>>).
+
+[[mdwebsvcref]]
+=== javax.xml.ws.WebServiceRef
+
+The `WebServiceRef` annotation is used to declare a reference to a Web
+service. It follows the resource pattern exemplified by the
+`javax.annotation.Resource` annotation in JSR-250 <<bib35>>.
+
+The injected references of `WebServiceRef` annotation are not guaranteed
+to be thread safe. If the references are accessed by multiple threads,
+usual synchronization techinques can be used to support multiple
+threads.
+
+The `WebServiceRef` annotation is required to be honored when running on
+the Java EE 5 platform, where it is subject to the common resource
+injection rules described by the platform specification <<bib36>>.
+
+The injected references of `WebServiceRef` annotation can be configured
+with the corresponding features of annotations annotated with
+`WebServiceFeatureAnnotation` annotations. For example, a SEI reference
+can be configured with the MTOM web service feature using `@MTOM`.
+Similarly, a generated service reference can be configured with web
+service features using the corresponding `WebServiceFeatureAnnotation`
+annotations. JAX-WS specification defines three standard features
+AddressingFeature, MTOMFeature and RespectBindingFeature that can be
+used while creating proxy instances. However, there are no standard
+features that can be used while creating service instances in the
+current specification. A JAX-WS implementation may define its own
+features but they will be non-portable across all JAX-WS
+implementations.
+
+If a JAX-WS implementation encounters an unsupported or unrecognized
+annotation annotated with the `WebServiceFeatureAnnotation` that is
+specified with `@WebServiceRef`, an error MUST be given.
+
+
+[id="Table 7.9"]
+Table 7.9: `WebServiceRef` properties.
+|==================================
+|Property   |Description    |Default
+|`name`     |The name identifying the Web service reference.    |””
+|`wsdlLocation`     |A URL pointing to the location of the WSDL
+document for the service being referred to.|””
+|`type`     |The resource type as a Java class object   |`Object.class`
+|`value`        |The service type as a Java class object    |`Service.class`
+|`mappedName`       |A product specific name that this resource should be mapped to.    |””
+|`lookup`       |A portable JNDI lookup name that resolves
+to the target web service reference.   |””
+|==================================
+
+
+The name of the resource, as defined by the `name` element (or
+defaulted) is a name that is local to the application component using
+the resource.
+
+The name can be absolute JNDI name(with a logical namespace) or relative
+to the JNDI java:comp/env namespace.
+
+Many application servers provide a way to map these local names to names
+of resources known to the application server. This `mappedName` is often
+a global JNDI name, but may be a name of any form. Application servers
+are not required to support any particular form or type of mapped name,
+nor the ability to use mapped names. A mapped name is product-dependent
+and often installation-dependent. No use of a mapped name is portable.
+
+A defined reference can be resolved using a portable JNDI name provided
+by `lookup` element. In this case, it is an error if there are any
+circular dependencies between entries of references. Similarly, it is an
+error if looking up the specified JNDI name results in a resource whose
+type is not compatible with the reference being created. Since this
+``lookup'' functionality is just resolving to an already defined
+reference, only `name` can be specified with `lookup` (doesn’t require
+any other metadata like `wsdlLocation` etc.).
+
+There are two uses to the `WebServiceRef` annotation:
+
+1.  To define a reference whose type is a generated service class. In
+this case, the `type` and `value` element will both refer to the
+generated service class type. Moreover, if the reference type can be
+inferred by the field/method declaration the annotation is applied to,
+the `type` and `value` elements MAY have the default value
+(`Object.class`, that is). If the type cannot be inferred, then at least
+the `type` element MUST be present with a non-default value.
+2.  To define a reference whose type is a SEI. In this case, the `type`
+element MAY be present with its default value if the type of the
+reference can be inferred from the annotated field/method declaration,
+but the `value` element MUST always be present and refer to a generated
+service class type (a subtype of `javax.xml.ws.Service`).
+
+The `wsdlLocation` element, if present, overrides the WSDL location
+information specified in the `WebService` annotation of the referenced
+generated service class.
+
+When resolving the URI specified as the `wsdlLocation` element or any
+document it may transitively reference, a JAX-WS implementation MUST use
+the catalog facility defined in section <<catalogfacility>>.
+
+[[example-6]]
+==== Example
+
+The following shows both uses of the `WebServiceRef` annotation.
+
+[source,java,numbered]
+-------------
+// Generated Service Class
+
+@WebServiceClient(name="StockQuoteService",
+                  targetNamespace="...",
+                  wsdlLocation="...")
+public class StockQuoteService extends javax.xml.ws.Service {
+    ...
+
+    @WebEndpoint(name="StockQuoteHTTPPort")
+    StockQuoteProvider getStockQuoteHTTPPort() { ... };
+
+    @WebEndpoint(name="StockQuoteHTTPPort")
+    StockQuoteProvider getStockQuoteHTTPPort(WebServiceFeature ... f) { ... };
+
+    @WebEndpoint(name="StockQuoteSMTPPort")
+    StockQuoteProvider getStockQuoteSMTPPort() { ... };
+
+    @WebEndpoint(name="StockQuoteSMTPPort")
+    StockQuoteProvider getStockQuoteSMTPPort(WebServiceFeature ... f) { ... };
+}
+
+// Generated SEI
+
+@WebService(name="StockQuoteProvider",
+            targetNamespace="...")
+public interface StockQuoteProvider {
+    Double getStockQuote(String ticker);
+}
+
+// Sample client code
+
+@Stateless
+public class ClientComponent {
+
+    // WebServiceRef using the generated service interface type
+    @WebServiceRef
+    public StockQuoteService stockQuoteService;
+
+    // WebServiceRef using the SEI type
+    // stockQuoteProvider proxy is configured with MTOM feature
+    @MTOM
+    @WebServiceRef(StockQuoteService.class)
+    private StockQuoteProvider stockQuoteProvider;
+
+
+    // other methods go here...
+}
+-------------
+
+[[mdwebsvcrefs]]
+=== javax.xml.ws.WebServiceRefs
+
+The `WebServiceRefs` annotation is used to declare multiple references
+to Web services on a single class. It is necessary to work around the
+limition against specifying repeated annotations of the same type on any
+given class, which prevents listing multiple `javax.ws.WebServiceRef`
+annotations one after the other. This annotation follows the resource
+pattern exemplified by the `javax.annotation.Resources` annotation in
+JSR-250 <<bib35>>.
+
+Since no name and type can be inferred in this case, each
+`WebServiceRef` annotation inside a `WebServiceRefs` MUST contain `name`
+and `type` elements with non-default values.
+
+The `WebServiceRef` annotation is required to be honored when running on
+the Java EE 5 platform, where it is subject to the common resource
+injection rules described by the platform specification <<bib36>>.
+
+[id="Table 7.10"]
+Table 7.10: `WebServiceRefs` properties.
+|==================================
+|Property   |Description    |Default
+|`value`        |An array of `WebServiceRef` annotations, each defining a web
+service reference. |`{}`
+|==================================
+
+There is no way to associate web service features with the injected
+instances of this annotation. If an instance needs to be configured with
+the web service features, use @WebServiceRef to inject the resource
+along with its features.
+
+[[example-7]]
+==== Example
+
+The following shows how to use the `WebServiceRefs` annotation to
+declare at the class level two web service references. The first one
+uses the SEI type, while the second one uses a generated service class
+type.
+
+[source,java,numbered]
+-------------
+@WebServiceRefs({@WebServiceRef(name="accounting"
+                                type=AccountingPortType.class,
+                                value=AccountingService.class),
+                 @WebServiceRef(name="payroll",
+                                type=PayrollService.class)})
+@Stateless
+public MyComponent {
+
+    // methods using the declared resources go here...
+}
+-------------
+
+[[mdjsr181]]
+=== Annotations Defined by JSR-181
+
+In addition to the annotations defined in the preceding sections, JAX-WS
+2.0 uses several annotations defined by JSR-181.
+
+_♦ Conformance (JSR-181 conformance):_ A JAX-WS 2.0 implementation MUST be conformant to
+the JAX-WS profile of JSR-181 1.1 <<bib16>>.
+
+As a convenience to the reader, the following sections reproduce the
+definition of the JSR-181 annotations applicable to JAX-WS.
+
+[[mdwebservice]]
+==== javax.jws.WebService
+
+[source,java,numbered]
+-------------
+@Target({TYPE})
+public @interface WebService {
+    String name() default "";
+    String targetNamespace() default "";
+    String serviceName() default "";
+    String wsdlLocation() default "";
+    String endpointInterface() default "";
+    String portName() default "";
+};
+-------------
+
+Consistently with the URI resolution process in JAX-WS, when resolving
+the URI specified as the `wsdlLocation` element or any document it may
+transitively reference, a JAX-WS implementation MUST use the catalog
+facility defined in section <<catalogfacility>>.
+
+[[mdwebmethod]]
+==== javax.jws.WebMethod
+
+[source,java,numbered]
+-------------
+@Target({METHOD})
+public @interface WebMethod {
+    String operationName() default "";
+    String action() default "" ;
+    boolean exclude() default false;
+};
+-------------
+
+[[mdoneway]]
+==== javax.jws.OneWay
+
+[source,java,numbered]
+-------------
+@Target({METHOD})
+public @interface Oneway {
+};
+-------------
+
+[[mdwebparam]]
+==== javax.jws.WebParam
+
+[source,java,numbered]
+-------------
+@Target({PARAMETER})
+public @interface WebParam {
+    public enum Mode { IN, OUT, INOUT };
+
+    String name() default "";
+    String targetNamespace() default "";
+    Mode mode() default Mode.IN;
+    boolean header() default false;
+    String partName() default "";
+};
+-------------
+
+[[mdwebresult]]
+==== javax.jws.WebResult
+[source,java,numbered]
+-------------
+@Target({METHOD})
+public @interface WebResult {
+    String name() default "return";
+    String targetNamespace() default "";
+    boolean header() default false;
+    String partName() default "";
+};
+-------------
+
+[[mdsoapbinding]]
+==== javax.jws.SOAPBinding
+[source,java,numbered]
+-------------
+@Target({TYPE, METHOD})
+public @interface SOAPBinding {
+    public enum Style { DOCUMENT, RPC }
+
+    public enum Use { LITERAL, ENCODED }
+
+    public enum ParameterStyle { BARE, WRAPPED }
+
+    Style style() default Style.DOCUMENT;
+    Use use() default Use.LITERAL;
+    ParameterStyle parameterStyle() default ParameterStyle.WRAPPED;
+}
+-------------
+
+[[mdhandlerchain]]
+==== javax.jws.HandlerChain
+[source,java,numbered]
+-------------
+@Target({TYPE})
+public @interface HandlerChain {
+    String file();
+    String name() default "";
+}
+-------------
+
+[[action]]
+=== javax.xml.ws.Action
+
+The `Action` annotation is applied to the methods of a SEI. It is used
+to specify the `input`, `output`, `fault` WS-Addressing Action values
+associated with the annotated method.
+
+For such a method, the mapped operation in the generated WSDL’s
+`wsam:Action` attribute on the WSDL `input`, `output` and `fault`
+messages of the WSDL operation is based upon which attributes of the
+Action annotation have been specified. The `wsam:Action` computation
+algorithm is specified in section <<wsamComputation>>
+
+[id="Table 7.11"]
+Table 7.11: `FaultAction` properties.
+|==================================
+|Property   |Description    |Default
+|`fault`        |Array of FaultAction for the
+wsdl:fault s of the operation   |””
+|`input`        |Action for the wsdl:input of the operation |””
+|`output`       |Action for the wsdl:output of the operation    |””
+|==================================
+
+
+[[faultaction]]
+=== javax.xml.ws.FaultAction
+
+The `FaultAction` annotation is used within the `Action` annotation to
+specify the WS-Addressing Action of a service specific exception as
+defined by section <<j2w11except>>.
+
+The `wsam:Action` attribute value in the fault message in the generated
+WSDL operation mapped for an exception class is equal to the
+corresponding `value` in the FaultAction. The `wsam:Action` computation
+algorithm is specified in section <<wsamComputation>>
+
+[id="Table 7.12"]
+Table 7.12: `FaultAction` properties.
+|==================================
+|Property   |Description    |Default
+|`value`        |Action for the `wsdl:fault` of the operation   |””
+|`output`       |Name of the exception class    |no defaults required property
+|==================================
+
+[[webservfeatureannotation]]
+=== javax.xml.ws.spi.WebServiceFeatureAnnotation
+
+The `WebServiceFeatureAnnotation` is a meta-annotation used by a JAX-WS
+implementation to identify other annotations as `WebServiceFeature`s.
+JAX-WS provides the following annotations as `WebServiceFeatures`:
+`javax.xml.ws.soap.Addressing`, `javax.xml.ws.soap.MTOM`, and
+`javax.xml.ws.RespectBinding`. If a JAX-WS implementation encounters an
+annotation annotated with the `WebServiceFeatureAnnotation` that it does
+not support or recognize an ERROR MUST be given.
+
+[id="Table 7.13"]
+Table 7.13: `WebServiceFeatureAnnotation` properties.
+|==================================
+|Property   |Description    |Default
+|`id`        |Unique identifier for the
+`WebServiceFeature` represented by the
+annotated annotation.   |No defaults required property
+|`bean`       |The class name of a derived
+`WebServiceFeature` class associated with
+the annotated annotation.    |No defaults required property
+|==================================
+
+The following shows how the `Addressing` annotation uses the
+`WebServiceFeatureAnnotation` meta-annotation.
+
+[source,java,numbered]
+-------------
+@WebServiceFeatureAnnotation(id=AddressingFeature.ID,
+                             bean=AddressingFeature.class)
+public @interface Addressing {
+    /**
+     * Specifies if this feature is enabled or disabled.
+     */
+    boolean enabled() default true;
+
+    /**
+     * Property to determine whether WS-Addressing
+     * headers MUST be present on incoming messages.
+     */
+    boolean required() default false;
+}
+-------------
+
+[[addrannotation]]
+==== javax.xml.ws.soap.Addressing
+
+The `Addressing` annotation is applied to an endpoint implementation
+class and to an injected web service proxy reference. It is used to
+control the use of WS-Addressing<<bib26>><<37>><<bib27>>.
+It corresponds with the `AddressingFeature` described in section <<addressingfeature>>.
+
+[id="Table 7.14"]
+Table 7.14: `Addressing` properties.
+|==================================
+|Property   |Description    |Default
+|`enabled`  |Specifies if WS-Addressing is enabled or not.  |true
+|`required` |Specifies Adddressing headers MUST be present on incoming messages. |false
+|`responses`    |If addressing is enabled, this property determines if endpoint requires
+the use of anonymous responses, or non-anonymous responses, or all. |`Responses.ALL`
+|==================================
+
+The generated WSDL must indicate the use of addressing as specified in
+the section <<j2w11svcports>>. The runtime requirements of enabling
+addressing for SOAP binding are specified in section <<addressing>>.
+
+[[mtomannotation]]
+==== javax.xml.ws.soap.MTOM
+
+The `MTOM` annotation is applied to an endpoint implementation class
+and to an injected web service proxy reference.
+It is used to control the use of MTOM. It corresponds to the
+`MTOMFeature` described in section <<mtomfeature>>.
+
+[id="Table 7.15"]
+Table 7.15: `MTOM` properties.
+|==================================
+|Property   |Description    |Default
+|`enabled`  |Specifies if MTOM is enabled or not.  |true
+|`threshold` |Specifies the size in bytes that binary data SHOULD be before
+being sent as an attachment. |0
+|==================================
+
+[[respbindingannotation]]
+==== javax.xml.ws.RespectBinding
+
+The `RespectBinding` annotation is applied to an endpoint implementation
+class
+
+and to an injected web service proxy reference
+
+. It is used to control whether a JAX-WS implementation MUST
+respect/honor the contents of the `wsdl:binding` associated with an
+endpoint. It has a corresponding `RespectBindingFeature` described in
+section <<respbindfeature>>.
+
+[id="Table 7.16"]
+Table 7.16: `RespectBinding` properties.
+|==================================
+|Property   |Description    |Default
+|`enabled`  |Specifies whether the wsdl:binding must be
+respected or not.  |true
+|==================================

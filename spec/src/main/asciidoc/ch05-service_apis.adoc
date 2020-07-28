@@ -1,0 +1,876 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+
+[[serviceapis]]
+== Service APIs
+
+This chapter describes requirements on JAX-WS service implementations
+and standard APIs provided for their use.
+
+[[providersvcapi]]
+=== javax.xml.ws.Provider
+
+JAX-WS services typically implement a native Java service endpoint
+interface (SEI), perhaps mapped from a WSDL port type, either directly
+or via the use of annotations. Section <<j2wsdl11interface>> describes the
+requirements that a Java interface must meet to qualify as a JAX-WS SEI.
+Section <<wsdl11porttype>> describes the mapping from a WSDL port type to
+an equivalent Java SEI.
+
+Java SEIs provide a high level Java-centric abstraction that hides the
+details of converting between Java objects and their XML representations
+for use in XML-based messages. However, in some cases it is desirable
+for services to be able to operate at the XML message level. The
+`Provider` interface offers an alternative to SEIs and may be
+implemented by services wishing to work at the XML message level.
+
+_♦ Conformance (Provider support required):_ An implementation MUST support
+`Provider<Source>` in payload mode with all the predefined bindings. It
+MUST also support `Provider<SOAPMessage>` in message mode in conjunction
+with the predefined SOAP bindings and
+`Provider<javax.activation.DataSource>` in message mode in conjunction
+with the predefined HTTP binding.
+
+_♦ Conformance (Provider default constructor):_ A `Provider` based service endpoint
+implementation MUST provide a public default constructor.
+
+An empty Source payload can be used in payload mode to send a response
+with no payload. An empty source can be constructed using zero-argument
+default constructors of DOMSource, SAXSource, and StreamSource.
+
+A typed `Provider` interface is one in which the type parameter has been
+bound to a concrete class, e.g. `Provider<Source>` or
+`Provider<SOAPMessage>`, as opposed to being left unbound, as in
+`Provider<T>`.
+
+_♦ Conformance (Provider implementation):_ A `Provider` based service endpoint
+implementation MUST implement a typed `Provider` interface.
+
+_♦ Conformance (WebServiceProvider annotation):_ A `Provider` based service endpoint
+implementation MUST carry a `WebServiceProvider` annotation (see
+<<mdwebsvcprovider>>).
+
+`Provider` is a low level generic API that requires services to work
+with messages or message payloads and hence requires an intimate
+knowledge of the desired message or payload structure. The generic
+nature of `Provider` allows use with a variety of message object types.
+
+A JAX-WS implementation MUST honor all `WebServiceFeatures` (section
+<<webservicefeature>>) for `Provider` based applications.
+
+[[invocation]]
+==== Invocation
+
+A `Provider` based service instance’s `invoke` method is called for each
+message received for the service.
+
+When an invoke method returns null, it is considered that no response
+needs to be sent by service.
+
+[[exceptions]]
+===== Exceptions
+
+The service runtime is required to catch exceptions thrown by a Provider
+instance. A `Provider` instance may make use of the protocol specific
+exception handling mechanism as described in section
+<<protocolspecificfaults>>. The protocol binding is responsible for
+converting the exception into a protocol specific fault representation
+and then invoking the handler chain and dispatching the fault message as
+appropriate.
+
+[[configuration]]
+==== Configuration
+
+The `ServiceMode` annotation is used to configure the messaging mode of
+a `Provider` instance. Use of `@ServiceMode(value=MESSAGE)` indicates
+that the provider instance wishes to receive and send entire protocol
+messages (e.g. a SOAP message when using the SOAP binding); absence of
+the annotation or use of `@ServiceMode(value=PAYLOAD)` indicates that
+the provider instance wishes to receive and send message payloads only
+(e.g. the contents of a SOAP Body element when using the SOAP binding).
+
+Provider instances MAY use the `WebServiceContext` facility (see
+<<webservicecontext>>) to access the message context and other information
+about the request currently being served.
+
+The JAX-WS runtime makes certain properties available to a `Provider`
+instance that can be used to determine its configuration. These
+properties are passed to the `Provider` instance each time it is invoked
+using the `MessageContext` instance accessible from the
+`WebServiceContext`.
+
+[[examples-1]]
+==== Examples
+
+For brevity, error handling is omitted in the following examples.
+
+[[simple-echo-service-reply-message-is-the-same-as-the-input-message]]
+===== Simple echo service, reply message is the same as the input message
+
+[source,java,numbered]
+-------------
+@WebServiceProvider
+@ServiceMode(value=Service.Mode.MESSAGE)
+public class MyService implements Provider<SOAPMessage> {
+    public MyService() {
+    }
+
+    public SOAPMessage invoke(SOAPMessage request) {
+        return request;
+    }
+}
+-------------
+
+[[simple-static-reply-reply-message-contains-a-fixed-acknowlegment-element]]
+===== Simple static reply, reply message contains a fixed acknowlegment element
+
+[source,java,numbered]
+-------------
+@WebServiceProvider
+@ServiceMode(value=Service.Mode.PAYLOAD)
+public class MyService implements Provider<Source> {
+    public MyService() {
+    }
+
+    public Source invoke(Source request) {
+        Source requestPayload = request.getPayload();
+        ...
+        String replyElement = "<n:ack xmlns:n=’...’/>";
+        StreamSource reply = new StreamSource(new StringReader(replyElement));
+        return reply;
+    }
+}
+-------------
+
+[[using-jaxb-to-read-the-input-message-and-set-the-reply]]
+===== Using JAXB to read the input message and set the reply
+
+[source,java,numbered]
+-------------
+@WebServiceProvider
+@ServiceMode(value=Service.Mode.PAYLOAD)
+public class MyService implements Provider<Source> {
+    public MyService() {
+    }
+
+    public Source invoke(Source request) {
+        JAXBContent jc = JAXBContext.newInstance(...);
+        Unmarshaller u = jc.createUnmarshaller();
+        Object requestObj = u.unmarshall(request);
+        ...
+        Acknowledgement reply = new Acknowledgement(...);
+        return new JAXBSource(jc, reply);
+    }
+}
+-------------
+
+[[endpointif]]
+=== javax.xml.ws.Endpoint
+
+The `Endpoint` class can be used to create and publish Web service
+endpoints.
+
+An endpoint consists of an object that acts as the Web service
+implementation (called here __implementor__) plus some configuration
+information, e.g. a `Binding`. Implementor and binding are set when the
+endpoint is created and cannot be modified later. Their values can be
+retrieved using the `getImplementor` and `getBinding` methods
+respectively. Other configuration information may be set at any time
+after the creation of an `Endpoint` but before its publication.
+
+[[endpointfactusage]]
+==== Endpoint Usage
+
+Endpoints can be created using the following static methods on
+`Endpoint`:
+
+`create(Object implementor)`::
+Creates and returns an `Endpoint` for the specified implementor. If the
+implementor specifies a binding using the `javax.xml.ws.BindingType`
+annotation it MUST be used else a default binding of SOAP 1.1 / HTTP
+binding MUST be used.
+
+`create(Object implementor, WebServiceFeature ... features)`::
+Same as the above `create()` method. The created `Endpoint` is
+configured with the web service features. These features override the
+corresponding features that are specified in WSDL, if present.
+
+`create(String bindingID, Object implementor)`::
+Creates and returns an `Endpoint` for the specified binding and
+implementor. If the bindingID is `null` and no binding information is
+specified via the `javax.xml.ws.BindingType` annotation then a default
+SOAP 1.1 / HTTP binding MUST be used.
+
+`create(String bindingID, Object implementor, WebServiceFeature ... features)`::
+Same as the above `create()` method. The created `Endpoint` is
+configured with the web service features. These features override the
+corresponding features that are specified in WSDL, if present.
+
+`publish(String address, Object implementor)`::
+Creates and publishes an `Endpoint` for the given implementor. The
+binding is chosen by default based on the URL scheme of the provided
+address (which must be a URL). If a suitable binding if found, the
+endpoint is created then published as if the
+`Endpoint.publish(String address)` method had been called. The created
+`Endpoint` is then returned as the value of the method.
+
+`publish(String address, Object implementor, WebServiceFeature ... features)`::
+Same as the above `publish()` method. The created `Endpoint` is
+configured with the web service features. These features override the
+corresponding features that are specified in WSDL, if present.
+
+These methods MUST delegate the creation of Endpoint to the
+`javax.xml.ws.spi.Provider` SPI class (see <<spiprovider>>) by calling the
+`createEndpoint` and `createAndPublishEndpoint` methods respectively.
+
+An implementor object MUST be either an instance of a class annotated
+with the `@WebService` annotation according to the rules in chapter
+<<j2wsdl11chap>> or an instance of a class annotated with the
+`WebServiceProvider` annotation and implementing the `Provider`
+interface (see <<providersvcapi>>).
+
+The `publish(String,Object)` method is provided as a shortcut for the
+common operation of creating and publishing an `Endpoint`. The following
+code provides an example of its use:
+
+[source,java,numbered]
+-------------
+// assume Test is an endpoint implementation class annotated with @WebService
+Test test = new Test();
+Endpoint e = Endpoint.publish("http://localhost:8080/test", test);
+-------------
+
+_♦ Conformance (Endpoint publish(String address, Object implementor) Method):_ The effect
+of invoking the `publish` method on an `Endpoint` MUST be the same as
+first invoking the `create` method with the binding ID appropriate to
+the URL scheme used by the address, then invoking the
+`publish(String address)` method on the resulting `endpoint`.
+
+_♦ Conformance (Default Endpoint Binding):_ In the absence of a specified binding, if the
+URL scheme for the address argument of the `Endpoint.publish` method is
+``http'' or ``https'' then an implementation MUST use the SOAP 1.1/HTTP
+binding (see chapter <<soapbindchap>>) as the binding for the newly
+created endpoint.
+
+_♦ Conformance (Other Bindings):_ An implementation MAY support using the
+`Endpoint.publish` method with addresses whose URL scheme is neither
+``http'' nor ``https''.
+
+The success of the `Endpoint.publish` method is conditional to the
+presence of the appropriate permission as described in section
+<<endpointpublishpermission>>.
+
+Endpoint implementors MAY use the `WebServiceContext` facility (see
+<<webservicecontext>>) to access the message context and other information
+about the request currently being served. Injection of the
+`WebServiceContext`, if requested, MUST happen the first time the
+endpoint is published. After any injections have been performed and
+before any requests are dispatched to the implementor, the implementor
+method which carries a `javax.annotation.PostConstruct` annotation, if
+present, MUST be invoked. Such a method MUST satisfy the requirements
+for lifecycle methods in JSR-250 <<bib35>>.
+
+[[endpointpublishing]]
+==== Publishing
+
+An `Endpoint` is in one of three states: not published (the default),
+published or stopped. Published endpoints are active and capable of
+receiving incoming requests and dispatching them to their implementor.
+Non published endpoints are inactive. Stopped endpoint were in the
+published until some time ago, then got stopped. Stopped endpoints
+cannot be published again. Publication of an `Endpoint` can be achieved
+by invoking one of the following methods:
+
+`publish(String address)`::
+Publishes the endpoint at the specified address (a URL). The address
+MUST use a URL scheme compatible with the endpoint’s binding.
+`publish(Object serverContext)`::
+Publishes the endpoint using the specified server context. The server
+context MUST contain address information for the resulting endpoint
+and it MUST be compatible with the endpoint’s binding.
+
+_♦ Conformance (Publishing over HTTP):_ If the `Binding` for an `Endpoint` is a SOAP (see
+<<soapbindchap>>) or HTTP (see <<xmlbindchap>>) binding, then an
+implementation MUST support publishing the `Endpoint` to a URL whose
+scheme is either ``http'' or ``https''.
+
+The WSDL contract for an endpoint is created dynamically based on the
+annotations on the implementor class, the `Binding` in use and the set
+of metadata documents specified on the endpoint (see
+<<endpointmetadata>>).
+
+_♦ Conformance (WSDL Publishing):_ An `Endpoint` that uses the SOAP 1.1/HTTP binding (see
+<<soapbindchap>>) MUST make its contract available as a WSDL 1.1 document
+at the publishing address suffixed with ``?WSDL'' or ``?wsdl''.
+
+An `Endpoint` that uses any other binding defined in this specification
+in conjunction with the HTTP transport SHOULD make its contract
+available using the same convention. It is RECOMMENDED that an
+implementation provide a way to access the contract for an endpoint even
+when the latter is published over a transport other than HTTP.
+
+The success of the two `Endpoint.publish` methods described above is
+conditional to the presence of the appropriate permission as described
+in section <<endpointpublishpermission>>.
+
+Applications that wish to modify the configuration information (e.g. the
+metadata) for an `Endpoint` must make sure the latter is in the
+not-published state. Although the various setter methods on `Endpoint`
+must always store their arguments so that they can be retrieved by a
+later invocation of a getter, the changes they entail may not be
+reflected on the endpoint until the next time it is published. In other
+words, the effects of configuration changes on a currently published
+endpoint are undefined.
+
+The `stop` method can be used to stop publishing an endpoint. A stopped
+endpoint may not be restarted. It is an error to invoke a `publish`
+method on a stopped endpoint. After the `stop` method returns, the
+runtime MUST NOT dispatch any further invocations to the endpoint’s
+implementor.
+
+An `Endpoint` will be typically invoked to serve concurrent requests, so
+its implementor should be written so as to support multiple threads. The
+`synchronized` keyword may be used as usual to control access to
+critical sections of code. For finer control over the threads used to
+dispatch incoming requests, an application can directly set the executor
+to be used, as described in section <<endpointexecutor>>.
+
+[[example-4]]
+===== Example
+
+The following example shows the use of the `publish(Object)` method
+using a hypothetical HTTP server API that includes the `HttpServer` and
+`HttpContext` classes.
+
+[source,java,numbered]
+-------------
+// assume Test is an endpoint implementation class annotated with @WebService
+Test test = new Test();
+HttpServer server = HttpServer.create(new InetSocketAddress(8080),10);
+server.setExecutor(Executor.newFixedThreadPool(10));
+server.start();
+HttpContext context = server.createContext("/test");
+Endpoint endpoint = Endpoint.create(SOAPBinding.SOAP11HTTP_BINDING, test);
+endpoint.publish(context);
+-------------
+
+Note that the specified server context uses its own executor mechanism.
+At runtime then, any other executor set on the `Endpoint` instance would
+be ignored by the JAX-WS implementation.
+
+[[endpointpublishpermission]]
+==== Publishing Permission
+
+For security reasons, administrators may want to restrict the ability of
+applications to publish Web service endpoints. To this end, JAX-WS 2.0
+defines a new permission class, `javax.xml.ws.WebServicePermission`, and
+one named permission, `publishEndpoint`.
+
+_♦ Conformance (Checking publishEndpoint Permission):_ When any of the `publish`
+methods defined by the `Endpoint` class are invoked, an implementation
+MUST check whether a `SecurityManager` is installed with the
+application. If it is, implementations MUST verify that the application
+has the `WebServicePermission` identified by the target name
+`publishEndpoint` before proceeding. If the permission is not granted,
+implementations MUST NOT publish the endpoint and they MUST throw a
+`java.lang.SecurityException`.
+
+[[endpointmetadata]]
+==== Endpoint Metadata
+
+A set of metadata documents can be associated with an `Endpoint` by
+means of the `setMetadata(List<Source>)` method. By setting the metadata
+of an `Endpoint`, an application can bypass the automatic generation of
+the endpoint’s contract and specify the desired contract directly. This
+way it is possible, e.g., to make sure that the WSDL or XML Schema
+document that is published contains information that cannot be
+represented using built-in Java annotations (see <<metadata>>).
+
+_♦ Conformance (Required Metadata Types):_ An implementation MUST support WSDL 1.1 and
+XML Schema 1.0 documents as metadata.
+
+_♦ Conformance (Unknown Metadata):_ An implementation MUST ignore metadata documents
+whose type it does not recognize.
+
+When specifying a list of documents as metadata, an application may need
+to establish references between them. For instance, a WSDL document may
+import one or more XML Schema documents. In order to do so, the
+application MUST use the `systemId` property of the
+`javax.xml.transform.Source` class by setting its value to an absolute
+URI that uniquely identifies it among all supplied metadata documents,
+then using the given URI in the appropriate construct (e.g.
+`wsdl:import` or `xsd:import`).
+
+[[endpointcontract]]
+==== Determining the Contract for an Endpoint
+
+This section details how the annotations on the endpoint implementation
+class and the metadata for an endpoint instance are used at publishing
+time to create a contract for the endpoint.
+
+Both the `WebService` and `WebServiceProvider` annotations define a
+`wsdlLocation` annotation element which can be used to point to the
+desired WSDL document for the endpoint. If such an annotation element is
+present on the endpoint implementation class and has a value other than
+the default one (i.e. it is not the empty string), then a JAX-WS
+implementation MUST use the document referred to from the `wsdlLocation`
+annotation element to determine the contract, according to the rules in
+section <<usingwsdllocationandmetadata>>.
+
+In addition to the case in which the `Endpoint` API is explicitly used,
+the requirements in this section are also applicable to the publishing
+of an endpoint via declarative means, e.g. in a servlet container. In
+this case, there may not be an equivalent for the notion of metadata as
+described in <<endpointmetadata>>. In such an occurrence, the rules in
+this section MUST be applied using an empty set of metadata documents as
+the metadata for the endpoint.
+
+In the context of the Java EE Platform, JSR-109 <<bib17>>
+defines deployment descriptor elements that may be used to
+override the value of the `wsdlLocation` annotation element. Please
+refer to that specification for more details.
+
+As we specify additional rules to be used in determining the contract
+for an endpoint, we distinguish two cases: that of a SEI-based endpoint
+(i.e. an endpoint that is annotated with a `WebService` annotation) and
+that of a Provider-based endpoint.
+
+[[contractseiendpoints]]
+===== SEI-based Endpoints
+
+For publishing to succeed, a SEI-based endpoint MUST have an associated
+contract.
+
+If the `wsdlLocation` annotation element is the empty string, then a
+JAX-WS implementation must obey the following rules, depending on the
+binding used by the endpoint:
+
+SOAP 1.1/HTTP Binding::
+A JAX-WS implementation MUST generate a WSDL description for the
+endpoint based on the rules in section <<usingwsdllocationandmetadata>>
+below.
+SOAP 1.2/HTTP Binding::
+A JAX-WS implementation MUST NOT generate a WSDL description for the
+endpoint.
+HTTP Binding::
+A JAX-WS implementation MUST NOT generate a WSDL description for the
+endpoint.
+Any Implementation-Specific Binding::
+A JAX-WS implementation MAY generate a WSDL description for the
+endpoint.
+
+This requirements guarantee that future versions of this specification
+may mandate support for additional WSDL binding in conjunction with the
+predefined binding identifiers without negatively affecting existing
+applications.
+
+A generated contract MUST follow the rules in chapter <<j2wsdl11chap>> and
+those in the JAXB specification <<bib10>>.
+
+[[contractproviderendpoints]]
+===== Provider-based Endpoints
+
+Provider-based endpoints SHOULD have a non-empty `wsdlLocation` pointing
+to a valid WSDL description of the endpoint.
+
+If the `wsdlLocation` annotation element is the empty string, then a
+JAX-WS implementation MUST NOT generate a WSDL description for the
+endpoint.
+
+[[usingwsdllocationandmetadata]]
+===== Use of `@WebService(wsdlLocation)` and Metadata
+
+A WSDL document contains two different kinds of information: abstract
+information (i.e. portTypes and any schema-related information) which
+affects the format of the messages and the data being exchanged, and
+binding-related one (i.e. bindings and ports) which affects the choice
+of protocol and transport as well as the on-the-wire format of the
+messages. Annotations (see <<metadata>>) are provided to capture the
+former aspects but not the latter. (The `@SOAPBinding` annotation is a
+bit of a hybrid, because it captures the signature-related aspects of
+the `soap:binding` binding extension in WSDL 1.1.)
+
+At runtime, annotations must be followed for all the abstract aspects of
+an interaction, but binding information has to come from somewhere else.
+Although the choice of binding is made at the time an endpoint is
+created, this specification does not attempt to capture all possible
+binding properties in its APIs, since the extensibility of WSDL would
+make it a futile exercise. Rather, when an endpoint is published, a
+description for it, if present, is consulted to determine binding
+information, using the `wsdl:service` and `wsdl:port` qualified names as
+a key.
+
+In terms of priority, the description specified using the `wsdlLocation`
+annotation element, if present, comes first, and the metadata documents
+are secondary. In the absence of a non-empty, non-default `wsdlLocation`
+annotation element, the metadata documents are consulted to identify as
+many description components as possible that can be reused when
+producing the contract for the endpoint.
+
+There are some restrictions on the packaging of the description and any
+associated metadata documents. The goal of these restrictions is to make
+it possible to publish an endpoint without forcing a JAX-WS
+implementation to retrieve, store and patch multiple documents from
+potentially remote sites.
+
+The value of the `wsdlLocation` annotation element on an endpoint
+implementation class, if any, MUST be a relative URL. The document it
+points to MUST be packaged with the application. Moreover, it MUST
+follow the requirements in section <<applicationspecifiedservice>> below
+(``Application-specified Service'').
+
+In the Java SE platform, relative URLs are treated as resources. When
+running on the Java EE platform, the dispositions in the JSR-109
+specification apply.
+
+For ease of identification, let’s call this document the ``root
+description document'', to distinguish it from any WSDL documents it
+might import.
+
+At publishing time, a JAX-WS implementation MUST patch the endpoint
+address in the root description document to match the actual address the
+endpoint is deployed at.
+
+In order to state the requirements for patching the locations of any
+`wsdl:import`-ed or `xsd:import`-ed documents, let’s define a document
+as being _local_ if and only if
+
+1.  it is the root description document, or
+2.  it is reachable from a local document via an import statement whose
+location is either a relative URL or an absolute URL for which there is
+a corresponding metadata document (i.e. a `Source` object which is a
+member of the list of metadata documents and whose `systemId` property
+is equal to the URL in question).
+
+A JAX-WS implementation MUST patch the location attributes of all
+`wsdl:import` and `xsd:import` statement in local documents that point
+to local documents. An implementation MUST NOT patch any other location
+attributes.
+
+Please note that, although the catalog facility (see <<catalogfacility>>)
+is used to resolve any absolute URLs encountered while processing the
+root description document or any documents transitively reachable from
+it via `wsdl:import` and `xsd:import` statements, those absolute URLs
+will not be rewritten when the importing document is published, since
+documents resolved via the catalog are not considered local, even if the
+catalog maps them to resources packaged with the application.
+
+In what follows, for better readability, the term ``metadata document''
+should be interpreted as also covering the description document pointed
+to by the `wsdlLocation` annotation element (if any), while keeping in
+mind the processing rules in the preceding paragraphs.
+
+As a guideline, the generated contract must reuse as much as possible
+the set of metadata documents provided by the application. In order to
+simplify an implementor’s task, this specification requires that only a
+small number of well-defined scenarios in which the application provides
+metadata documents be supported.
+
+Implementations MAY support other use cases, but they MUST follow the
+general rule that any application-provided metadata element takes
+priority over an implementation-generated one, with the exception of the
+overriding of a port address.
+
+For instance, if the application-provided metadata contains a definition
+for portType _foo_ that in no case should the JAX-WS implementation
+create its own _foo_ portType to replace the one provided by the
+application in the final contract for the endpoint.
+
+The exception to using a metadata document as supplied by the
+application without any modifications is the address of the `wsdl:port`
+for the endpoint, which MUST be overridden so as to match the address
+specified as an argument to the `publish` method or the one implicit in
+a server context.
+
+When publishing the main WSDL document for an endpoint, an
+implementation MUST ensure that all references between documents are
+correct and resolvable. This may require remapping the metadata
+documents to URLs different from those set as their `systemId` property.
+The renaming MUST be consistent, in that the ``imports'' and
+``includes'' relationships existing between documents when the metadata
+was supplied to the endpoint MUST be respected at publishing time.
+Moreover, the same metadata document SHOULD NOT be published at
+multiple, different URLs.
+
+When resolving URI references to other documents when processing
+metadata documents or any of the documents they may transitively
+reference, a JAX-WS implementation MUST use the catalog facility defined
+in section <<catalogfacility>>, except when there is a metadata document
+whose system id matches the URI in question. In other words, metadata
+documents have priority over catalog-based mappings.
+
+The scenarios which are required to be supported are the following:
+
+[[applicationspecifiedservice]]
+===== Application-specified Service
+
+One of the metadata documents, say *D*, contains a definition for a WSDL
+service whose qualified name , say *S*, matches that specified by the
+endpoint being published. In this case, a JAX-WS implementation MUST use
+*D* as the service description. No further generation of
+contract-related artifacts may occur.
+
+[id="Table 5.1"]
+Table 5.1: Standard `Endpoint` properties.
+|==================================
+|Name |Type |Description
+3+|*javax.xml.ws.wsdl*
+|.service   |QName  |Specifies the qualified name of the service.
+|.port      |QName  |Specifies the qualified name of the port.
+|==================================
+
+The implementation MUST also
+override the port address in *D* and the `location` and `schemaLocation`
+attributes as detailed in the preceding paragraphs. It is an error if
+more than one metadata document contains a definition for the
+sought-after service *S*.
+
+[[application-specified-porttype]]
+===== Application-specified PortType
+
+No metadata document contains a definition for the sought-after service
+*S*, but a metadata document, say *D*, contains a definition for the
+WSDL portType whose qualified name, say *P*, matches that specified by
+the endpoint being published. In this case, a JAX-WS implementation MUST
+create a new description for *S*, including an appropriate WSDL binding
+element referencing portType *P*. The metadata document *D* MUST be
+imported/included so that the published contract uses the definition of
+*P* provided by *D*. No schema generation occurs,as *P* is assumed to
+embed or import schema definitions for all the types/elements it
+requires. Like in the previous case, the implementation MUST override
+any `location` and `schemaLocation` attributes. It is an error if more
+than one metadata document contains a definition for the sought-after
+portType *P*.
+
+[[application-specified-schema-or-no-metadata]]
+===== Application-specified Schema or No Metadata
+
+No metadata document contains a definition for the sought-after service
+*S* and portType *P*. In this case, a JAX-WS implementation MUST
+generate a complete WSDL for *S*. When it comes to generating a schema
+for a certain target namespace, say *T*, the implementation MUST reuse
+the schema for *T* among the available metadata documents, if any. Like
+in the preceding case, the implementation MUST override any
+`schemaLocation` attributes. It is an error if more than one schema
+documents specified as metadata for the endpoint attempt to define
+components in a namespace *T* used by the endpoint.
+
+Note: _The three scenarios described above cover several applicative use cases.
+The first one represents an application that has full control over all
+aspects of the contract. The JAX-WS runtime just uses what the
+application provided, with a minimum of adjustments to ensure
+consistency. The second one corresponds to an application that defines
+all abstract aspects of the WSDL, i.e. portType(s) and schema(s),
+leaving up to the JAX-WS runtime to generate the concrete portions of
+the contract. Finally, the third case represents an application that
+uses one or more well-known schema(s), possibly taking advantage of lots
+of facets/constraints that JAXB cannot capture, and wants to reuse it
+as-is, leaving all the WSDL-specific aspects of the contract up to the
+runtime. This use case also covers an application that does not specify
+any metadata, leaving WSDL and schema generation up to the JAX-WS (and
+JAXB) implementation._
+
+[[endpointproperties]]
+==== Endpoint Properties
+
+An `Endpoint` has an associated set of properties that may be read and
+written using the `getProperties` and `setProperties` methods
+respectively.
+
+<<Table 5.1>> lists the set of standard `Endpoint`
+properties.
+
+When present, the WSDL-related properties override the values specified
+using the `WebService` and `WebServiceProvider` annotations. This
+functionality is most useful with provider objects (see section
+<<mdwebsvcprovider>>), since the latter are naturally more suited to a
+more dynamic usage. For instance, an application that publishes a
+provider endpoint can decide at runtime which web service to impersonate
+by using a combination of metadata documents and the properties
+described in this section.
+
+[[endpointexecutor]]
+==== Executor
+
+`Endpoint` instances can be configured with a
+`java.util.concurrent.Executor`. The executor will then be used to
+dispatch any incoming requests to the application. The `setExecutor` and
+`getExecutor` methods of `Endpoint` can be used to modify and retrieve
+the executor configured for a service.
+
+_♦ Conformance (Use of Executor):_ If an executor object is successfully set on an
+`Endpoint` via the `setExecutor` method, then an implementation MUST use
+it to dispatch incoming requests upon publication of the `Endpoint` by
+means of the `publish(String address)` method. If publishing is carried
+out using the `publish(Object serverContext)`) method, an implementation
+MAY use the specified executor or another one specific to the server
+context being used.
+
+_♦ Conformance (Default Executor):_ If an executor has not been set on an `Endpoint`, an
+implementation MUST use its own executor, a
+`java.util.concurrent.ThreadPoolExecutor` or analogous mechanism, to
+dispatch incoming requests.
+
+[[epr5]]
+==== javax.xml.ws.EndpointReference
+
+The following methods can be used on a published `Endpoint` to retrieve
+an `javax.xml.ws.EndpointReference` for the `Endpoint` instance.
+
+`getEndpointReference(List<Element> referenceParameters)`::
+Creates and returns and `javax.xml.ws.EndpointReference` for a
+published `Endpoint`. If the binding is SOAP 1.1/HTTP or SOAP
+1.2/HTTP, then a `javax.xml.ws.wsaddressing.W3CEndpointReference` MUST
+be returned. A returned `W3CEndpointReference` MUST also contain the
+specified `referenceParameters`. An implementation MUST throw a
+`javax.xml.ws.WebServiceException` if the `Endpoint` instance has not
+been published. An implementation MUST throw
+`java.lang.UnsupportedOperationException` if the `Endpoint` instance
+uses the XML/HTTP binding.
+`getEndpointReference(Class<T> clazz, List<Element> referenceParameters)`::
+Creates and returns and `javax.xml.ws.EndpointReference` of type
+`clazz` for a published `Endpoint` instance. If `clazz` is of type
+`javax.xml.ws.wsaddressing.W3CEndpointReference`, then the returned
+`W3CEndpointReference` MUST contain the specified
+`referenceParameters`. An implementation MUST throw a
+`javax.xml.ws.WebServiceException` if the `Endpoint` instance has not
+been published. If the Class `clazz` is not a subclass of
+`EndpointReference` or the `Endpoint` implementation does not support
+`EndpointReferences` of type `clazz` a
+`javax.xml.ws.WebServiceException` MUST be thrown. An implementation
+MUST throw `java.lang.UnsupportedOperationException` if the `Endpoint`
+instance uses the XML/HTTP binding.
+
+_♦ Conformance (`Endpoint’s W3CEndpointReference`):_ The returned `W3EndpointReference`
+MUST contain `wsam:ServiceName` and `wsam:ServiceName[@EndpointName]` as
+per Addressing 1.0 - Metadata<<bib27>>. The
+`wsam:InterfaceName` MAY be present in the `W3CEndpointReference`. If
+there is an associated WSDL, then the WSDL location MUST be referenced
+using `wsdli:wsdlLocation` in the `W3CEndpointReference`’s
+`wsa:Metadata`.
+
+[[webservicecontext]]
+=== javax.xml.ws.WebServiceContext
+
+The `javax.xml.ws.WebServiceContext` interface makes it possible for an
+endpoint implementation object and potentially any other objects that
+share its execution context to access information pertaining to the
+request being served.
+
+The result of invoking any methods on the `WebServiceContext` of a
+component outside the invocation of one of its web service methods is
+undefined. An implementation SHOULD throw a
+`java.lang.IllegalStateException` if it detects such a usage.
+
+The `WebServiceContext` is treated as an injectable resource that can be
+set at the time an endpoint is initialized. The `WebServiceContext`
+object will then use thread-local information to return the correct
+information regardless of how many threads are concurrently being used
+to serve requests addressed to the same endpoint object.
+
+In Java SE, the resource injection denoted by the `WebServiceContext`
+annotation is REQUIRED to take place only when the annotated class is an
+endpoint implementation class.
+
+The following code shows a simple endpoint implementation class which
+requests the injection of its `WebServiceContext`:
+
+[source,java,numbered]
+-------------
+@WebService
+public class Test {
+@Resource
+private WebServiceContext context;
+public String reverse(String inputString) { ... }
+}
+-------------
+
+The `javax.annotation.Resource` annotation defined by JSR-250 <<bib35>>
+is used to request injection of the `WebServiceContext`. The
+following constraints apply to the annotation elements of a `Resource`
+annotation used to inject a `WebServiceContext`:
+
+* The `type` element MUST be either `java.lang.Object` (the default) or
+`javax.xml.ws.WebServiceContext`. If the former, then the resource MUST
+be injected into a field or a method. In this case, the type of the
+field or the type of the JavaBeans property defined by the method MUST
+be `javax.xml.ws.WebServiceContext`.
+* The `authenticationType`, `shareable` elements, if they appear, MUST
+have their respective default values.
+
+The above restriction on `type` guarantees that a resource type of
+`WebServiceContext` is either explicitly stated or can be inferred from
+the annotated field/method declaration. Moreover, the field/method type
+must be assignable from the type described by the annotation’s `type`
+element.
+
+When running on the Java SE platform, the `name` and `mappedName`
+elements are ignored. As a consequence, on Java SE there is no point in
+declaring a resource of type `WebServiceContext` on the endpoint class
+itself (instead of one of its fields/methods), since it won’t be
+accessible at runtime via JNDI.
+
+When running on the Java EE 5 platform, resources of type
+`WebServiceContext` are treated just like all other injectable resources
+there and are subject to the constraints prescribed by the platform
+specification <<bib36>>.
+
+An endpoint implementation can retrieve an
+`javax.xml.ws.EndpointReference` for the endpoint using
+`getEndpointReference(List<Element> referenceParameters)`, and
+`getEndpointReference( Class<T> clazz, List<Element> referenceParameters)`
+methods. These methods have the same semantics as the
+`Endpoint.getEndpointReference()` methods specified in the section
+<<epr5>>
+
+*Note:* _When using method-based injection, it is recommended that the method be
+declared as non-public, otherwise it will be exposed as a web service
+operation. Alternatively, the method can be marked with the
+`@WebMethod(exclude=true)` annotation to ensure it will not be part of
+the generated portType for the service._
+
+[[messagecontext]]
+==== MessageContext
+
+The message context made available to endpoint instances via the
+`WebServiceContext` acts as a restricted window on to the
+`MessageContext` of the inbound message following handler execution (see
+chapter <<handfmwk>>). The restrictions are as follows:
+
+* Only properties whose scope is `APPLICATION` are visible using a
+`MessageContext` obtained from a `WebServiceContext`; the `get` method
+returns `null` for properties with `HANDLER` scope, the `Set` returned
+by `keySet` only includes properties with `APPLICATION` scope.
+* New properties set in the context are set in the underlying
+`MessageContext` with `APPLICATION` scope.
+* An attempt to set the value of property whose scope is `HANDLER` in
+the underlying `MessageContext` results in an `IllegalArgumentException`
+being thrown.
+* Only properties whose scope is `APPLICATION` can be removed using the
+context. An attempt to remove a property whose scope is `HANDLER` in the
+underlying `MessageContext` results in an `IllegalArgumentException`
+being thrown.
+* The `Map.putAll` method can be used to insert multiple properties at
+once. Each property is inserted individually, each insert operation
+being carried out as if enclosed by a try/catch block that traps any
+`IllegalArgumentException`. Consequently, `putAll` is not atomic: it
+silently ignores properties whose scope is `HANDLER` and it never throws
+an `IllegalArgumentException`.
+
+The `MessageContext` is used to store handlers information between
+request and response phases of a message exchange pattern, restricting
+access to context properties in this way ensures that endpoint
+implementations can only access properties intended for their use.
+
+[[w3cendpointreferencebuilder]]
+=== javax.xml.ws.wsaddressing.W3CEndpointReferenceBuilder
+
+Occasionally it is necessary for one application component to create an
+`EndpointReference` for another web service endpoint. The
+`W3CEndpointReferenceBuilder` class provides a standard API for creating
+`W3CEndpointReference` instances for web service endpoints.
+
+_♦ Conformance (Building W3CEndpointReference):_ `W3CEndpointReferenceBuilder.build()`
+method MUST construct an `EndpointReference` as per the Addressing 1.0 -
+Metadata<<bib27>>.
