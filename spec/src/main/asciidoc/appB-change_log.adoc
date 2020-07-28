@@ -1,0 +1,389 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+
+[appendix]
+[[change-log]]
+== Change Log
+
+[[changes]]
+=== 2.3 Changes
+
+* Changed the definition of the discovery process of
+`javax.xml.ws.spi.Provider` implementation (section <<providerdiscovery>>)
+* Added `@Repeateble` to `@WebServiceClientRef`
+* Added missing javadoc
+* Added `@since` to javadoc
+* Updated references from J2SE to Java SE
+
+[[changes-1]]
+=== 2.2 Changes
+
+* Added `@Action` generation requirements in SEI (section <<msgandpart>>)
+* Updated `wsa:EndpointReference` mapping (section <<w3ceprmapping>>)
+* Updated that the use of metadata in `mime:content` is disabled by
+default (section <<mimecontent>>)
+* Updated generated service constructor requirements (section
+<<gensvcif>>,<<staticcase>>)
+* Updated that static or final methods cannot be web methods (section
+<<j2ws11class>>)
+* Added `wsam:Action` algorithm and requirements (section <<j2w11method>>,
+<<wsamComputation>>)
+* Clarified the namespace of the generated JAXB beans (section
+<<j2w11methodparams>>)
+* Added that packaging wrapper beans optional (section
+<<j2wsdldocwrapped>>)
+* Added requirements for wsdl:part names in doc/lit wrapper case
+(section <<j2wsdldocwrapped>>)
+* Added that @XmlElement can be specified on doc/lit wrapper method
+parameters (section <<j2wsdldocwrapped>>)
+* Added wsdl:message naming requirements (section <<j2w11except>>)
+* Added @XmlType requirements on exception classes (section
+<<j2w11except>>)
+* Clarified the fault bean’s @XmlType requirements (section
+<<j2w11except>>)
+* Added that packaging exception beans optional (section <<j2w11except>>)
+* Added Use of Addressing requirements in WSDL (section <<j2w11svcports>>)
+* Added service creation with web service features (section
+<<dynamiccase>>)
+* Added W3CEndpointReference requirements (section <<bindingproviderif>>,
+<<epr5>>, <<webservicecontext>>, <<w3cendpointreferencebuilder>>)
+* Added Use of Addressing requirements in proxies (section <<proxies>>)
+* Clarified the empty payload Source for Provider (section
+<<providersvcapi>>)
+* Clarified oneway invocation for Provider endpoints (section
+<<invocation>>)
+* Added features usage with Endpoint API (section <<endpointfactusage>>,
+<<providerendpointcreation>>)
+* Added HTTP SPI (section <<httpspi>>)
+* Clarified that fully qualified class name can be specified for
+generated exception, service classes customizations (section
+<<bindingdeclporttypefault>>, <<bindingdeclservice>>)
+
+[[changes-2]]
+=== 2.1 Changes
+
+* Added JAXB 2.1 requirement (sections 1.1, 2.4, 3.6.2).
+* Added wsa namespace definition (section 1.5).
+* Added conformance requirement for `@XmlSeeAlso` annotation (section
+2.2).
+* Added conformance requirement for use of JAXB annotations (section
+2.3.1).
+* Added clarification that not both input and output messages must be
+present for wrapper style (section 2.3.1.2).
+* Added section 2.4.1 `W3CEndpointReference`.
+* Added `getPortName(WebServiceFeature...)` method to generated Service
+(section 2.7).
+* Added text describing the need to use customizations to resolve some
+conflicts (section 3.4).
+* Added conformance requirement to honor JAXB annotations (section 3.6).
+* Added conformance requirement for Exceptions that are NOT service
+specific exceptions (section 3.7).
+* Added conformance requirement for
+`BindingProvider.getEndpointReference` (section 4.2).
+* Added new `getPort` methods on `Service` that take
+`WebServiceFeatures` and `EndpointReference` (section 4.2.3).
+* Added text stating that `Dispatch` and `Provider` based applications
+MUST honor `WebServiceFeatures` (section 4.3 and 5.1).
+* Added sections <<endpointreference>>, <<epr5>> and <<epr6>>
+`javax.xml.ws.EndpointReference`.
+* Added section 5.4 on
+`javax.xml.ws.wsaddressing.W3CEndpointReferenceBuilder`.
+* Modified description of `createEndpoint` method to state to cover case
+when no binding is specified (section <<providerendpointcreation>>).
+* Added section <<readepr>> EndpointReferences.
+* Added section <<getport>> Getting Port Objects.
+* Added section <<webservicefeature>> javax.xml.ws.WebServiceFeature.
+* Added conformance rquirement for unsupported
+`WebServiceFeatureAnnotations` (section 7).
+* Added `Action`, `FaultAction` and `WebServiceFeatureAnnotation`
+annotations (sections 7.12, 7.13 and 7.14).
+* Added `javax.xml.ws.reference.parameters` standard message context
+property (table 9.2).
+* Added section <<addressing>> Addressing.
+
+[[changes-since-proposed-final-draft]]
+=== Changes since Proposed Final Draft
+
+* Added clarification for usage of
+`javax.xml.ws.binding.attachments.outbound` in Dispatch
+* Added clarification for usage of `null` in Dispatch (section 4.3).
+* Removed requirement that the ``name'' element of the WebFault
+annotation be always present, since this conflicts with 3.7 (section
+7.2).
+* Clarified usage of generics in document wrapped case.
+* Added inner class mapping requirements.
+* Rephrased rules on using WebServiceContext so that the limitations
+that apply in the Java SE environment are marked as such (section 5.3).
+* Added conformance requirements for RequestWrapper and ResponseWrapper
+annotations (section 2.3.1.2).
+* Clarified order of invocation of Handler.close methods (section
+9.3.2.3).
+* Clarified requirement on additional context properties and reserved
+the java.* and javax.* namespaces for Java specifications (section
+4.2.1.2).
+* Added new binding identifiers for SOAP/HTTP bindings with MTOM enabled
+(section 10.4.1.1).
+* Added requirement detailing the semantics of ``MTOM enabled'' (section
+10.4.1.1).
+* Renamed section 5.2.5 and added new requirements around generation of
+the contract for an endpoint (section 5.2.5).
+* Fixed example in figure 3.4 and added requirement on XmlType
+annotation on a generated fault bean (section 3.7).
+* Removed references to WSDL 2.0 and updated goals to reflect WSDL 2.0
+support will be added a future revision of the specification.
+* Clarified the nillability status of various elements in the Java to
+WSDL binding (sections 3.6.2.1, 3.6.2.2); this included adding a new
+conformance requirement (section 3.6.2.3).
+* Added a requirement that a class annotated with WebServiceProvider
+must not be annotated with WebService (section 7.7).
+* Added a conformance requirement for support of the XML/HTTP binding,
+in analogy with the existing requirements for SOAP (section 11.1).
+* Added explicit mention of the predefined binding identifiers (sections
+10.4.1 and 11.1).
+* Added requirements around binding identifiers for
+implementation-specific bindings (section 6.1).
+* Adding a requirement on dealing with exceptions thrown during handler
+processing (section 4.2.4).
+* Removed the javax.xml.ws.servlet.session message context property
+(section 9.4.1.1).
+* Fixed erroneous reference to a ``generated service interface'' in
+section 7.9 (the correct terminology is ``generated service class'').
+* Added javax.xml.ws.WebServiceRefs annotation (section 7.10).
+* Added clarifications for XML / HTTP binding.
+* Corrected signature for `Endpoint.create` to use String for bindingId.
+
+[[changes-since-public-draft]]
+=== Changes since Public Draft
+
+* Changed endpoint publishing so that endpoints cannot be stopped and
+published again multiple times (section 5.2.2).
+* Clarified that request and response beans do not contain properties
+corresponding to header parameters (section 3.6.2.1).
+* Clarified that criteria for bare style take only parts bound to the
+body into account (section 3.6.2.2).
+* Add a create(Object implementor) to Endpoint to create an Endpoint.
+* Clarified the use of INOUT param with two different MIME bindings in
+the input and output messages.
+* Use of WebParam and WebResult partName.
+* Replaced the init/destroy methods of handlers with the PostConstruct
+and PreDestroy annotations from JSR-250 (section 9.3.1).
+* Replaced the BeginService/EndService annotations with PostConstruct
+and PreDestroy from JSR-250 in endpoint implementors (section 5.2.1).
+* Added WebParam.header WebResult.header usage (section 3.6) and updated
+WSDL SOAP HTTP Binding section (3.9.2).
+* Removed requirements to support additional SOAP headers mapping.
+* Added support for DataSource as a message format for Provider and
+clarified the requirement for the other supported types (section 5.1).
+Same thing for Dispatch (section 4.3).
+* Clarified that LogicalMessageContext.getSource() may return null when
+there is no payload associated with the message (section 9.4.2).
+* Clarified that parts bound to mime:content are treated as unlisted
+from the point of view of applying the wrapper style rules (section
+2.6.3).
+* Removed the ParameterIndex annotation (chapters 3 and 7).
+* Clarified naming rules for generated wrapper elements and their type
+(section 3.6.2.1).
+* Clarified that holders should never be used for the return type of a
+method (section 2.3.3).
+* Added effect of the BindingType annotation on the generated WSDL
+service (sections 3.8 and 3.10).
+* Added condition that the wrapper elements be non-nillable to wrapper
+style (section 2.3.1.2).
+* Clarified use of targetNamespace from WebService in an implementation
+class and an SEI based on 181 changes.
+* Updated the usage of WebMethod exclude element from Java to WSDL
+mapping.
+* Changed the algorithm for the default target namespace from java to
+WSDL (section 3.2).
+* Added requirement that a provider’s constructor be public (section
+5.1).
+* Fixed some inconsistencies caused by the removal of RemoteException
+(e.g. in section 4.2.4).
+* Added service delegate requirements to chapter 4.
+* Added zero-argument public constructor requirement to the
+implementation-specific Provider SPI class (section 6.2).
+* Updated use of SOAPBinding on a per method basis in the document style
+case and removed editor’s note about SOAPBinding not being allowed on
+methods (section 2.3.1 and 3.6.2) .
+* Added portName element to @WebServiceProvider annotation.
+* Added requirement on correctness of annotation to the beginning of
+chapter 7.
+* Added requirement for conformance to the JAX-WS profile in JSR-181
+(section 7.11).
+* Clarified invocation of Handler.destroy (section 9.3.1).
+* Added use of HandlerChain annotation (section 9.2.1.3).
+* Updated 181 annotations (section 7.11).
+* Added catalog facility (section 4.2.5) and clarified that it is
+required to be used when processing endpoint metadata at publishing time
+(section 5.2.5) and annotations (chapter 7).
+* Added WebServiceRef annotation (section 7.10).
+* Added restrictions on metadata at the time an endpoint is published
+(section 5.2.7).
+* Replaced HandlerRegistry with HandlerResolver (sections 4.2.1,
+9.2.1.1, 10.1.1.2, 11.1.1.1). Fixed handler ordering section accordingly
+(section 9.2.1.2).
+* Clarified that endpoint properties override the values defined using
+the WebServiceProvider annotation (section 5.2.8).
+* Removed mapping of headerfaults (sections 2.6.2.2 and 8.7.6).
+* Split standard message context properties into multiple tables and
+added servlet-specific properties (section 9.4.1.1).
+* Added WebServiceContext (section 5.3); refactored message context
+section in chapter 5 so that it applies to all kinds of endpoints.
+* Added WebServicePermission (section 5.2.5).
+* Added conformance requirement for one-way operations (section 6.2.2).
+* Added BindingType annotation (section 7.9).
+* Added requirement the provider endpoint implementation class carry a
+WebServiceProvider annotation (section 5.1).
+* Fixed RequestWrapper and ResponseWrapper description to use that they
+can be applied to the methods of an SEI (sections 7.4 and 7.5).
+* Fixed package name for javax.xml.ws.Provider and updated section with
+WebServiceProvider annotation (section 5.1).
+* Added WebServiceProvider annotation in `javax.xml.ws` package (section
+7.8).
+* Changed Factory pattern to use javax.xml.ws.spi.Provider
+* Removed javax.xml.ws.EndpointFactory (section 5.2).
+* Removed javax.xml.ws.Servicefactory (section 4.1).
+* Removed definition of message-level security annotations (section
+7.1), their use (sections 4.2.2 and 6.1.1) and the corresponding message
+context property (in section 9.4).
+* Removed WSDL 2.0 mapping (appendices A and B).
+
+[[changes-since-early-draft-3]]
+=== Changes Since Early Draft 3
+
+* Added requirements on mapping @WebService-annotated Java classes to
+WSDL.
+* Removed references to the RMI classes that JAX-RPC 1.1 used to denote
+remoteness, since their role is now taken by annotations:
+`java.rmi.Remote` and `java.rmi.RemoteException`.
+* Added <<endpointif>> on the new Endpoint API.
+* Added the following new annotation types: @RequestWrapper,
+@ResponseWrapper, @WebServiceClient, @WebEndpoint.
+* Added the createService(Class serviceInterface) method to
+ServiceFactory.
+* Renamed the Service.createPort method to Service.addPort.
+* Added MTOMEnabled property to SOAPBinding.
+* Removed the HTTP method getter/setter from HTTPBinding and replaced
+them with a new message context property called
+javax.xml.ws.http.request.method.
+* In section <<soapmuprocrules>> clarified that SOAP headers directly
+supported by a binding must be treated as understood when processing
+mustUnderstand attributes.
+* Added getStackTrace to the list of getters defined on
+java.lang.Throwable with must not be mapped to fault bean properties.
+* In section <<stdbpprops>>, removed the requirement that an exception be
+thrown if the application attempts to set an unknown or unsupported
+property on a binding provider, since there are no stub-specific
+properties any more, only those in the request context.
+* Changed the client API chapter to reflect the annotation-based
+runtime. In particular, the distinction between generated stubs and
+dynamic proxies disappeared, and the spec now simply talks about
+proxies.
+* Changed JAX-RPC to JAX-WS, javax.xml.rpc.xxx to javax.xml.ws.xxx.
+Reflected resulting changes made to APIs.
+* Added new context properties to provide access to HTTP headers and
+status code.
+* Added new XML/HTTP Binding, see chapter <<xmlbindchap>>.
+
+[[changes-since-early-draft-2]]
+=== Changes Since Early Draft 2
+
+* Renamed ``element'' attribute of the jaxws:parameter annotation to
+``childParameterName'' for clarity, see sections
+<<bindingdeclporttypeoperation>> and <<bindingdeclbindingoperation>>.
+* Added javax.xml.ws.ServiceMode annotation type, see section
+<<mdservicemode>>.
+* Fixed example of external binding file to use a schema annotation, see
+section <<externalbindingfile>>.
+* Modified Dispatch so it can be used with multiple message types and
+either message payloads or entire messages, see section <<dispatch>>.
+* Modified Provider so it can be used with multiple message types and
+either message payloads or entire messages, see section
+<<providersvcapi>>.
+* Added new annotation for generated exceptions, see section
+<<mdwebfault>>.
+* Added default Java package name to WSDL targetNamespace mapping
+algorithm, see section <<j2w11package>>.
+* Added ordering to properties in request and response beans for
+doc/lit/wrapped, see section <<j2wsdldocwrapped>>.
+* Clarified that SEI method should throw JAX-RPC exception with a cause
+of any runtime exception thrown during local processing, see section
+<<stubexceptions>>.
+* Removed requirement that SEIs MUST NOT have constants, see section
+<<j2wsdl11interface>>.
+* Updated document bare mapping to clarify that `@WebParam` and
+`@WebResult` can be used to customize the generated global element
+names, see section <<j2wsdl11docbaremap>>.
+
+[[changes-since-early-draft-1]]
+=== Changes Since Early Draft 1
+
+* Added chapter <<serviceapis>> Service APIs.
+* Added chapter <<wsdl202java>> WSDL 2.0 to Java Mapping.
+* Added chapter <<j2wsdl20chap>> Java to WSDL 2.0 Mapping.
+* Added mapping from Java to `wsdl:service` and `wsdl:port`, see
+sections <<j2w11bindif>>, <<j2w11soapbindif>> and <<j2w11svcports>>.
+* Fixed section <<wsdl11typemapping>> to allow use of JAXB interface based
+mapping.
+* Added support for document/literal/bare mapping in Java to WSDL
+mapping, see section <<j2w11methodparams>>.
+* Added conformance requirement to describe the expected behaviour when
+two or more faults refer to the same global element, see section
+<<faulttoexceptmap>>.
+* Added resolution to issue regarding binding of duplicate headers, see
+section <<wsdl11headbindext>>.
+* Added use of JAXB ns URI to Java package name mapping, see section
+<<wsdl11defmap>>.
+* Added use of JAXB package name to ns URI mapping, see section
+<<j2w11package>>.
+* Introduced new typographic convention to clearly mark non-normative
+notes.
+* Removed references to J2EE and JNDI usage from ServiceFactory
+description, see section <<svcfactusage>>.
+* Clarified relationship between TypeMappingRegistry and JAXB.
+* Emphasized control nature of context properties, added lifecycle
+subsection.
+* Clarified fixed binding requirement for proxies.
+* Added section for SOAP proocol bindings <<soapbindprotocols>>. The HTTP
+subsection of this now contains much of the mterial from the JAX-RPC 1.1
+Runtime Services chapter.
+* Clarified that async methods are added to the regular sync SEI when
+async mapping is enabled rather than to a separate async-only SEI, see
+section <<wsdl11asyncmethod>>.
+* Added support for WSDL MIME binding, see section
+<<wsdl11mimebindingmap>>.
+* Clarified that fault mapping should only generate a single exception
+for each equivalent set of faults, see section <<faulttoexceptmap>>.
+* Added property for message attachments.
+* Removed element references to anonymous type as valid for wrapper
+style mapping (this doesn’t prevent substitution as orignally thought),
+see section <<wrappedstyle>>.
+* Removed implementation specific methods from generated service
+interfaces, see section <<gensvcif>>.
+* Clarified behaviour under fault condition for asynchronous operation
+mapping, see section <<wsdl112jasyncfaults>>.
+* Clarified that additional parts mapped using soapbind:header cannot be
+mapped to a method return type, see section <<paramorderandreturn>>.
+* Added new section to clarify mapping from exception to SOAP fault, see
+<<mapextosoapfault>>.
+* Clarified meaning of _other_ in the handler processing section, see
+<<handlerexecution>>.
+* Added a section to clarify Stub use of RemoteException and
+JAXRPCException, see <<stubexceptions>>.
+* Added new Core API chapter and rearranged sections into Core, Client
+and Server API chapters.
+* Changes for context refactoring, removed message context properties
+that previously held request/response contexts on client side, added
+description of rules for moving between jaxws context and message
+context boundaries.
+* Removed requirement for Response.get to throw JAXRPCException, now
+throws standard java.util.concurrent.ExecutionException instead.
+* Added security API information, see sections <<servicesecurityconfig>>
+and <<bindingmsgsec>>.
+* Clarrified SOAP mustUnderstand processing, see section
+<<soapmuprocrules>>. Made it clear that the handler rather than the
+HandlerInfo is authoritative wrt which protocol elements (e.g. SOAP
+headers) it processes.
+* Updated exception mapping for Java to WSDL since JAXB does not
+envision mapping exception classes directly, see section <<j2w11except>>.

@@ -1,0 +1,626 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+
+[[customize]]
+== Customizations
+
+This chapter describes a standard customization facility that can be
+used to customize the WSDL 1.1 to Java binding defined in section
+<<wsdl112java>>.
+
+[[bindinglanguage]]
+=== Binding Language
+
+JAX-WS 2.0 defines an XML-based language that can be used to specify
+customizations to the WSDL 1.1 to Java binding. In order to maintain
+consistency with JAXB, we call it a __binding language__. Similarly,
+customizations will hereafter be referred to as __binding
+declarations__.
+
+All XML elements defined in this section belong to the
+`http://java.sun.com/xml/ns/jaxws` namespace. For clarity, the rest of
+this section uses qualified element names exclusively. Wherever it
+appears, the `jaxws` prefix is assumed to be bound to the
+`http://java.sun.com/xml/ns/jaxws` namespace name.
+
+The binding language is extensible. Extensions are expressed using
+elements and/or attributes whose namespace name is different from the
+one used by this specification.
+
+[Standard binding declarations] The `http://java.sun.com/xml/ns/jaxws`
+namespace is reserved for standard JAX-WS binding declarations.
+Implementations MUST support all standard JAX-WS binding declarations.
+Implementation-specific binding declaration extensions MUST NOT use the
+`http://java.sun.com/xml/ns/jaxws` namespace.
+
+[Binding language extensibility] Implementations MUST ignore unknown
+elements and attributes appearing inside a binding declaration whose
+namespace name is not the one specified in the standard, i.e.
+`http://java.sun.com/xml/ns/jaxws`.
+
+[[bindingdeclarationcontainer]]
+=== Binding Declaration Container
+
+There are two ways to specify binding declarations. In the first
+approach, all binding declarations pertaining to a given WSDL document
+are grouped together in a standalone document, called an _external
+binding file_ (see <<externalbindingfile>>). The second approach consists
+in embeddeding binding declarations directly inside a WSDL document (see
+<<embeddedbindingdeclarations>>).
+
+In either case, the `jaxws:bindings` element is used as a container for
+JAX-WS binding declarations. It contains a (possibly empty) list of
+binding declarations, in any order.
+
+[id="8.1"]
+[source,java,numbered]
+-------------
+<jaxws:bindings wsdlLocation="xs:anyURI"?
+                node="xs:string"?
+                version="string"?>
+    ...binding declarations...
+</jaxws:bindings>
+-------------
+Figure 8.1: Syntax of the binding declaration container
+
+*Semantics*
+
+@wsdlLocation::
+A URI pointing to a WSDL file establishing the scope of the contents
+of this binding declaration. It MUST NOT be present if the
+`jaxws:bindings` element is used as an extension inside a WSDL
+document or one of its ancestor `jaxws:bindings` elements already
+contains this attribute.
+@node::
+An XPath expression pointing to the element in the WSDL file in scope
+that this binding declaration is attached to. It MUST NOT be present
+if the `jaxws:bindings` appears inside a WSDL document.
+@version::
+A version identifier. It MUST NOT appear on `jaxws:bindings` elements
+which have any `jaxws:bindings` ancestors (i.e. on non top-level
+binding declarations).
+
+For the JAX-WS 2.0 specification, the version identifier, if present,
+MUST be `2.0`. If the `@version` attribute is absent, it will implicitly
+be assumed to be `2.0`.
+
+[[embeddedbindingdeclarations]]
+=== Embedded Binding Declarations
+
+An embedded binding declaration is specified by using the
+`jaxws:bindings` element as a WSDL extension. Embedded binding
+declarations MAY appear on any of the elements in the WSDL 1.1 namespace
+that accept extension elements, per the schema for the WSDL 1.1
+namespace as amended by the WS-I Basic Profile 1.1<<bib20>>.
+
+A binding declaration embedded in a WSDL document can only affect the
+WSDL element it extends. When a `jaxws:bindings` element is used as a
+WSDL extension, it MUST NOT have a `node` attribute. Moreover, it MUST
+NOT have an element whose qualified name is `jaxws:bindings` amongs its
+children.
+
+[[embeddedbindingdeclarationsex]]
+==== Example
+
+Figure <<8.2>> shows a WSDL document containing binding declaration
+extensions. For JAXB annotations, it assumes that the prefix `jaxb` is
+bound to the namespace name `http://java.sun.com/xml/ns/jaxb`.
+
+[[externalbindingfile]]
+=== External Binding File
+
+The `jaxws:bindings` element MAY appear as the root element of a XML
+document. Such a document is called an __external binding file__.
+
+An external binding file specifies bindings for a given WSDL document.
+The WSDL document in question is identified via the mandatory
+`wsdlLocation` attribute on the root `jaxws:bindings` element in the
+document.
+
+[id="8.2"]
+[source,java,numbered]
+-------------
+<wsdl:definitions targetNamespace="..." xmlns:tns=..." xmlns:stns="...">
+    <wsdl:types>
+        <xs:schema targetNamespace="http://example.org/bar">
+            <xs:annotation>
+                <xs:appinfo>
+                    <jaxb:bindings>
+                    ...some JAXB binding declarations...
+                    </jaxb:bindings>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:element name="setLastTradePrice">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="tickerSymbol" type="xs:string"/>
+                        <xs:element name="lastTradePrice" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="setLastTradePriceResponse">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="setLastTradePrice">
+        <wsdl:part name="setPrice" element="stns:setLastTradePrice"/>
+    </wsdl:message>
+
+    <wsdl:message name="setLastTradePriceResponse">
+        <wsdl:part name="setPriceResponse" type="stns:setLastTradePriceResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="StockQuoteUpdater">
+        <wsdl:operation name="setLastTradePrice">
+            <wsdl:input message="tns:setLastTradePrice"/>
+            <wsdl:output message="tns:setLastTradePriceResponse"/>
+            <jaxws:bindings>
+                <jaxws:method name="updatePrice"/>
+            </jaxws:bindings>
+        </wsdl:operation>
+        <jaxws:bindings>
+            <jaxws:enableAsyncMapping>true</jaxws:enableAsyncMapping>
+        </jaxws:bindings>
+    </wsdl:portType>
+
+    <jaxws:bindings>
+        <jaxws:package name="com.acme.foo"/>
+        ...additional binding declarations...
+    </jaxws:bindings>
+</wsdl:definitions>
+-------------
+
+In an external binding file, `jaxws:bindings` elements MAY appear as
+non-root elements, e.g. as a child or descendant of the root
+`jaxws:bindings` element. In this case, they MUST carry a `node`
+attribute identifying the element in the WSDL document they annotate.
+The root `jaxws:bindings` element implicitly contains a `node` attribute
+whose value is `//`, i.e. selecting the root element in the document. An
+XPath expression on a non-root `jaxws:bindings` element selects zero or
+more nodes from the set of nodes selected by its parent `jaxws:bindings`
+element.
+
+External binding files are semantically equivalent to embedded binding
+declarations (see <<embeddedbindingdeclarations>>). When a JAX-WS
+implementation processes a WSDL document for which there is an external
+binding file, it MUST operate as if all binding declarations specified
+in the external binding file were instead specified as embedded
+declarations on the nodes in the in the WSDL document they target. It is
+an error if, upon embedding the binding declarations defined in one or
+more external binding files, the resulting WSDL document contains
+conflicting binding declarations.
+
+_♦ Conformance (Multiple binding files):_ Implementations MUST support specifying any
+number of external JAX-WS and JAXB binding files for processing in
+conjunction with at least one WSDL document.
+
+Please refer to section <<jaxbbindingdeclarations>> for more information
+on processing JAXB binding declarations.
+
+[[externalbindingfileex]]
+==== Example
+
+Figures <<8.3>> and <<8.4>> show an example external binding
+file and WSDL document respectively that express the same set of binding
+declarations as the WSDL document in <<embeddedbindingdeclarationsex>>.
+
+[id="8.3"]
+[source,xml,numbered]
+-------------
+<jaxws:bindings wsdlLocation="http://example.org/foo.wsdl">
+    <jaxws:package name="com.acme.foo"/>
+    <jaxws:bindings
+        node="wsdl:types/xs:schema[targetNamespace=’http://example.org/bar’]">
+        <jaxb:bindings>
+            ...some JAXB binding declarations...
+        </jaxb:bindings>
+    </jaxws:bindings>
+    <jaxws:bindings node="wsdl:portType[@name=’StockQuoteUpdater’]">
+        <jaxws:enableAsyncMapping>true</jaxws:enableAsyncMapping>
+        <jaxws:bindings node="wsdl:operation[@name=’setLastTradePrice’]">
+            <jaxws:method name="updatePrice"/>
+        </jaxws:bindings>
+    </jaxws:bindings>
+    ...additional binding declarations....
+</jaxws:bindings>
+-------------
+Figure 8.3: Sample external binding file for WSDL in figure <<8.4>>
+
+[[jaxbbindingdeclarations]]
+=== Using JAXB Binding Declarations
+
+It is possible to use JAXB binding declarations in conjunction with
+JAX-WS.
+
+The JAXB 2.0 bindings element, henceforth referred to as
+`jaxb:bindings`, MAY appear as an annotation inside a schema document
+embedded in a WSDL document, i.e. as a descendant of a `xs:schema`
+element whose parent is the `wsdl:types` element. It affects the data
+binding as specified by JAXB 2.0.
+
+[id="8.4"]
+[source,xml,numbered]
+-------------
+<wsdl:definitions targetNamespace="..." xmlns:tns="..." xmlns:stns="...">
+    <wsdl:types>
+        <xs:schema targetNamespace="http://example.org/bar">
+            <xs:element name="setLastTradePrice">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="tickerSymbol" type="xs:string"/>
+                        <xs:element name="lastTradePrice" type="xs:float"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="setLastTradePriceResponse">
+                <xs:complexType>
+                    <xs:sequence/>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+
+    <wsdl:message name="setLastTradePrice">
+        <wsdl:part name="setPrice" element="stns:setLastTradePrice"/>
+    </wsdl:message>
+
+    <wsdl:message name="setLastTradePriceResponse">
+        <wsdl:part name="setPriceResponse"
+            type="stns:setLastTradePriceResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="StockQuoteUpdater">
+        <wsdl:operation name="setLastTradePrice">
+            <wsdl:input message="tns:setLastTradePrice"/>
+            <wsdl:output message="tns:setLastTradePriceResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
+-------------
+Figure 8.4: WSDL document referred to by external binding file in figure <<8.3>>
+
+Additionally, `jaxb:bindings` MAY appear inside a JAX-WS external
+binding file as a child of a `jaxws:bindings` element whose `node`
+attribute points to a `xs:schema` element inside a WSDL document. When
+the schema is processed, the outcome MUST be as if the `jaxb:bindings`
+element was inlined inside the schema document as an annotation on the
+schema component.
+
+While processing a JAXB binding declaration (i.e. a `jaxb:bindings`
+element) for a schema document embedded inside a WSDL document, all
+XPath expressions that appear inside it MUST be interpreted as if the
+containing `xs:schema` element was the root of a standalone schema
+document.
+
+*Editors Note 8.1* _This last requirement ensures that JAXB processors don’t have to be
+extended to incorporate knowledge of WSDL. In particular, it becomes
+possible to take a JAXB binding file and embed it in a JAX-WS binding
+file as-is, without fixing up all its XPath expressions, even in the
+case that the XML Schema the JAXB binding file refers to was embedded in
+a WSDL._
+
+[[scopingofbindings]]
+=== Scoping of Bindings
+
+Binding declarations are scoped according to the parent-child hierarchy
+in the WSDL document. For instance, when determining the value of the
+`jaxws:enableWrapperStyle` customization parameter for a portType
+operation, binding declarations MUST be processed in the following
+order, according to the element they pertain to: (1) the portType
+operation in question, (2) its parent portType, (3) the definitions
+element.
+
+Tools MUST NOT ignore binding declarations. It is an error if upon
+applying all the customizations in effect for a given WSDL document, any
+of the generated Java source code artifacts does not contain legal Java
+syntax. In particular, it is an error to use any reserved keywords as
+the name of a Java field, method, type or package.
+
+[[standardbindingdeclarations]]
+=== Standard Binding Declarations
+
+The following sections detail the predefined binding declarations,
+classified according to the WSDL element they’re allowed on. All these
+declarations reside in the `http://java.sun.com/xml/ns/jaxws` namespace.
+
+[[bindingdecldefinitions]]
+==== Definitions
+
+The following binding declarations MAY appear in the context of a WSDL
+document, either as an extension to the `wsdl:definitions` element or in
+an external binding file at a place where there is a WSDL document in
+scope.
+
+[source,xml,numbered]
+-------------
+<jaxws:package name="xs:string">?
+    <jaxws:javadoc>xs:string</jaxws:javadoc>?
+</jaxws:package>
+
+<jaxws:enableWrapperStyle>?
+    xs:boolean
+</jaxws:enableWrapperStyle>
+
+<jaxws:enableAsyncMapping>?
+    xs:boolean
+</jaxws:enableAsyncMapping>
+
+<jaxws:enableMIMEContent>?
+    xs:boolean
+</jaxws:enableMIMEContent>
+-------------
+
+[[semantics-1]]
+===== Semantics
+
+package/@name::
+Name of the Java package for the targetNamespace of the parent
+`wsdl:definitions` element.
+package/javadoc/text()::
+Package-level javadoc string.
+enableWrapperStyle::
+If present with a boolean value of `true` (resp. `false`), wrapper
+style is enabled (resp. disabled) by default for all operations.
+enableAsyncMapping::
+If present with a boolean value of `true` (resp. `false`),
+asynchronous mappings are enabled (resp. disbled) by default for all
+operations.
+enableMIMEContent::
+If present with a boolean value of `true` (resp. `false`), use of the
+`mime:content` information is enabled (resp. disabled) by default for
+all operations.
+
+The `enableWrapperStyle` declaration only affects operations that
+qualify for the wrapper style per the JAX-WS specification. By default,
+this declaration is `true`, i.e. wrapper style processing is turned on
+by default for all qualified operations, and must be disabled by using a
+`jaxws:enableWrapperStyle` declaration with a value of `false` in the
+appropriate scope.
+
+[[bindingdeclporttype]]
+==== PortType
+
+The following binding declarations MAY appear in the context of a WSDL
+portType, either as an extension to the `wsdl:portType` element or with
+a `node` attribute pointing at one.
+
+[source,xml,numbered]
+-------------
+<jaxws:class name="xs:string">?
+    <jaxws:javadoc>xs:string</jaxws:javadoc>?
+</jaxws:class>
+
+<jaxws:enableWrapperStyle>?
+    xs:boolean
+</jaxws:enableWrapperStyle>
+
+<jaxws:enableAsyncMapping>xs:boolean</jaxws:enableAsyncMapping>?
+-------------
+
+[[semantics-2]]
+===== Semantics
+
+class/@name::
+Fully qualified name of the generated service endpoint interface
+corresponding to the parent `wsdl:portType`.
+class/javadoc/text()::
+Class-level javadoc string.
+enableWrapperStyle::
+If present with a boolean value of `true` (resp. `false`), wrapper
+style is enabled (resp. disabled) by default for all operations in
+this `wsdl:portType`.
+enableAsyncMapping::
+If present with a boolean value of `true` (resp. `false`),
+asynchronous mappings are enabled (resp. disabled) by default for all
+operations in this `wsdl:portType`.
+
+[[bindingdeclporttypeoperation]]
+==== PortType Operation
+
+The following binding declarations MAY appear in the context of a WSDL
+portType operation, either as an extension to the
+`wsdl:portType/wsdl:operation` element or with a `node` attribute
+pointing at one.
+
+[source,xml,numbered]
+-------------
+<jaxws:method name="xs:string">?
+    <jaxws:javadoc>xs:string</jaxws:javadoc>?
+</jaxws:method>
+
+<jaxws:enableWrapperStyle>?
+    xs:boolean
+</jaxws:enableWrapperStyle>
+
+<jaxws:enableAsyncMapping>?
+    xs:boolean
+</jaxws:enableAsyncMapping>
+
+<jaxws:parameter part="xs:string"
+                 childElementName="xs:QName"?
+                 name="xs:string"/>*
+-------------
+
+[[semantics-3]]
+===== Semantics
+
+method/@name::
+Name of the Java method corresponding to this `wsdl:operation`.
+method/javadoc/text()::
+Method-level javadoc string.
+enableWrapperStyle::
+If present with a boolean value of `true` (resp. `false`), wrapper
+style is enabled (resp. disabled) by default for this
+`wsdl:operation`.
+enableAsyncMapping::
+If present with a boolean value of `true`, asynchronous mappings are
+enabled by default for this `wsdl:operation`.
+parameter/@part::
+A XPath expression identifying a `wsdl:part` child of a
+`wsdl:message`.
+parameter/@childElementName::
+The qualified name of a child element information item of the global
+type definition or global element declaration referred to by the
+`wsdl:part` identified by the previous attribute.
+parameter/@name::
+The name of the Java formal parameter corresponding to the parameter
+identified by the previous two attributes.
+
+It is an error if two parameters that do not correspond to the same Java
+formal parameter are assigned the same name, or if a part/element that
+corresponds to the Java method return value is assigned a name.
+
+[[bindingdeclporttypefault]]
+==== PortType Fault Message
+
+The following binding declarations MAY appear in the context of a WSDL
+portType operation’s fault message, either as an extension to the
+`wsdl:portType/wsdl:operation/wsdl:fault` element or with a `node`
+attribute pointing at one.
+
+[source,xml,numbered]
+-------------
+<jaxws:class name="xs:string">?
+    <jaxws:javadoc>xs:string</jaxws:javadoc>?
+</jaxws:class>
+-------------
+
+[[semantics-4]]
+===== Semantics
+
+Fully qualified name of the generated exception class for this fault.
+
+Class-level javadoc string.
+
+It is an error if faults that refer to the same `wsdl:message` element
+are mapped to exception classes with different names.
+
+[[bindingdeclbinding]]
+==== Binding
+
+The following binding declarations MAY appear in the context of a WSDL
+binding, either as an extension to the `wsdl:binding` element or with a
+`node` attribute pointing at one.
+
+[source,xml,numbered]
+-------------
+<jaxws:enableMIMEContent>?
+    xs:boolean
+</jaxws:enableMIMEContent>
+-------------
+
+[[semantics-5]]
+===== Semantics
+
+enableMIMEContent::
+If present with a boolean value of `true` (resp. `false`), use of the
+`mime:content` information is enabled (resp. disabled) for all
+operations in this binding.
+
+[[bindingdeclbindingoperation]]
+==== Binding Operation
+
+The following binding declarations MAY appear in the context of a WSDL
+binding operation, either as an extension to the
+`wsdl:binding/wsdl:operation` element or with a `node` attribute
+pointing at one.
+
+[source,xml,numbered]
+-------------
+<jaxws:enableMIMEContent>?
+    xs:boolean
+</jaxws:enableMIMEContent>
+
+<jaxws:parameter part="xs:string"
+                 childElementName="xs:QName"?
+                 name="xs:string"/>*
+
+<jaxws:exception part="xs:string">*
+    <jaxws:class name="xs:string">?
+        <jaxws:javadoc>xs:string</jaxws:javadoc>?
+    </jaxws:class>
+</jaxws:exception>
+-------------
+
+[[semantics-6]]
+===== Semantics
+
+enableMIMEContent::
+If present with a boolean value of `true` (resp. `false`), use of the
+`mime:content` information is enabled (resp. disabled) for this
+operation.
+parameter/@part::
+A XPath expression identifying a `wsdl:part` child of a
+`wsdl:message`.
+parameter/@childElementName::
+The qualified name of a child element information item of the global
+type definition or global element declaration referred to by the
+`wsdl:part` identified by the previous attribute.
+parameter/@name::
+The name of the Java formal parameter corresponding to the parameter
+identified by the previous two attributes. The parameter in question
+MUST correspond to a `soap:header` extension.
+
+[[bindingdeclservice]]
+==== Service
+
+The following binding declarations MAY appear in the context of a WSDL
+service, either as an extension to the `wsdl:service` element or with a
+`node` attribute pointing at one.
+
+[source,xml,numbered]
+-------------
+<jaxws:class name="xs:string">?
+    <jaxws:javadoc>xs:string</jaxws:javadoc>?
+</jaxws:class>
+-------------
+
+[[semantics-7]]
+===== Semantics
+
+class/@name::
+Fully qualified name of the generated service class.
+class/javadoc/text()::
+Class-level javadoc string.
+
+[[bindingdeclport]]
+==== Port
+
+The following binding declarations MAY appear in the context of a WSDL
+service, either as an extension to the `wsdl:port` element or with a
+`node` attribute pointing at one.
+
+[source,xml,numbered]
+-------------
+<jaxws:method name="xs:string">?
+    <jaxws:javadoc>xs:string</jaxws:javadoc>?
+</jaxws:method>
+
+<jaxws:provider/>?
+-------------
+
+[[semantics-8]]
+===== Semantics
+
+method/@name::
+The name of the generated port getter method.
+method/javadoc/text()::
+Method-level javadoc string.
+provider::
+This binding declaration specifies that the annotated port will be
+used with the `javax.xml.ws.Provider` interface.
+
+A port annotated with a `jaxws:provider` binding declaration is treated
+specially. No service endpoint interface will be generated for it, since
+the application code will use in its lieu the `javax.xml.ws.Provider`
+interface. Additionally, the port getter method on the generated service
+interface will be omitted.
+
+*Editors Note 8.2* _Omitting a getXYZPort() method is necessary for consistency, because if
+it existed it would specify the non-existing SEI type as its return
+type._

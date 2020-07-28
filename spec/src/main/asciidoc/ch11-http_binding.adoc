@@ -1,0 +1,217 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+
+[[xmlbindchap]]
+== HTTP Binding
+
+This chapter describes the JAX-WS XML/HTTP binding. The JAX-WS XML/HTTP
+binding provides raw XML over HTTP messaging capabilities as used in
+many Web services today.
+
+[[configuration-2]]
+=== Configuration
+
+The XML/HTTP binding is identified by the URL
+`http://www.w3.org/2004/08/wsdl/http`, which is also the value of the
+constant `javax.xml.ws.http.HTTPBinding.HTTP_BINDING`.
+
+_♦ Conformance (XML/HTTP Binding Support):_ An implementation MUST support the XML/HTTP
+binding.
+
+An XML/HTTP binding instance allows HTTP-specific configuration in
+addition to that described in section <<handlerconfig>>. The additional
+information can be configured either programmatically or using
+deployment metadata. The following subsections describe each form of
+configuration.
+
+[[programmatic-configuration-1]]
+==== Programmatic Configuration
+
+JAX-WS only defines APIs for programmatic configuration of client side
+XML/HTTP bindings – server side bindings are expected to be configured
+using deployment metadata.
+
+[[xmlbindchaphand]]
+===== HTTP Handlers
+
+The handler chain for an XML/HTTP binding is configured as described in
+section <<handfmwrkprogconf>>. The handler chain may contain handlers of
+the following types:
+
+Logical::
+Logical handlers are handlers that implement
+`javax.xml.ws.handler.LogicalHandler` either directly or indirectly.
+Logical handlers have access to the entire XML message via the logical
+message context.
+
+Use of `javax.xml.ws.binding.attachments.outbound` property in Dispatch
+
+* When using `Dispatch` in XML / HTTP binding in payload mode,
+attachments specified using the
+`javax.xml.ws.binding.attachments.outbound` property will be included as
+mime attachments to the message.
+* When using `Dispatch` in XML / HTTP binding in message mode, the
+`javax.xml.ws.binding.attachments.outbound` property will be ignored.
+`Dispatch` of type `DataSource` should be used to send mime attachments
+for the XML / HTTP binding in message mode.
+
+_♦ Conformance (Incompatible handlers):_ An implementation MUST throw
+`WebServiceException` when, at the time a binding provider is created,
+the handler chain returned by the configured `HandlerResolver` contains
+an incompatible handler.
+
+_♦ Conformance (Incompatible handlers):_ Implementations MUST throw a
+`WebServiceException` when attempting to configure an incompatible
+handler using `Binding.setHandlerChain`.
+
+_♦ Conformance (Logical handler access):_ An implementation MUST allow access to the
+entire XML message via a logical message context.
+
+[[deployment-model-2]]
+==== Deployment Model
+
+JAX-WS defines no standard deployment model for handlers. Such a model
+is provided by JSR 109<<bib17>> Implementing Enterprise
+Web Services.
+
+[[processing-model-1]]
+=== Processing Model
+
+The XML/HTTP binding implements the general handler framework processing
+model described in section <<handprocmodel>>.
+
+[[xmlexcepthandling]]
+==== Exception Handling
+
+The following subsections describe HTTP specific requirements for
+handling exceptions thrown by handlers and service endpoint
+implementations.
+
+[[handler-exceptions-1]]
+===== Handler Exceptions
+
+A binding is responsible for catching runtime exceptions thrown by
+handlers and following the processing model described in section
+<<handlerexecution>>. A binding is responsible for converting the
+exception to a fault message subject to further handler processing if
+the following criteria are met:
+
+1.  A handler throws a `ProtocolException` from `handleMessage`
+2.  The MEP in use includes a response to the message being processed
+3.  The current message is not already a fault message (the handler
+might have undertaken the work prior to throwing the exception).
+
+If the above criteria are met then the exception is converted to a HTTP
+response message as follows:
+
+* If the exception is an instance of `HTTPException` then the HTTP
+response code is set according to the value of the `statusCode`
+property. Any current XML message content is removed.
+* If the exception is of any other type then the HTTP status code is set
+to 500 to reflect a server class of error and any current XML message
+content is removed.
+* Handler processing is resumed as described in section
+<<handlerexecution>>.
+
+If the criteria for converting the exception to a fault message subject
+to further handler processing are not met then the exception is handled
+as follows depending on the current message direction:
+
+Outbound::
+The HTTP status code is set to 500 to reflect a server class of error,
+any current XML message content is removed and the message is
+dispatched.
+Inbound::
+The exception is passed to the binding provider.
+
+[[service-endpoint-exceptions-1]]
+===== Service Endpoint Exceptions
+
+Service endpoints can throw service specific exceptions or runtime
+exceptions. In both cases they can provide protocol specific information
+using the cause mechanism, see section <<protocolspecificfaults>>.
+
+A server side implementation of the XML/HTTP binding is responsible for
+catching exceptions thrown by a service endpoint implementation and, if
+the message exchange pattern in use includes a response to the message
+that caused the exception, converting such exceptions to HTTP response
+messages and invoking the `handleFault` method on handlers for the
+response message as described in section <<handlerexecution>>.
+
+Section <<mapextohttpfault>> describes the rules for mapping an exception
+to a HTTP status code.
+
+[[mapextohttpfault]]
+===== Mapping Exceptions to a HTTP Status Code
+
+When mapping an exception to a HTTP status code, the status code of the
+HTTP fault message is populated according to the following rules of
+precedence:
+
+1.  `HTTPException.getStatusCode()`footnote:[If the exception is a HTTPException or has a cause that is a HTTPException .]
+2.  `500`.
+
+[[xmlbindhttp]]
+=== HTTP Support
+
+[[one-way-operations-1]]
+==== One-way Operations
+
+HTTP interactions are request-response in nature. When used for one-way
+messages, implementations wait for the HTTP response even though there
+is no XML message in the HTTP response entity body.
+
+_♦ Conformance (One-way operations):_ When invoking one-way operations, an implementation
+of the XML/HTTP binding MUST block until the HTTP response is received
+or an error occurs.
+
+Note that completion of the HTTP request simply means that the
+transmission of the request is complete, not that the request was
+accepted or processed.
+
+[[security-1]]
+==== Security
+
+Section <<stdbpprops>> defines two standard context properties
+(`javax.xml.ws.security.auth.username` and
+`javax.xml.ws.security.auth.password`) that may be used to configure
+authentication information.
+
+_♦ Conformance (HTTP basic authentication support):_ An implementation of the XML/HTTP
+binding MUST support HTTP basic authentication.
+
+_♦ Conformance (Authentication properties):_ A client side implementation MUST support
+use of the the standard properties `javax.xml.ws.security.auth.username`
+and `javax.xml.ws.security.auth.password` to configure HTTP basic
+authentication.
+
+[[session-management-2]]
+==== Session Management
+
+Section <<stdbpprops>> defines a standard context property
+(`javax.xml.ws.session.maintain`) that may be used to control whether a
+client side runtime will join a session initiated by a service.
+
+A XML/HTTP binding implementation can use three HTTP mechanisms for
+session management:
+
+Cookies::
+To initiate a session a service includes a cookie in a message sent to
+a client. The client stores the cokkie and returns it in subsequest
+messages to the service.
+URL rewriting::
+To initiate a session a service directs a client to a new URL for
+subsequent interactions. The new URL contains an encoded session
+identifier.
+SSL::
+The SSL session ID is used to track a session.
+
+_♦ Conformance (URL rewriting support)_ An implementation MUST support use of HTTP URL
+rewriting for state management.
+
+_♦ Conformance (Cookie support):_ An implementation SHOULD support use of HTTP cookies
+for state management.
+
+_♦ Conformance (SSL session support):_ An implementation MAY support use of SSL session
+based state management.

@@ -1,0 +1,1344 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+
+[[j2wsdl11chap]]
+== Java to WSDL 1.1 Mapping
+
+This chapter describes the mapping from Java to WSDL 1.1. This mapping
+is used when generating web service endpoints from existing Java
+interfaces.
+
+_♦ Conformance (WSDL 1.1 support):_ Implementations MUST support mapping Java to WSDL
+1.1.
+
+The following sections describe the default mapping from each Java
+construct to the equivalent WSDL 1.1 artifact.
+
+An application MAY customize the mapping using the annotations defined
+in section <<metadata>>.
+
+_♦ Conformance (Standard annotations):_ An implementation MUST support the use of
+annotations defined in section [metadata] to customize the Java to WSDL
+1.1 mapping.
+
+[[javanames]]
+=== Java Names
+
+_♦ Conformance (Java identifier mapping):_ In the absence of annotations described in this
+specification, Java identifiers MUST be mapped to XML names using the
+algorithm defined in appendix B of SOAP 1.2 Part 2<<bib4>>.
+
+[[javanamecollisions]]
+==== Name Collisions
+
+WS-I Basic Profile 1.0<<bib8>> (see
+R2304) requires operations within a `wsdl:portType` to be uniquely named
+– support for customization of the operation name allows this
+requirement to be met when a Java SEI contains overloaded methods.
+
+_♦ Conformance (Method name disambiguation):_ An implementation MUST support the use of
+the `javax.jws.WebMethod` annotation to disambiguate overloaded Java
+method names when mapped to WSDL.
+
+[[j2w11package]]
+=== Package
+
+A Java package is mapped to a `wsdl:definitions` element and an
+associated `targetNamespace` attribute. The `wsdl:definitions` element
+acts as a container for other WSDL elements that together form the WSDL
+description of the constructs in the corresponding Java package.
+
+A default value for the `targetNamespace` attribute is derived from the
+package name as follows:
+
+1.  The package name is tokenized using the . character as a delimiter.
+2.  The order of the tokens is reversed.
+3.  The value of the `targetNamespace` attribute is obtained by
+concatenating http://to the list of tokens separated by  . and /.
+
+E.g., the Java package com.example.ws would be mapped to the target
+namespace http://ws.example.com/ .
+
+_♦ Conformance (Package name mapping):_ The `javax.jws.WebService` annotation (see
+section <<mdwebservice>>) MAY be used to specify the target namespace to
+use for a Web service and MUST be used for classes or interfaces in no
+package. In the absence of a `javax.jws.WebService` annotation the Java
+package name MUST be mapped to the value of the `wsdl:definitions`
+element’s `targetNamespace` attribute using the algorithm defined above.
+
+No specific authoring style is required for the mapped WSDL document;
+implementations are free to generate WSDL that uses the WSDL and XML
+Schema import directives.
+
+_♦ Conformance (WSDL and XML Schema import directives):_ Generated WSDL MUST comply with
+the WS-I Basic Profile 1.0<<bib8>>
+restrictions (See R2001, R2002, and R2003) on usage of WSDL and XML
+Schema import directives.
+
+[[j2ws11class]]
+=== Class
+
+A Java class (not an interface) annotated with a `javax.jws.WebService`
+annotation can be used to define a Web service.
+
+In order to allow for a separation between Web service interface and
+implementation, if the `WebService` annotation on the class under
+consideration has a `endpointInterface` element, then the interface
+referred by this element is for all purposes the SEI associated with the
+class.
+
+Otherwise, the class implicitly defines a service endpoint interface
+(SEI) which comprises all of the public
+
+non-static or non-final
+
+methods that satisfy one of the following conditions:
+
+1.  They are annotated with the `javax.jws.WebMethod` annotation with
+the `exclude` element set to `false` or missing (since `false` is the
+default for this annotation element).
+2.  They are not annotated with the `javax.jws.WebMethod` annotation but
+their declaring class has a `javax.jws.WebService` annotation.
+
+For mapping purposes, this implicit SEI and its methods are considered
+to be annotated with the same Web service-related annotations that the
+original class and its methods have.
+
+In pratice, in order to exclude a public method of a class annotated
+with `WebService` and not directly specifying a `endpointInterface` from
+the implicitly defined SEI, it is necessary to annotate the method with
+a `WebMethod` annotation with the `exclude` element set to `true`.
+
+_♦ Conformance (Class mapping):_ An implementation MUST support the mapping of
+`javax.jws.WebService` annotated classes to implicit service endpoint
+interfaces.
+
+For mapping purposes, this class must be a top level class or a static
+inner class. As defined by JSR 181, a class annotated with
+`javax.jws.WebService` must have a default public constructor.
+
+[[j2wsdl11interface]]
+=== Interface
+
+A Java service endpoint interface (SEI) is mapped to a `wsdl:portType`
+element. The `wsdl:portType` element acts as a container for other WSDL
+elements that together form the WSDL description of the methods in the
+corresponding Java SEI. An SEI is a Java interface that meets all of the
+following criteria:
+
+* It MUST carry a `javax.jws.WebService` annotation (see
+<<mdwebservice>>).
+* Any of its methods MAY carry a `javax.jws.WebMethod` annotation (see
+<<mdwebmethod>>).
+* `javax.jws.WebMethod` if used, MUST NOT have the `exclude` element set
+to `true`.
+* All method parameters and return types are compatible with the JAXB
+2.0<<bib10>> Java to XML Schema mapping definition
+
+_♦ Conformance (portType naming):_ The `javax.jws.WebService` annotation (see section
+<<mdwebservice>>) MAY be used to customize the `name` and
+`targetNamespace` attributes of the `wsdl:portType` element. If not
+customized, the value of the `name` attribute of the `wsdl:portType`
+element MUST be the name of the SEI not including the package name and
+the target namespace is computed as defined above in section
+<<j2w11package>>.
+
+Figure <<3.1>> shows an example of a Java SEI and the
+corresponding `wsdl:portType`.
+
+Multiple SEIs in the same package may result in name clashes as the
+result of sections <<j2wsdldocwrapped>> and <<j2w11except>> of the
+specification. Customizations may be used to resolve these clashes. See
+sections <<mdwebfault>>, <<mdrequestWrapper>> and <<mdresponseWrapper>> for
+more information on these customizations.
+
+[[inheritance]]
+==== Inheritance
+
+WSDL 1.1 does not define a standard representation for the inheritance
+of `wsdl:portType` elements. When mapping an SEI that inherits from
+another interface, the SEI is treated as if all methods of the inherited
+interface were defined within the SEI.
+
+_♦ Conformance (Inheritance flattening):_ A mapped `wsdl:portType` element MUST contain
+WSDL definitions for all the methods of the corresponding Java SEI
+including all inherited methods.
+
+_♦ Conformance (Inherited interface mapping):_ An implementation MAY map inherited
+interfaces to additional `wsdl:portType` elements within the
+`wsdl:definitions` element.
+
+[[j2w11method]]
+=== Method
+
+Each public method in a Java SEI is mapped to a `wsdl:operation` element
+in the corresponding `wsdl:portType` plus one or more `wsdl:message`
+elements.
+
+_♦ Conformance (Operation naming):_ In the absence of customizations, the value of the
+`name` attribute of the `wsdl:operation` element MUST be the name of the
+Java method. The `javax.jws.WebMethod` (see [mdwebmethod]) annotation
+MAY be used to customize the value of the `name` attribute of the
+`wsdl:operation` element and MUST be used to resolve naming conflicts.
+If the `exclude` element of the `javax.jws.WebMethod` is set to `true`
+then the Java method MUST NOT be present in the wsdl as a
+`wsdl:operation` element.
+
+Methods are either one-way or two-way: one way methods have an input but
+produce no output, two way methods have an input and produce an output.
+Section [j2wsdl11onewayops] describes one way operations further.
+
+The `wsdl:operation` element corresponding to each method has one or
+more child elements as follows:
+
+* A `wsdl:input` element that refers to an associated `wsdl:message`
+element to describe the operation input.
+
+* (Two-way methods only) an optional `wsdl:output` element that refers to
+a `wsdl:message` to describe the operation output.
+
+* (Two-way methods only) zero or more `wsdl:fault` child elements, one for
+each exception thrown by the method. The `wsdl:fault` child elements
+refer to associated `wsdl:message` elements to describe each fault. See
+section [j2w11except] for further details on exception mapping.
+
+* `wsdl:input`, `wsdl:output`(if any), and `wsdl:fault`(if any) child
+elements must have `wsam:Action` attribute to describe WS-Addressing
+Action property. The value of the `wsam:Action` attribute is computed
+using the algorithm in section <<wsamComputation>>
+
+The value of a `wsdl:message` element’s `name` attribute is not
+significant but by convention it is normally equal to the corresponding
+operation name for input messages and the operation name concatenated
+with Response for output messages. Naming of fault messages is described
+in section section <<j2w11except>>.
+
+_♦ Conformance (Generating wsam:Action ):_ `wsdl:operation`’s child elements
+`wsdl:input`, `wsdl:output`, and `wsdl:fault` MUST have the
+`wsam:Action` attribute. `wsam:Action` attribute MUST be computed using
+the algorithm that is specified in <<wsamComputation>>
+
+Each `wsdl:message` element has one of the followingfootnote:[The
+`javax.jws.WebParam` and `javax.jws.WebResult` annotations can introduce
+additional parts into messages when the `header` element is `true`.]:
+
+Document style::
+A single `wsdl:part` child element that refers, via an `element`
+attribute, to a global element declaration in the `wsdl:types`
+section.
+RPC style::
+Zero or more `wsdl:part` child elements (one per method parameter and
+one for a non-void return value) that refer, via a `type` attribute,
+to named type declarations in the `wsdl:types` section.
+
+Figure <<3.1>> shows an example of mapping a Java interface
+containing a single method to WSDL 1.1 using document style. Figure
+<<3.2>> shows an example of mapping a Java interface
+containing a single method to WSDL 1.1 using RPC style.
+
+Section <<j2w11methodparams>> describes the mapping from Java methods and
+their parameters to corresponding global element declarations and named
+types in the `wsdl:types` section.
+
+[id="3.1"]
+[source,java,numbered]
+-------------
+// Java
+package com.example;
+@WebService
+public interface StockQuoteProvider {
+    float getPrice(String tickerSymbol)
+        throws TickerException;
+}
+
+<!-- WSDL extract -->
+<types>
+    <xsd:schema targetNamespace="...">
+        <!-- element declarations -->
+        <xsd:element name="getPrice"
+            type="tns:getPriceType"/>
+        <xsd:element name="getPriceResponse"
+            type="tns:getPriceResponseType"/>
+        <xsd:element name="TickerException"
+            type="tns:TickerExceptionType"/>
+
+        <!-- type definitions -->
+        ...
+    </xsd:schema>
+</types>
+
+<message name="getPrice">
+    <part name="getPrice" element="tns:getPrice"/>
+</message>
+
+<message name="getPriceResponse">
+    <part name="getPriceResponse" element="tns:getPriceResponse"/>
+</message>
+
+<message name="TickerException">
+    <part name="TickerException" element="tns:TickerException"/>
+</message>
+
+<portType name="StockQuoteProvider">
+    <operation name="getPrice">
+        <input message="tns:getPrice" wsam:action="..."/>
+        <output message="tns:getPriceResponse wsam:action="..."/>
+        <fault message="tns:TickerException wsam:action="..."/>
+    </operation>
+</portType>
+-------------
+Figure 3.1: Java interface to WSDL portType mapping using document style
+
+[id="3.2"]
+[source,java,numbered]
+-------------
+// Java
+package com.example;
+@WebService
+public interface StockQuoteProvider {
+    float getPrice(String tickerSymbol)
+        throws TickerException;
+}
+
+<!-- WSDL extract -->
+<types>
+    <xsd:schema targetNamespace="...">
+        <!-- element declarations -->
+        <xsd:element name="TickerException"
+            type="tns:TickerExceptionType"/>
+
+        <!-- type definitions -->
+        ...
+    </xsd:schema>
+</types>
+
+<message name="getPrice">
+    <part name="tickerSymbol" type="xsd:string"/>
+</message>
+
+<message name="getPriceResponse">
+    <part name="return" type="xsd:float"/>
+</message>
+
+<message name="TickerException">
+    <part name="TickerException" element="tns:TickerException"/>
+</message>
+
+<portType name="StockQuoteProvider">
+    <operation name="getPrice">
+        <input message="tns:getPrice"/>
+        <output message="tns:getPriceResponse"/>
+        <fault message="tns:TickerException"/>
+    </operation>
+</portType>
+-------------
+Figure 3.2: Java interface to WSDL portType mapping using RPC style
+
+[[j2wsdl11onewayops]]
+==== One Way Operations
+
+Only Java methods whose return type is `void`, that have no parameters
+that implement `Holder` and that do not throw any checked exceptions can
+be mapped to one-way operations. Not all Java methods that fulfill this
+requirement are amenable to become one-way operations and automatic
+choice between two-way and one-way mapping is not possible.
+
+_♦ Conformance (One-way mapping):_ Implementations MUST support use of the
+`javax.jws.OneWay` (see [mdoneway]) annotation to specify which methods
+to map to one-way operations. Methods that are not annotated with
+`javax.jws.OneWay` MUST NOT be mapped to one-way operations.
+
+_♦ Conformance (One-way mapping errors):_ Implementations MUST prevent mapping to one-way
+operations of methods that do not meet the necessary criteria.
+
+[[wsamComputation]]
+==== wsam:Action Computation Algorithm
+
+All `wsdl:operation`’s child elements `wsdl:input`, `wsdl:output` and
+`wsdl:fault` must have the `wsam:Action` attribute in the the generated
+WSDL. The algorithm to compute `wsam:Action` from SEI method is as
+follows:
+
+1.  A non-default `@Action(input=...)` or `@WebMethod(action=...)` value
+on a SEI method MUST result into `wsdl:input[@wsam:Action]` attribute in
+the corresponding wsdl:operation. Also, `@Action(input=...)` and
+`@WebMethod(action=...)` annotation element values MUST be same, if
+present.
+2.  A non-default `@Action(output=...)` value on a SEI method MUST
+result into `wsdl:output` attribute in the corresponding
+`wsdl:operation`.
+3.  A non-default `@Action(@FaultAction=...)` value on a SEI method MUST
+result into `wsdl:fault` attribute in the corresponding
+`wsdl:operation`. The `wsdl:fault` element MUST correspond to the
+exception specified by `className` annotated element value.
+4.  If `wsdl:input[@wsam:Action]` cannot be mapped from the above steps,
+then `wsam:Action` is generated using the metadata defaulting algorithm
+as if `wsdl:input[@name]` is not present in WSDL.
+5.  If `wsdl:output[@wsam:Action]` cannot be mapped from the above
+steps, then `wsam:Action` is generated using the metadata defaulting
+algorithm as if `wsdl:output[@name]` is not present in WSDL.
+6.  If `wsdl:fault[@wsam:Action]` cannot be mapped from the above steps,
+then `wsam:Action` is generated using the metadata defaulting algorithm
+as if `wsdl:fault[@name]` is the corresponding exception class name.
+
+For example:
+
+[source,java,numbered]
+-------------
+@Action(input="inAction")
+public float getPrice(String ticker) throws InvalidTickerException;
+
+// the mapped wsdl:operation if targetNamespace="http://example.com" and
+// portType="StockQuoteProvider"
+<operation name="getPrice">
+    <input name="foo" message="tns:getPrice" wsam:Action="inAction"/>
+    <output name="bar" message="tns:getPriceResponse"
+        wsam:Action="http://example.com/StockQuoteProvider/getPriceResponse" />
+    <fault name="FooTickerException" message="tns:InvalidTickerException" wsam:Action="http://example.com/StockQuoteProvider/getPrice/Fault/InvalidTickerException"/>
+</operation>
+-------------
+
+[[j2w11methodparams]]
+=== Method Parameters and Return Type
+
+A Java method’s parameters and return type are mapped to components of
+either the messages or the global element declarations mapped from the
+method. Parameters can be mapped to components of the message or global
+element declaration for either the operation input message, operation
+output message or both. The mapping depends on the parameter
+classification.The `javax.jws.WebParam` annotation’s `header` element
+MAY be used to map parameters to SOAP headers. Header parameters MUST be
+included as `soap:header` elements in the operation’s input message. The
+`javax.jws.WebResult` annotation’s `header` element MAY be used to map
+results to SOAP headers. Header results MUST be included as
+`soap:header` elements in the operation’s output message.
+
+Since JAX-WS uses JAXB for it data binding, JAXB annotations on methods
+and method parameters MUST be honored. A JAXB annotation on the method
+is used to specify the binding of a methods return type while an
+annotation on the parameter specifies the binding of that parameter.
+
+_♦ Conformance (use of JAXB annotations):_ An implementation MUST honor any JAXB
+annotation that exists on an SEI method or parameter to assure that the
+proper XML infoset is used when marshalling/ +
+unmarshalling the the return value or parameters of the method. The set
+of JAXB annotations that MUST be supported are:
+`javax.xml.bind.annotation.XmlAttachementRef`,
+`javax.xml.bind.annotation.XmlList`, `javax.xml.bind.XmlMimeType` and
+`javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter`
+
+JAXB doesn’t define any namespace by default to types and elements. In
+the web services, typically these entities that are created for method
+parameters and return parameters are qualified.
+
+_♦ Conformance (Overriding JAXB types empty namespace):_ JAX-WS tools and runtimes MUST
+override the default empty namespace for JAXB types and elements to
+SEI’s targetNamespace.
+
+[[j2wsdl11paramclass]]
+==== Parameter and Return Type Classification
+
+Method parameters and return type are classified as follows:
+
+`in`::
+The value is transmitted by copy from a service client to the SEI but
+is not returned from the service endpoint to the client.
+`out`::
+The value is returned by copy from an SEI to the client but is not
+transmitted from the client to the service endpoint implementation.
+`in/out`::
+The value is transmitted by copy from a service client to the SEI and
+is returned by copy from the SEI to the client.
+
+A methods return type is always `out`. For method parameters, holder
+classes are used to determine the classification. `javax.xml.ws.Holder`.
+A parameter whose type is a parameterized `javax.xml.ws.Holder<T>` class
+is classified as `in/out` or `out`, all other parameters are classified
+as `in`.
+
+_♦ Conformance (Parameter classification):_ The `javax.jws.WebParam` annotation (see
+[mdwebparam]) MAY be used to specify whether a holder parameter is
+treated as `in/out` or `out`. If not specified, the default MUST be
+`in/out`.
+
+_♦ Conformance (Parameter naming):_ The `javax.jws.WebParam` annotation (see
+[mdwebparam]) MAY be used to specify the `name` of the `wsdl:part` or
+XML Schema element declaration corresponding to a Java parameter. If
+both the `name` and `partName` elements are used in the
+`javax.jws.WebParam` annotation then the `partName` MUST be used for the
+`wsdl:part` name attribute and the `name` element from the annotation
+will be ignored. If not specified, the default is arg_N_, where _N_ is
+replaced with the zero-based argument index. Thus, for instance, the
+first argument of a method will have a default parameter name of arg0,
+the second one arg1and so on.
+
+_♦ Conformance (Result naming):_ The `javax.jws.WebResult` annotation (see [mdwebparam])
+MAY be used to specify the `name` of the `wsdl:part` or XML Schema
+element declaration corresponding to the Java method return type. If
+both the `name` and `partName` elements are used in the
+`javax.jws.WebResult` annotations then the `partName` MUST be used for
+the `wsdl:part` name attribute and the `name` elment from the annotation
+will be ignored. In the absence of customizations, the default name is
+`return`.
+
+_♦ Conformance (Header mapping of parameters and results):_ The `javax.jws.WebParam`
+annotation’s `header` element MAY be used to map parameters to SOAP
+headers. Header parameters MUST be included as `soap:header` elements in
+the operation’s input message. The `javax.jws.WebResult` annotation’s
+`header` element MAY be used to map results to SOAP headers. Header
+results MUST be included as `soap:header` elements in the operation’s
+output message.
+
+[[jaxbargmap]]
+==== Use of JAXB
+
+JAXB 2.1 defines a mapping from Java classes to XML Schema constructs.
+JAX-WS uses this mapping to generate XML Schema named type and global
+element declarations that are referred to from within the WSDL `message`
+constructs generated for each operation.
+
+Three styles of Java to WSDL mapping are supported: document wrapped,
+document bare and RPC. The styles differ in what XML Schema constructs
+are generated for a method. The three styles are described in the
+following subsections.
+
+The `javax.jws.SOAPBinding` annotation MAY be used to specify at the
+type level which style to use for all methods it contains or on a per
+method basis if the `style` is `document`.
+
+[[j2wsdldocwrapped]]
+===== Document Wrapped
+
+This style is identified by a `javax.jws.SOAPBinding` annotation with
+the following properties: a `style` of `DOCUMENT`, a `use` of `LITERAL`
+and a `parameterStyle` of `WRAPPED`.
+
+For the purposes of utilizing the JAXB mapping, each method is converted
+to two Java bean classes: one for the method input (henceforth called
+the _request bean_) and one for the method output (henceforth called the
+_response bean_).
+
+Application’s programming model doesn’t use these bean classes, so the
+applications need not package these classes. JAX-WS implementations may
+generate these classes dynamically as specified in this section.
+
+_♦ Conformance (Dynamically generating wrapper beans):_ A JAX-WS implementation SHOULD
+not require an application to package request and response bean classes.
+However, when the bean classes are packaged, they MUST be used.
+
+_♦ Conformance (Default wrapper bean names):_ In the absence of customizations, the
+wrapper request bean class MUST be named the same as the method and the
+wrapper response bean class MUST be named the same as the method with a
+Response suffix. The first letter of each bean name is capitalized to
+follow Java class naming conventions.
+
+_♦ Conformance (Default wrapper bean package):_ In the absence of customizations, the
+wrapper beans package MUST be a generated `jaxws` subpackage of the SEI
+package.
+
+The `javax.xml.ws.RequestWrapper` and `javax.xml.ws.ResponseWrapper`
+annotations (see <<mdrequestWrapper>> and <<mdresponseWrapper>>) MAY be used
+to customize the name of the generated wrapper bean classes.
+
+_♦ Conformance (Wrapper element names):_ The `javax.xml.ws.RequestWrapper` and
+`javax.xml.ws.ResponseWrapper` annotations (see <<mdrequestWrapper>> and
+<<mdresponseWrapper>>) MAY be used to specify the qualified name of the
+elements generated for the wrapper beans.
+
+_♦ Conformance (Wrapper bean name clash):_ Generated bean classes must have unique names
+within a package and MUST NOT clash with other classes in that package.
+Clashes during generation MUST be reported as an error and require user
+intervention via name customization to correct. Note that some platforms
+do not distiguish filenames based on case so comparisons MUST ignore
+case.
+
+The name of `wsdl:part` for the wrapper must be named as `parameters`
+for input messages in the generated WSDL. If a SEI method doesn’t have
+any header parameters or return type, then the `name` of `wsdl:part` for
+the wrapper must be named as `parameters` for output messages in the
+generated WSDL, otherwise it would be named as `result`. The
+`RequestWrapper` and `ResponseWrapper` annotations MAY be used to
+customize the `name` of the `wsdl:part` for the wrapper part.
+
+_♦ Conformance (Default Wrapper wsdl:part names):_ In the absence of customizations, the
+name of the `wsdl:part` for the wrapper MUST be named as `parameters`
+for input messages in the generated WSDL. In the absence of
+customizations, when there are no header parameters or return type in a
+SEI method, the `name` of the `wsdl:part` for the wrapper MUST be named
+as `parameters` for output messages. In all other cases, it MUST be
+named as `result`.
+
+_♦ Conformance (Customizing Wrapper `wsdl:part` names):_ Non-default `partName` values of
+the `RequestWrapper` and `ResponseWrapper` annotations, if specified on
+a SEI method, MUST be used as `wsdl:part` `name` for the corresponding
+input and output messages in the generated WSDL.
+
+A request bean is generated containing properties for each `in` and
+`in/out` non-header parameter. A response bean is generated containing
+properties for the method return value, each `out` non-header parameter,
+and `in/out` non-header parameter. Method return values are represented
+by an `out` property named return. The order of the properties in the
+request bean is the same as the order of parameters in the method
+signature. The order of the properties in the response bean is the
+property corresponding to the return value (if present) followed by the
+properties for the parameters in the same order as the parameters in the
+method signature.
+
+If a SEI’s method parameter or return type is annotated with
+`@XmlElement`, that annotation is used for the wrapper bean properties.
+This can be used to map corresponding XML schema element declaration’s
+attributes like `minOccurs`, `maxOccurs`, and `nillable` etc. It is an
+error to specify `@XmlElement` with a parameter or return type that is
+mapped to header part. If both `@XmlElement` and
+`@WebParam`/`@WebResult` are present, then it is an error to specify
+`@XmlElement`’s `name`, and `namespace` elements different from
+`@WebParam`/`@WebResult`’s `name` and `targetNamespace` elements
+respectively.
+
+_♦ Conformance (Wrapper property):_ If a SEI’s method parameter or return type is
+annotated with `@XmlElement`, that annotation MUST be used on the
+wrapper bean property.
+
+The request and response beans are generated with the appropriate JAXB
+customizations to result in a global element declaration for each bean
+class when mapped to XML Schema by JAXB. The corresponding global
+element declarations MUST NOT have the nillable attribute set to a value
+of true. Whereas the element name is derived from the `RequestWrapper`
+or `ResponseWrapper` annotations, its type is named according to the
+operation name (for the local part) and the target namespace for the
+portType that contains the operation (for the namespace name).
+
+Figure <<3.3>> illustrates this conversion.
+
+[id="3.3"]
+[source,java,numbered]
+-------------
+float getPrice(@WebParam(name="tickerSymbol") String sym);
+
+@XmlRootElement(name="getPrice", targetNamespace="...")
+@XmlType(name="getPrice", targetNamespace="...")
+@XmlAccessorType(AccessType.FIELD)
+public class GetPrice {
+    @XmlElement(name="tickerSymbol", targetNamespace="")
+    public String tickerSymbol;
+}
+
+@XmlRootElement(name="getPriceResponse", targetNamespace="...")
+@XmlType(name="getPriceResponse", targetNamespace="...")
+@XmlAccessorType(AccessType.FIELD)
+public class GetPriceResponse {
+    @XmlElement(name="return", targetNamespace="")
+    public float _return;
+}
+-------------
+Figure 3.3: Wrapper mode bean representation of an operation
+
+When the JAXB mapping to XML Schema is utilized this results in global
+element declarations for the mapped request and response beans with
+child elements for each method parameter according to the parameter
+classification:
+
+`in`::
+The parameter is mapped to a child element of the global element
+declaration for the request bean.
+`out`::
+The parameter or return value is mapped to a child element of the
+global element declaration for the response bean. In the case of a
+parameter, the class of the value of the holder class (see section
+<<j2wsdl11paramclass>>) is used for the mapping rather than the holder
+class itself.
+`in/out`::
+The parameter is mapped to a child element of the global element
+declarations for the request and response beans. The class of the
+value of the holder class (see section <<j2wsdl11paramclass>>) is used
+for the mapping rather than the holder class itself.
+
+The global element declarations are used as the values of the
+`wsdl:part` elements `element` attribute, see figure [exinterfacemap].
+
+[[j2wsdl11docbaremap]]
+===== Document Bare
+
+This style is identified by a `javax.jws.SOAPBinding` annotation with
+the following properties: a `style` of `DOCUMENT`, a `use` of `LITERAL`
+and a `parameterStyle` of `BARE`.
+
+In order to qualify for use of bare mapping mode a Java method must
+fulfill all of the following criteria:
+
+1.  It must have at most one `in` or `in/out` non-header parameter.
+2.  If it has a return type other than `void` it must have no `in/out`
+or `out` non-header parameters.
+3.  If it has a return type of `void` it must have at most one `in/out`
+or `out` non-header parameter.
+
+If present, the type of the input parameter is mapped to a named XML
+Schema type using the mapping defined by JAXB. If the input parameter is
+a holder class then the class of the value of the holder is used
+instead.
+
+If present, the type of the output parameter or return value is mapped
+to a named XML Schema type using the mapping defined by JAXB. If an
+output parameter is used then the class of the value of the holder class
+is used.
+
+A global element declaration is generated for the method input and, in
+the absence of a `WebParam` annotation, its local name is equal to the
+operation name. A global element declaration is generated for the method
+output and, in the absence of a `WebParam` or `WebResult` annotation,
+the local name is equal to the operation name suffixed with Response.
+The type of the two elements depends on whether a type was generated for
+the corresponding element or not:
+
+Named type generated::
+The type of the global element is the named type.
+No type generated::
+The type of the element is an anonymous empty type.
+
+The namespace name of the input and output global elements is the value
+of the `targetNamespace` attribute of the WSDL `definitions` element.
+
+The nillable attribute of the generated global elements MUST have a
+value of true if and only if the corresponding Java types are reference
+types.
+
+The global element declarations are used as the values of the
+`wsdl:part` elements `element` attribute, see figure <<exinterfacemap>>.
+
+[[rpc]]
+===== RPC
+
+This style is identified by a `javax.jws.SOAPBinding` annotation with
+the following properties: a `style` of `RPC`, a `use` of `LITERAL` and a
+`parameterStyle` of `WRAPPED` footnote:[Use of `RPC` style requires use
+of `WRAPPED` parameter style. Deviations from this is an error].
+
+The Java types of each `in`, `out` and `in/out` parameter and the return
+value are mapped to named XML Schema types using the mapping defined by
+JAXB. For `out` and `in/out` parameters the class of the value of the
+holder is used rather than the holder itself.
+
+Each method parameter and the return type is mapped to a message part
+according to the parameter classification:
+
+`in`::
+The parameter is mapped to a part of the input message.
+`out`::
+The parameter or return value is mapped to a part of the output
+message.
+`in/out`::
+The parameter is mapped to a part of the input and output message.
+
+The named types are used as the values of the `wsdl:part` elements
+`type` attribute, see figure <<3.2>>. The value of the
+`name` attribute of each `wsdl:part` element is the name of the
+corresponding method parameter or returnfor the method return value.
+
+Due to the limitations described in section 5.3.1 of the WS-I Basic
+Profile specification (see <<bib8>>),
+null values cannot be used as method arguments or as the return value
+from a method which uses the rpc/literal binding.
+
+_♦ Conformance (Null Values in rpc/literal):_ If a null value is passed as an argument to
+a method, or returned from a method, that uses the rpc/literal style,
+then an implementation MUST throw a `WebServiceException`.
+
+[[j2w11except]]
+=== Service Specific Exception
+
+A service specific Java exception is mapped to a `wsdl:fault` element, a
+`wsdl:message` element with a single child `wsdl:part` element and an
+XML Schema global element declaration. The `wsdl:fault` element appears
+as a child of the `wsdl:operation` element that corresponds to the Java
+method that throws the exception and refers to the `wsdl:message`
+element. The `wsdl:part` element refers to an XML Schema global element
+declaration that describes the fault.
+
+_♦ Conformance (Exception naming):_ In the absence of customizations, the name of the
+global element declaration for a mapped exception MUST be the name of
+the Java exception. The `javax.xml.ws.WebFault` annotation MAY be used
+to customize the local name and namespace name of the element.
+
+_♦ Conformance (wsdl:message naming):_ In the absence of customizations, the name of the
+wsdl:message element MUST be the name of the Java exception.
+
+The `javax.xml.ws.WebFault` annotation may be used to customize the name
+of the `wsdl:message` element and also to resolve any conflicts.
+
+_♦ Conformance (wsdl:message naming using WebFault):_ If an exception has @WebFault, then
+messageName MUST be the name of the corresponding wsdl:message element.
+
+Service specific exceptions are defined as all checked exceptions except
+`java.rmi.RemoteException` and its subclasses.
+
+_♦ Conformance (`java.lang.RuntimeExceptions` and `java.rmi.RemoteExceptions`):_
+`java.lang.RuntimeException` and `java.rmi.RemoteException` and their
+subclasses MUST NOT be treated as service specific exceptions and MUST
+NOT be mapped to WSDL.
+
+JAXB defines the mapping from a Java bean to XML Schema element
+declarations and type definitions and is used to generate the global
+element declaration that describes the fault. For exceptions that match
+the pattern described in section <<faulttoexceptmap>> (i.e. exceptions
+that have a `getFaultInfo` method and `WebFault` annotation), the
+_FaultBean_ is used as input to JAXB when mapping the exception to XML
+Schema. For exceptions that do not match the pattern described in
+section <<faulttoexceptmap>>, JAX-WS maps those exceptions to Java beans
+and then uses those Java beans as input to the JAXB mapping. The
+following algorithm is used to map non-matching exception classes to the
+corresponding Java beans for use with JAXB:
+
+1.  In the absence of customizations, the name of the bean is the same
+as the name of the Exception suffixed with Bean.
+2.  In the absence of customizations, the package of the bean is a
+generated `jaxws` subpackage of the SEI package. E.g. if the SEI package
+is `com.example.stockquote` then the package of the bean would be
+`com.example.stockquote.jaxws`.
+3.  For each getter in the exception and its superclasses, a property of
+the same type and name is added to the bean. The `getCause`,
+`getLocalizedMessage` and `getStackTrace` getters from
+`java.lang.Throwable` and the `getClass` getter from `java.lang.Object`
+are excluded from the list of getters to be mapped.
+4.  The bean is annotated with a JAXB @XmlType annotation. If the
+exception class has a @XmlType annotation, then it is used for the fault
+bean’s @XmlType annotation. Otherwise, the fault bean’s @XmlType
+annotation is computed with name property set to the name of the
+exception and the namespace property set to the target namespace of the
+corresponding portType
++
+. Additionally, the `@XmlType` annotation has a `propOrder` property
+whose value is an array containing the names of all the properties of
+the exception class that were mapped in the previous bullet point,
+sorted lexicographically according to the Unicode value of each of their
+characters (i.e. using the same algorithm that the
+`int java.lang.String.compareTo(String)` method uses).
+5.  The bean is annotated with a JAXB `@XmlRootElement` annotation whose
+`name` property is set, in the absence of customizations, to the name of
+the exception.
+
+_♦ Conformance (Fault bean’s @XmlType ):_ If an exception class has a `@XmlType`
+annotation, then it MUST be used for the fault bean’s `@XmlType`
+annotation.
+
+_♦ Conformance (Fault bean name clash):_ Generated bean classes must have unique names
+within a package and MUST NOT clash with other classes in that package.
+Clashes during generation MUST be reported as an error and require user
+intervention via name customization to correct. Note that some platforms
+do not distiguish filenames based on case so comparisons MUST ignore
+case.
+
+Figure <<3.4>> illustrates this mapping.
+[id="3.4"]
+[source,java,numbered]
+-------------
+@WebFault(name="UnknownTickerFault", targetNamespace="...")
+public class UnknownTicker extends Exception {
+    ...
+        public UnknownTicker(Sting ticker) { ... }
+        public UnknownTicker(Sting ticker, String message) { ... }
+        public UnknownTicker(Sting ticker, String message, Throwable cause)
+            { ... }
+        public String getTicker() { ... }
+}
+
+@XmlRootElement(name="UnknownTickerFault" targetNamespace="...")
+@XmlAccessorType(AccessType.FIELD)
+@XmlType(name="UnknownTicker", namespace="...",
+        propOrder={"message", "ticker"})
+public class UnknownTickerBean {
+    ...
+    public UnknownTickerBean() { ... }
+    public String getTicker() { ... }
+    public void setTicker(String ticker) { ... }
+    public String getMessage() { ... }
+    public void setMessage(String message) { ... }
+}
+-------------
+Figure 3.4: Mapping of an exception to a bean for use with JAXB.
+
+Application’s programming model doesn’t use these bean classes, so the
+applications need not package these classes. JAX-WS implementations may
+generate these classes dynamically as specified in this section.
+
+_♦ Conformance (Dynamically generating exception beans):_ JAX-WS implementations SHOULD
+not require an application to package exception bean classes. However,
+when the exception bean classes are packaged, they MUST be used.
+
+[[j2w11bindings]]
+=== Bindings
+
+In WSDL 1.1, an abstract port type can be bound to multiple protocols.
+
+_♦ Conformance (Binding selection):_ An implementation MUST generate a WSDL binding
+according to the rules of the binding denoted by the `BindingType`
+annotation (see <<mdbindingtype>>), if present, otherwise the default is
+the SOAP 1.1/HTTP binding (see <<soapbindchap>>).
+
+Each protocol binding extends a common extensible skeleton structure and
+there is one instance of each such structure for each protocol binding.
+An example of a port type and associated binding skeleton structure is
+shown in figure <<3.5>>.
+
+[id="3.5"]
+[source,java,numbered]
+-------------
+<portType name="StockQuoteProvider">
+    <operation name="getPrice" parameterOrder="tickerSymbol">
+        <input message="tns:getPrice"/>
+        <output message="tns:getPriceResponse"/>
+        <fault message="tns:unknowntickerException"/>
+    </operation>
+</portType>
+
+<binding name="StockQuoteProviderBinding">
+    <!-- binding specific extensions possible here -->
+    <operation name="getPrice">
+        <!-- binding specific extensions possible here -->
+        <input message="tns:getPrice">
+            <!-- binding specific extensions possible here -->
+        </input>
+        <output message="tns:getPriceResponse">
+            <!-- binding specific extensions possible here -->
+        </output>
+        <fault message="tns:unknowntickerException">
+            <!-- binding specific extensions possible here -->
+        </fault>
+    </operation>
+</binding>
+-------------
+Figure 3.5: WSDL portType and associated binding
+
+The common skeleton structure is mapped from Java as described in the
+following subsections.
+
+[[j2w11bindif]]
+==== Interface
+
+A Java SEI is mapped to a `wsdl:binding` element and zero or more
+`wsdl:port` extensibility elements.
+
+The `wsdl:binding` element acts as a container for other WSDL elements
+that together form the WSDL description of the binding to a protocol of
+the corresponding `wsdl:portType`. The value of the `name` attribute of
+the `wsdl:binding` is not significant, by convention it contains the
+qualified name of the corresponding `wsdl:portType` suffixed with
+Binding.
+
+The `wsdl:port` extensibility elements define the binding specific
+endpoint address for a given port, see section <<j2w11svcports>>.
+
+[[method-and-parameters]]
+==== Method and Parameters
+
+Each method in a Java SEI is mapped to a `wsdl:operation` child element
+of the corresponding `wsdl:binding`. The value of the `name` attribute
+of the `wsdl:operation` element is the same as the corresponding
+`wsdl:operation` element in the bound `wsdl:portType`. The
+`wsdl:operation` element has `wsdl:input`, `wsdl:output`, and
+`wsdl:fault` child elements if they are present in the corresponding
+`wsdl:operation` child element of the `wsdl:portType` being bound.
+
+[[generics]]
+=== Generics
+
+In JAX-WS when starting from Java and if generics are used in the
+document wrapped case, impelementations are required to use type
+erasure(see JLS section 4.6 for definition of Type Erasure) when
+generating the request / response wrapper beans and exception beans
+except in the case of `Collections`. Type erasure is a mapping from
+parameterized types or type variables to types that are never
+parameterized types or type variables. Erasure basically gets rid of all
+the generic type information from the runtime representation. In the
+case of `Collection` instead of applying erasure on the `Collection`
+itself, erasure would be applied to the type of `Collection` i.e it
+would be `Collection<erasure(T)>`. The following code snippets shows the
+result of erasure on a wrapper bean that is generated when using
+generics:
+
+[source,java,numbered]
+-------------
+public <T extends Shape> T setColor(T shape, Color color) {
+    shape.setColor(color);
+    return shape;
+}
+-------------
+
+The generated wrapper bean would be
+[source,java,numbered]
+-------------
+@XmlRootElement(name = "setColor", namespace = "...")
+@XmlAccessorType(AccessType.FIELD)
+@XmlType(name = "setColor", namespace = "...")
+public class SetColor {
+
+    @XmlElement(name = "arg0", namespace = "")
+    private Shape arg0;
+
+    @XmlElement(name = "arg1", namespace = "")
+    private Color arg0;
+
+    public Shape getArg0() {
+        return this.arg0;
+    }
+
+    public void setArg0(Shape arg0) {
+        this.arg0 = arg0;
+    }
+
+    public Color getArg1() {
+        return this.arg1;
+    }
+
+    public void setArg1(Color arg1) {
+        this.arg1 = arg1;
+    }
+}
+-------------
+
+The following code snippets shows the resulting wrapper bean when using
+Collections:
+[source,java,numbered]
+-------------
+public List<Shape> echoShapeList(List<Shape> list) {
+    return list;
+}
+-------------
+
+The generated wrapper bean would be
+[source,java,numbered]
+-------------
+@XmlRootElement(name = "echoShapeList", namespace = "...")
+@XmlAccessorType(AccessType.FIELD)
+@XmlType(name = "echoShapeList", namespace = "...")
+public class EchoShapeList {
+
+    @XmlElement(name = "arg0", namespace = "")
+    private List<Shape> arg0;
+
+    public List<Shape> getArg0() {
+        return this.arg0;
+    }
+
+    public void setArg0(List<Shape> arg0) {
+        this.arg0 = arg0;
+    }
+}
+-------------
+[source,java,numbered]
+-------------
+public <T> T echoTList(List<T> list) {
+    if (list.size() == 0)
+        return null;
+    return list.iterator().next();
+}
+-------------
+
+The generated wrapper bean would be
+[source,java,numbered]
+-------------
+@XmlRootElement(name = "echoTList", namespace = "...")
+@XmlAccessorType(AccessType.FIELD)
+@XmlType(name = "echoTList", namespace = "...")
+public class EchoTList {
+
+    @XmlElement(name = "arg0", namespace = "")
+    private List<Object> arg0;
+
+    public List<Object> getArg0() {
+        return this.arg0;
+    }
+
+    public void setArg0(List<Object> arg0) {
+        this.arg0 = arg0;
+    }
+}
+-------------
+[source,java,numbered]
+-------------
+public List<? extends Shape> setArea(List<? extends Shape> list) {
+Iterator iterator = list.iterator();
+while(iterator.haNext()) {
+iterator.next().setArea(...);
+}
+return list;
+}
+-------------
+
+The generated wrapper bean would be
+[source,java,numbered]
+-------------
+@XmlRootElement(name = "setArea", namespace = "...")
+@XmlAccessorType(AccessType.FIELD)
+@XmlType(name = "setArea", namespace = "...")
+public class SetArea {
+
+    @XmlElement(name = "arg0", namespace = "")
+    private List<Shape> arg0;
+
+    public List<Shape> getArg0() {
+        return this.arg0;
+    }
+
+    public void setArg0(List<Shape> arg0) {
+        this.arg0 = arg0;
+    }
+}
+-------------
+
+[[j2w11soapbinding]]
+=== SOAP HTTP Binding
+
+This section describes the additional WSDL binding elements generated
+when mapping Java to WSDL 1.1 using the SOAP HTTP binding.
+
+_♦ Conformance (SOAP binding support):_ Implementations MUST be able to generate SOAP
+HTTP bindings when mapping Java to WSDL 1.1.
+
+Figure <<3.6>> shows an example of a SOAP HTTP binding.
+[id="3.6"]
+[source,java,numbered]
+-------------
+<binding name="StockQuoteProviderBinding">
+    <soap:binding
+        transport="http://schemas.xmlsoap.org/soap/http"
+            style="document"/>
+    <operation name="getPrice">
+        <soap:operation style="document|rpc"/>
+        <input message="tns:getPrice">
+            <soap:body use="literal"/>
+        </input>
+        <output message="tns:getPriceResponse">
+            <soap:body use="literal"/>
+        </output>
+        <fault message="tns:unknowntickerException">
+            <soap:fault use="literal"/>
+        </fault>
+    </operation>
+</binding>
+-------------
+Figure 3.6: WSDL SOAP HTTP binding
+
+[[j2w11soapbindif]]
+==== Interface
+
+A Java SEI is mapped to a `soap:binding` child element of the
+corresponding `wsdl:binding` element plus a `soap:address` child element
+of any corresponding `wsdl:port` element (see section [j2w11svcports]).
+
+The value of the `transport` attribute of the `soap:binding` is
+`http://schemas.xmlsoap.org/soap/http`. The value of the `style`
+attribute of the `soap:binding` is either `document` or `rpc`.
+
+_♦ Conformance (SOAP binding style required):_ Implementations MUST include a `style`
+attribute on a generated `soap:binding`.
+
+[[method-and-parameters-1]]
+==== Method and Parameters
+
+Each method in a Java SEI is mapped to a `soap:operation` child element
+of the corresponding `wsdl:operation`. The value of the `style`
+attribute of the `soap:operation` is `document` or `rpc`. If not
+specified, the value defaults to the value of the `style` attribute of
+the `soap:binding`. WS-I Basic Profile<<8>>
+requires that all operations within a given SOAP HTTP binding
+instance have the same binding style.
+
+The parameters of a Java method are mapped to `soap:body` or
+`soap:header` child elements of the `wsdl:input` and `wsdl:output`
+elements for each `wsdl:operation` binding element. The value of the
+`use` attribute of the `soap:body` is `literal`. Figure
+<<3.7>> shows an example using document style, figure
+<<3.8>> shows the same example using rpc style.
+
+[id="3.7"]
+[source,java,numbered]
+-------------
+<types>
+    <schema targetNamespace="...">
+        <xsd:element name="getPrice" type="tns:getPriceType"/>
+        <xsd:complexType name="getPriceType">
+            <xsd:sequence>
+                <xsd:element name="tickerSymbol" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+        <xsd:element name="getPriceResponse"
+            type="tns:getPriceResponseType"/>
+        <xsd:complexType name="getPriceResponseType">
+            <xsd:sequence>
+                <xsd:element name="return" type="xsd:float"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </schema>
+</types>
+
+<message name="getPrice">
+    <part name="getPrice"
+        element="tns:getPrice"/>
+</message>
+
+<message name="getPriceResponse">
+    <part name="getPriceResponse" element="tns:getPriceResponse"/>
+</message>
+
+<portType name="StockQuoteProvider">
+    <operation name="getPrice" parameterOrder="tickerSymbol">
+        <input message="tns:getPrice"/>
+        <output message="tns:getPriceResponse"/>
+    </operation>
+</portType>
+
+<binding name="StockQuoteProviderBinding">
+    <soap:binding
+        transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="getPrice" parameterOrder="tickerSymbol">
+        <soap:operation/>
+        <input message="tns:getPrice">
+            <soap:body use="literal"/>
+        </input>
+        <output message="tns:getPriceResponse">
+            <soap:body use="literal"/>
+        </output>
+    </operation>
+</binding>
+-------------
+Figure 3.7: WSDL definition using document style
+
+[id="3.8"]
+[source,java,numbered]
+-------------
+<types>
+    <schema targetNamespace="...">
+        <xsd:element name="getPrice" type="tns:getPriceType"/>
+        <xsd:complexType name="getPriceType">
+            <xsd:sequence>
+                <xsd:element form="unqualified" name="tickerSymbol"
+                    type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+
+        <xsd:element name="getPriceResponse"
+            type="tns:getPriceResponseType"/>
+        <xsd:complexType name="getPriceResponseType">
+            <xsd:sequence>
+                <xsd:element form="unqualified" name="return"
+                type="xsd:float"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </schema>
+</types>
+
+<message name="getPrice">
+    <part name="tickerSymbol" type="xsd:string"/>
+</message>
+
+<message name="getPriceResponse">
+    <part name="result" type="xsd:float"/>
+</message>
+
+<portType name="StockQuoteProvider">
+    <operation name="getPrice">
+        <input message="tns:getPrice"/>
+        <output message="tns:getPriceResponse"/>
+    </operation>
+</portType>
+
+<binding name="StockQuoteProviderBinding">
+    <soap:binding
+        transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
+    <operation name="getPrice">
+        <soap:operation/>
+        <input message="tns:getPrice">
+            <soap:body use="literal"/>
+        </input>
+        <output message="tns:getPriceResponse">
+            <soap:body use="literal"/>
+        </output>
+    </operation>
+</binding>
+-------------
+Figure 3.8: WSDL definition using rpc style
+
+[[j2w11svcports]]
+=== Service and Ports
+
+A Java service implementation class is mapped to a single `wsdl:service`
+element that is a child of a `wsdl:definitions` element for the
+appropriate target namespace. The latter is mapped from the value of the
+`targetNamespace` element of the `WebService` annotation, if non-empty
+value, otherwise from the package of the Java service implementation
+class according to the rules in section <<j2w11package>>.
+
+In mapping a `@WebService`-annotated class (see <<j2ws11class>>) to a
+`wsdl:service`, the `serviceName` element of the `WebService` annotation
+are used to derive the service name. The value of the `name` attribute
+of the `wsdl:service` element is computed according to the JSR-181
+<<bib16>> specification. It is given by the `serviceName` element of
+the `WebService` annotation, if present with a non-default value,
+otherwise the name of the implementation class with the Servicesuffix
+appended to it.
+
+_♦ Conformance (Service creation):_ Implementations MUST be able to map classes annotated
+with the `javax.jws.WebService` annotation to WSDL `wsdl:service`
+elements.
+
+A WSDL 1.1 service is a collection of related `wsdl:port` elements. A
+`wsdl:port` element describes a port type bound to a particular protocol
+(a `wsdl:binding`) that is available at particular endpoint address.
+
+Each desired port is represented by a `wsdl:port` child element of the
+single `wsdl:service` element mapped from the Java package. JAX-WS 2.0
+allows specifying one port of one binding type for each service defined
+by the application. Implementations MAY support additional ports, as
+long as their names do not conflict with the standard one.
+
+[Port selection] The `portName` element of the `WebService` annotation,
+if present, MUST be used to derive the port name to use in WSDL. In the
+absence of a `portName` element, an implementation MUST use the value of
+the `name` element of the `WebService` annotation, if present, suffixed
+with Port. Otherwise, an implementation MUST use the simple name of the
+class annotated with `WebService` suffixed with Port.
+
+_♦ Conformance (Port binding):_ The WSDL port defined for a service MUST refer to a
+binding of the type indicated by the `BindingType` annotation on the
+service implementation class (see <<j2w11bindings>>).
+
+Binding specific child extension elements of the `wsdl:port` element
+define the endpoint address for a port. E.g. see the `soap:address`
+element described in section <<j2w11soapbindif>>.
+
+If the endpoint enables Addressing, that can be indicated in the
+generated WSDL as per the Addressing 1.0 - Metadata<<bib27>>.
+
+[Use of Addressing] Endpoint’s use of addressing, if any, MUST be
+indicated in the `wsdl:binding` or `wsdl:port` sections of the WSDL 1.1
+as per WS-Addressing 1.0 - Metadata<<bib27>>.
+
+Example 1: Possible Policy assertion for `@Addressing` in the generated
+WSDL:
+[source,java,numbered]
+-------------
+<wsam:Addressing wsp:Optional="true">
+    <wsp:Policy/>
+</wsam:Addressing>
+-------------
+
+Example 2: Possible Policy assertion for `@Addressing(required=true)` in
+the generated WSDL:
+[source,java,numbered]
+-------------
+<wsam:Addressing>
+    <wsp:Policy/>
+</wsam:Addressing>
+-------------
+
+Example 3: Possible Policy assertion for
+[source,java,numbered]
+-------------
+<wsam:Addressing wsp:Optional="true">
+    <wsp:Policy>
+        <wsam:NonAnonymousResponses/>
+    </wsp:Policy>
+</wsam:Addressing>
+-------------

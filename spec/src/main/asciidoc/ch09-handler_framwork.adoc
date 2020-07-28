@@ -1,0 +1,671 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+
+[[handfmwk]]
+== Handler Framework
+
+JAX-WS provides a flexible plug-in framework for message processing
+modules, known as handlers, that may be used to extend the capabilities
+of a JAX-WS runtime system. This chapter describes the handler framework
+in detail.
+
+_♦ Conformance (Handler framework support):_ An implementation MUST support the handler
+framework.
+
+[[architecture]]
+=== Architecture
+
+The handler framework is implemented by a JAX-WS protocol binding in
+both client and server side runtimes. Proxies, and `Dispatch` instances,
+known collectively as binding providers, each use protocol bindings to
+bind their abstract functionality to specific protocols (see figure
+<<handarchfig>>). Protocol bindings can extend the handler framework to
+provide protocol specific functionality; chapter <<soapbindchap>>
+describes the JAX-WS SOAP binding that extends the handler framework
+with SOAP specific functionality.
+
+Client and server-side handlers are organized into an ordered list known
+as a handler chain. The handlers within a handler chain are invoked each
+time a message is sent or received. Inbound messages are processed by
+handlers prior to binding provider processing. Outbound messages are
+processed by handlers after any binding provider processing.
+
+Handlers are invoked with a message context that provides methods to
+access and modify inbound and outbound messages and to manage a set of
+properties. Message context properties may be used to facilitate
+communication between individual handlers and between handlers and
+client and service implementations. Different types of handlers are
+invoked with different types of message context.
+
+[[handlertypes]]
+==== Types of Handler
+
+JAX-WS 2.0 defines two types of handler:
+
+Logical::
+Handlers that only operate on message context properties and message
+payloads. Logical handlers are protocol agnostic and are unable to
+affect protocol specific parts of a message. Logical handlers are
+handlers that implement `javax.xml.ws.handler.LogicalHandler`.
+Protocol::
+Handlers that operate on message context properties and protocol
+specific messages. Protocol handlers are specific to a particular
+protocol and may access and change protocol specific aspects of a
+message. Protocol handlers are handlers that implement any interface
+derived from `javax.xml.ws.handler.Handler` except
+`javax.xml.ws.handler.LogicalHandler`.
+
+
+image::handarch.png[]
+Figure 9.1: Handler architecture
+
+Figure <<9.2>> shows the class hierarchy for handlers.
+
+Handlers for protocols other than SOAP are expected to implement a
+protocol-specific interface that extends `javax.xml.ws.handler.Handler`.
+
+[[binding-responsibilities]]
+==== Binding Responsibilities
+
+The following subsections describe the responsibilities of the protocol
+binding when hosting a handler chain.
+
+[[handler-and-message-context-management]]
+===== Handler and Message Context Management
+
+The binding is responsible for instantiation, invocation, and
+destruction of handlers according to the rules specified in section
+<<handprocmodel>>. The binding is responsible for instantiation and
+management of message contexts according to the rules specified in
+section <<handmsgctxmngmt>>
+
+image::handlers.png[]
+Figure 9.2: Handler class hierarchy
+
+_♦ Conformance (Logical handler support):_ All binding implementations MUST support
+logical handlers (see section <<handlertypes>>) being deployed in their
+handler chains.
+
+_♦ Conformance (Other handler support):_ Binding implementations MAY support other
+handler types (see section <<handlertypes>>) being deployed in their
+handler chains.
+
+_♦ Conformance (Incompatible handlers):_ An implementation MUST throw
+`WebServiceException` when, at the time a binding provider is created,
+the handler chain returned by the configured `HandlerResolver` contains
+an incompatible handler.
+
+_♦ Conformance (Incompatible handlers):_ Implementations MUST throw a
+`WebServiceException` when attempting to configure an incompatible
+handler using the `Binding.setHandlerChain` method.
+
+[[handmsgdispatch]]
+===== Message Dispatch
+
+The binding is responsible for dispatch of both outbound and inbound
+messages after handler processing. Outbound messages are dispatched
+using whatever means the protocol binding uses for communication.
+Inbound messages are dispatched to the binding provider. JAX-WS defines
+no standard interface between binding providers and their binding.
+
+[[handexcepthandling]]
+===== Exception Handling
+
+The binding is responsible for catching runtime exceptions thrown by
+handlers and respecting any resulting message direction and message type
+change as described in section <<handlerexecution>>.
+
+Outbound exceptionsfootnote:[Outbound exceptions are exceptions thrown
+by a handler that result in the message direction being set to outbound
+according to the rules in section <<handlerexecution>>.] are converted to
+protocol fault messages and dispatched using whatever means the protocol
+binding uses for communication. Specific protocol bindings describe the
+mechanism for their particular protocol, section <<soap11excepthandling>>
+describes the mechanism for the SOAP 1.1 binding. Inbound exceptions are
+passed to the binding provider.
+
+[[handlerconfig]]
+=== Configuration
+
+Handler chains may be configured either programmatically or using
+deployment metadata. The following subsections describe each form of
+configuration.
+
+[[handfmwrkprogconf]]
+==== Programmatic Configuration
+
+JAX-WS only defines APIs for programmatic configuration of client side
+handler chains – server side handler chains are expected to be
+configured using deployment metadata.
+
+[[handlerresolver]]
+===== javax.xml.ws.handler.HandlerResolver
+
+A `Service` instance maintains a handler resolver that is used when
+creating proxies or `Dispatch` instances, known collectively as binding
+providers. During the creation of a binding provider, the handler
+resolver currently registered with a service is used to create a handler
+chain, which in turn is then used to configure the binding provider. A
+`Service` instance provides access to a `handlerResolver` property, via
+the `Service.getHandlerResolver` and `Service.setHandlerResolver`
+methods. A `HandlerResolver` implements a single method,
+`getHandlerChain`, which has one argument, a `PortInfo` object. The
+JAX-WS runtime uses the `PortInfo` argument to pass the
+`HandlerResolver` of the service, port and binding in use. The
+`HandlerResolver` may use any of this information to decide which
+handlers to use in constructing the requested handler chain.
+
+When a `Service` instance is used to create an instance of a binding
+provider then the created instance is configured with the handler chain
+created by the `HandlerResolver` instance registered on the `Service`
+instance at that point in time.
+
+_♦ Conformance (Handler chain snapshot):_ Changing the handler resolver configured for a
+`Service` instance MUST NOT affect the handlers on previously created
+proxies, or `Dispatch` instances.
+
+[[handlerordering]]
+===== Handler Ordering
+
+The handler chain for a binding is constructed by starting with the
+handler chain as returned by the `HandlerResolver` for the service in
+use and sorting its elements so that all logical handlers precede all
+protocol handlers. In performing this operation, the order of handlers
+of any given type (logical or protocol) in the original chain is
+maintained. Figure <<9.3>> illustrates this.
+
+Section <<handlerexecution>> describes how the handler order relates to
+the order of handler execution for inbound and outbound messages.
+
+image::handord.png[]
+Figure 9.3: Handler ordering, Ln and Pn represent logical and protocol handlers respectively.
+
+[[handlerchain]]
+===== javax.jws.HandlerChain annotation
+
+The `javax.jws.HandlerChain` annotation defined by JSR-181 <<bib16>>
+may be used to specify in a declarative way the handler chain to use for
+a service.
+
+When used in conunction with JAX-WS, the `name` element of the
+`HandlerChain` annotation, if present, MUST have the default value (the
+empty string).
+
+In addition to appearing on a endpoint implementation class or a SEI, as
+specified by JSR-181, the `handlerChain` annotation MAY appear on a
+generated service class. In this case, it affects all the proxies and
+`Dispatch` instances created using any of the ports on the service.
+
+_♦ Conformance (HandlerChain annotation):_ An implementation MUST support using the
+`HandlerChain` annotation on an endpoint implementation class, including
+a provider, on an endpoint interface and on a generated service class.
+
+On the client, the `HandlerChain` annotation can be seen as a shorthand
+way of defining and installing a handler resolver (see
+<<clienthandlerresolver>>).
+
+_♦ Conformance (Handler resolver for a HandlerChain annotation):_ For a generated service
+class (see <<gensvcif>>) which is annotated with a `HandlerChain`
+annotation, the default handler resolver MUST return handler chains
+consistent with the contents of the handler chain descriptor referenced
+by the `HandlerChain` annotation.
+
+Figure <<9.4>> shows an endpoint implementation class annotated
+with a `HandlerChain` annotation.
+
+[id="9.4"]
+[source,java,numbered]
+-------------
+@WebService
+@HandlerChain(file="sample_chain.xml")
+public class MyService {
+    ...
+}
+-------------
+Figure 9.4: Use of the HandlerChain annotation
+
+[[javax.xml.ws.binding]]
+===== javax.xml.ws.Binding
+
+The `Binding` interface is an abstraction of a JAX-WS protocol binding
+(see section [protocolbinding] for more details). As described above,
+the handler chain initially configured on an instance is a snapshot of
+the applicable handlers configured on the `Service` instance at the time
+of creation. `Binding` provides methods to manipulate the initially
+configured handler chain for a specific instance.
+
+_♦ Conformance (Binding handler manipulation):_ Changing the handler chain on a `Binding`
+instance MUST NOT cause any change to the handler chains configured on
+the `Service` instance used to create the `Binding` instance.
+
+[[deployment-model]]
+==== Deployment Model
+
+JAX-WS defines no standard deployment model for handlers. Such a model
+is provided by JSR 109<<bib17>> Implementing Enterprise
+Web Services.
+
+[[handprocmodel]]
+=== Processing Model
+
+This section describes the processing model for handlers within the
+handler framework.
+
+[[handlerlifecycle]]
+==== Handler Lifecycle
+
+In some cases, a JAX-WS implementation must instantiate handler classes
+directly, e.g. in a container environment or when using the
+`HandlerChain` annotation. When doing so, an implementation must invoke
+the handler lifecycle methods as prescribed in this section.
+
+If an application does its own instantiation of handlers, e.g. using a
+handler resolver, then the burden of calling any handler lifecycle
+methods falls on the application itself. This should not be seen as
+inconsistent, because handlers are logically part of the application, so
+their contract will be known to the application developer.
+
+The JAX-WS runtime system manages the lifecycle of handlers by invoking
+any methods of the handler class annotated as lifecycle methods before
+and after dispatching requests to the handler itself.
+
+The JAX-WS runtime system is responsible for loading the handler class
+and instantiating the corresponding handler object according to the
+instruction contained in the applicable handler configuration file or
+deployment descriptor.
+
+The lifecycle of a handler instance begins when the JAX-WS runtime
+system creates a new instance of the handler class.
+
+The runtime MUST then carry out any injections requested by the handler,
+typically via the `javax.annotation.Resource` annotation. After all the
+injections have been carried out, including in the case where no
+injections were requested, the runtime MUST invoke the method carrying a
+`javax.annotation.PostConstruct` annotation, if present. Such a method
+MUST satisfy the requirements in JSR-250 <<bib35>> for lifecycle
+methods (i.e. it has a void return type and takes zero arguments). The
+handler instance is then ready for use.
+
+_♦ Conformance (Handler initialization):_ After injection has been completed, an
+implementation MUST call the lifecycle method annotated with
+`PostConstruct`, if present, prior to invoking any other method on a
+handler instance.
+
+Once the handler instance is created and initialized it is placed into
+the `Ready` state. While in the `Ready` state the JAX-WS runtime system
+may invoke other handler methods as required.
+
+The lifecycle of a handler instance ends when the JAX-WS runtime system
+stops using the handler for processing inbound or outbound messages.
+After taking the handler offline, a JAX-WS implementation SHOULD invoke
+the lifecycle method which carries a `javax.annotation.PreDestroy`
+annotation, if present, so as to permit the handler to clean up its
+resources. Such a method MUST satisfy the requirements in JSR-250
+<<bib35>> for lifecycle methods
+
+An implementation can only release handlers after the instance they are
+attached to, be it a proxy, a `Dispatch` object, an endpoint or some
+other component, e.g. a EJB object, is released. Consequently, in
+non-container environments, it is impossible to call the `PreDestroy`
+method in a reliable way, and handler instance cleanup must be left to
+finalizer methods and regular garbage collection.
+
+_♦ Conformance (Handler destruction):_ In a managed environment, prior to releasing a
+handler instance, an implementation MUST call the lifecycle method
+annotated with `PreDestroy` method, if present, on any `Handler`
+instances which it instantiated.
+
+The handler instance must release its resources and perform cleanup in
+the implementation of the `PreDestroy` lifecycle method. After
+invocation of the `PreDestroy` method(s), the handler instance will be
+made available for garbage collection.
+
+[[handlerexecution]]
+==== Handler Execution
+
+As described in section <<handlerordering>>, a set of handlers is managed
+by a binding as an ordered list called a handler chain. Unless modified
+by the actions of a handler (see below) normal processing involves each
+handler in the chain being invoked in turn. Each handler is passed a
+message context (see section <<handmsgctxmngmt>>) whose contents may be
+manipulated by the handler.
+
+For outbound messages handler processing starts with the first handler
+in the chain and proceeds in the same order as the handler chain. For
+inbound messages the order of processing is reversed: processing starts
+with the last handler in the chain and proceeds in the reverse order of
+the handler chain. E.g., consider a handler chain that consists of six
+handlers latexmath:[$H_{1}\ldots H_{6}$] in that order: for outbound
+messages handler latexmath:[$H_{1}$] would be invoked first followed by
+latexmath:[$H_{2}$], latexmath:[$H_{3}$], …, and finally handler
+latexmath:[$H_{6}$]; for inbound messages latexmath:[$H_{6}$] would be
+invoked first followed by latexmath:[$H_{5}$], latexmath:[$H_{4}$], …,
+and finally latexmath:[$H_{1}$].
+
+In the following discussion the terms next handler and previous handler
+are used. These terms are relative to the direction of the message,
+<<Table 9.1>> summarizes their meaning.
+
+Handlers may change the direction of messages and the order of handler
+processing by throwing an exception or by returning `false` from
+`handleMessage` or `handleFault`. The following subsections describe
+each handler method and the changes to handler chain processing they may
+cause.
+
+[id="Table 9.1"]
+|==================================
+|*Message Direction* |*Term* |*Handler*
+|Inbound   |Next |latexmath:[$H_{i-1}$]
+|          |Previous |latexmath:[$H_{i+1}$]
+|Outbound  |Next    |latexmath:[$H_{i+1}$]
+|          |Previous |latexmath:[$H_{i-1}$]
+|==================================
+Table 9.1: Next and previous handlers for handler H i .
+
+
+[[handlemessage]]
+===== `handleMessage`
+
+This method is called for normal message processing. Following
+completion of its work the `handleMessage` implementation can do one of
+the following:
+
+Return `true`::
+This indicates that normal message processing should continue. The
+runtime invokes `handleMessage` on the next handler or dispatches the
+message (see section <<handmsgdispatch>>) if there are no further
+handlers.
+Return `false`::
+This indicates that normal message processing should cease. Subsequent
+actions depend on whether the message exchange pattern (MEP) in use
+requires a response to the _message currently being
+processed_footnote:[For a request-response MEP, if the message
+direction is reversed during processing of a request message then the
+message becomes a response message. Subsequent handler processing
+takes this change into account.] or not:
+ +
+Response;;
+The message direction is reversed, the runtime invokes
+`handleMessage` on the nextfootnote:[Next in this context means the
+next handler taking into account the message direction reversal]
+handler or dispatches the message (see section <<handmsgdispatch>>) if
+there are no further handlers.
+No response;;
+Normal message processing stops, `close` is called on each
+previously invoked handler in the chain, the message is dispatched
+(see section <<handmsgdispatch>>).
+Throw `ProtocolException` or a subclass::
+This indicates that normal message processing should cease. Subsequent
+actions depend on whether the MEP in use requires a response to the
+message currently being processed or not:
+ +
+Response;;
+Normal message processing stops, fault message processing starts.
+The message direction is reversed, if the message is not already a
+fault message then it is replaced with a fault messagefootnote:[The
+handler may have already converted the message to a fault message,
+in which case no change is made.], and the runtime invokes
+`handleFault` on the nexthandler or dispatches the message (see
+section <<handmsgdispatch>>) if there are no further handlers.
+No response;;
+Normal message processing stops, `close` is called on each
+previously invoked handler in the chain, the exception is dispatched
+(see section <<handexcepthandling>>).
+Throw any other runtime exception::
+This indicates that normal message processing should cease. Subsequent
+actions depend on whether the MEP in use includes a response to the
+message currently being processed or not:
+ +
+Response;;
+Normal message processing stops, `close` is called on each
+previously invoked handler in the chain, the message direction is
+reversed, and the exception is dispatched (see section
+<<handexcepthandling>>).
+No response;;
+Normal message processing stops, `close` is called on each
+previously invoked handler in the chain, the exception is dispatched
+(see section <<handexcepthandling>>).
+
+[[handlefault]]
+===== `handleFault`
+
+Called for fault message processing, following completion of its work
+the `handleFault` implementation can do one of the following:
+
+Return `true`::
+This indicates that fault message processing should continue. The
+runtime invokes `handleFault` on the next handler or dispatches the
+fault message (see section <<handmsgdispatch>>) if there are no further
+handlers.
+Return `false`::
+This indicates that fault message processing should cease. Fault
+message processing stops, `close` is called on each previously invoked
+handler in the chain, the fault message is dispatched (see section
+<<handmsgdispatch>>).
+Throw `ProtocolException` or a subclass::
+This indicates that fault message processing should cease. Fault
+message processing stops, `close` is called on each previously invoked
+handler in the chain, the exception is dispatched (see section
+<<handexcepthandling>>).
+Throw any other runtime exception::
+This indicates that fault message processing should cease. Fault
+message processing stops, `close` is called on each previously invoked
+handler in the chain, the exception is dispatched (see section
+<<handexcepthandling>>).
+
+[[close]]
+===== `close`
+
+A handler’s `close` method is called at the conclusion of a message
+exchange pattern (MEP). It is called just prior to the binding
+dispatching the final message, fault or exception of the MEP and may be
+used to clean up per-MEP resources allocated by a handler. The `close`
+method is only called on handlers that were previously invoked via
+either `handleMessage` or `handleFault`
+
+_♦ Conformance (Invoking `close` ):_ At the conclusion of an MEP, an implementation MUST
+call the `close` method of each handler that was previously invoked
+during that MEP via either `handleMessage` or `handleFault`.
+
+_♦ Conformance (Order of `close` invocations):_ Handlers are invoked in the reverse order
+in which they were first invoked to handle a message according to the
+rules for normal message processing (see <<handlerexecution>>).
+
+[[handler-implementation-considerations]]
+==== Handler Implementation Considerations
+
+Handler instances may be pooled by a JAX-WS runtime system. All
+instances of a specific handler are considered equivalent by a JAX-WS
+runtime system and any instance may be chosen to handle a particular
+message. Different handler instances may be used to handle each message
+of an MEP. Different threads may be used for each handler in a handler
+chain, for each message in an MEP or any combination of the two.
+Handlers should not rely on thread local state to share information.
+Handlers should instead use the message context, see section
+<<handmsgctxmngmt>>.
+
+[[handmsgctxmngmt]]
+=== Message Context
+
+Handlers are invoked with a message context that provides methods to
+access and modify inbound and outbound messages and to manage a set of
+properties.
+
+Different types of handler are invoked with different types of message
+context. Sections <<handmsgctxif>> and <<handlogmsgctx>> describe
+`MessageContext` and `LogicalMessageContext` respectively. In addition,
+JAX-WS bindings may define a message context subtype for their
+particular protocol binding that provides access to protocol specific
+features. Section <<soapbindmsgcontext>> describes the message context
+subtype for the JAX-WS SOAP binding.
+
+[[handmsgctxif]]
+==== javax.xml.ws.handler.MessageContext
+
+`MessageContext` is the super interface for all JAX-WS message contexts.
+It extends `Map<String,Object>` with additional methods and constants to
+manage a set of properties that enable handlers in a handler chain to
+share processing related state. For example, a handler may use the `put`
+method to insert a property in the message context that one or more
+other handlers in the handler chain may subsequently obtain via the
+`get` method.
+
+Properties are scoped as either `APPLICATION` or `HANDLER`. All
+properties are available to all handlers for an instance of an MEP on a
+particular endpoint. E.g., if a logical handler puts a property in the
+message context, that property will also be available to any protocol
+handlers in the chain during the execution of an MEP instance.
+`APPLICATION` scoped properties are also made available to client
+applications (see section <<bindingproviderconfig>>) and service endpoint
+implementations. The defaultscope for a property is `HANDLER`.
+
+_♦ Conformance (Message context property scope):_ Properties in a message context MUST be
+shared across all handler invocations for a particular instance of an
+MEP on any particular endpoint.
+
+[[stdbindingprops]]
+===== Standard Message Context Properties
+
+<<Table 9.2>> lists the set of standard `MessageContext`
+properties.
+
+The standard properties form a set of metadata that describes the
+context of a particular message. The property values may be manipulated
+by client applications, service endpoint implementations, the JAX-WS
+runtime or handlers deployed in a protocol binding. A JAX-WS runtime is
+expected to implement support for those properties shown as mandatory
+and may implement support for those properties shown as optional.
+
+<<Table 9.3>> lists the standard `MessageContext`
+properties specific to the HTTP protocol. These properties are only
+required to be present when using an HTTP-based binding.
+
+<<Table 9.4>> lists those properties that are
+specific to endpoints running inside a servlet container. These
+properties are only required to be present in the message context of an
+endpoint that is deployed inside a servlet container and uses an
+HTTP-based binding.
+
+[id="Table 9.2"]
+Table 9.2: Standard `MessageContext` properties.
+|==================================
+|Name           |Type       |Mandatory  |Description
+4+|*javax.xml.ws.handler.message*
+|`.outbound`    |Boolean    |Y          |Specifies the message direction: `true` for
+outbound messages, `false` for inbound messages.
+4+|*javax.xml.ws.binding.attachments*
+|`.inbound` |Maplatexmath:[$<$]String,DataHandlerlatexmath:[$>$]    |Y |A
+map of attachments to an inbound message. The key is a unique identifier
+for the attachment. The value is a `DataHandler` for the attachment
+data. Bindings describe how to carry attachments with messages.
+|`.outbound`    |Maplatexmath:[$<$]String,DataHandlerlatexmath:[$>$] |Y
+|A map of attachments to an outbound message. The key is a unique
+identifier for the attachment. The value is a `DataHandler` for the
+attachment data. Bindings describe how to carry attachments with
+messages.
+4+|*javax.xml.ws.reference*
+|`.parameters`  |`List<Element>`    |Y  |A list of WS Addressing reference
+parameters. The list MUST include all SOAP headers marked with the
+`wsa:IsReferenceParameter= true` attribute.
+4+|*javax.xml.ws.wsdl*
+|`.description` |URI    |N  |A resolvable URI that may be used to obtain
+access to the WSDL for the endpoint.
+|`.service`     |`QName`    |N  |The name
+of the service being invoked in the WSDL.
+|`.port`    |QName  |N |The name
+of the port over which the current message was received in the WSDL.
+|`.interface`   |QName  |N  |The name of the port type to which the
+current message belongs.
+|`.operation`   |QName  |N  |The name of the WSDL
+operation to which the current message belongs. The namespace is the
+target namespace of the WSDL definitions element.
+|==================================
+
+[id="Table 9.3"]
+Table 9.3: Standard HTTP `MessageContext` properties.
+|==================================
+|Name           |Type       |Mandatory  |Description
+4+|*javax.xml.ws.http.request*
+|`.headers`     |Maplatexmath:[$<$]String,Listlatexmath:[$<$]Stringlatexmath:[$>$]latexmath:[$>$]
+|Y  |A map of the HTTP headers for the request message. The key is the
+header name. The value is a list of values for that header.
+|`.method`  |`String`   |Y  |The HTTP method for the request message.
+|`.querystring` |`String`   |Y  |The HTTP query string for the request message, or `null`
+if the request does not have any. If the address specified using the
+javax.xml.ws.service.endpoint.address in the BindingProvider contains a
+query string and if the querystring property is set by the client it
+will override the existing query string in the
+javax.xml.ws.service.endpoint.address property. The value of the
+property does not include the leading ``?'' of the query string in it.
+This property is only used with HTTP binding.
+|`.pathinfo`    |`String`   |Y  |Extra path information associated with the URL the client sent when it
+made this request. The extra path information follows the base url path
+but precedes the query string and will start with a "/" character.
+4+|*javax.xml.ws.http.response*
+|`.headers` |Maplatexmath:[$<$]String,Listlatexmath:[$<$]Stringlatexmath:[$>$]latexmath:[$>$]
+|Y  |A map of the HTTP headers for the response message. The key is the
+header name. The value is a list of values for that header.
+|`.code`    |Integer    |Y  |The HTTP response status code.
+|==================================
+
+[id="Table 9.4"]
+Table 9.4: Standard Servlet Container-Specific `MessageContext` properties.
+|==================================
+|Name           |Type       |Mandatory  |Description
+4+|*javax.xml.ws.servlet*
+|`.context` |javax.servlet.ServletContext   |Y  |The `ServletContext`
+object belonging to the web application that contains the endpoint.
+|`.request` |javax.servlet.http.HttpServletRequest  |Y  |The
+`HttpServletRequest` object associated with the request currently being
+served.
+|`.response`    |javax.servlet.http.HttpServletResponse |Y  |The
+`HttpServletResponse` object associated with the request currently being
+served.
+|==================================
+
+[[handlogmsgctx]]
+==== javax.xml.ws.handler.LogicalMessageContext
+
+Logical handlers (see section <<handlertypes>>) are passed a message
+context of type `LogicalMessageContext` when invoked.
+`LogicalMessageContext` extends `MessageContext` with methods to obtain
+and modify the message payload, it does not provide access to the
+protocol specific aspects of a message. A protocol binding defines what
+component of a message are available via a logical message context.
+E.g., the SOAP binding, see section <<soapbindchaphand>>, defines that a
+logical handler deployed in a SOAP binding can access the contents of
+the SOAP body but not the SOAP headers whereas the XML/HTTP binding
+described in chapter <<xmlbindchap>> defines that a logical handler can
+access the entire XML payload of a message.
+
+The `getSource()` method of `LogicalMessageContext` MUST return null
+whenever the message doesn’t contain an actual payload. A case in which
+this might happen is when, on the server, the endpoint implementation
+has thrown an exception and the protocol in use does not define a notion
+of payload for faults (e.g. the HTTP binding defined in chapter
+<<xmlbindchap>>).
+
+[[reltojaxwsctx]]
+==== Relationship to Application Contexts
+
+Client side binding providers have methods to access contexts for
+outbound and inbound messages. As described in section
+<<bindingproviderconfig>> these contexts are used to initialize a message
+context at the start of a message exchange and to obtain application
+scoped properties from a message context at the end of a message
+exchange.
+
+As described in chapter <<serviceapis>>, service endpoint implementations
+may require injection of a context from which they can access the
+message context for each inbound message and manipulate the
+corresponding application-scoped properties.
+
+Handlers may manipulate the values and scope of properties within the
+message context as desired. E.g., a handler in a client-side SOAP
+binding might introduce a header into a SOAP request message to carry
+metadata from a property that originated in a `BindingProvider` request
+context; a handler in a server-side SOAP binding might add application
+scoped properties to the message context from the contents of a header
+in a request SOAP message that is then made available in the context
+available (via injection) to a service endpoint implementation.
