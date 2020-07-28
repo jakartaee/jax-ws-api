@@ -121,7 +121,7 @@
 
         <jaxb-api.version>3.0.0</jaxb-api.version>
         <soap-api.version>2.0.0</soap-api.version>
-        <jws-api.version>3.0.0-RC2</jws-api.version>
+        <jws-api.version>3.0.0</jws-api.version>
     </properties>
 
     <build>
