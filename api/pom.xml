@@ -83,7 +83,7 @@
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${jaxb-api.version}</version>
+            <version>${xml.bind-api.version}</version>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.soap</groupId>
@@ -119,9 +119,9 @@
 
         <legal.doc.source>${project.basedir}/..</legal.doc.source>
 
-        <jaxb-api.version>3.0.0</jaxb-api.version>
-        <soap-api.version>2.0.0</soap-api.version>
         <jws-api.version>3.0.0</jws-api.version>
+        <soap-api.version>2.0.0</soap-api.version>
+        <xml.bind-api.version>3.0.0</xml.bind-api.version>
     </properties>
 
     <build>
