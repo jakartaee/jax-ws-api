@@ -245,7 +245,7 @@ protocol binding for use by clients, it is implemented by proxies and is
 extended by the `Dispatch` interface. Figure <<4.1>>
 illustrates the class relationships.
 
-image::bindingprovider.png[]
+image::images/bindingprovider.png[]
 Figure 4.1: Binding Provider Class Relationships
 
 A web service client can get an `javax.xml.ws.EndpointReference` from a
