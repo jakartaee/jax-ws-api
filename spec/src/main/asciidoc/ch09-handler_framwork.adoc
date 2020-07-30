@@ -57,7 +57,7 @@ derived from `javax.xml.ws.handler.Handler` except
 `javax.xml.ws.handler.LogicalHandler`.
 
 
-image::handarch.png[]
+image::images/handarch.png[]
 Figure 9.1: Handler architecture
 
 Figure <<9.2>> shows the class hierarchy for handlers.
@@ -80,7 +80,7 @@ destruction of handlers according to the rules specified in section
 management of message contexts according to the rules specified in
 section <<handmsgctxmngmt>>
 
-image::handlers.png[]
+image::images/handlers.png[]
 Figure 9.2: Handler class hierarchy
 
 _♦ Conformance (Logical handler support):_ All binding implementations MUST support
@@ -178,7 +178,7 @@ maintained. Figure <<9.3>> illustrates this.
 Section <<handlerexecution>> describes how the handler order relates to
 the order of handler execution for inbound and outbound messages.
 
-image::handord.png[]
+image::images/handord.png[]
 Figure 9.3: Handler ordering, Ln and Pn represent logical and protocol handlers respectively.
 
 [[handlerchain]]
