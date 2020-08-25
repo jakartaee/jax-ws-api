@@ -10,13 +10,6 @@
 
 package jakarta.xml.ws.spi;
 
-import java.io.*;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.xml.ws.WebServiceException;
 
@@ -34,10 +27,7 @@ class FactoryFinder {
 
     /**
      * Finds the implementation {@code Class} object for the given
-     * factory name, or if that fails, finds the {@code Class} object
-     * for the given fallback class name. The arguments supplied MUST be
-     * used in order. If using the first argument is successful, the second
-     * one will not be used.
+     * factory name.
      * <P>
      * This method is package private so that this code can be shared.
      *
@@ -46,82 +36,42 @@ class FactoryFinder {
      *
      * @param factoryClass          the name of the factory to find, which is
      *                              a system property
-     * @param fallbackClassName     the implementation class name, which is
-     *                              to be used only if nothing else
-     *                              is found; {@code null} to indicate that
-     *                              there is no fallback class name
-     * @exception WebServiceException if there is an error
+     * @exception WebServiceException if provider not found
+     *
      */
     @SuppressWarnings("unchecked")
-    static <T> T find(Class<T> factoryClass, String fallbackClassName) {
-        ClassLoader classLoader = ServiceLoaderUtil.contextClassLoader(EXCEPTION_HANDLER);
-
-        T provider = ServiceLoaderUtil.firstByServiceLoader(factoryClass, logger, EXCEPTION_HANDLER);
-        if (provider != null) return provider;
-
+    static <T> T find(Class<T> factoryClass) {
         String factoryId = factoryClass.getName();
-
-        // try to read from $java.home/lib/jaxws.properties
-        provider = (T) fromJDKProperties(factoryId, fallbackClassName, classLoader);
-        if (provider != null) return provider;
+        ClassLoader classLoader = ServiceLoaderUtil.contextClassLoader(EXCEPTION_HANDLER);
+        T provider = ServiceLoaderUtil.firstByServiceLoader(factoryClass, logger, EXCEPTION_HANDLER);
 
         // Use the system property
-        provider = (T) fromSystemProperty(factoryId, fallbackClassName, classLoader);
-        if (provider != null) return provider;
+        if (provider == null) {
+            provider = (T) fromSystemProperty(factoryId, classLoader);
+        }
 
         // handling Glassfish (platform specific default)
-        if (isOsgi()) {
-            return (T) lookupUsingOSGiServiceLoader(factoryId);
+        if (provider == null && isOsgi()) {
+            provider = (T) lookupUsingOSGiServiceLoader(factoryId);
         }
 
-        if (fallbackClassName == null) {
+        if (provider == null) {
             throw new WebServiceException(
-                "Provider for " + factoryId + " cannot be found", null);
+                    "Provider for " + factoryId + " cannot be found", null);
         }
 
-        return (T) ServiceLoaderUtil.newInstance(fallbackClassName,
-                fallbackClassName, classLoader, EXCEPTION_HANDLER);
+        return provider;
     }
 
     private static Object fromSystemProperty(String factoryId,
-                                             String fallbackClassName,
                                              ClassLoader classLoader) {
         try {
             String systemProp = System.getProperty(factoryId);
             if (systemProp != null) {
                 return ServiceLoaderUtil.newInstance(systemProp,
-                        fallbackClassName, classLoader, EXCEPTION_HANDLER);
+                        null, classLoader, EXCEPTION_HANDLER);
             }
         } catch (SecurityException ignored) {
-        }
-        return null;
-    }
-
-    private static Object fromJDKProperties(String factoryId,
-                                            String fallbackClassName,
-                                            ClassLoader classLoader) {
-        Path path = null;
-        try {
-            String JAVA_HOME = System.getProperty("java.home");
-            path = Paths.get(JAVA_HOME, "conf", "jaxws.properties");
-
-            // to ensure backwards compatibility
-            if (!Files.exists(path)) {
-                path = Paths.get(JAVA_HOME, "lib", "jaxws.properties");
-            }
-
-            if (Files.exists(path)) {
-                Properties props = new Properties();
-                try (InputStream inStream = Files.newInputStream(path)) {
-                    props.load(inStream);
-                }
-                String factoryClassName = props.getProperty(factoryId);
-                return ServiceLoaderUtil.newInstance(factoryClassName,
-                        fallbackClassName, classLoader, EXCEPTION_HANDLER);
-            }
-        } catch (Exception ignored) {
-            logger.log(Level.SEVERE, "Error reading JAX-WS configuration from ["  + path +
-                    "] file. Check it is accessible and has correct format.", ignored);
         }
         return null;
     }
