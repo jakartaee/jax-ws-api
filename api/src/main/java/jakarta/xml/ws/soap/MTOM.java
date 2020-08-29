@@ -25,9 +25,9 @@ import jakarta.xml.ws.WebServiceProvider;
  * web service.
  * <p>
  * This annotation MUST only be used in conjunction the
- * {@code javax.jws.WebService}, {@link WebServiceProvider},
+ * {@code jakarta.jws.WebService}, {@link WebServiceProvider},
  * {@link WebServiceRef} annotations.
- * When used with the {@code javax.jws.WebService} annotation this
+ * When used with the {@code jakarta.jws.WebService} annotation this
  * annotation MUST only be used on the service endpoint implementation
  * class.
  * When used with a {@code WebServiceRef} annotation, this annotation

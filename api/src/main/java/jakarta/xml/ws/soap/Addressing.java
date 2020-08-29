@@ -27,9 +27,9 @@ import jakarta.xml.ws.spi.WebServiceFeatureAnnotation;
  * with any other binding is undefined.
  * <p>
  * This annotation MUST only be used in conjunction with the
- * {@code javax.jws.WebService}, {@link WebServiceProvider},
+ * {@code jakarta.jws.WebService}, {@link WebServiceProvider},
  *  and {@link WebServiceRef} annotations.
- * When used with a {@code javax.jws.WebService} annotation, this
+ * When used with a {@code jakarta.jws.WebService} annotation, this
  * annotation MUST only be used on the service endpoint implementation
  * class.
  * When used with a {@code WebServiceRef} annotation, this annotation

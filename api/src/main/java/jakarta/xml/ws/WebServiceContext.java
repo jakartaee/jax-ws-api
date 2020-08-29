@@ -28,7 +28,7 @@ import org.w3c.dom.Element;
  *
  *  @since 1.6, JAX-WS 2.0
  *
- *  @see "javax.annotation.Resource"
+ *  @see "jakarta.annotation.Resource"
  **/
 public interface WebServiceContext {
 

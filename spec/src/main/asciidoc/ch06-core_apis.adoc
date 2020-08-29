@@ -9,9 +9,9 @@ This chapter describes the standard core APIs that may be used by both
 client and server side applications.
 
 [[protocolbinding]]
-=== javax.xml.ws.Binding
+=== jakarta.xml.ws.Binding
 
-The `javax.xml.ws.Binding` interface acts as a base interface for JAX-WS
+The `jakarta.xml.ws.Binding` interface acts as a base interface for JAX-WS
 protocol bindings. Bindings to specific protocols extend `Binding` and
 may add methods to configure specific aspects of that protocol binding’s
 operation. Chapter <<soapbindchap>> describes the JAX-WS SOAP binding;
@@ -40,7 +40,7 @@ descriptor) by throwing `UnsupportedOperationException` from the
 `setHandlerChain` method of `Binding`
 
 [[spiprovider]]
-=== javax.xml.ws.spi.Provider
+=== jakarta.xml.ws.spi.Provider
 
 `Provider` is an abstract service provider interface (SPI) factory class
 that provides various methods for the creation of `Endpoint` instances
@@ -53,8 +53,8 @@ The `Provider` SPI allows an application to use a different JAX-WS
 implementation from the one bundled with the platform without any code
 changes.
 
-_♦ Conformance (Concrete `javax.xml.ws.spi.Provider` required):_ An implementation MUST
-provide a concrete class that extends `javax.xml.ws.spi.Provider`. Such
+_♦ Conformance (Concrete `jakarta.xml.ws.spi.Provider` required):_ An implementation MUST
+provide a concrete class that extends `jakarta.xml.ws.spi.Provider`. Such
 a class MUST have a public constructor which takes no arguments.
 
 [[providerdiscovery]]
@@ -71,13 +71,13 @@ terminates.
 
 1.  Use the service-provider loading facilities, defined by the
 `java.util.ServiceLoader` class, to attempt to locate and load an
-implementation of `javax.xml.ws.spi.Provider` service using the default
+implementation of `jakarta.xml.ws.spi.Provider` service using the default
 loading mechanism .
 2.  Use the configuration file `jaxws.properties`. The file is in
 standard `java.util.Properties` format and typically located in the conf
 directory of the Java installation. It contains the fully qualified name
-of the implementation class with the key `javax.xml.ws.spi.Provider`.
-3.  If a system property with the name `javax.xml.ws.spi.Provider` is
+of the implementation class with the key `jakarta.xml.ws.spi.Provider`.
+3.  If a system property with the name `jakarta.xml.ws.spi.Provider` is
 defined, then its value is used as the name of the implementation class.
 4.  Finally, a platform implementation is used.
 
@@ -89,7 +89,7 @@ Endpoints can be created using the following methods on `Provider`:
 *`createEndpoint(String bindingID, Object implementor)`* Creates and
 returns an `Endpoint` for the specified binding and implementor. If the
 `bindingId is` `null` and no binding information is specified via the
-`javax.xml.ws.BindingType` annotation then a default SOAP1.1/HTTP
+`jakarta.xml.ws.BindingType` annotation then a default SOAP1.1/HTTP
 binding MUST be used.
 
 *`createEndpoint(String bindingID, Object implementor, WebServiceFeature ... features)`*
@@ -111,7 +111,7 @@ Same as the above `createAndPublishEndpoint()` method. The created
 *`createEndpoint(String bindingId, Class<?> implementorClass, Invoker invoker, WebServiceFeature ... features)`*
 Creates an Endpoint for the implementor class and the endpoint
 invocation is handled by the `Invoker`. If the bindingId is null and no
-binding information is specified via the `javax.xml.ws.BindingType`
+binding information is specified via the `jakarta.xml.ws.BindingType`
 annotation then a default SOAP1.1/HTTP binding MUST be used. The created
 `Endpoint` is configured with the web service features.
 
@@ -138,14 +138,14 @@ appropriate to the URL scheme used by the address, then invoking the
 [[providerservicedelegatecreation]]
 ==== Creating ServiceDelegate Objects
 
-`javax.xml.ws.spi.ServiceDelegate` <<coresvcdelegate>> can be created
+`jakarta.xml.ws.spi.ServiceDelegate` <<coresvcdelegate>> can be created
 using the following methods on `Provider`:
 
 *`createServiceDelegate(URL wsdlDocumentLocation, QName serviceName, Class <? extends Service> serviceClass)`*
 Creates and returns a `ServiceDelegate` for the specified service. When
 starting from WSDL the serviceClass will be the generated service class
 as described in section <<gensvcif>>. In the dynamic case where there is
-no service class generated it will be `javax.xml.ws.Service`. The
+no service class generated it will be `jakarta.xml.ws.Service`. The
 serviceClass is used by the `ServiceDelegate` to get access to the
 annotations.
 
@@ -160,7 +160,7 @@ The `Provider` class provides the following methods to create
 `EndpointReference` instances.
 
 *`readEndpointReference(javax.xml.transform.Source source)`* Unmarshalls
-and returns a `javax.xml.ws.EndpointReference` from the infoset
+and returns a `jakarta.xml.ws.EndpointReference` from the infoset
 contained in `source`.
 
 *`createW3CEndpointReference`* Creates a `W3CEndpointReference` using
@@ -191,35 +191,35 @@ NOT be used directly as the value of an WS-Addressing header such as
 `wsa:ReplyTo`.
 
 [[coresvcdelegate]]
-=== javax.xml.ws.spi.ServiceDelegate
+=== jakarta.xml.ws.spi.ServiceDelegate
 
-The `javax.xml.ws.spi.ServiceDelegate` class is an abstract class that
+The `jakarta.xml.ws.spi.ServiceDelegate` class is an abstract class that
 implementations MUST provide. This is the class that
-`javax.xml.ws.Service` <<serviceapi>> class delegates all methods, except
+`jakarta.xml.ws.Service` <<serviceapi>> class delegates all methods, except
 the static `create` methods to. ServiceDelegate is defined as an
 abstract class for future extensibility purpose.
 
-_♦ Conformance (Concrete `javax.xml.ws.spi.ServiceDelegate` required):_ An implementation
+_♦ Conformance (Concrete `jakarta.xml.ws.spi.ServiceDelegate` required):_ An implementation
 MUST provide a concrete class that extends
-`javax.xml.ws.spi.ServiceDelegate`.
+`jakarta.xml.ws.spi.ServiceDelegate`.
 
 [[coreexceptions]]
 === Exceptions
 
 The following standard exceptions are defined by JAX-WS.
 
-`javax.xml.ws.WebServiceException`::
+`jakarta.xml.ws.WebServiceException`::
 A runtime exception that is thrown by methods in JAX-WS APIs when
 errors occur during local processing.
-`javax.xml.ws.ProtocolException`::
+`jakarta.xml.ws.ProtocolException`::
 A base class for exceptions related to a specific protocol binding.
 Subclasses are used to communicate protocol level fault information to
 clients and may be used by a service implementation to control the
 protocol specific fault representation.
-`javax.xml.ws.soap.SOAPFaultException`::
+`jakarta.xml.ws.soap.SOAPFaultException`::
 A subclass of `ProtocolException`, may be used to carry SOAP specific
 information.
-`javax.xml.ws.http.HTTPException`::
+`jakarta.xml.ws.http.HTTPException`::
 A subclass of `ProtocolException`, may be used to carry HTTP specific
 information.
 
@@ -286,7 +286,7 @@ MUST throw a `WebServiceException` if any error is detected when sending
 the message.
 
 [[webservicefeature]]
-=== javax.xml.ws.WebServiceFeature
+=== jakarta.xml.ws.WebServiceFeature
 
 JAX-WS 2.1 introduces the notion of features. A feature is associated
 with a particular functionality or behavior. Some features may only have
@@ -306,15 +306,15 @@ There are no standard features for service creation in the current
 specification. A JAX-WS 2.2 implementation may define its own features
 but they will be non-portable across all JAX-WS 2.2 implementations.
 
-Each feature is derived from the `javax.xml.ws.WebServiceFeature` class.
+Each feature is derived from the `jakarta.xml.ws.WebServiceFeature` class.
 This allows the web service developer to pass different types of
 `WebServiceFeatures` to the various JAX-WS APIs that utilize them. Also,
 each feature should be documented using JavaDocs on the derived classes.
 Each `WebServiceFeature` MUST have a `public static final String ID`
 field that is used to uniquely identify the feature.
 
-_♦ Conformance (`javax.xml.ws.WebServiceFeatures`):_ Each derived type of
-`javax.xml.ws.WebServiceFeature` MUST contain a
+_♦ Conformance (`jakarta.xml.ws.WebServiceFeatures`):_ Each derived type of
+`jakarta.xml.ws.WebServiceFeature` MUST contain a
 `public static final String ID` field that uniquely identifies the
 feature against all features of all implementations.
 
@@ -333,14 +333,14 @@ WS-Addressing himself while using the Dispatch and Provider APIs and
 thus he MUST be able to tell JAX-WS to disable addressing.
 
 _♦ Conformance (`enabled` property):_ Each derived type of
-`javax.xml.ws.WebServiceFeature` MUST provide a constructor argument
+`jakarta.xml.ws.WebServiceFeature` MUST provide a constructor argument
 and/or method to allow the web service developer to set the value of the
 `enabled` property. The public default constructor MUST by default set
 the `enabled` property to `true`. An implementation MUST honor the value
 of the `enabled` property of any supported `WebServiceFeature`.
 
 [[addressingfeature]]
-==== javax.xml.ws.soap.AddressingFeature
+==== jakarta.xml.ws.soap.AddressingFeature
 
 The `AddressingFeature` is used to control the use of
 WS-Addressing<<bib26>> by JAX-WS. This feature MUST be
@@ -375,7 +375,7 @@ Developers may choose to prevent this from happening by explicitly
 disabling the `AddressingFeature`.
 
 [[epr6]]
-===== javax.xml.ws.EndpointReference
+===== jakarta.xml.ws.EndpointReference
 
 The abstract `EndpointReference` class is used by the JAX-WS APIs to
 reference a particular endpoint in accordance with the W3C Web Services
@@ -385,17 +385,17 @@ Addressing 1.0<<bib26>>. Each concrete instance of an
 Applications may also use the `EndpointReference` class in method
 signatures. JAXB 2.1 will bind the `EndpointReference` base class to
 `xs:anyType`. Applications should instead use concrete implementations
-of `EndpointReference` such as `javax.xml.ws.W3CEndpointReference` which
+of `EndpointReference` such as `jakarta.xml.ws.W3CEndpointReference` which
 will provide better binding. JAX-WS implementations are required to
 support the `W3CEndpointReference` class but they may also provide other
 `EndpointReference` subclasses that represent different versions of
 Addressing.
 
 [[w3cepr]]
-===== javax.xml.ws.W3CEndpointReference
+===== jakarta.xml.ws.W3CEndpointReference
 
 The `W3CEndpointReference` class is a concrete implementation of the
-`javax.xml.ws.EndpointReference` class and is used to reference
+`jakarta.xml.ws.EndpointReference` class and is used to reference
 endpoints that are compliant with the W3C Web Services Addressing 1.0 -
 Core<<bib26>> recommendation. Applications may use this
 class to pass `EndpointReference` instances as method parameters or
@@ -403,13 +403,13 @@ return types. JAXB 2.1 will bind the `W3CEndpointReference` class to the
 W3C EndpointReference XML Schema in the WSDL.
 
 [[mtomfeature]]
-===== javax.xml.ws.soap.MTOMFeature
+===== jakarta.xml.ws.soap.MTOMFeature
 
 The `MTOMFeature` is used to specify if MTOM should be used with a web
 service. This feature should be used instead of the
-`javax.xml.ws.soap.SOAPBinding.SOAP11HTTP_MTOM_BINDING`,
-`javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_MTOM_BINDING` and the
-`javax.xml.ws.soap.SOAPBinding.setMTOMEnabled()`. This feature MUST be
+`jakarta.xml.ws.soap.SOAPBinding.SOAP11HTTP_MTOM_BINDING`,
+`jakarta.xml.ws.soap.SOAPBinding.SOAP12HTTP_MTOM_BINDING` and the
+`jakarta.xml.ws.soap.SOAPBinding.setMTOMEnabled()`. This feature MUST be
 supported with the SOAP 1.1/HTTP or SOAP 1.2/HTTP bindings. Using this
 feature with any other bindings is undefined. This feature corresponds
 to the `MTOM` annotation described in section <<mtomannotation>>.
@@ -424,19 +424,19 @@ The `threshold` is the size in bytes that binary data SHOULD be in order
 to be sent as an attachment. The `threshold` MUST not be negative. The
 default value is `0`.
 
-_♦ Conformance (`javax.xml.ws.soap.MTOMFeature`):_ An implementation MUST support the
-`javax.xml.ws.soap.MTOMFeature` and its `threshold` property.
+_♦ Conformance (`jakarta.xml.ws.soap.MTOMFeature`):_ An implementation MUST support the
+`jakarta.xml.ws.soap.MTOMFeature` and its `threshold` property.
 
 [[respbindfeature]]
-===== javax.xml.ws.RespectBindingFeature
+===== jakarta.xml.ws.RespectBindingFeature
 
 The `RespectBindingFeature` is used to control whether a JAX-WS
 implementation MUST respect/honor the contents of the `wsdl:binding`
 associated with an endpoint. It has a corresponding `RespectBinding`
 annotation described in section <<respbindingannotation>>.
 
-_♦ Conformance ( javax.xml.ws.RespectBindingFeature ):_ When the
-`javax.xml.ws.RespectBindingFeature` is enabled, a JAX-WS implementation
+_♦ Conformance ( jakarta.xml.ws.RespectBindingFeature ):_ When the
+`jakarta.xml.ws.RespectBindingFeature` is enabled, a JAX-WS implementation
 MUST inspect the `wsdl:binding` at runtime to determine result and
 parameter bindings as well as any `wsdl:extensions` that have the
 `required=true` attribute. All required `wsdl:extensions` MUST be
@@ -453,7 +453,7 @@ behavior with regards to respecting the `wsdl:binding` when this feature
 is disabled is undefined.
 
 [[httpspi]]
-=== javax.xml.ws.spi.http (HTTP SPI)
+=== jakarta.xml.ws.spi.http (HTTP SPI)
 
 The classes in this package can be used for a portable deployment of
 JAX-WS web services in a HTTP container(for example, servlet container).
@@ -471,16 +471,16 @@ Java SE platform.
 
 The HTTP SPI consists of the following classes:
 
-`javax.xml.ws.spi.http.HttpContext`::
+`jakarta.xml.ws.spi.http.HttpContext`::
 `HttpContext` represents a mapping between the root URI path of a web
 service to a `HttpHandler` which is invoked to handle requests
 destined for that path on the associated container.
-`javax.xml.ws.spi.http.HttpExchange`::
+`jakarta.xml.ws.spi.http.HttpExchange`::
 This class encapsulates a HTTP request received and a response to be
 generated in one exchange.
-`javax.xml.ws.spi.http.HttpHandler`::
+`jakarta.xml.ws.spi.http.HttpHandler`::
 A handler which is invoked to process HTTP exchanges.
-`javax.xml.ws.spi.Invoker`::
+`jakarta.xml.ws.spi.Invoker`::
 `Invoker` hides the detail of calling into application endpoint
 implementation.
 
@@ -549,4 +549,4 @@ services runtime portably.
 
 _♦ Conformance (HTTP SPI in SE platform):_ A JAX-WS 2.2 implementation in Java SE
 platform MUST support
-`Endpoint.publish(javax.xml.ws.spi.http.HttpContext)`.
+`Endpoint.publish(jakarta.xml.ws.spi.http.HttpContext)`.

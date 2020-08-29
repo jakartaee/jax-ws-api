@@ -13,7 +13,7 @@ Conformance requirements in this chapter use the term implementation to
 refer to a client side JAX-WS runtime system.
 
 [[serviceapi]]
-=== javax.xml.ws.Service
+=== jakarta.xml.ws.Service
 
 `Service` is an abstraction that represents a WSDL service. A WSDL
 `service` is a collection of related ports, each of which consists of a
@@ -40,7 +40,7 @@ _♦ Conformance (Service completeness):_ A `Service` implementation MUST be cap
 creating proxies, `Dispatch` instances, and new ports.
 
 All the service methods except the static `create` methods and the
-constructors delegate to `javax.xml.ws.spi.ServiceDelegate`, see section
+constructors delegate to `jakarta.xml.ws.spi.ServiceDelegate`, see section
 <<coresvcdelegate>>.
 
 [[svcusage]]
@@ -105,7 +105,7 @@ The following code snippet shows the generated constructors:
 @WebServiceClient(name="StockQuoteService",
                   targetNamespace="http://example.com/stocks",
                   wsdlLocation="http://example.com/stocks.wsdl")
-public class StockQuoteService extends javax.xml.ws.Service {
+public class StockQuoteService extends jakarta.xml.ws.Service {
     public StockQuoteService() {
         super(new URL("http://example.com/stocks.wsdl"),
         new QName("http://example.com/stocks", "StockQuoteService"));
@@ -149,7 +149,7 @@ Internally, the `Service` class delegates all of its functionality to a
 pluggability of implementations.
 
 For this to work, every `Service` object internally MUST hold a
-reference to a `javax.xml.ws.spi.ServiceDelegate` object (see
+reference to a `jakarta.xml.ws.spi.ServiceDelegate` object (see
 <<coresvcdelegate>>) to which it delegates every non-static method call.
 The field used to hold the reference MUST be private.
 
@@ -238,7 +238,7 @@ threads to deliver callbacks, e.g. by ``borrowing'' them when the
 application invokes a remote operation.
 
 [[bindingproviderif]]
-=== javax.xml.ws.BindingProvider
+=== jakarta.xml.ws.BindingProvider
 
 The `BindingProvider` interface represents a component that provides a
 protocol binding for use by clients, it is implemented by proxies and is
@@ -248,11 +248,11 @@ illustrates the class relationships.
 image::images/bindingprovider.png[]
 Figure 4.1: Binding Provider Class Relationships
 
-A web service client can get an `javax.xml.ws.EndpointReference` from a
+A web service client can get an `jakarta.xml.ws.EndpointReference` from a
 `BindingProvider` instance that will reference the target endpoint.
 
-_♦ Conformance (`javax.xml.ws.BindingProvider.getEndpointReference`):_ An implementation
-MUST be able to return an `javax.xml.ws.EndpointReference` for the
+_♦ Conformance (`jakarta.xml.ws.BindingProvider.getEndpointReference`):_ An implementation
+MUST be able to return an `jakarta.xml.ws.EndpointReference` for the
 target endpoint if a SOAP binding is being used. If the
 `BindingProvider` instance has a binding that is either SOAP 1.1/HTTP or
 SOAP 1.2/HTTP, then a `W3CEndpointReference` MUST be returned. If the
@@ -325,27 +325,27 @@ for implementations to support.
 Table 4.1: Standard BindingProvider properties.
 |==================================
 |Name |Type |Mandatory |Description
-4+|*javax.xml.ws.service.endpoint*
+4+|*jakarta.xml.ws.service.endpoint*
 |.address   |String |Y  |The address of the service endpoint as
 a protocol specific URI. The URI
 scheme must match the protocol
 binding in use.
-4+|*javax.xml.ws.security.auth*
+4+|*jakarta.xml.ws.security.auth*
 |.username  |String |Y  |Username for HTTP basic
 authentication.
 |.password  |String |Y  |Password for HTTP basic
 authentication.
-4+|*javax.xml.ws.session*
+4+|*jakarta.xml.ws.session*
 |.maintain  |Boolean    |Y  |Used by a client to indicate whether it
 is prepared to participate in a service
 endpoint initiated session. The default
 value is false .
-4+|*javax.xml.ws.soap.http.soapaction*
+4+|*jakarta.xml.ws.soap.http.soapaction*
 |.use   |Boolean    |N  |Controls whether the SOAPAction
 HTTP header is used in SOAP/HTTP
 requests. Default value is false.
 |.uri   |String     |N  |The value of the SOAPAction HTTP
-header if the `javax.xml.ws.soap-
+header if the `jakarta.xml.ws.soap-
 .http.soapaction.use` property is
 set to true . Default value is an empty string.
 |==================================
@@ -409,7 +409,7 @@ be used to support multiple threads.
 _♦ Conformance (Proxy support):_ An implementation MUST support proxies.
 
 _♦ Conformance (Implementing `BindingProvider`):_ An instance of a proxy MUST implement
-`javax.xml.ws.BindingProvider`.
+`jakarta.xml.ws.BindingProvider`.
 
 A proxy is created using the `getPort` methods of a `Service` instance:
 
@@ -458,7 +458,7 @@ can fail if the interface doesn’t conform to the mapping or if any WSDL
 related metadata is missing from the `Service` instance.
 
 _♦ Conformance (`Service.getPort` failure):_ If creation of a proxy fails, an
-implementation MUST throw `javax.xml.ws.WebServiceException`. The cause
+implementation MUST throw `jakarta.xml.ws.WebServiceException`. The cause
 of that exception SHOULD be set to an exception that provides more
 information on the cause of the error (e.g. an `IOException`).
 
@@ -466,11 +466,11 @@ The use of WS-Addressing requirements can be indicated in a WSDL as per
 Addressing 1.0 - Metadata<<bib27>>. A proxy created using
 `getPort()` calls is configured with the addressing requirements as
 specified in the associated WSDL or explicitly passing
-`javax.xml.ws.soap.AddressingFeature` web service feature.
+`jakarta.xml.ws.soap.AddressingFeature` web service feature.
 
 _♦ Conformance (Proxy’s Addressing use):_ A proxy MUST be configured with the use of
 addressing requirements as indicated in the associated WSDL. But if the
-proxy is created using `javax.xml.ws.soap.AddressingFeature` web service
+proxy is created using `jakarta.xml.ws.soap.AddressingFeature` web service
 feature, the feature’s addressing requirements MUST take precedence over
 WSDL’s addressing requirements.
 
@@ -490,12 +490,12 @@ stub class is involved.
 
 [source,java,numbered]
 -------------
-javax.xml.ws.Service service = ...;
+jakarta.xml.ws.Service service = ...;
 com.example.StockQuoteProvider proxy = service.getPort(portName,
     com.example.StockQuoteProvider.class)
-javax.xml.ws.BindingProvider bp = (javax.xml.ws.BindingProvider)proxy;
+jakarta.xml.ws.BindingProvider bp = (jakarta.xml.ws.BindingProvider)proxy;
 Map<String,Object> context = bp.getRequestContext();
-context.setProperty("javax.xml.ws.session.maintain", Boolean.TRUE);
+context.setProperty("jakarta.xml.ws.session.maintain", Boolean.TRUE);
 proxy.getLastTradePrice("ACME");
 -------------
 
@@ -505,7 +505,7 @@ configuration of the proxy. Lines 7 invokes a method on the proxy.
 [[stubexceptions]]
 ==== Exceptions
 
-All methods of an SEI can throw `javax.xml.ws.WebServiceException` and
+All methods of an SEI can throw `jakarta.xml.ws.WebServiceException` and
 zero or more service specific exceptions.
 
 _♦ Conformance (Remote Exceptions):_ If an error occurs during a remote operation
@@ -532,7 +532,7 @@ result in a `WebServiceException` whose cause is a
 `java.lang.IllegalArgumentException` thrown by some implementation code.
 
 [[dispatch]]
-=== javax.xml.ws.Dispatch
+=== jakarta.xml.ws.Dispatch
 
 XML Web Services use XML messages for communication between services and
 service clients. The higher level JAX-WS APIs are designed to hide the
@@ -542,11 +542,11 @@ message level is desirable. The `Dispatch` interface provides support
 for this mode of interaction.
 
 _♦ Conformance (`Dispatch` support):_ Implementations MUST support the
-`javax.xml.ws.Dispatch` interface.
+`jakarta.xml.ws.Dispatch` interface.
 
 `Dispatch` supports two usage modes, identified by the constants
-`javax.xml.ws.Service.Mode.MESSAGE` and
-`javax.xml.ws.Service.Mode.PAYLOAD` respectively:
+`jakarta.xml.ws.Service.Mode.MESSAGE` and
+`jakarta.xml.ws.Service.Mode.PAYLOAD` respectively:
 
 Message::
 In this mode, client applications work directly with protocol-specific
@@ -587,13 +587,13 @@ binding (see chapter <<xmlbindchap>>) in payload mode, the HTTP request
 and response entity bodies must contain XML directly or a MIME wrapper
 with an XML root part. When used in mssage mode, if the message is not
 an XML message a `WebServiceException` MUST be thrown.
-`javax.xml.soap.SOAPMessage`::
+`jakarta.xml.soap.SOAPMessage`::
 Use of `SOAPMessage` objects allows clients to work with SOAP messages
 using the convenience features provided by the `java.xml.soap`
 package. `SOAPMessage` objects may only be used with `Dispatch`
 instances that use the SOAP binding (see chapter <<soapbindchap>>) in
 message mode.
-`javax.activation.DataSource`::
+`jakarta.activation.DataSource`::
 Use of `DataSource` objects allows clients to work with MIME-typed
 messages. `DataSource` objects may only be used with `Dispatch`
 instances that use the HTTP binding (see chapter <<xmlbindchap>>) in
@@ -706,12 +706,12 @@ In the case of a `Response` instance this can only be a
 The following interfaces are used to obtain the results of an operation
 invocation:
 
-`javax.xml.ws.Response`::
+`jakarta.xml.ws.Response`::
 A generic interface that is used to group the results of an invocation
 with the response context. `Response` extends
 `java.util.concurrent.Future<T>` to provide asynchronous result
 polling capabilities.
-`javax.xml.ws.AsyncHandler`::
+`jakarta.xml.ws.AsyncHandler`::
 A generic interface that clients implement to receive results in an
 asynchronous callback. It defines a single `handleResponse` method
 that has a `Response` object as its argument.
@@ -861,14 +861,14 @@ endpoint (see <<endpointcontract>>) are subject to the requirements in
 this section, resulting in catalog-based URI resolutions.
 
 [[endpointreference]]
-=== javax.xml.ws.EndpointReference
+=== jakarta.xml.ws.EndpointReference
 
-A `javax.xml.ws.EndpointReference` is an abstraction that represents an
+A `jakarta.xml.ws.EndpointReference` is an abstraction that represents an
 invocable web service endpoint. Client applications can use an
 `EndpointReference` to get a port for an SEI although doing so prevents
 them from getting/setting the `Executor` or `HandlerResolver` which
 would normally be done on a `Service` instance. The `EndpointReference`
-class delegates to the `javax.xml.ws.spi.Provider` to perform the
+class delegates to the `jakarta.xml.ws.spi.Provider` to perform the
 `getPort` operation. The following method can be used to get a proxy for
 a Port.
 

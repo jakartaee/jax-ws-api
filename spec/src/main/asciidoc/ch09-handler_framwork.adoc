@@ -47,14 +47,14 @@ Logical::
 Handlers that only operate on message context properties and message
 payloads. Logical handlers are protocol agnostic and are unable to
 affect protocol specific parts of a message. Logical handlers are
-handlers that implement `javax.xml.ws.handler.LogicalHandler`.
+handlers that implement `jakarta.xml.ws.handler.LogicalHandler`.
 Protocol::
 Handlers that operate on message context properties and protocol
 specific messages. Protocol handlers are specific to a particular
 protocol and may access and change protocol specific aspects of a
 message. Protocol handlers are handlers that implement any interface
-derived from `javax.xml.ws.handler.Handler` except
-`javax.xml.ws.handler.LogicalHandler`.
+derived from `jakarta.xml.ws.handler.Handler` except
+`jakarta.xml.ws.handler.LogicalHandler`.
 
 
 image::images/handarch.png[]
@@ -63,7 +63,7 @@ Figure 9.1: Handler architecture
 Figure <<9.2>> shows the class hierarchy for handlers.
 
 Handlers for protocols other than SOAP are expected to implement a
-protocol-specific interface that extends `javax.xml.ws.handler.Handler`.
+protocol-specific interface that extends `jakarta.xml.ws.handler.Handler`.
 
 [[binding-responsibilities]]
 ==== Binding Responsibilities
@@ -140,7 +140,7 @@ handler chains – server side handler chains are expected to be
 configured using deployment metadata.
 
 [[handlerresolver]]
-===== javax.xml.ws.handler.HandlerResolver
+===== jakarta.xml.ws.handler.HandlerResolver
 
 A `Service` instance maintains a handler resolver that is used when
 creating proxies or `Dispatch` instances, known collectively as binding
@@ -182,9 +182,9 @@ image::images/handord.png[]
 Figure 9.3: Handler ordering, Ln and Pn represent logical and protocol handlers respectively.
 
 [[handlerchain]]
-===== javax.jws.HandlerChain annotation
+===== jakarta.jws.HandlerChain annotation
 
-The `javax.jws.HandlerChain` annotation defined by JSR-181 <<bib16>>
+The `jakarta.jws.HandlerChain` annotation defined by JSR-181 <<bib16>>
 may be used to specify in a declarative way the handler chain to use for
 a service.
 
@@ -225,8 +225,8 @@ public class MyService {
 -------------
 Figure 9.4: Use of the HandlerChain annotation
 
-[[javax.xml.ws.binding]]
-===== javax.xml.ws.Binding
+[[jakarta.xml.ws.binding]]
+===== jakarta.xml.ws.Binding
 
 The `Binding` interface is an abstraction of a JAX-WS protocol binding
 (see section [protocolbinding] for more details). As described above,
@@ -279,10 +279,10 @@ The lifecycle of a handler instance begins when the JAX-WS runtime
 system creates a new instance of the handler class.
 
 The runtime MUST then carry out any injections requested by the handler,
-typically via the `javax.annotation.Resource` annotation. After all the
+typically via the `jakarta.annotation.Resource` annotation. After all the
 injections have been carried out, including in the case where no
 injections were requested, the runtime MUST invoke the method carrying a
-`javax.annotation.PostConstruct` annotation, if present. Such a method
+`jakarta.annotation.PostConstruct` annotation, if present. Such a method
 MUST satisfy the requirements in JSR-250 <<bib35>> for lifecycle
 methods (i.e. it has a void return type and takes zero arguments). The
 handler instance is then ready for use.
@@ -299,7 +299,7 @@ may invoke other handler methods as required.
 The lifecycle of a handler instance ends when the JAX-WS runtime system
 stops using the handler for processing inbound or outbound messages.
 After taking the handler offline, a JAX-WS implementation SHOULD invoke
-the lifecycle method which carries a `javax.annotation.PreDestroy`
+the lifecycle method which carries a `jakarta.annotation.PreDestroy`
 annotation, if present, so as to permit the handler to clean up its
 resources. Such a method MUST satisfy the requirements in JSR-250
 <<bib35>> for lifecycle methods
@@ -501,7 +501,7 @@ features. Section <<soapbindmsgcontext>> describes the message context
 subtype for the JAX-WS SOAP binding.
 
 [[handmsgctxif]]
-==== javax.xml.ws.handler.MessageContext
+==== jakarta.xml.ws.handler.MessageContext
 
 `MessageContext` is the super interface for all JAX-WS message contexts.
 It extends `Map<String,Object>` with additional methods and constants to
@@ -551,10 +551,10 @@ HTTP-based binding.
 Table 9.2: Standard `MessageContext` properties.
 |==================================
 |Name           |Type       |Mandatory  |Description
-4+|*javax.xml.ws.handler.message*
+4+|*jakarta.xml.ws.handler.message*
 |`.outbound`    |Boolean    |Y          |Specifies the message direction: `true` for
 outbound messages, `false` for inbound messages.
-4+|*javax.xml.ws.binding.attachments*
+4+|*jakarta.xml.ws.binding.attachments*
 |`.inbound` |Maplatexmath:[$<$]String,DataHandlerlatexmath:[$>$]    |Y |A
 map of attachments to an inbound message. The key is a unique identifier
 for the attachment. The value is a `DataHandler` for the attachment
@@ -564,11 +564,11 @@ data. Bindings describe how to carry attachments with messages.
 identifier for the attachment. The value is a `DataHandler` for the
 attachment data. Bindings describe how to carry attachments with
 messages.
-4+|*javax.xml.ws.reference*
+4+|*jakarta.xml.ws.reference*
 |`.parameters`  |`List<Element>`    |Y  |A list of WS Addressing reference
 parameters. The list MUST include all SOAP headers marked with the
 `wsa:IsReferenceParameter= true` attribute.
-4+|*javax.xml.ws.wsdl*
+4+|*jakarta.xml.ws.wsdl*
 |`.description` |URI    |N  |A resolvable URI that may be used to obtain
 access to the WSDL for the endpoint.
 |`.service`     |`QName`    |N  |The name
@@ -586,23 +586,23 @@ target namespace of the WSDL definitions element.
 Table 9.3: Standard HTTP `MessageContext` properties.
 |==================================
 |Name           |Type       |Mandatory  |Description
-4+|*javax.xml.ws.http.request*
+4+|*jakarta.xml.ws.http.request*
 |`.headers`     |Maplatexmath:[$<$]String,Listlatexmath:[$<$]Stringlatexmath:[$>$]latexmath:[$>$]
 |Y  |A map of the HTTP headers for the request message. The key is the
 header name. The value is a list of values for that header.
 |`.method`  |`String`   |Y  |The HTTP method for the request message.
 |`.querystring` |`String`   |Y  |The HTTP query string for the request message, or `null`
 if the request does not have any. If the address specified using the
-javax.xml.ws.service.endpoint.address in the BindingProvider contains a
+jakarta.xml.ws.service.endpoint.address in the BindingProvider contains a
 query string and if the querystring property is set by the client it
 will override the existing query string in the
-javax.xml.ws.service.endpoint.address property. The value of the
+jakarta.xml.ws.service.endpoint.address property. The value of the
 property does not include the leading ``?'' of the query string in it.
 This property is only used with HTTP binding.
 |`.pathinfo`    |`String`   |Y  |Extra path information associated with the URL the client sent when it
 made this request. The extra path information follows the base url path
 but precedes the query string and will start with a "/" character.
-4+|*javax.xml.ws.http.response*
+4+|*jakarta.xml.ws.http.response*
 |`.headers` |Maplatexmath:[$<$]String,Listlatexmath:[$<$]Stringlatexmath:[$>$]latexmath:[$>$]
 |Y  |A map of the HTTP headers for the response message. The key is the
 header name. The value is a list of values for that header.
@@ -613,19 +613,19 @@ header name. The value is a list of values for that header.
 Table 9.4: Standard Servlet Container-Specific `MessageContext` properties.
 |==================================
 |Name           |Type       |Mandatory  |Description
-4+|*javax.xml.ws.servlet*
-|`.context` |javax.servlet.ServletContext   |Y  |The `ServletContext`
+4+|*jakarta.xml.ws.servlet*
+|`.context` |jakarta.servlet.ServletContext   |Y  |The `ServletContext`
 object belonging to the web application that contains the endpoint.
-|`.request` |javax.servlet.http.HttpServletRequest  |Y  |The
+|`.request` |jakarta.servlet.http.HttpServletRequest  |Y  |The
 `HttpServletRequest` object associated with the request currently being
 served.
-|`.response`    |javax.servlet.http.HttpServletResponse |Y  |The
+|`.response`    |jakarta.servlet.http.HttpServletResponse |Y  |The
 `HttpServletResponse` object associated with the request currently being
 served.
 |==================================
 
 [[handlogmsgctx]]
-==== javax.xml.ws.handler.LogicalMessageContext
+==== jakarta.xml.ws.handler.LogicalMessageContext
 
 Logical handlers (see section <<handlertypes>>) are passed a message
 context of type `LogicalMessageContext` when invoked.
