@@ -9,7 +9,7 @@ This chapter describes requirements on JAX-WS service implementations
 and standard APIs provided for their use.
 
 [[providersvcapi]]
-=== javax.xml.ws.Provider
+=== jakarta.xml.ws.Provider
 
 JAX-WS services typically implement a native Java service endpoint
 interface (SEI), perhaps mapped from a WSDL port type, either directly
@@ -29,7 +29,7 @@ _♦ Conformance (Provider support required):_ An implementation MUST support
 `Provider<Source>` in payload mode with all the predefined bindings. It
 MUST also support `Provider<SOAPMessage>` in message mode in conjunction
 with the predefined SOAP bindings and
-`Provider<javax.activation.DataSource>` in message mode in conjunction
+`Provider<jakarta.activation.DataSource>` in message mode in conjunction
 with the predefined HTTP binding.
 
 _♦ Conformance (Provider default constructor):_ A `Provider` based service endpoint
@@ -166,7 +166,7 @@ public class MyService implements Provider<Source> {
 -------------
 
 [[endpointif]]
-=== javax.xml.ws.Endpoint
+=== jakarta.xml.ws.Endpoint
 
 The `Endpoint` class can be used to create and publish Web service
 endpoints.
@@ -187,7 +187,7 @@ Endpoints can be created using the following static methods on
 
 `create(Object implementor)`::
 Creates and returns an `Endpoint` for the specified implementor. If the
-implementor specifies a binding using the `javax.xml.ws.BindingType`
+implementor specifies a binding using the `jakarta.xml.ws.BindingType`
 annotation it MUST be used else a default binding of SOAP 1.1 / HTTP
 binding MUST be used.
 
@@ -199,7 +199,7 @@ corresponding features that are specified in WSDL, if present.
 `create(String bindingID, Object implementor)`::
 Creates and returns an `Endpoint` for the specified binding and
 implementor. If the bindingID is `null` and no binding information is
-specified via the `javax.xml.ws.BindingType` annotation then a default
+specified via the `jakarta.xml.ws.BindingType` annotation then a default
 SOAP 1.1 / HTTP binding MUST be used.
 
 `create(String bindingID, Object implementor, WebServiceFeature ... features)`::
@@ -221,7 +221,7 @@ configured with the web service features. These features override the
 corresponding features that are specified in WSDL, if present.
 
 These methods MUST delegate the creation of Endpoint to the
-`javax.xml.ws.spi.Provider` SPI class (see <<spiprovider>>) by calling the
+`jakarta.xml.ws.spi.Provider` SPI class (see <<spiprovider>>) by calling the
 `createEndpoint` and `createAndPublishEndpoint` methods respectively.
 
 An implementor object MUST be either an instance of a class annotated
@@ -267,7 +267,7 @@ about the request currently being served. Injection of the
 `WebServiceContext`, if requested, MUST happen the first time the
 endpoint is published. After any injections have been performed and
 before any requests are dispatched to the implementor, the implementor
-method which carries a `javax.annotation.PostConstruct` annotation, if
+method which carries a `jakarta.annotation.PostConstruct` annotation, if
 present, MUST be invoked. Such a method MUST satisfy the requirements
 for lifecycle methods in JSR-250 <<bib35>>.
 
@@ -364,7 +364,7 @@ be ignored by the JAX-WS implementation.
 
 For security reasons, administrators may want to restrict the ability of
 applications to publish Web service endpoints. To this end, JAX-WS 2.0
-defines a new permission class, `javax.xml.ws.WebServicePermission`, and
+defines a new permission class, `jakarta.xml.ws.WebServicePermission`, and
 one named permission, `publishEndpoint`.
 
 _♦ Conformance (Checking publishEndpoint Permission):_ When any of the `publish`
@@ -615,7 +615,7 @@ contract-related artifacts may occur.
 Table 5.1: Standard `Endpoint` properties.
 |==================================
 |Name |Type |Description
-3+|*javax.xml.ws.wsdl*
+3+|*jakarta.xml.ws.wsdl*
 |.service   |QName  |Specifies the qualified name of the service.
 |.port      |QName  |Specifies the qualified name of the port.
 |==================================
@@ -713,32 +713,32 @@ implementation MUST use its own executor, a
 dispatch incoming requests.
 
 [[epr5]]
-==== javax.xml.ws.EndpointReference
+==== jakarta.xml.ws.EndpointReference
 
 The following methods can be used on a published `Endpoint` to retrieve
-an `javax.xml.ws.EndpointReference` for the `Endpoint` instance.
+an `jakarta.xml.ws.EndpointReference` for the `Endpoint` instance.
 
 `getEndpointReference(List<Element> referenceParameters)`::
-Creates and returns and `javax.xml.ws.EndpointReference` for a
+Creates and returns and `jakarta.xml.ws.EndpointReference` for a
 published `Endpoint`. If the binding is SOAP 1.1/HTTP or SOAP
-1.2/HTTP, then a `javax.xml.ws.wsaddressing.W3CEndpointReference` MUST
+1.2/HTTP, then a `jakarta.xml.ws.wsaddressing.W3CEndpointReference` MUST
 be returned. A returned `W3CEndpointReference` MUST also contain the
 specified `referenceParameters`. An implementation MUST throw a
-`javax.xml.ws.WebServiceException` if the `Endpoint` instance has not
+`jakarta.xml.ws.WebServiceException` if the `Endpoint` instance has not
 been published. An implementation MUST throw
 `java.lang.UnsupportedOperationException` if the `Endpoint` instance
 uses the XML/HTTP binding.
 `getEndpointReference(Class<T> clazz, List<Element> referenceParameters)`::
-Creates and returns and `javax.xml.ws.EndpointReference` of type
+Creates and returns and `jakarta.xml.ws.EndpointReference` of type
 `clazz` for a published `Endpoint` instance. If `clazz` is of type
-`javax.xml.ws.wsaddressing.W3CEndpointReference`, then the returned
+`jakarta.xml.ws.wsaddressing.W3CEndpointReference`, then the returned
 `W3CEndpointReference` MUST contain the specified
 `referenceParameters`. An implementation MUST throw a
-`javax.xml.ws.WebServiceException` if the `Endpoint` instance has not
+`jakarta.xml.ws.WebServiceException` if the `Endpoint` instance has not
 been published. If the Class `clazz` is not a subclass of
 `EndpointReference` or the `Endpoint` implementation does not support
 `EndpointReferences` of type `clazz` a
-`javax.xml.ws.WebServiceException` MUST be thrown. An implementation
+`jakarta.xml.ws.WebServiceException` MUST be thrown. An implementation
 MUST throw `java.lang.UnsupportedOperationException` if the `Endpoint`
 instance uses the XML/HTTP binding.
 
@@ -751,9 +751,9 @@ using `wsdli:wsdlLocation` in the `W3CEndpointReference`’s
 `wsa:Metadata`.
 
 [[webservicecontext]]
-=== javax.xml.ws.WebServiceContext
+=== jakarta.xml.ws.WebServiceContext
 
-The `javax.xml.ws.WebServiceContext` interface makes it possible for an
+The `jakarta.xml.ws.WebServiceContext` interface makes it possible for an
 endpoint implementation object and potentially any other objects that
 share its execution context to access information pertaining to the
 request being served.
@@ -786,16 +786,16 @@ public String reverse(String inputString) { ... }
 }
 -------------
 
-The `javax.annotation.Resource` annotation defined by JSR-250 <<bib35>>
+The `jakarta.annotation.Resource` annotation defined by JSR-250 <<bib35>>
 is used to request injection of the `WebServiceContext`. The
 following constraints apply to the annotation elements of a `Resource`
 annotation used to inject a `WebServiceContext`:
 
 * The `type` element MUST be either `java.lang.Object` (the default) or
-`javax.xml.ws.WebServiceContext`. If the former, then the resource MUST
+`jakarta.xml.ws.WebServiceContext`. If the former, then the resource MUST
 be injected into a field or a method. In this case, the type of the
 field or the type of the JavaBeans property defined by the method MUST
-be `javax.xml.ws.WebServiceContext`.
+be `jakarta.xml.ws.WebServiceContext`.
 * The `authenticationType`, `shareable` elements, if they appear, MUST
 have their respective default values.
 
@@ -817,7 +817,7 @@ there and are subject to the constraints prescribed by the platform
 specification <<bib36>>.
 
 An endpoint implementation can retrieve an
-`javax.xml.ws.EndpointReference` for the endpoint using
+`jakarta.xml.ws.EndpointReference` for the endpoint using
 `getEndpointReference(List<Element> referenceParameters)`, and
 `getEndpointReference( Class<T> clazz, List<Element> referenceParameters)`
 methods. These methods have the same semantics as the
@@ -864,7 +864,7 @@ access to context properties in this way ensures that endpoint
 implementations can only access properties intended for their use.
 
 [[w3cendpointreferencebuilder]]
-=== javax.xml.ws.wsaddressing.W3CEndpointReferenceBuilder
+=== jakarta.xml.ws.wsaddressing.W3CEndpointReferenceBuilder
 
 Occasionally it is necessary for one application component to create an
 `EndpointReference` for another web service endpoint. The

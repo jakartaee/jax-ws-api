@@ -61,7 +61,7 @@ environment, an implementation may perform any correctness checks at
 deployment time.
 
 [[mdservicemode]]
-=== javax.xml.ws.ServiceMode
+=== jakarta.xml.ws.ServiceMode
 
 The `ServiceMode` annotation is used to specify the mode for a provider
 class, i.e. whether a provider wants to have access to protocol message
@@ -74,21 +74,21 @@ Table 7.1: `ServiceMode` properties.
 |==================================
 |Property   |Description    |Default
 |`value`      |The service mode, one of
-javax.xml.ws.Service.Mode. MESSAGE or
-javax.xml.ws.Service.Mode.PAYLOAD.
+jakarta.xml.ws.Service.Mode. MESSAGE or
+jakarta.xml.ws.Service.Mode.PAYLOAD.
 MESSAGE means that the whole protocol
 message will be handed to the provider
 instance, PAYLOAD that only the payload of
 the protocol message will be handed to the
 provider instance.
-|javax.xml.ws.Service.Mode.PAYLOAD
+|jakarta.xml.ws.Service.Mode.PAYLOAD
 |==================================
 
 The `ServiceMode` annotation type is marked `@Inherited`, so the
 annotation will be inherited from the superclass.
 
 [[mdwebfault]]
-=== javax.xml.ws.WebFault
+=== jakarta.xml.ws.WebFault
 
 The `WebFault` annotation is used when mapping WSDL faults to Java
 exceptions, see section <<faulttoexceptmap>>. It is used to capture the
@@ -109,7 +109,7 @@ Table 7.2: `WebFault` properties.
 
 
 [[mdrequestWrapper]]
-=== javax.xml.ws.RequestWrapper
+=== jakarta.xml.ws.RequestWrapper
 
 The `RequestWrapper` annotation is applied to the methods of an SEI. It
 is used to capture the JAXB generated request wrapper bean and the
@@ -132,7 +132,7 @@ Table 7.3: `RequestWrapper` properties.
 |==================================
 
 [[mdresponseWrapper]]
-=== javax.xml.ws.ResponseWrapper
+=== jakarta.xml.ws.ResponseWrapper
 
 The `ResponseWrapper` annotation is applied to the methods of an SEI. It
 is used to capture the JAXB generated response wrapper bean and the
@@ -156,7 +156,7 @@ Table 7.4: `ResponseWrapper` properties.
 
 
 [[mdwebsvcclient]]
-=== javax.xml.ws.WebServiceClient
+=== jakarta.xml.ws.WebServiceClient
 
 The `WebServiceClient` annotation is specified on a generated service
 class (see <<gensvcif>>). It is used to associate a class with a specific
@@ -177,7 +177,7 @@ document it may transitively reference, a JAX-WS implementation MUST use
 the catalog facility defined in section <<catalogfacility>>.
 
 [[mdwebendpoint]]
-=== javax.xml.ws.WebEndpoint
+=== jakarta.xml.ws.WebEndpoint
 
 The `WebEndpoint` annotation is specified on the `get`_PortName_`()`
 methods of a generated service class (see <<gensvcif>>). It is used to
@@ -209,7 +209,7 @@ class.
 @WebServiceClient(name="StockQuoteService",
                   targetNamespace="...",
                   wsdlLocation="...")
-public class StockQuoteService extends javax.xml.ws.Service {
+public class StockQuoteService extends jakarta.xml.ws.Service {
     public StockQuoteService() {
         super(wsdlLocation_fromAnnotation, serviceName_fromAnnotation);
     }
@@ -244,10 +244,10 @@ public class StockQuoteService extends javax.xml.ws.Service {
 -------------
 
 [[mdwebsvcprovider]]
-=== javax.xml.ws.WebServiceProvider
+=== jakarta.xml.ws.WebServiceProvider
 
 The `WebServiceProvider` annotation is specified on classes that
-implement a strongly typed `javax.xml.ws.Provider`. It is used to
+implement a strongly typed `jakarta.xml.ws.Provider`. It is used to
 declare that a class that satisfies the requirements for a provider (see
 <<providersvcapi>>) does indeed define a Web service endpoint, much like
 the `WebService` annotation does for SEI-based endpoints.
@@ -274,7 +274,7 @@ document it may transitively reference, a JAX-WS implementation MUST use
 the catalog facility defined in section <<catalogfacility>>.
 
 [[mdbindingtype]]
-=== javax.xml.ws.BindingType
+=== jakarta.xml.ws.BindingType
 
 The `BindingType` annotation is applied to an endpoint implementation
 class. It specifies the binding to use when publishing an endpoint of
@@ -291,11 +291,11 @@ The default binding for an endpoint is the SOAP 1.1/HTTP one (see
 chapter <<soapbindchap>>).
 
 [[mdwebsvcref]]
-=== javax.xml.ws.WebServiceRef
+=== jakarta.xml.ws.WebServiceRef
 
 The `WebServiceRef` annotation is used to declare a reference to a Web
 service. It follows the resource pattern exemplified by the
-`javax.annotation.Resource` annotation in JSR-250 <<bib35>>.
+`jakarta.annotation.Resource` annotation in JSR-250 <<bib35>>.
 
 The injected references of `WebServiceRef` annotation are not guaranteed
 to be thread safe. If the references are accessed by multiple threads,
@@ -376,7 +376,7 @@ the `type` element MUST be present with a non-default value.
 element MAY be present with its default value if the type of the
 reference can be inferred from the annotated field/method declaration,
 but the `value` element MUST always be present and refer to a generated
-service class type (a subtype of `javax.xml.ws.Service`).
+service class type (a subtype of `jakarta.xml.ws.Service`).
 
 The `wsdlLocation` element, if present, overrides the WSDL location
 information specified in the `WebService` annotation of the referenced
@@ -398,7 +398,7 @@ The following shows both uses of the `WebServiceRef` annotation.
 @WebServiceClient(name="StockQuoteService",
                   targetNamespace="...",
                   wsdlLocation="...")
-public class StockQuoteService extends javax.xml.ws.Service {
+public class StockQuoteService extends jakarta.xml.ws.Service {
     ...
 
     @WebEndpoint(name="StockQuoteHTTPPort")
@@ -443,14 +443,14 @@ public class ClientComponent {
 -------------
 
 [[mdwebsvcrefs]]
-=== javax.xml.ws.WebServiceRefs
+=== jakarta.xml.ws.WebServiceRefs
 
 The `WebServiceRefs` annotation is used to declare multiple references
 to Web services on a single class. It is necessary to work around the
 limition against specifying repeated annotations of the same type on any
 given class, which prevents listing multiple `javax.ws.WebServiceRef`
 annotations one after the other. This annotation follows the resource
-pattern exemplified by the `javax.annotation.Resources` annotation in
+pattern exemplified by the `jakarta.annotation.Resources` annotation in
 JSR-250 <<bib35>>.
 
 Since no name and type can be inferred in this case, each
@@ -509,7 +509,7 @@ As a convenience to the reader, the following sections reproduce the
 definition of the JSR-181 annotations applicable to JAX-WS.
 
 [[mdwebservice]]
-==== javax.jws.WebService
+==== jakarta.jws.WebService
 
 [source,java,numbered]
 -------------
@@ -530,7 +530,7 @@ transitively reference, a JAX-WS implementation MUST use the catalog
 facility defined in section <<catalogfacility>>.
 
 [[mdwebmethod]]
-==== javax.jws.WebMethod
+==== jakarta.jws.WebMethod
 
 [source,java,numbered]
 -------------
@@ -543,7 +543,7 @@ public @interface WebMethod {
 -------------
 
 [[mdoneway]]
-==== javax.jws.OneWay
+==== jakarta.jws.OneWay
 
 [source,java,numbered]
 -------------
@@ -553,7 +553,7 @@ public @interface Oneway {
 -------------
 
 [[mdwebparam]]
-==== javax.jws.WebParam
+==== jakarta.jws.WebParam
 
 [source,java,numbered]
 -------------
@@ -570,7 +570,7 @@ public @interface WebParam {
 -------------
 
 [[mdwebresult]]
-==== javax.jws.WebResult
+==== jakarta.jws.WebResult
 [source,java,numbered]
 -------------
 @Target({METHOD})
@@ -583,7 +583,7 @@ public @interface WebResult {
 -------------
 
 [[mdsoapbinding]]
-==== javax.jws.SOAPBinding
+==== jakarta.jws.SOAPBinding
 [source,java,numbered]
 -------------
 @Target({TYPE, METHOD})
@@ -601,7 +601,7 @@ public @interface SOAPBinding {
 -------------
 
 [[mdhandlerchain]]
-==== javax.jws.HandlerChain
+==== jakarta.jws.HandlerChain
 [source,java,numbered]
 -------------
 @Target({TYPE})
@@ -612,7 +612,7 @@ public @interface HandlerChain {
 -------------
 
 [[action]]
-=== javax.xml.ws.Action
+=== jakarta.xml.ws.Action
 
 The `Action` annotation is applied to the methods of a SEI. It is used
 to specify the `input`, `output`, `fault` WS-Addressing Action values
@@ -636,7 +636,7 @@ wsdl:fault s of the operation   |””
 
 
 [[faultaction]]
-=== javax.xml.ws.FaultAction
+=== jakarta.xml.ws.FaultAction
 
 The `FaultAction` annotation is used within the `Action` annotation to
 specify the WS-Addressing Action of a service specific exception as
@@ -656,13 +656,13 @@ Table 7.12: `FaultAction` properties.
 |==================================
 
 [[webservfeatureannotation]]
-=== javax.xml.ws.spi.WebServiceFeatureAnnotation
+=== jakarta.xml.ws.spi.WebServiceFeatureAnnotation
 
 The `WebServiceFeatureAnnotation` is a meta-annotation used by a JAX-WS
 implementation to identify other annotations as `WebServiceFeature`s.
 JAX-WS provides the following annotations as `WebServiceFeatures`:
-`javax.xml.ws.soap.Addressing`, `javax.xml.ws.soap.MTOM`, and
-`javax.xml.ws.RespectBinding`. If a JAX-WS implementation encounters an
+`jakarta.xml.ws.soap.Addressing`, `jakarta.xml.ws.soap.MTOM`, and
+`jakarta.xml.ws.RespectBinding`. If a JAX-WS implementation encounters an
 annotation annotated with the `WebServiceFeatureAnnotation` that it does
 not support or recognize an ERROR MUST be given.
 
@@ -700,7 +700,7 @@ public @interface Addressing {
 -------------
 
 [[addrannotation]]
-==== javax.xml.ws.soap.Addressing
+==== jakarta.xml.ws.soap.Addressing
 
 The `Addressing` annotation is applied to an endpoint implementation
 class and to an injected web service proxy reference. It is used to
@@ -722,7 +722,7 @@ the section <<j2w11svcports>>. The runtime requirements of enabling
 addressing for SOAP binding are specified in section <<addressing>>.
 
 [[mtomannotation]]
-==== javax.xml.ws.soap.MTOM
+==== jakarta.xml.ws.soap.MTOM
 
 The `MTOM` annotation is applied to an endpoint implementation class
 and to an injected web service proxy reference.
@@ -739,7 +739,7 @@ being sent as an attachment. |0
 |==================================
 
 [[respbindingannotation]]
-==== javax.xml.ws.RespectBinding
+==== jakarta.xml.ws.RespectBinding
 
 The `RespectBinding` annotation is applied to an endpoint implementation
 class

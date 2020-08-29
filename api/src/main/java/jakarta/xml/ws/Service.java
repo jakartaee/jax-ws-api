@@ -357,7 +357,7 @@ public class Service {
      * @param type The class of object used for messages or message
      * payloads. Implementations are required to support
      * {@code javax.xml.transform.Source}, {@code jakarta.xml.soap.SOAPMessage}
-     * and {@code javax.activation.DataSource}, depending on
+     * and {@code jakarta.activation.DataSource}, depending on
      * the binding in use.
      * @param mode Controls whether the created dispatch instance is message
      * or payload oriented, i.e. whether the client will work with complete

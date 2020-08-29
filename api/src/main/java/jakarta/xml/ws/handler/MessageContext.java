@@ -114,21 +114,21 @@ public interface MessageContext extends Map<String, Object> {
 
     /**
      * Standard property: servlet request object.
-     * <p>Type: javax.servlet.http.HttpServletRequest
+     * <p>Type: jakarta.servlet.http.HttpServletRequest
      */
     public static final String SERVLET_REQUEST =
             "jakarta.xml.ws.servlet.request";
 
     /**
      * Standard property: servlet response object.
-     * <p>Type: javax.servlet.http.HttpServletResponse
+     * <p>Type: jakarta.servlet.http.HttpServletResponse
      */
     public static final String SERVLET_RESPONSE =
             "jakarta.xml.ws.servlet.response";
 
     /**
      * Standard property: servlet context object.
-     * <p>Type: javax.servlet.ServletContext
+     * <p>Type: jakarta.servlet.ServletContext
      */
     public static final String SERVLET_CONTEXT =
             "jakarta.xml.ws.servlet.context";

@@ -104,17 +104,17 @@ section [xmlnames].
 An application MAY customize this mapping using the `jaxws:class`
 binding declaration defined in section [bindingdeclporttype].
 
-_♦ Conformance (`javax.jws.WebService` required):_ A mapped SEI MUST be annotated with a
-`javax.jws.WebService` annotation.
+_♦ Conformance (`jakarta.jws.WebService` required):_ A mapped SEI MUST be annotated with a
+`jakarta.jws.WebService` annotation.
 
 A WSDL may define additional types via type substitution that are not
 referenced by a service directly but may still need to be marshalled by
-JAX-WS. The `javax.xml.bind.XmlSeeAlso` annotation from JAXB is used on
+JAX-WS. The `jakarta.xml.bind.XmlSeeAlso` annotation from JAXB is used on
 the generated SEI to specify any additional types from the WSDL.
 
-_♦ Conformance (`javax.xml.bind.XmlSeeAlso` required):_ An SEI generated from a WSDL that
+_♦ Conformance (`jakarta.xml.bind.XmlSeeAlso` required):_ An SEI generated from a WSDL that
 defines types not directly referenced by the `Port` MUST contain the
-`javax.xml.bind.XmlSeeAlso` annotation with all of the additional types
+`jakarta.xml.bind.XmlSeeAlso` annotation with all of the additional types
 referenced either directly or indirectly.
 
 [id="2.1"]
@@ -148,7 +148,7 @@ Figure 2.1: Directly and indirectly @XmlSeeAlso annotated SEI
 
 
 Figure <<2.1>> shows how an SEI can be annotated with
-`javax.xml.bind.XmlSeeAlso`. This figures shows some of the types that
+`jakarta.xml.bind.XmlSeeAlso`. This figures shows some of the types that
 may have been created while importing a WSDL and the different
 approaches to annotating the SEI.
 
@@ -172,8 +172,8 @@ section [xmlnames].
 An application MAY customize this mapping using the `jaxws:method`
 binding declaration defined in section <<bindingdeclporttypeoperation>>.
 
-_♦ Conformance ( javax.jws.WebMethod required):_ A mapped Java method MUST be annotated
-with a `javax.jws.WebMethod` annotation. The annotation MAY be omitted
+_♦ Conformance ( jakarta.jws.WebMethod required):_ A mapped Java method MUST be annotated
+with a `jakarta.jws.WebMethod` annotation. The annotation MAY be omitted
 if all its properties would have the default values.
 
 The WS-I Basic Profile<<bib20>> R2304
@@ -189,8 +189,8 @@ _♦ Conformance (Transmission primitive support):_ An implementation MUST suppo
 of operations that use the `one-way` and `request-response` transmission
 primitives.
 
-_♦ Conformance (Using javax.jws.OneWay ):_ A Java method mapped from a one-way operation
-MUST be annotated with a `javax.jws.OneWay` annotation.
+_♦ Conformance (Using jakarta.jws.OneWay ):_ A Java method mapped from a one-way operation
+MUST be annotated with a `jakarta.jws.OneWay` annotation.
 
 Mapping of `notification` and `solicit-response` operations is out of
 scope.
@@ -212,23 +212,23 @@ described in the following subsections. Note that the binding of a port
 type can affect the mapping of that port type to Java, see section
 [wsdl11bindingmap] for details.
 
-_♦ Conformance (Using javax.jws.SOAPBinding ):_ An SEI mapped from a port type that is
+_♦ Conformance (Using jakarta.jws.SOAPBinding ):_ An SEI mapped from a port type that is
 bound using the WSDL SOAP binding MUST be annotated with a
-`javax.jws.SOAPBinding` annotation describing the choice of style,
+`jakarta.jws.SOAPBinding` annotation describing the choice of style,
 encoding and parameter style. The annotation MAY be omitted if all its
 properties would have the default values (i.e.
 document/literal/wrapped).
 
-_♦ Conformance (Using javax.jws.WebParam ):_ Generated Java method parameters MUST be
-annotated with a `javax.jws.WebParam` annotation. If the style is rpc or
+_♦ Conformance (Using jakarta.jws.WebParam ):_ Generated Java method parameters MUST be
+annotated with a `jakarta.jws.WebParam` annotation. If the style is rpc or
 if the style is Document and the parameter style is BARE then the
-`partName` element of `javax.jws.WebParam` MUST refer to the `wsdl:part`
+`partName` element of `jakarta.jws.WebParam` MUST refer to the `wsdl:part`
 name of the parameter.
 
-_♦ Conformance (Using javax.jws.WebResult ):_ Generated Java methods MUST be annotated
-with a `javax.jws.WebResult` annotation. If the style is rpc or if the
+_♦ Conformance (Using jakarta.jws.WebResult ):_ Generated Java methods MUST be annotated
+with a `jakarta.jws.WebResult` annotation. If the style is rpc or if the
 style is Document and the parameter style is BARE then the `partName`
-element of `javax.jws.WebResult` MUST refer to the `wsdl:part` name of
+element of `jakarta.jws.WebResult` MUST refer to the `wsdl:part` name of
 the parameter. The annotation MAY be omitted if all its properties would
 have the default values.
 
@@ -296,9 +296,9 @@ marshalling/unmarshalling the return type. Parameters of an SEI method
 MUST contain the appropriate JAXB annotations to assure that the proper
 XML infoset is used when marshalling/unmarshalling the parameters of the
 method. The set of JAXB annotations that MUST be supported are:
-`javax.xml.bind.annotation.XmlAttachementRef`,
-`javax.xml.bind.annotation.XmlList`, `javax.xml.bind.XmlMimeType` and
-`javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter`.
+`jakarta.xml.bind.annotation.XmlAttachementRef`,
+`jakarta.xml.bind.annotation.XmlList`, `jakarta.xml.bind.XmlMimeType` and
+`jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter`.
 
 [[non-wrapper-style]]
 ===== Non-wrapper Style
@@ -416,14 +416,14 @@ reported as an error and requires developer intervention to correct,
 either by disabling wrapper style mapping, modifying the source WSDL or
 by specifying a customized parameter name mapping.
 
-_♦ Conformance (Using `javax.xml.ws.RequestWrapper` ):_ If wrapper style is used,
+_♦ Conformance (Using `jakarta.xml.ws.RequestWrapper` ):_ If wrapper style is used,
 generated Java methods MUST be annotated with a
-`javax.xml.ws.RequestWrapper` annotation. The annotation MAY be omitted
+`jakarta.xml.ws.RequestWrapper` annotation. The annotation MAY be omitted
 if all its properties would have the default values.
 
-_♦ Conformance (Using `javax.xml.ws.ResponseWrapper` ):_ If wrapper style is used,
+_♦ Conformance (Using `jakarta.xml.ws.ResponseWrapper` ):_ If wrapper style is used,
 generated Java methods MUST be annotated with a
-`javax.xml.ws.ResponseWrapper` annotation. The annotation MAY be omitted
+`jakarta.xml.ws.ResponseWrapper` annotation. The annotation MAY be omitted
 if all its properties would have the default values.
 
 [[example]]
@@ -537,7 +537,7 @@ appear in the wrapper.
 Holder classes are used to support `out` and `in/out` parameters in
 mapped method signatures. They provide a mutable wrapper for otherwise
 immutable object references. JAX-WS defines a generic holder class
-(`javax.xml.ws.Holder<T>`) that can be used for any Java class.
+(`jakarta.xml.ws.Holder<T>`) that can be used for any Java class.
 
 Parameters whose XML data type would normally be mapped to a Java
 primitive type (e.g., `xsd:int` to `int`) are instead mapped to a
@@ -547,7 +547,7 @@ parameter whose XML data type would normally be mapped to a Java `int`
 is instead mapped to `Holder<java.lang.Integer>`.
 
 _♦ Conformance (Use of `Holder` ):_ Implementations MUST map `out` and `in/out` method
-parameters using `javax.xml.ws.Holder<T>`, with the exception of a `out`
+parameters using `jakarta.xml.ws.Holder<T>`, with the exception of a `out`
 part that has been mapped to the method’s return type.
 
 [[wsdl11asyncmethod]]
@@ -576,11 +576,11 @@ method as being asynchronous.
 The following standard interfaces are used in the asynchronous operation
 mapping:
 
-`javax.xml.ws.Response`::
+`jakarta.xml.ws.Response`::
   A generic interface that is used to group the results of a method
   invocation with the response context. `Response` extends `Future<T>`
   to provide asynchronous result polling capabilities.
-`javax.xml.ws.AsyncHandler`::
+`jakarta.xml.ws.AsyncHandler`::
   A generic interface that clients implement to receive results in an
   asynchronous callback.
 
@@ -827,19 +827,19 @@ optimizing transmission of binary data types. JAX-WS provides the MIME
 processing required to enable JAXB to serialize and deserialize MIME
 based MTOM/XOP packages. The contract between JAXB and an MTOM/XOP
 package processor is defined by the
-`javax.xml.bind.AttachmentMarshaller` and
-`javax.xml.bind.AttachmentUnmarshaller` classes. A JAX-WS implementation
+`jakarta.xml.bind.AttachmentMarshaller` and
+`jakarta.xml.bind.AttachmentUnmarshaller` classes. A JAX-WS implementation
 can plug into it by registering its own `AttachmentMarshaller` and
 `AttachmentUnmarshaller` at runtime using the
-`setAttachmentUnmarshaller` method of `javax.xml.bind.Unmarshaller`
+`setAttachmentUnmarshaller` method of `jakarta.xml.bind.Unmarshaller`
 (resp. the `setAttachmentMarshaller` method of
-`javax.xml.bind.Marshaller`).
+`jakarta.xml.bind.Marshaller`).
 
 [[w3ceprmapping]]
 ==== W3CEndpointReference
 
 JAXB 2.1 by default does not map `wsa:EndpointReference` to the
-`javax.xml.ws.wsaddressing.W3CEndpointReference` class. However, for
+`jakarta.xml.ws.wsaddressing.W3CEndpointReference` class. However, for
 JAX-WS developers to fully utilize the use of a `wsa:EndpointReference`,
 JAX-WS implementations MUST map the `wsa:EndpointReference`
 
@@ -848,17 +848,17 @@ JAXB 2.1 provides a standard customization that can be used to cause
 this mapping. Implementations may provide a way to map these types
 differently.
 
-_♦ Conformance (`javax.xml.ws.wsaddressing.W3CEndpointReference`):_ Any schema element of
+_♦ Conformance (`jakarta.xml.ws.wsaddressing.W3CEndpointReference`):_ Any schema element of
 the type `wsa:EndpointReference` or its subtypes MUST be mapped to
-`javax.xml.ws.wsaddressing.W3CEndpointReference` by default.
+`jakarta.xml.ws.wsaddressing.W3CEndpointReference` by default.
 
 [[faulttoexceptmap]]
 === Fault
 
 A `wsdl:fault` element is mapped to a Java exception.
 
-_♦ Conformance (`javax.xml.ws.WebFault` required):_ A mapped exception MUST be annotated
-with a `javax.xml.ws.WebFault` annotation.
+_♦ Conformance (`jakarta.xml.ws.WebFault` required):_ A mapped exception MUST be annotated
+with a `jakarta.xml.ws.WebFault` annotation.
 
 _♦ Conformance (Exception naming):_ In the absence of customizations, the name of a
 mapped exception MUST be the value of the `name` attribute of the
@@ -1159,11 +1159,11 @@ A `wsdl:service` is a collection of related `wsdl:port` elements. A
 `wsdl:port` element describes a port type bound to a particular protocol
 (a `wsdl:binding`) that is available at particular endpoint address. On
 the client side, a `wsdl:service` element is mapped to a generated
-service class that extends `javax.xml.ws.Service` (see section
+service class that extends `jakarta.xml.ws.Service` (see section
 <<serviceapi>> for more information on the `Service` class).
 
 _♦ Conformance ( Service superclass required):_ A generated service class MUST extend
-the `javax.xml.ws.Service` class.
+the `jakarta.xml.ws.Service` class.
 
 _♦ Conformance (Service class naming):_ In the absence of customization, the name of a
 generated service class MUST be the value of the `name` attribute of the
@@ -1176,19 +1176,19 @@ using the `jaxws:class` binding declaration defined in section
 
 In order to allow an implementation to identify the Web service that a
 generated service class corresponds to, the latter is required to be
-annotated with `javax.xml.ws.WebServiceClient` annotation. The
+annotated with `jakarta.xml.ws.WebServiceClient` annotation. The
 annotation contains all the information necessary to locate a WSDL
 document and uniquely identify a `wsdl:service` inside it.
 
-_♦ Conformance (`javax.xml.ws.WebServiceClient required`):_ A generated service class
-MUST be annotated with a `javax.xml.ws.WebServiceClient` annotation.
+_♦ Conformance (`jakarta.xml.ws.WebServiceClient required`):_ A generated service class
+MUST be annotated with a `jakarta.xml.ws.WebServiceClient` annotation.
 
 JAX-WS 2.2 mandates that six constructors be present on every generated
 service class.
 
 _♦ Conformance (Generated service default constructor):_ A generated service class MUST
 have a default (i.e. zero-argument) public constructor. This constructor
-MUST call the `javax.xml.ws.Service(URL, QName)` protected constructor,
+MUST call the `jakarta.xml.ws.Service(URL, QName)` protected constructor,
 passing as arguments the WSDL location and the service name. The values
 of the actual arguments for this call MUST be equal (in the
 `java.lang.Object.equals` sense) to the values specified in the
@@ -1197,9 +1197,9 @@ itself.
 
 _♦ Conformance (Generated service `(WebServiceFeature ...)` constructor):_ A generated
 service class MUST have a public constructor that takes one argument,
-the web service features (a varargs `javax.xml.ws.WebServiceFeature`).
+the web service features (a varargs `jakarta.xml.ws.WebServiceFeature`).
 This constructor MUST call the
-`javax.xml.ws.Service(URL, QName, WebServiceFeature ...)` protected
+`jakarta.xml.ws.Service(URL, QName, WebServiceFeature ...)` protected
 constructor, passing as arguments the WSDL location, the service name
 and the web service features. The values of the actual arguments WSDL
 location, service name for this call are as specified in the mandatory
@@ -1210,7 +1210,7 @@ invoked.
 _♦ Conformance (Generated service `(URL)` constructor):_ The implementation class MUST
 have a public constructor that takes one argument, the WSDL location (a
 `java.net.URL`). This constructor MUST call the
-`javax.xml.ws.Service(URL, QName)` protected constructor. The values of
+`jakarta.xml.ws.Service(URL, QName)` protected constructor. The values of
 the actual arguments WSDL location is with which it was invoked and the
 service name is as specified in the mandatory `WebServiceClient`
 annotation on the generated service class itself.
@@ -1219,8 +1219,8 @@ _♦ Conformance (Generated service `(URL,WebServiceFeature...)` constructor):_ 
 implementation +
 class MUST have a public constructor that takes two arguments, the WSDL
 location (a `java.net.URL`) and the web service features (a varargs
-`javax.xml.ws.WebServiceFeature`). This constructor MUST call the
-`javax.xml.ws.Service(URL, QName, WebServiceFeature ...)` protected
+`jakarta.xml.ws.WebServiceFeature`). This constructor MUST call the
+`jakarta.xml.ws.Service(URL, QName, WebServiceFeature ...)` protected
 constructor, passing as arguments the WSDL location, the service name
 and the web service features. The values of the actual arguments WSDL
 location and the web services features are with which it was invoked and
@@ -1231,7 +1231,7 @@ _♦ Conformance (Generated service `(URL,QName)` constructor):_ The implementat
 MUST have a public constructor that takes two arguments, the WSDL
 location (a `java.net.URL`) and the service name (a
 `javax.xml.namespace.QName`). This constructor MUST call the
-`javax.xml.ws.Service(URL, QName)` protected constructor, passing as
+`jakarta.xml.ws.Service(URL, QName)` protected constructor, passing as
 arguments the WSDL location and the service name values with which it
 was invoked.
 
@@ -1239,8 +1239,8 @@ _♦ Conformance (Generated service `(URL,QName,WebServiceFeature...)` construct
 implementation class MUST have a public constructor that takes three
 arguments, the WSDL location (a `java.net.URL`), the service name (a
 `javax.xml.namespace.QName`) and the web service features (a varargs
-`javax.xml.ws.WebServiceFeature`). This constructor MUST call the
-`javax.xml.ws.Service(URL, QName, WebServiceFeature ...)` protected
+`jakarta.xml.ws.WebServiceFeature`). This constructor MUST call the
+`jakarta.xml.ws.Service(URL, QName, WebServiceFeature ...)` protected
 constructor, passing as arguments the WSDL location, the service name
 and the web service feature values with which it was invoked.
 
@@ -1257,7 +1257,7 @@ service and whose binding is supported by the JAX-WS implementation:
 
 `get`_PortName_`(WebServiceFeature... features)`::
   One required method that takes a variable-length array of
-  `javax.xml.ws.WebServiceFeature` and returns a proxy that implements
+  `jakarta.xml.ws.WebServiceFeature` and returns a proxy that implements
   the mapped service endpoint interface. The method generated delegates
   to the
   `Service.getPort(QName portName, Class<T> SEI, WebServiceFeature... features)`
@@ -1266,7 +1266,7 @@ service and whose binding is supported by the JAX-WS implementation:
   `WebEndpoint` annotation on the method itself.
 
 _♦ Conformance (Failed getPort Method):_ A generated `get`_PortName_ method MUST throw
-`javax.xml.ws.WebServiceException` on failure.
+`jakarta.xml.ws.WebServiceException` on failure.
 
 The value of _PortName_ in the above is derived as follows: the value of
 the `name` attribute of the `wsdl:port` element is first mapped to a
@@ -1280,11 +1280,11 @@ port using the `jaxws:method` binding declaration defined in section
 
 In order to enable an implementation to determine the `wsdl:port` that a
 port getter method corresponds to, the latter is required to be
-annotated with a `javax.xml.ws.WebEndpoint` annotation.
+annotated with a `jakarta.xml.ws.WebEndpoint` annotation.
 
-_♦ Conformance (`javax.xml.ws.WebEndpoint` required):_ The `get`_PortName_ methods of
+_♦ Conformance (`jakarta.xml.ws.WebEndpoint` required):_ The `get`_PortName_ methods of
 generated service interface MUST be annotated with a
-`javax.xml.ws.WebEndpoint` annotation.
+`jakarta.xml.ws.WebEndpoint` annotation.
 
 [[example-2]]
 ==== Example
@@ -1304,7 +1304,7 @@ class.
 @WebServiceClient(name="StockQuoteService",
 targetNamespace="http://example.com/stocks",
 wsdlLocation="http://example.com/stocks.wsdl")
-public class StockQuoteService extends javax.xml.ws.Service {
+public class StockQuoteService extends jakarta.xml.ws.Service {
 
     public StockQuoteService() {
         super(new URL("http://example.com/stocks.wsdl"),
@@ -1423,6 +1423,6 @@ intervention to correct. The error may be corrected either by modifying
 the source WSDL or by specifying a customized name mapping.
 
 If a name collision occurs between a mapped Java method and a method in
-`javax.xml.ws.BindingProvider` (an interface that proxies are required
+`jakarta.xml.ws.BindingProvider` (an interface that proxies are required
 to implement, see section <<bindingproviderif>>), the prefix _ is added to
 the mapped method.

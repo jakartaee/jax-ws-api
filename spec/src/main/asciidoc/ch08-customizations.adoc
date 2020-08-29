@@ -613,11 +613,11 @@ method/javadoc/text()::
 Method-level javadoc string.
 provider::
 This binding declaration specifies that the annotated port will be
-used with the `javax.xml.ws.Provider` interface.
+used with the `jakarta.xml.ws.Provider` interface.
 
 A port annotated with a `jaxws:provider` binding declaration is treated
 specially. No service endpoint interface will be generated for it, since
-the application code will use in its lieu the `javax.xml.ws.Provider`
+the application code will use in its lieu the `jakarta.xml.ws.Provider`
 interface. Additionally, the port getter method on the generated service
 interface will be omitted.
 

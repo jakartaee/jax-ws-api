@@ -14,7 +14,7 @@ many Web services today.
 
 The XML/HTTP binding is identified by the URL
 `http://www.w3.org/2004/08/wsdl/http`, which is also the value of the
-constant `javax.xml.ws.http.HTTPBinding.HTTP_BINDING`.
+constant `jakarta.xml.ws.http.HTTPBinding.HTTP_BINDING`.
 
 _♦ Conformance (XML/HTTP Binding Support):_ An implementation MUST support the XML/HTTP
 binding.
@@ -41,18 +41,18 @@ the following types:
 
 Logical::
 Logical handlers are handlers that implement
-`javax.xml.ws.handler.LogicalHandler` either directly or indirectly.
+`jakarta.xml.ws.handler.LogicalHandler` either directly or indirectly.
 Logical handlers have access to the entire XML message via the logical
 message context.
 
-Use of `javax.xml.ws.binding.attachments.outbound` property in Dispatch
+Use of `jakarta.xml.ws.binding.attachments.outbound` property in Dispatch
 
 * When using `Dispatch` in XML / HTTP binding in payload mode,
 attachments specified using the
-`javax.xml.ws.binding.attachments.outbound` property will be included as
+`jakarta.xml.ws.binding.attachments.outbound` property will be included as
 mime attachments to the message.
 * When using `Dispatch` in XML / HTTP binding in message mode, the
-`javax.xml.ws.binding.attachments.outbound` property will be ignored.
+`jakarta.xml.ws.binding.attachments.outbound` property will be ignored.
 `Dispatch` of type `DataSource` should be used to send mime attachments
 for the XML / HTTP binding in message mode.
 
@@ -174,23 +174,23 @@ accepted or processed.
 ==== Security
 
 Section <<stdbpprops>> defines two standard context properties
-(`javax.xml.ws.security.auth.username` and
-`javax.xml.ws.security.auth.password`) that may be used to configure
+(`jakarta.xml.ws.security.auth.username` and
+`jakarta.xml.ws.security.auth.password`) that may be used to configure
 authentication information.
 
 _♦ Conformance (HTTP basic authentication support):_ An implementation of the XML/HTTP
 binding MUST support HTTP basic authentication.
 
 _♦ Conformance (Authentication properties):_ A client side implementation MUST support
-use of the the standard properties `javax.xml.ws.security.auth.username`
-and `javax.xml.ws.security.auth.password` to configure HTTP basic
+use of the the standard properties `jakarta.xml.ws.security.auth.username`
+and `jakarta.xml.ws.security.auth.password` to configure HTTP basic
 authentication.
 
 [[session-management-2]]
 ==== Session Management
 
 Section <<stdbpprops>> defines a standard context property
-(`javax.xml.ws.session.maintain`) that may be used to control whether a
+(`jakarta.xml.ws.session.maintain`) that may be used to control whether a
 client side runtime will join a session initiated by a service.
 
 A XML/HTTP binding implementation can use three HTTP mechanisms for

@@ -23,7 +23,7 @@ import java.lang.reflect.InvocationTargetException;
  * invocation of web service on endpoint instance.
  *
  * Container also injects the provided {@code WebServiceContext} and takes
- * care of invoking {@code javax.annotation.PostConstruct} methods,
+ * care of invoking {@code jakarta.annotation.PostConstruct} methods,
  * if present, on the endpoint implementation.
  *
  * @see Provider#createEndpoint(String, Class, Invoker, WebServiceFeature...)
