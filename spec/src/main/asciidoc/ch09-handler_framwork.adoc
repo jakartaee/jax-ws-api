@@ -10,7 +10,7 @@ modules, known as handlers, that may be used to extend the capabilities
 of a JAX-WS runtime system. This chapter describes the handler framework
 in detail.
 
-_♦ Conformance (Handler framework support):_ An implementation MUST support the handler
+&#9674; _Conformance (Handler framework support):_ An implementation MUST support the handler
 framework.
 
 [[architecture]]
@@ -83,20 +83,20 @@ section <<handmsgctxmngmt>>
 image::images/handlers.png[]
 Figure 9.2: Handler class hierarchy
 
-_♦ Conformance (Logical handler support):_ All binding implementations MUST support
+&#9674; _Conformance (Logical handler support):_ All binding implementations MUST support
 logical handlers (see section <<handlertypes>>) being deployed in their
 handler chains.
 
-_♦ Conformance (Other handler support):_ Binding implementations MAY support other
+&#9674; _Conformance (Other handler support):_ Binding implementations MAY support other
 handler types (see section <<handlertypes>>) being deployed in their
 handler chains.
 
-_♦ Conformance (Incompatible handlers):_ An implementation MUST throw
+&#9674; _Conformance (Incompatible handlers):_ An implementation MUST throw
 `WebServiceException` when, at the time a binding provider is created,
 the handler chain returned by the configured `HandlerResolver` contains
 an incompatible handler.
 
-_♦ Conformance (Incompatible handlers):_ Implementations MUST throw a
+&#9674; _Conformance (Incompatible handlers):_ Implementations MUST throw a
 `WebServiceException` when attempting to configure an incompatible
 handler using the `Binding.setHandlerChain` method.
 
@@ -161,7 +161,7 @@ provider then the created instance is configured with the handler chain
 created by the `HandlerResolver` instance registered on the `Service`
 instance at that point in time.
 
-_♦ Conformance (Handler chain snapshot):_ Changing the handler resolver configured for a
+&#9674; _Conformance (Handler chain snapshot):_ Changing the handler resolver configured for a
 `Service` instance MUST NOT affect the handlers on previously created
 proxies, or `Dispatch` instances.
 
@@ -197,7 +197,7 @@ specified by JSR-181, the `handlerChain` annotation MAY appear on a
 generated service class. In this case, it affects all the proxies and
 `Dispatch` instances created using any of the ports on the service.
 
-_♦ Conformance (HandlerChain annotation):_ An implementation MUST support using the
+&#9674; _Conformance (HandlerChain annotation):_ An implementation MUST support using the
 `HandlerChain` annotation on an endpoint implementation class, including
 a provider, on an endpoint interface and on a generated service class.
 
@@ -205,7 +205,7 @@ On the client, the `HandlerChain` annotation can be seen as a shorthand
 way of defining and installing a handler resolver (see
 <<clienthandlerresolver>>).
 
-_♦ Conformance (Handler resolver for a HandlerChain annotation):_ For a generated service
+&#9674; _Conformance (Handler resolver for a HandlerChain annotation):_ For a generated service
 class (see <<gensvcif>>) which is annotated with a `HandlerChain`
 annotation, the default handler resolver MUST return handler chains
 consistent with the contents of the handler chain descriptor referenced
@@ -235,7 +235,7 @@ the applicable handlers configured on the `Service` instance at the time
 of creation. `Binding` provides methods to manipulate the initially
 configured handler chain for a specific instance.
 
-_♦ Conformance (Binding handler manipulation):_ Changing the handler chain on a `Binding`
+&#9674; _Conformance (Binding handler manipulation):_ Changing the handler chain on a `Binding`
 instance MUST NOT cause any change to the handler chains configured on
 the `Service` instance used to create the `Binding` instance.
 
@@ -287,7 +287,7 @@ MUST satisfy the requirements in JSR-250 <<bib35>> for lifecycle
 methods (i.e. it has a void return type and takes zero arguments). The
 handler instance is then ready for use.
 
-_♦ Conformance (Handler initialization):_ After injection has been completed, an
+&#9674; _Conformance (Handler initialization):_ After injection has been completed, an
 implementation MUST call the lifecycle method annotated with
 `PostConstruct`, if present, prior to invoking any other method on a
 handler instance.
@@ -311,7 +311,7 @@ non-container environments, it is impossible to call the `PreDestroy`
 method in a reliable way, and handler instance cleanup must be left to
 finalizer methods and regular garbage collection.
 
-_♦ Conformance (Handler destruction):_ In a managed environment, prior to releasing a
+&#9674; _Conformance (Handler destruction):_ In a managed environment, prior to releasing a
 handler instance, an implementation MUST call the lifecycle method
 annotated with `PreDestroy` method, if present, on any `Handler`
 instances which it instantiated.
@@ -464,11 +464,11 @@ used to clean up per-MEP resources allocated by a handler. The `close`
 method is only called on handlers that were previously invoked via
 either `handleMessage` or `handleFault`
 
-_♦ Conformance (Invoking `close` ):_ At the conclusion of an MEP, an implementation MUST
+&#9674; _Conformance (Invoking `close` ):_ At the conclusion of an MEP, an implementation MUST
 call the `close` method of each handler that was previously invoked
 during that MEP via either `handleMessage` or `handleFault`.
 
-_♦ Conformance (Order of `close` invocations):_ Handlers are invoked in the reverse order
+&#9674; _Conformance (Order of `close` invocations):_ Handlers are invoked in the reverse order
 in which they were first invoked to handle a message according to the
 rules for normal message processing (see <<handlerexecution>>).
 
@@ -520,7 +520,7 @@ handlers in the chain during the execution of an MEP instance.
 applications (see section <<bindingproviderconfig>>) and service endpoint
 implementations. The defaultscope for a property is `HANDLER`.
 
-_♦ Conformance (Message context property scope):_ Properties in a message context MUST be
+&#9674; _Conformance (Message context property scope):_ Properties in a message context MUST be
 shared across all handler invocations for a particular instance of an
 MEP on any particular endpoint.
 

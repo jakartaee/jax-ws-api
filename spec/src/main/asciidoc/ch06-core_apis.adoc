@@ -34,7 +34,7 @@ implementation’s vendor.
 `Binding` provides methods to manipulate the handler chain configured on
 an instance (see section <<handfmwrkprogconf>>).
 
-_♦ Conformance (Read-only handler chains):_ An implementation MAY prevent changes to
+&#9674; _Conformance (Read-only handler chains):_ An implementation MAY prevent changes to
 handler chains configured by some other means (e.g. via a deployment
 descriptor) by throwing `UnsupportedOperationException` from the
 `setHandlerChain` method of `Binding`
@@ -53,7 +53,7 @@ The `Provider` SPI allows an application to use a different JAX-WS
 implementation from the one bundled with the platform without any code
 changes.
 
-_♦ Conformance (Concrete `jakarta.xml.ws.spi.Provider` required):_ An implementation MUST
+&#9674; _Conformance (Concrete `jakarta.xml.ws.spi.Provider` required):_ An implementation MUST
 provide a concrete class that extends `jakarta.xml.ws.spi.Provider`. Such
 a class MUST have a public constructor which takes no arguments.
 
@@ -129,7 +129,7 @@ shortcut for the common operation of creating and publishing an
 `Endpoint`. It corresponds to the static `publish` method defined on the
 `Endpoint` class, see <<endpointfactusage>>.
 
-_♦ Conformance (Provider createAndPublishEndpoint Method):_ The effect of invoking the
+&#9674; _Conformance (Provider createAndPublishEndpoint Method):_ The effect of invoking the
 `createAndPublishEndpoint` method on a `Provider` MUST be the same as
 first invoking the `createEndpoint` method with the binding ID
 appropriate to the URL scheme used by the address, then invoking the
@@ -199,7 +199,7 @@ implementations MUST provide. This is the class that
 the static `create` methods to. ServiceDelegate is defined as an
 abstract class for future extensibility purpose.
 
-_♦ Conformance (Concrete `jakarta.xml.ws.spi.ServiceDelegate` required):_ An implementation
+&#9674; _Conformance (Concrete `jakarta.xml.ws.spi.ServiceDelegate` required):_ An implementation
 MUST provide a concrete class that extends
 `jakarta.xml.ws.spi.ServiceDelegate`.
 
@@ -235,13 +235,13 @@ ProtocolException is._
 [[protocolspecificfaults]]
 ==== Protocol Specific Exception Handling
 
-_♦ Conformance (Protocol specific fault generation):_ When throwing an exception as the
+&#9674; _Conformance (Protocol specific fault generation):_ When throwing an exception as the
 result of a protocol level fault, an implementation MUST ensure that the
 exception is an instance of the appropriate `ProtocolException`
 subclass. For SOAP the appropriate `ProtocolException` subclass is
 `SOAPFaultException`, for XML/HTTP is is `HTTPException`.
 
-_♦ Conformance (Protocol specific fault consumption):_ When an implementation catches an
+&#9674; _Conformance (Protocol specific fault consumption):_ When an implementation catches an
 exception thrown by a service endpoint implementation and the cause of
 that exception is an instance of the appropriate `ProtocolException`
 subclass for the protocol in use, an implementation MUST reflect the
@@ -281,7 +281,7 @@ public void endpointOperation() {
 [[onewayoperationexception]]
 ===== One-way Operations
 
-_♦ Conformance (One-way operations):_ When sending a one-way message, implementations
+&#9674; _Conformance (One-way operations):_ When sending a one-way message, implementations
 MUST throw a `WebServiceException` if any error is detected when sending
 the message.
 
@@ -313,7 +313,7 @@ each feature should be documented using JavaDocs on the derived classes.
 Each `WebServiceFeature` MUST have a `public static final String ID`
 field that is used to uniquely identify the feature.
 
-_♦ Conformance (`jakarta.xml.ws.WebServiceFeatures`):_ Each derived type of
+&#9674; _Conformance (`jakarta.xml.ws.WebServiceFeatures`):_ Each derived type of
 `jakarta.xml.ws.WebServiceFeature` MUST contain a
 `public static final String ID` field that uniquely identifies the
 feature against all features of all implementations.
@@ -332,7 +332,7 @@ their web applications. For example, a developer may choose to implement
 WS-Addressing himself while using the Dispatch and Provider APIs and
 thus he MUST be able to tell JAX-WS to disable addressing.
 
-_♦ Conformance (`enabled` property):_ Each derived type of
+&#9674; _Conformance (`enabled` property):_ Each derived type of
 `jakarta.xml.ws.WebServiceFeature` MUST provide a constructor argument
 and/or method to allow the web service developer to set the value of the
 `enabled` property. The public default constructor MUST by default set
@@ -424,7 +424,7 @@ The `threshold` is the size in bytes that binary data SHOULD be in order
 to be sent as an attachment. The `threshold` MUST not be negative. The
 default value is `0`.
 
-_♦ Conformance (`jakarta.xml.ws.soap.MTOMFeature`):_ An implementation MUST support the
+&#9674; _Conformance (`jakarta.xml.ws.soap.MTOMFeature`):_ An implementation MUST support the
 `jakarta.xml.ws.soap.MTOMFeature` and its `threshold` property.
 
 [[respbindfeature]]
@@ -435,7 +435,7 @@ implementation MUST respect/honor the contents of the `wsdl:binding`
 associated with an endpoint. It has a corresponding `RespectBinding`
 annotation described in section <<respbindingannotation>>.
 
-_♦ Conformance ( jakarta.xml.ws.RespectBindingFeature ):_ When the
+&#9674; _Conformance ( jakarta.xml.ws.RespectBindingFeature ):_ When the
 `jakarta.xml.ws.RespectBindingFeature` is enabled, a JAX-WS implementation
 MUST inspect the `wsdl:binding` at runtime to determine result and
 parameter bindings as well as any `wsdl:extensions` that have the
@@ -547,6 +547,6 @@ Having a support for this SPI in a JAX-WS implementation in Java SE
 platform would enable deployments to use the Java SE platform’s web
 services runtime portably.
 
-_♦ Conformance (HTTP SPI in SE platform):_ A JAX-WS 2.2 implementation in Java SE
+&#9674; _Conformance (HTTP SPI in SE platform):_ A JAX-WS 2.2 implementation in Java SE
 platform MUST support
 `Endpoint.publish(jakarta.xml.ws.spi.http.HttpContext)`.

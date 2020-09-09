@@ -105,7 +105,7 @@ children.
 
 Figure <<8.2>> shows a WSDL document containing binding declaration
 extensions. For JAXB annotations, it assumes that the prefix `jaxb` is
-bound to the namespace name `http://java.sun.com/xml/ns/jaxb`.
+bound to the namespace name `https://jakarta.ee/xml/ns/jaxb`.
 
 [[externalbindingfile]]
 === External Binding File
@@ -195,7 +195,7 @@ an error if, upon embedding the binding declarations defined in one or
 more external binding files, the resulting WSDL document contains
 conflicting binding declarations.
 
-_♦ Conformance (Multiple binding files):_ Implementations MUST support specifying any
+&#9674; _Conformance (Multiple binding files):_ Implementations MUST support specifying any
 number of external JAX-WS and JAXB binding files for processing in
 conjunction with at least one WSDL document.
 

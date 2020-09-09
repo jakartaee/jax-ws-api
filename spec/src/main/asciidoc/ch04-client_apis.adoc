@@ -36,7 +36,7 @@ using a handler resolver (see section <<clienthandlerresolver>>).
 * Configure the `java.util.concurrent.Executor` to be used for
 asynchronous invocations (see section <<serviceexecutor>>).
 
-_♦ Conformance (Service completeness):_ A `Service` implementation MUST be capable of
+&#9674; _Conformance (Service completeness):_ A `Service` implementation MUST be capable of
 creating proxies, `Dispatch` instances, and new ports.
 
 All the service methods except the static `create` methods and the
@@ -77,12 +77,12 @@ features.
 document is attached to the service. The created service needs to be
 configured with the web service features.
 
-_♦ Conformance (Service Creation Failure):_ If a `create` method fails to create a
+&#9674; _Conformance (Service Creation Failure):_ If a `create` method fails to create a
 service object, it MUST throw `WebServiceException`. The cause of that
 exception SHOULD be set to an exception that provides more information
 on the cause of the error (e.g. an `IOException`).
 
-_♦ Conformance (Service creation using features):_ The created service object MUST honor
+&#9674; _Conformance (Service creation using features):_ The created service object MUST honor
 the web service features. If a JAX-WS implementation doesn’t understand
 any passed-in feature, it MUST throw `WebServiceException`.
 
@@ -224,13 +224,13 @@ invoke any asynchronous callbacks requested by the application. The
 `setExecutor` and `getExecutor` methods of `Service` can be used to
 modify and retrieve the executor configured for a service.
 
-_♦ Conformance (Use of Executor):_ If an executor object is successfully configured for
+&#9674; _Conformance (Use of Executor):_ If an executor object is successfully configured for
 use by a Service via the `setExecutor` method, then subsequent
 asynchronous callbacks MUST be delivered using the specified executor.
 Calls that were outstanding at the time the `setExecutor` method was
 called MAY use the previously set executor, if any.
 
-_♦ Conformance (Default Executor):_ Lacking an application-specified executor, an
+&#9674; _Conformance (Default Executor):_ Lacking an application-specified executor, an
 implementation MUST use its own executor, a
 `java.util.concurrent.ThreadPoolExecutor` or analogous mechanism, to
 deliver callbacks. An implementation MUST NOT use application-provided
@@ -251,7 +251,7 @@ Figure 4.1: Binding Provider Class Relationships
 A web service client can get an `jakarta.xml.ws.EndpointReference` from a
 `BindingProvider` instance that will reference the target endpoint.
 
-_♦ Conformance (`jakarta.xml.ws.BindingProvider.getEndpointReference`):_ An implementation
+&#9674; _Conformance (`jakarta.xml.ws.BindingProvider.getEndpointReference`):_ An implementation
 MUST be able to return an `jakarta.xml.ws.EndpointReference` for the
 target endpoint if a SOAP binding is being used. If the
 `BindingProvider` instance has a binding that is either SOAP 1.1/HTTP or
@@ -259,7 +259,7 @@ SOAP 1.2/HTTP, then a `W3CEndpointReference` MUST be returned. If the
 binding is XML/HTTP an `java.lang.UnsupportedOperationException` MUST be
 thrown.
 
-_♦ Conformance (`BindingProvider’s W3CEndpointReference`):_ The returned
+&#9674; _Conformance (`BindingProvider’s W3CEndpointReference`):_ The returned
 `W3CEndpointReference` MUST contain `wsam:ServiceName` and
 `wsam:ServiceName[@EndpointName]` as per Addressing 1.0 -
 Metadata<<bib27>>. The `wsam:InterfaceName` MAY be present in
@@ -295,7 +295,7 @@ The response context is first emptied and then each property in the
 message context that has a scope of `APPLICATION` is copied to the
 response context.
 
-_♦ Conformance (Message context decoupling):_ Modifications to the request context while
+&#9674; _Conformance (Message context decoupling):_ Modifications to the request context while
 previously invoked operations are in-progress MUST NOT affect the
 contents of the message context for the previously invoked operations.
 
@@ -351,19 +351,19 @@ set to true . Default value is an empty string.
 |==================================
 
 
-_♦ Conformance (Required `BindingProvider` properties):_ An implementation MUST support
+&#9674; _Conformance (Required `BindingProvider` properties):_ An implementation MUST support
 all properties shown as mandatory in table <<Table 4.1>>.
 
 Note that properties shown as mandatory are not required to be present
 in any particular context; however, if present, they must be honored.
 
-_♦ Conformance (Optional `BindingProvider` properties):_ An implementation MAY support
+&#9674; _Conformance (Optional `BindingProvider` properties):_ An implementation MAY support
 the properties shown as optional in table <<Table 4.1>>.
 
 [[additional-properties]]
 ===== Additional Properties
 
-_♦ Conformance (Additional context properties):_ Implementations MAY define additional
+&#9674; _Conformance (Additional context properties):_ Implementations MAY define additional
 implementation specific properties not listed in table <<Table 4.1>>.
 The java.* and javax.* namespaces are reserved for use by Java
 specifications.
@@ -383,7 +383,7 @@ Instead a separate response context is made available using the
 `Response` interface, see sections [wsdl11asyncmethod] and
 [dispasyncresp] for further details on the use of asynchronous methods.
 
-_♦ Conformance (Asynchronous response context):_ The local response context of a
+&#9674; _Conformance (Asynchronous response context):_ The local response context of a
 `BindingProvider` instance MUST NOT be updated on completion of an
 asynchronous operation, instead the response context MUST be made
 available via a `Response` instance.
@@ -406,9 +406,9 @@ Proxy instances are not guaranteed to be thread safe. If the instances
 are accessed by multiple threads, usual synchronization techniques can
 be used to support multiple threads.
 
-_♦ Conformance (Proxy support):_ An implementation MUST support proxies.
+&#9674; _Conformance (Proxy support):_ An implementation MUST support proxies.
 
-_♦ Conformance (Implementing `BindingProvider`):_ An instance of a proxy MUST implement
+&#9674; _Conformance (Implementing `BindingProvider`):_ An instance of a proxy MUST implement
 `jakarta.xml.ws.BindingProvider`.
 
 A proxy is created using the `getPort` methods of a `Service` instance:
@@ -457,7 +457,7 @@ rules specified in chapter <<wsdl112java>> (WSDL 1.1). Creation of a proxy
 can fail if the interface doesn’t conform to the mapping or if any WSDL
 related metadata is missing from the `Service` instance.
 
-_♦ Conformance (`Service.getPort` failure):_ If creation of a proxy fails, an
+&#9674; _Conformance (`Service.getPort` failure):_ If creation of a proxy fails, an
 implementation MUST throw `jakarta.xml.ws.WebServiceException`. The cause
 of that exception SHOULD be set to an exception that provides more
 information on the cause of the error (e.g. an `IOException`).
@@ -468,7 +468,7 @@ Addressing 1.0 - Metadata<<bib27>>. A proxy created using
 specified in the associated WSDL or explicitly passing
 `jakarta.xml.ws.soap.AddressingFeature` web service feature.
 
-_♦ Conformance (Proxy’s Addressing use):_ A proxy MUST be configured with the use of
+&#9674; _Conformance (Proxy’s Addressing use):_ A proxy MUST be configured with the use of
 addressing requirements as indicated in the associated WSDL. But if the
 proxy is created using `jakarta.xml.ws.soap.AddressingFeature` web service
 feature, the feature’s addressing requirements MUST take precedence over
@@ -508,21 +508,21 @@ configuration of the proxy. Lines 7 invokes a method on the proxy.
 All methods of an SEI can throw `jakarta.xml.ws.WebServiceException` and
 zero or more service specific exceptions.
 
-_♦ Conformance (Remote Exceptions):_ If an error occurs during a remote operation
+&#9674; _Conformance (Remote Exceptions):_ If an error occurs during a remote operation
 invocation, an implemention MUST throw a service specific exception if
 possible. If the error cannot be mapped to a service specific exception,
 an implementation MUST throw a `ProtocolException` or one of its
 subclasses, as appropriate for the binding in use. See section
 <<protocolspecificfaults>> for more details.
 
-_♦ Conformance (Exceptions During Handler Processing):_ Exceptions thrown during handler
+&#9674; _Conformance (Exceptions During Handler Processing):_ Exceptions thrown during handler
 processing on the client MUST be passed on to the application. If the
 exception in question is a subclass of `WebServiceException` then an
 implementation MUST rethrow it as-is, without any additional wrapping,
 otherwise it MUST throw a `WebServiceException` whose cause is set to
 the exception that was thrown during handler processing.
 
-_♦ Conformance (Other Exceptions):_ For all other errors, i.e. all those that don’t occur
+&#9674; _Conformance (Other Exceptions):_ For all other errors, i.e. all those that don’t occur
 as part of a remote invocation or handler processing, an implementation
 MUST throw a `WebServiceException` whose cause is the original local
 exception that was thrown, if any.
@@ -541,7 +541,7 @@ corresponding XML messages, but in some cases operating at the XML
 message level is desirable. The `Dispatch` interface provides support
 for this mode of interaction.
 
-_♦ Conformance (`Dispatch` support):_ Implementations MUST support the
+&#9674; _Conformance (`Dispatch` support):_ Implementations MUST support the
 `jakarta.xml.ws.Dispatch` interface.
 
 `Dispatch` supports two usage modes, identified by the constants
@@ -649,20 +649,20 @@ message with an empty body.
 passed to `invoke` with the HTTP POST and PUT operations is an error
 condition and will result in a `WebServiceException`.
 
-_♦ Conformance (Failed `Dispatch.invoke`):_ When an operation is invoked using an
+&#9674; _Conformance (Failed `Dispatch.invoke`):_ When an operation is invoked using an
 `invoke` method, an implementation MUST throw a `WebServiceException` if
 there is any error in the configuration of the `Dispatch` instance or a
 `ProtocolException` if an error occurs during the remote operation
 invocation.
 
-_♦ Conformance (Failed `Dispatch.invokeAsync`):_ When an operation is invoked using an
+&#9674; _Conformance (Failed `Dispatch.invokeAsync`):_ When an operation is invoked using an
 `invokeAsync` method, an implementation MUST throw a
 `WebServiceException` if there is any error in the configuration of the
 `Dispatch` instance. Errors that occur during the invocation are
 reported when the client attempts to retrieve the results of the
 operation.
 
-_♦ Conformance (Failed `Dispatch.invokeOneWay`):_ When an operation is invoked using an
+&#9674; _Conformance (Failed `Dispatch.invokeOneWay`):_ When an operation is invoked using an
 `invokeOneWay` method, an implementation MUST throw a
 `WebServiceException` if there is any error in the configuration of the
 `Dispatch` instance or if an error is detectedfootnote:[The invocation
@@ -695,7 +695,7 @@ In both cases, errors that occur during the invocation are reported via
 an exception when the client attempts to retrieve the results of the
 operation.
 
-_♦ Conformance (Reporting asynchronous errors):_ If the operation invocation fails, an
+&#9674; _Conformance (Reporting asynchronous errors):_ If the operation invocation fails, an
 implementation MUST throw a `java.util.concurrent.ExecutionException`
 from the `Response.get` method.
 
@@ -725,7 +725,7 @@ that has a `Response` object as its argument.
 `Dispatch` instance will use to marshall and unmarshall messages or
 message payloads.
 
-_♦ Conformance (Marshalling failure):_ If an error occurs when using the supplied
+&#9674; _Conformance (Marshalling failure):_ If an error occurs when using the supplied
 `JAXBContext` to marshall a request or unmarshall a response, an
 implementation MUST throw a `WebServiceException` whose `cause` is set
 to the original `JAXBException`.
@@ -843,7 +843,7 @@ MUST be used to retrieve all the resources with the specified name.
 Relative URIs inside a catalog file are relative to the location of the
 catalog that contains them.
 
-_♦ Conformance (Use of the Catalog):_ In the process of resolving a URI that points to a
+&#9674; _Conformance (Use of the Catalog):_ In the process of resolving a URI that points to a
 WSDL document or any document reachable from it, a JAX-WS implementation
 MUST perform a URI resolution for it, as prescribed by the XML Catalogs
 1.1 specification, using the catalog defined above as its entity

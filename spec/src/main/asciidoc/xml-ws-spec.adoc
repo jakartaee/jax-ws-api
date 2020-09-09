@@ -13,6 +13,8 @@
 :toclevels: 4
 :sectnumlevels: 4
 :sectanchors:
+:xrefstyle: full
+:listing-caption:
 ifdef::backend-pdf[]
 :pagenums:
 :numbered:
@@ -24,7 +26,7 @@ endif::[]
 include::license-efsl.adoc[]
 
 // == Scope
-:sectnums:
+:sectnums!:
 include::xml-ws.adoc[]
 
 // == Jakarta XML Web Services

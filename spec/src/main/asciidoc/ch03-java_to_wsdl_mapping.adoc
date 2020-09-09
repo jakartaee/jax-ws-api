@@ -9,7 +9,7 @@ This chapter describes the mapping from Java to WSDL 1.1. This mapping
 is used when generating web service endpoints from existing Java
 interfaces.
 
-_♦ Conformance (WSDL 1.1 support):_ Implementations MUST support mapping Java to WSDL
+&#9674; _Conformance (WSDL 1.1 support):_ Implementations MUST support mapping Java to WSDL
 1.1.
 
 The following sections describe the default mapping from each Java
@@ -18,14 +18,14 @@ construct to the equivalent WSDL 1.1 artifact.
 An application MAY customize the mapping using the annotations defined
 in section <<metadata>>.
 
-_♦ Conformance (Standard annotations):_ An implementation MUST support the use of
+&#9674; _Conformance (Standard annotations):_ An implementation MUST support the use of
 annotations defined in section [metadata] to customize the Java to WSDL
 1.1 mapping.
 
 [[javanames]]
 === Java Names
 
-_♦ Conformance (Java identifier mapping):_ In the absence of annotations described in this
+&#9674; _Conformance (Java identifier mapping):_ In the absence of annotations described in this
 specification, Java identifiers MUST be mapped to XML names using the
 algorithm defined in appendix B of SOAP 1.2 Part 2<<bib4>>.
 
@@ -37,7 +37,7 @@ R2304) requires operations within a `wsdl:portType` to be uniquely named
 – support for customization of the operation name allows this
 requirement to be met when a Java SEI contains overloaded methods.
 
-_♦ Conformance (Method name disambiguation):_ An implementation MUST support the use of
+&#9674; _Conformance (Method name disambiguation):_ An implementation MUST support the use of
 the `jakarta.jws.WebMethod` annotation to disambiguate overloaded Java
 method names when mapped to WSDL.
 
@@ -60,7 +60,7 @@ concatenating http://to the list of tokens separated by  . and /.
 E.g., the Java package com.example.ws would be mapped to the target
 namespace http://ws.example.com/ .
 
-_♦ Conformance (Package name mapping):_ The `jakarta.jws.WebService` annotation (see
+&#9674; _Conformance (Package name mapping):_ The `jakarta.jws.WebService` annotation (see
 section <<mdwebservice>>) MAY be used to specify the target namespace to
 use for a Web service and MUST be used for classes or interfaces in no
 package. In the absence of a `jakarta.jws.WebService` annotation the Java
@@ -71,7 +71,7 @@ No specific authoring style is required for the mapped WSDL document;
 implementations are free to generate WSDL that uses the WSDL and XML
 Schema import directives.
 
-_♦ Conformance (WSDL and XML Schema import directives):_ Generated WSDL MUST comply with
+&#9674; _Conformance (WSDL and XML Schema import directives):_ Generated WSDL MUST comply with
 the WS-I Basic Profile 1.0<<bib8>>
 restrictions (See R2001, R2002, and R2003) on usage of WSDL and XML
 Schema import directives.
@@ -110,7 +110,7 @@ with `WebService` and not directly specifying a `endpointInterface` from
 the implicitly defined SEI, it is necessary to annotate the method with
 a `WebMethod` annotation with the `exclude` element set to `true`.
 
-_♦ Conformance (Class mapping):_ An implementation MUST support the mapping of
+&#9674; _Conformance (Class mapping):_ An implementation MUST support the mapping of
 `jakarta.jws.WebService` annotated classes to implicit service endpoint
 interfaces.
 
@@ -136,7 +136,7 @@ to `true`.
 * All method parameters and return types are compatible with the JAXB
 2.0<<bib10>> Java to XML Schema mapping definition
 
-_♦ Conformance (portType naming):_ The `jakarta.jws.WebService` annotation (see section
+&#9674; _Conformance (portType naming):_ The `jakarta.jws.WebService` annotation (see section
 <<mdwebservice>>) MAY be used to customize the `name` and
 `targetNamespace` attributes of the `wsdl:portType` element. If not
 customized, the value of the `name` attribute of the `wsdl:portType`
@@ -161,11 +161,11 @@ of `wsdl:portType` elements. When mapping an SEI that inherits from
 another interface, the SEI is treated as if all methods of the inherited
 interface were defined within the SEI.
 
-_♦ Conformance (Inheritance flattening):_ A mapped `wsdl:portType` element MUST contain
+&#9674; _Conformance (Inheritance flattening):_ A mapped `wsdl:portType` element MUST contain
 WSDL definitions for all the methods of the corresponding Java SEI
 including all inherited methods.
 
-_♦ Conformance (Inherited interface mapping):_ An implementation MAY map inherited
+&#9674; _Conformance (Inherited interface mapping):_ An implementation MAY map inherited
 interfaces to additional `wsdl:portType` elements within the
 `wsdl:definitions` element.
 
@@ -176,7 +176,7 @@ Each public method in a Java SEI is mapped to a `wsdl:operation` element
 in the corresponding `wsdl:portType` plus one or more `wsdl:message`
 elements.
 
-_♦ Conformance (Operation naming):_ In the absence of customizations, the value of the
+&#9674; _Conformance (Operation naming):_ In the absence of customizations, the value of the
 `name` attribute of the `wsdl:operation` element MUST be the name of the
 Java method. The `jakarta.jws.WebMethod` (see [mdwebmethod]) annotation
 MAY be used to customize the value of the `name` attribute of the
@@ -214,7 +214,7 @@ operation name for input messages and the operation name concatenated
 with Response for output messages. Naming of fault messages is described
 in section section <<j2w11except>>.
 
-_♦ Conformance (Generating wsam:Action ):_ `wsdl:operation`’s child elements
+&#9674; _Conformance (Generating wsam:Action ):_ `wsdl:operation`’s child elements
 `wsdl:input`, `wsdl:output`, and `wsdl:fault` MUST have the
 `wsam:Action` attribute. `wsam:Action` attribute MUST be computed using
 the algorithm that is specified in <<wsamComputation>>
@@ -344,12 +344,12 @@ be mapped to one-way operations. Not all Java methods that fulfill this
 requirement are amenable to become one-way operations and automatic
 choice between two-way and one-way mapping is not possible.
 
-_♦ Conformance (One-way mapping):_ Implementations MUST support use of the
+&#9674; _Conformance (One-way mapping):_ Implementations MUST support use of the
 `jakarta.jws.OneWay` (see [mdoneway]) annotation to specify which methods
 to map to one-way operations. Methods that are not annotated with
 `jakarta.jws.OneWay` MUST NOT be mapped to one-way operations.
 
-_♦ Conformance (One-way mapping errors):_ Implementations MUST prevent mapping to one-way
+&#9674; _Conformance (One-way mapping errors):_ Implementations MUST prevent mapping to one-way
 operations of methods that do not meet the necessary criteria.
 
 [[wsamComputation]]
@@ -419,7 +419,7 @@ and method parameters MUST be honored. A JAXB annotation on the method
 is used to specify the binding of a methods return type while an
 annotation on the parameter specifies the binding of that parameter.
 
-_♦ Conformance (use of JAXB annotations):_ An implementation MUST honor any JAXB
+&#9674; _Conformance (use of JAXB annotations):_ An implementation MUST honor any JAXB
 annotation that exists on an SEI method or parameter to assure that the
 proper XML infoset is used when marshalling/ +
 unmarshalling the the return value or parameters of the method. The set
@@ -432,7 +432,7 @@ JAXB doesn’t define any namespace by default to types and elements. In
 the web services, typically these entities that are created for method
 parameters and return parameters are qualified.
 
-_♦ Conformance (Overriding JAXB types empty namespace):_ JAX-WS tools and runtimes MUST
+&#9674; _Conformance (Overriding JAXB types empty namespace):_ JAX-WS tools and runtimes MUST
 override the default empty namespace for JAXB types and elements to
 SEI’s targetNamespace.
 
@@ -457,12 +457,12 @@ A parameter whose type is a parameterized `jakarta.xml.ws.Holder<T>` class
 is classified as `in/out` or `out`, all other parameters are classified
 as `in`.
 
-_♦ Conformance (Parameter classification):_ The `jakarta.jws.WebParam` annotation (see
+&#9674; _Conformance (Parameter classification):_ The `jakarta.jws.WebParam` annotation (see
 [mdwebparam]) MAY be used to specify whether a holder parameter is
 treated as `in/out` or `out`. If not specified, the default MUST be
 `in/out`.
 
-_♦ Conformance (Parameter naming):_ The `jakarta.jws.WebParam` annotation (see
+&#9674; _Conformance (Parameter naming):_ The `jakarta.jws.WebParam` annotation (see
 [mdwebparam]) MAY be used to specify the `name` of the `wsdl:part` or
 XML Schema element declaration corresponding to a Java parameter. If
 both the `name` and `partName` elements are used in the
@@ -473,7 +473,7 @@ replaced with the zero-based argument index. Thus, for instance, the
 first argument of a method will have a default parameter name of arg0,
 the second one arg1and so on.
 
-_♦ Conformance (Result naming):_ The `jakarta.jws.WebResult` annotation (see [mdwebparam])
+&#9674; _Conformance (Result naming):_ The `jakarta.jws.WebResult` annotation (see [mdwebparam])
 MAY be used to specify the `name` of the `wsdl:part` or XML Schema
 element declaration corresponding to the Java method return type. If
 both the `name` and `partName` elements are used in the
@@ -482,7 +482,7 @@ the `wsdl:part` name attribute and the `name` elment from the annotation
 will be ignored. In the absence of customizations, the default name is
 `return`.
 
-_♦ Conformance (Header mapping of parameters and results):_ The `jakarta.jws.WebParam`
+&#9674; _Conformance (Header mapping of parameters and results):_ The `jakarta.jws.WebParam`
 annotation’s `header` element MAY be used to map parameters to SOAP
 headers. Header parameters MUST be included as `soap:header` elements in
 the operation’s input message. The `jakarta.jws.WebResult` annotation’s
@@ -523,17 +523,17 @@ Application’s programming model doesn’t use these bean classes, so the
 applications need not package these classes. JAX-WS implementations may
 generate these classes dynamically as specified in this section.
 
-_♦ Conformance (Dynamically generating wrapper beans):_ A JAX-WS implementation SHOULD
+&#9674; _Conformance (Dynamically generating wrapper beans):_ A JAX-WS implementation SHOULD
 not require an application to package request and response bean classes.
 However, when the bean classes are packaged, they MUST be used.
 
-_♦ Conformance (Default wrapper bean names):_ In the absence of customizations, the
+&#9674; _Conformance (Default wrapper bean names):_ In the absence of customizations, the
 wrapper request bean class MUST be named the same as the method and the
 wrapper response bean class MUST be named the same as the method with a
 Response suffix. The first letter of each bean name is capitalized to
 follow Java class naming conventions.
 
-_♦ Conformance (Default wrapper bean package):_ In the absence of customizations, the
+&#9674; _Conformance (Default wrapper bean package):_ In the absence of customizations, the
 wrapper beans package MUST be a generated `jaxws` subpackage of the SEI
 package.
 
@@ -541,12 +541,12 @@ The `jakarta.xml.ws.RequestWrapper` and `jakarta.xml.ws.ResponseWrapper`
 annotations (see <<mdrequestWrapper>> and <<mdresponseWrapper>>) MAY be used
 to customize the name of the generated wrapper bean classes.
 
-_♦ Conformance (Wrapper element names):_ The `jakarta.xml.ws.RequestWrapper` and
+&#9674; _Conformance (Wrapper element names):_ The `jakarta.xml.ws.RequestWrapper` and
 `jakarta.xml.ws.ResponseWrapper` annotations (see <<mdrequestWrapper>> and
 <<mdresponseWrapper>>) MAY be used to specify the qualified name of the
 elements generated for the wrapper beans.
 
-_♦ Conformance (Wrapper bean name clash):_ Generated bean classes must have unique names
+&#9674; _Conformance (Wrapper bean name clash):_ Generated bean classes must have unique names
 within a package and MUST NOT clash with other classes in that package.
 Clashes during generation MUST be reported as an error and require user
 intervention via name customization to correct. Note that some platforms
@@ -561,7 +561,7 @@ generated WSDL, otherwise it would be named as `result`. The
 `RequestWrapper` and `ResponseWrapper` annotations MAY be used to
 customize the `name` of the `wsdl:part` for the wrapper part.
 
-_♦ Conformance (Default Wrapper wsdl:part names):_ In the absence of customizations, the
+&#9674; _Conformance (Default Wrapper wsdl:part names):_ In the absence of customizations, the
 name of the `wsdl:part` for the wrapper MUST be named as `parameters`
 for input messages in the generated WSDL. In the absence of
 customizations, when there are no header parameters or return type in a
@@ -569,7 +569,7 @@ SEI method, the `name` of the `wsdl:part` for the wrapper MUST be named
 as `parameters` for output messages. In all other cases, it MUST be
 named as `result`.
 
-_♦ Conformance (Customizing Wrapper `wsdl:part` names):_ Non-default `partName` values of
+&#9674; _Conformance (Customizing Wrapper `wsdl:part` names):_ Non-default `partName` values of
 the `RequestWrapper` and `ResponseWrapper` annotations, if specified on
 a SEI method, MUST be used as `wsdl:part` `name` for the corresponding
 input and output messages in the generated WSDL.
@@ -596,7 +596,7 @@ mapped to header part. If both `@XmlElement` and
 `@WebParam`/`@WebResult`’s `name` and `targetNamespace` elements
 respectively.
 
-_♦ Conformance (Wrapper property):_ If a SEI’s method parameter or return type is
+&#9674; _Conformance (Wrapper property):_ If a SEI’s method parameter or return type is
 annotated with `@XmlElement`, that annotation MUST be used on the
 wrapper bean property.
 
@@ -740,7 +740,7 @@ Profile specification (see <<bib8>>),
 null values cannot be used as method arguments or as the return value
 from a method which uses the rpc/literal binding.
 
-_♦ Conformance (Null Values in rpc/literal):_ If a null value is passed as an argument to
+&#9674; _Conformance (Null Values in rpc/literal):_ If a null value is passed as an argument to
 a method, or returned from a method, that uses the rpc/literal style,
 then an implementation MUST throw a `WebServiceException`.
 
@@ -755,24 +755,24 @@ method that throws the exception and refers to the `wsdl:message`
 element. The `wsdl:part` element refers to an XML Schema global element
 declaration that describes the fault.
 
-_♦ Conformance (Exception naming):_ In the absence of customizations, the name of the
+&#9674; _Conformance (Exception naming):_ In the absence of customizations, the name of the
 global element declaration for a mapped exception MUST be the name of
 the Java exception. The `jakarta.xml.ws.WebFault` annotation MAY be used
 to customize the local name and namespace name of the element.
 
-_♦ Conformance (wsdl:message naming):_ In the absence of customizations, the name of the
+&#9674; _Conformance (wsdl:message naming):_ In the absence of customizations, the name of the
 wsdl:message element MUST be the name of the Java exception.
 
 The `jakarta.xml.ws.WebFault` annotation may be used to customize the name
 of the `wsdl:message` element and also to resolve any conflicts.
 
-_♦ Conformance (wsdl:message naming using WebFault):_ If an exception has @WebFault, then
+&#9674; _Conformance (wsdl:message naming using WebFault):_ If an exception has @WebFault, then
 messageName MUST be the name of the corresponding wsdl:message element.
 
 Service specific exceptions are defined as all checked exceptions except
 `java.rmi.RemoteException` and its subclasses.
 
-_♦ Conformance (`java.lang.RuntimeExceptions` and `java.rmi.RemoteExceptions`):_
+&#9674; _Conformance (`java.lang.RuntimeExceptions` and `java.rmi.RemoteExceptions`):_
 `java.lang.RuntimeException` and `java.rmi.RemoteException` and their
 subclasses MUST NOT be treated as service specific exceptions and MUST
 NOT be mapped to WSDL.
@@ -817,11 +817,11 @@ characters (i.e. using the same algorithm that the
 `name` property is set, in the absence of customizations, to the name of
 the exception.
 
-_♦ Conformance (Fault bean’s @XmlType ):_ If an exception class has a `@XmlType`
+&#9674; _Conformance (Fault bean’s @XmlType ):_ If an exception class has a `@XmlType`
 annotation, then it MUST be used for the fault bean’s `@XmlType`
 annotation.
 
-_♦ Conformance (Fault bean name clash):_ Generated bean classes must have unique names
+&#9674; _Conformance (Fault bean name clash):_ Generated bean classes must have unique names
 within a package and MUST NOT clash with other classes in that package.
 Clashes during generation MUST be reported as an error and require user
 intervention via name customization to correct. Note that some platforms
@@ -861,7 +861,7 @@ Application’s programming model doesn’t use these bean classes, so the
 applications need not package these classes. JAX-WS implementations may
 generate these classes dynamically as specified in this section.
 
-_♦ Conformance (Dynamically generating exception beans):_ JAX-WS implementations SHOULD
+&#9674; _Conformance (Dynamically generating exception beans):_ JAX-WS implementations SHOULD
 not require an application to package exception bean classes. However,
 when the exception bean classes are packaged, they MUST be used.
 
@@ -870,7 +870,7 @@ when the exception bean classes are packaged, they MUST be used.
 
 In WSDL 1.1, an abstract port type can be bound to multiple protocols.
 
-_♦ Conformance (Binding selection):_ An implementation MUST generate a WSDL binding
+&#9674; _Conformance (Binding selection):_ An implementation MUST generate a WSDL binding
 according to the rules of the binding denoted by the `BindingType`
 annotation (see <<mdbindingtype>>), if present, otherwise the default is
 the SOAP 1.1/HTTP binding (see <<soapbindchap>>).
@@ -1092,7 +1092,7 @@ public class SetArea {
 This section describes the additional WSDL binding elements generated
 when mapping Java to WSDL 1.1 using the SOAP HTTP binding.
 
-_♦ Conformance (SOAP binding support):_ Implementations MUST be able to generate SOAP
+&#9674; _Conformance (SOAP binding support):_ Implementations MUST be able to generate SOAP
 HTTP bindings when mapping Java to WSDL 1.1.
 
 Figure <<3.6>> shows an example of a SOAP HTTP binding.
@@ -1130,7 +1130,7 @@ The value of the `transport` attribute of the `soap:binding` is
 `http://schemas.xmlsoap.org/soap/http`. The value of the `style`
 attribute of the `soap:binding` is either `document` or `rpc`.
 
-_♦ Conformance (SOAP binding style required):_ Implementations MUST include a `style`
+&#9674; _Conformance (SOAP binding style required):_ Implementations MUST include a `style`
 attribute on a generated `soap:binding`.
 
 [[method-and-parameters-1]]
@@ -1279,7 +1279,7 @@ the `WebService` annotation, if present with a non-default value,
 otherwise the name of the implementation class with the Servicesuffix
 appended to it.
 
-_♦ Conformance (Service creation):_ Implementations MUST be able to map classes annotated
+&#9674; _Conformance (Service creation):_ Implementations MUST be able to map classes annotated
 with the `jakarta.jws.WebService` annotation to WSDL `wsdl:service`
 elements.
 
@@ -1300,7 +1300,7 @@ the `name` element of the `WebService` annotation, if present, suffixed
 with Port. Otherwise, an implementation MUST use the simple name of the
 class annotated with `WebService` suffixed with Port.
 
-_♦ Conformance (Port binding):_ The WSDL port defined for a service MUST refer to a
+&#9674; _Conformance (Port binding):_ The WSDL port defined for a service MUST refer to a
 binding of the type indicated by the `BindingType` annotation on the
 service implementation class (see <<j2w11bindings>>).
 
