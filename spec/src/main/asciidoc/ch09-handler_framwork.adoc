@@ -56,11 +56,11 @@ message. Protocol handlers are handlers that implement any interface
 derived from `jakarta.xml.ws.handler.Handler` except
 `jakarta.xml.ws.handler.LogicalHandler`.
 
-
+[[handarchfig]]
+.Handler architecture
 image::images/handarch.png[]
-Figure 9.1: Handler architecture
 
-Figure <<9.2>> shows the class hierarchy for handlers.
+Figure <<handclshie>> shows the class hierarchy for handlers.
 
 Handlers for protocols other than SOAP are expected to implement a
 protocol-specific interface that extends `jakarta.xml.ws.handler.Handler`.
@@ -80,8 +80,9 @@ destruction of handlers according to the rules specified in section
 management of message contexts according to the rules specified in
 <<handmsgctxmngmt>>
 
+[[handclshie]]
+.Handler class hierarchy
 image::images/handlers.png[]
-Figure 9.2: Handler class hierarchy
 
 &#9674; _Conformance (Logical handler support):_ All binding implementations MUST support
 logical handlers (see <<handlertypes>>) being deployed in their
@@ -173,13 +174,14 @@ handler chain as returned by the `HandlerResolver` for the service in
 use and sorting its elements so that all logical handlers precede all
 protocol handlers. In performing this operation, the order of handlers
 of any given type (logical or protocol) in the original chain is
-maintained. Figure <<9.3>> illustrates this.
+maintained. <<handord>> illustrates this.
 
 <<handlerexecution>> describes how the handler order relates to
 the order of handler execution for inbound and outbound messages.
 
+[[handord]]
+.Handler ordering, Ln and Pn represent logical and protocol handlers respectively.
 image::images/handord.png[]
-Figure 9.3: Handler ordering, Ln and Pn represent logical and protocol handlers respectively.
 
 [[handlerchain]]
 ===== jakarta.jws.HandlerChain annotation
@@ -211,10 +213,11 @@ annotation, the default handler resolver MUST return handler chains
 consistent with the contents of the handler chain descriptor referenced
 by the `HandlerChain` annotation.
 
-Figure <<9.4>> shows an endpoint implementation class annotated
+Figure <<hchainannex>> shows an endpoint implementation class annotated
 with a `HandlerChain` annotation.
 
-[id="9.4"]
+[id="hchainannex"]
+.Use of the HandlerChain annotation
 [source,java,numbered]
 -------------
 @WebService
@@ -223,7 +226,6 @@ public class MyService {
     ...
 }
 -------------
-Figure 9.4: Use of the HandlerChain annotation
 
 [[jakarta.xml.ws.binding]]
 ===== jakarta.xml.ws.Binding
@@ -283,7 +285,7 @@ typically via the `jakarta.annotation.Resource` annotation. After all the
 injections have been carried out, including in the case where no
 injections were requested, the runtime MUST invoke the method carrying a
 `jakarta.annotation.PostConstruct` annotation, if present. Such a method
-MUST satisfy the requirements in JSR-250 <<bib35>> for lifecycle
+MUST satisfy the requirements in Jakarta Annotations <<bib35>> for lifecycle
 methods (i.e. it has a void return type and takes zero arguments). The
 handler instance is then ready for use.
 
@@ -301,7 +303,7 @@ stops using the handler for processing inbound or outbound messages.
 After taking the handler offline, a JAX-WS implementation SHOULD invoke
 the lifecycle method which carries a `jakarta.annotation.PreDestroy`
 annotation, if present, so as to permit the handler to clean up its
-resources. Such a method MUST satisfy the requirements in JSR-250
+resources. Such a method MUST satisfy the requirements in Jakarta Annotations
 <<bib35>> for lifecycle methods
 
 An implementation can only release handlers after the instance they are

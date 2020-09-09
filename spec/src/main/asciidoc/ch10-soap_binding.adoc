@@ -28,7 +28,7 @@ to be configured using annotations or deployment metadata.
 [[soap-roles]]
 ===== SOAP Roles
 
-SOAP 1.1<<bib2>> and SOAP 1.2<<3>><<4>> use different terminology
+SOAP 1.1<<bib2>> and SOAP 1.2<<bib3>><<bib4>> use different terminology
 for the same concept: a SOAP 1.1 _actor_ is equivalent to a SOAP 1.2
 _role_. This specification uses the SOAP 1.2 terminology.
 
@@ -148,7 +148,7 @@ SOAP specific processing as described in the following subsections.
 The SOAP protocol binding performs the following additional processing
 on inbound SOAP messages prior to the start of normal handler invocation
 processing (see <<handlerexecution>>). Refer to the SOAP
-specification<<2>><<3>><<4>> for a normative description of the
+specification<<bib2>><<bib3>><<bib4>> for a normative description of the
 SOAP processing model. This section is not intended to supercede any
 requirement stated within the SOAP specification, but rather to outline
 how the configuration information described above is combined to satisfy
@@ -287,7 +287,7 @@ modify the SOAP message payload.
 [[soapbindprotocols]]
 === SOAP Transport and Transfer Bindings
 
-SOAP<<2>><<4>> can be bound
+SOAP<<bib2>><<bib4>> can be bound
 to multiple transport or transfer protocols. This section describes
 requirements pertaining to the supported protocols for use with SOAP.
 
@@ -299,9 +299,9 @@ The SOAP 1.1 HTTP binding is identified by the URL
 the constant `jakarta.xml.ws.soap.SOAPBinding.SOAP11HTTP_BINDING`.
 
 &#9674; _Conformance (SOAP 1.1 HTTP Binding Support):_ An implementation MUST support the HTTP
-binding of SOAP 1.1<<bib2>> and SOAP With Attachments<<38>> as clarified by the WS-I Basic
+binding of SOAP 1.1<<bib2>> and SOAP With Attachments<<bib38>> as clarified by the WS-I Basic
 Profile<<bib20>>, WS-I Simple SOAP
-Binding Profile<<bib32>> and WS-I Attachment Profile<<33>>.
+Binding Profile<<bib32>> and WS-I Attachment Profile<<bib33>>.
 
 The SOAP 1.2 HTTP binding is identified by the URL
 `http://www.w3.org/2003/05/soap/bindings/HTTP/`, which is also the value

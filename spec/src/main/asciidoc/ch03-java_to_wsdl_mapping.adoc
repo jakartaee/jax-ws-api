@@ -1150,7 +1150,7 @@ Each method in a Java SEI is mapped to a `soap:operation` child element
 of the corresponding `wsdl:operation`. The value of the `style`
 attribute of the `soap:operation` is `document` or `rpc`. If not
 specified, the value defaults to the value of the `style` attribute of
-the `soap:binding`. WS-I Basic Profile<<8>>
+the `soap:binding`. WS-I Basic Profile<<bib8>>
 requires that all operations within a given SOAP HTTP binding
 instance have the same binding style.
 

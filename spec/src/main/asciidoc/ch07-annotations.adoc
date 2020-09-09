@@ -714,7 +714,7 @@ public @interface Addressing {
 
 The `Addressing` annotation is applied to an endpoint implementation
 class and to an injected web service proxy reference. It is used to
-control the use of WS-Addressing<<bib26>><<37>><<bib27>>.
+control the use of WS-Addressing<<bib26>><<bib37>><<bib27>>.
 It corresponds with the `AddressingFeature` described in <<addressingfeature>>.
 
 [id="Table 7.14"]
