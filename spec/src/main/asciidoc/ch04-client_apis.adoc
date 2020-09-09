@@ -6,11 +6,11 @@
 == Client APIs
 
 This chapter describes the standard APIs provided for client side use of
-JAX-WS. These APIs allow a client to create proxies for remote service
+Jakarta XML Web Services. These APIs allow a client to create proxies for remote service
 endpoints and dynamically construct operation invocations.
 
-Conformance requirements in this chapter use the term implementation to
-refer to a client side JAX-WS runtime system.
+Conformance requirements in this chapter use the term 'implementation' to
+refer to a client side Jakarta XML Web Services runtime system.
 
 [[serviceapi]]
 === jakarta.xml.ws.Service
@@ -40,7 +40,7 @@ asynchronous invocations (see <<serviceexecutor>>).
 creating proxies, `Dispatch` instances, and new ports.
 
 All the service methods except the static `create` methods and the
-constructors delegate to `jakarta.xml.ws.spi.ServiceDelegate`, see section
+constructors delegate to `jakarta.xml.ws.spi.ServiceDelegate`, see
 <<coresvcdelegate>>.
 
 [[svcusage]]
@@ -62,18 +62,21 @@ Service s = Service.create(wsdlLocation, serviceName);
 
 The following `create` methods may be used:
 
-*create(URL wsdlLocation, QName serviceName)* Returns a service object for the specified WSDL document and service
+`*create(URL wsdlLocation, QName serviceName)*`::
+Returns a service object for the specified WSDL document and service
 name.
 
-*create(QName serviceName)* Returns a service object for a service with the given name. No WSDL
+`*create(QName serviceName)*`::
+Returns a service object for a service with the given name. No WSDL
 document is attached to the service.
 
-*create(URL wsdlLocation, QName serviceName, WebServiceFeature ... features)*
+`*create(URL wsdlLocation, QName serviceName, WebServiceFeature ... features)*`::
 Returns a service object for the specified WSDL document and service
 name. The created service needs to be configured with the web service
 features.
 
-*create(QName serviceName, WebServiceFeature ... features)* Returns a service object for a service with the given name. No WSDL
+`*create(QName serviceName, WebServiceFeature ... features)*`::
+Returns a service object for a service with the given name. No WSDL
 document is attached to the service. The created service needs to be
 configured with the web service features.
 
@@ -83,7 +86,7 @@ exception SHOULD be set to an exception that provides more information
 on the cause of the error (e.g. an `IOException`).
 
 &#9674; _Conformance (Service creation using features):_ The created service object MUST honor
-the web service features. If a JAX-WS implementation doesn’t understand
+the web service features. If a Jakarta XML Web Services implementation doesn’t understand
 any passed-in feature, it MUST throw `WebServiceException`.
 
 [[staticcase]]
@@ -108,7 +111,7 @@ The following code snippet shows the generated constructors:
 public class StockQuoteService extends jakarta.xml.ws.Service {
     public StockQuoteService() {
         super(new URL("http://example.com/stocks.wsdl"),
-        new QName("http://example.com/stocks", "StockQuoteService"));
+              new QName("http://example.com/stocks", "StockQuoteService"));
     }
 
     public StockQuoteService(WebServiceFeature ... features) {
@@ -188,7 +191,6 @@ public class Service {
     }
 
     // begin delegated methods
-
     public <T> T getPort(Class<T> serviceEndpointInterface) {
         return delegate.getPort(serviceEndpointInterface);
     }
@@ -200,9 +202,9 @@ public class Service {
 [[clienthandlerresolver]]
 ==== Handler Resolver
 
-JAX-WS provides a flexible plug-in framework for message processing
+Jakarta XML Web Services provides a flexible plug-in framework for message processing
 modules, known as handlers, that may be used to extend the capabilities
-of a JAX-WS runtime system. Chapter <<handfmwk>> describes the handler
+of a Jakarta XML Web Services runtime system. <<handfmwk>> describes the handler
 framework in detail. A `Service` instance provides access to a
 `HandlerResolver` via a pair of
 `getHandlerResolver`/`setHandlerResolver` methods that may be used to
@@ -234,7 +236,7 @@ called MAY use the previously set executor, if any.
 implementation MUST use its own executor, a
 `java.util.concurrent.ThreadPoolExecutor` or analogous mechanism, to
 deliver callbacks. An implementation MUST NOT use application-provided
-threads to deliver callbacks, e.g. by ``borrowing'' them when the
+threads to deliver callbacks, e.g. by "borrowing" them when the
 application invokes a remote operation.
 
 [[bindingproviderif]]
@@ -242,16 +244,18 @@ application invokes a remote operation.
 
 The `BindingProvider` interface represents a component that provides a
 protocol binding for use by clients, it is implemented by proxies and is
-extended by the `Dispatch` interface. Figure <<4.1>>
+extended by the `Dispatch` interface. <<bprovclsrel>>
 illustrates the class relationships.
 
+[[bprovclsrel]]
+.Binding Provider Class Relationships
 image::images/bindingprovider.png[]
-Figure 4.1: Binding Provider Class Relationships
 
 A web service client can get an `jakarta.xml.ws.EndpointReference` from a
 `BindingProvider` instance that will reference the target endpoint.
 
-&#9674; _Conformance (`jakarta.xml.ws.BindingProvider.getEndpointReference`):_ An implementation
+&#9674; __Conformance (__``__jakarta.xml.ws.BindingProvider.getEndpointReference__``__):__
+An implementation
 MUST be able to return an `jakarta.xml.ws.EndpointReference` for the
 target endpoint if a SOAP binding is being used. If the
 `BindingProvider` instance has a binding that is either SOAP 1.1/HTTP or
@@ -259,7 +263,7 @@ SOAP 1.2/HTTP, then a `W3CEndpointReference` MUST be returned. If the
 binding is XML/HTTP an `java.lang.UnsupportedOperationException` MUST be
 thrown.
 
-&#9674; _Conformance (`BindingProvider’s W3CEndpointReference`):_ The returned
+&#9674; __Conformance (__``__BindingProvider__``__’s __``__W3CEndpointReference__``__):__ The returned
 `W3CEndpointReference` MUST contain `wsam:ServiceName` and
 `wsam:ServiceName[@EndpointName]` as per Addressing 1.0 -
 Metadata<<bib27>>. The `wsam:InterfaceName` MAY be present in
@@ -285,7 +289,7 @@ and response phases of a message exchange with a service:
 Request::
 The contents of the request context are used to initialize the message
 context (see <<handmsgctxif>>) prior to invoking any handlers
-(see chapter <<handfmwk>>) for the outbound message. Each property
+(see <<handfmwk>>) for the outbound message. Each property
 within the request context is copied to the message context with a
 scope of `HANDLER`.
 Response::
@@ -306,65 +310,72 @@ The request and response contexts are of type
 
 In some cases, data from the context may need to accompany information
 exchanges. When this is required, protocol bindings or handlers (see
-chapter [handfmwk]) are responsible for annotating outbound protocol
+<<handfmwk>>) are responsible for annotating outbound protocol
 data units and extracting metadata from inbound protocol data units.
 
-*Note:* _An example of the latter usage: a handler in a SOAP binding might
+[NOTE]
+.Note
+====
+_An example of the latter usage: a handler in a SOAP binding might
 introduce a header into a SOAP request message to carry metadata from
 the request context and might add metadata to the response context from
 the contents of a header in a response SOAP message._
+====
 
 [[stdbpprops]]
 ===== Standard Properties
 
-<<Table 4.1>> lists a set of standard properties that may be set
+<<bprovprops>> lists a set of standard properties that may be set
 on a `BindingProvider` instance and shows which properties are optional
 for implementations to support.
 
-[id="Table 4.1"]
-Table 4.1: Standard BindingProvider properties.
+[id="bprovprops"]
+.Standard BindingProvider properties
+[cols=,,,options="header"]
 |==================================
 |Name |Type |Mandatory |Description
-4+|*jakarta.xml.ws.service.endpoint*
+4+|`*jakarta.xml.ws.service.endpoint*`
 |.address   |String |Y  |The address of the service endpoint as
 a protocol specific URI. The URI
 scheme must match the protocol
 binding in use.
-4+|*jakarta.xml.ws.security.auth*
+4+|`*jakarta.xml.ws.security.auth*`
 |.username  |String |Y  |Username for HTTP basic
 authentication.
 |.password  |String |Y  |Password for HTTP basic
 authentication.
-4+|*jakarta.xml.ws.session*
+4+|`*jakarta.xml.ws.session*`
 |.maintain  |Boolean    |Y  |Used by a client to indicate whether it
 is prepared to participate in a service
 endpoint initiated session. The default
-value is false .
-4+|*jakarta.xml.ws.soap.http.soapaction*
-|.use   |Boolean    |N  |Controls whether the SOAPAction
+value is `false`.
+4+|`*jakarta.xml.ws.soap.http.soapaction*`
+|.use   |Boolean    |N  |Controls whether the `SOAPAction`
 HTTP header is used in SOAP/HTTP
-requests. Default value is false.
-|.uri   |String     |N  |The value of the SOAPAction HTTP
-header if the `jakarta.xml.ws.soap-
-.http.soapaction.use` property is
-set to true . Default value is an empty string.
+requests. Default value is `false`.
+|.uri   |String     |N  |The value of the `SOAPAction` HTTP
+header if the `jakarta.xml.ws.soap.http.soapaction.use` property is
+set to `true` . Default value is an empty string.
 |==================================
 
 
-&#9674; _Conformance (Required `BindingProvider` properties):_ An implementation MUST support
-all properties shown as mandatory in table <<Table 4.1>>.
+&#9674; __Conformance (Required __``__BindingProvider__``__ properties):__
+An implementation MUST support
+all properties shown as mandatory in <<bprovprops>>.
 
 Note that properties shown as mandatory are not required to be present
 in any particular context; however, if present, they must be honored.
 
-&#9674; _Conformance (Optional `BindingProvider` properties):_ An implementation MAY support
-the properties shown as optional in table <<Table 4.1>>.
+&#9674; __Conformance (Optional __``__BindingProvider__``__ properties):__
+An implementation MAY support
+the properties shown as optional in <<bprovprops>>.
 
 [[additional-properties]]
 ===== Additional Properties
 
-&#9674; _Conformance (Additional context properties):_ Implementations MAY define additional
-implementation specific properties not listed in table <<Table 4.1>>.
+&#9674; _Conformance (Additional context properties):_
+Implementations MAY define additional
+implementation specific properties not listed in <<bprovprops>>.
 The java.* and javax.* namespaces are reserved for use by Java
 specifications.
 
@@ -380,8 +391,8 @@ capabilities. When used, asynchronous operation invocations are
 decoupled from the `BindingProvider` instance at invocation time such
 that the response context is not updated when the operation completes.
 Instead a separate response context is made available using the
-`Response` interface, see sections [wsdl11asyncmethod] and
-[dispasyncresp] for further details on the use of asynchronous methods.
+`Response` interface, see <<wsdl11asyncmethod>> and
+<<dispasyncresp>> for further details on the use of asynchronous methods.
 
 &#9674; _Conformance (Asynchronous response context):_ The local response context of a
 `BindingProvider` instance MUST NOT be updated on completion of an
@@ -401,51 +412,50 @@ Proxies provide access to service endpoint interfaces at runtime without
 requiring static generation of a stub class. See
 `java.lang.reflect.Proxy` for more information on dynamic proxies as
 supported by the JDK.
-
 Proxy instances are not guaranteed to be thread safe. If the instances
 are accessed by multiple threads, usual synchronization techniques can
 be used to support multiple threads.
 
 &#9674; _Conformance (Proxy support):_ An implementation MUST support proxies.
 
-&#9674; _Conformance (Implementing `BindingProvider`):_ An instance of a proxy MUST implement
-`jakarta.xml.ws.BindingProvider`.
+&#9674; __Conformance (Implementing __``__BindingProvider__``__):__
+An instance of a proxy MUST implement `jakarta.xml.ws.BindingProvider`.
 
 A proxy is created using the `getPort` methods of a `Service` instance:
 
-`T getPort(Class<T> sei)`::
+`*T getPort(Class<T> sei)*`::
 Returns a proxy for the specified SEI, the `Service` instance is
 responsible for selecting the port (protocol binding and endpoint
 address).
-`T getPort(QName port, Class<T> sei)`::
+`*T getPort(QName port, Class<T> sei)*`::
 Returns a proxy for the endpoint specified by `port`. Note that the
 namespace component of `port` is the target namespace of the WSDL
 definitions document.
 
-`T getPort(Class<T> sei, WebServiceFeature... features)`::
+`*T getPort(Class<T> sei, WebServiceFeature... features)*`::
 Returns a proxy for the specified SEI, the `Service` instance is
 responsible for selecting the port (protocol binding and and endpoint
 address). The specified `features` MUST be enabled/disabled and
 configured as specified.
-`T getPort(QName port, Class<T> sei, WebServiceFeature... features)`::
+`*T getPort(QName port, Class<T> sei, WebServiceFeature... features)*`::
 Returns a proxy for the endpoint specified by `port`. Note that the
 namespace component of port is the target namespace of the WSDL
 definition document. The specified `features` MUST be enabled/disabled
 and configured as specified.
-`T getPort(EndpointReference epr, Class<T> sei, WebServiceFeature... features)`::
+`*T getPort(EndpointReference epr, Class<T> sei, WebServiceFeature... features)*`::
 Returns a proxy for the endpoint specified by `epr`. The address
 stored in the `epr` MUST be used during invocations on the endpoint.
 The `epr` MUST NOT be used as the value of any addressing header such
 as `wsa:ReplyTo`. The specified `features` MUST be enabled/disabled
-and configured as specified. Any JAX-WS supported `epr` metadata MUST
+and configured as specified. Any Jakarta XML Web Services supported `epr` metadata MUST
 match the `Service` instance’s ServiceName, otherwise a
-`WebServiceExeption` MUST be thrown. Any JAX-WS supported `epr`
+`WebServiceExeption` MUST be thrown. Any Jakarta XML Web Services supported `epr`
 metadata MUST match the PortName for the `sei`, otherwise a
 `WebServiceException` MUST be thrown. If the `Service` instance has an
 associated WSDL, its WSDL MUST be used to determine any binding
-information, any WSDL in a JAX-WS suppported `epr` metadata MUST be
+information, any WSDL in a Jakarta XML Web Services suppported `epr` metadata MUST be
 ignored. If the `Service` instance does not have a WSDL, then any WSDL
-inlined in the JAX-WS supported metadata of the `epr` MUST be used to
+inlined in the Jakarta XML Web Services supported metadata of the `epr` MUST be used to
 determine binding information. If there is not enough metadata in the
 `Service` instance or in the `epr` metadata to determine a port, then
 a `WebServiceException` MUST be thrown.
@@ -453,11 +463,12 @@ a `WebServiceException` MUST be thrown.
 The `serviceEndpointInterface` parameter specifies the interface that
 will be implemented by the proxy. The service endpoint interface
 provided by the client needs to conform to the WSDL to Java mapping
-rules specified in chapter <<wsdl112java>> (WSDL 1.1). Creation of a proxy
+rules specified in <<wsdl112java>>. Creation of a proxy
 can fail if the interface doesn’t conform to the mapping or if any WSDL
 related metadata is missing from the `Service` instance.
 
-&#9674; _Conformance (`Service.getPort` failure):_ If creation of a proxy fails, an
+&#9674; __Conformance (__``__Service.getPort__``__ failure):__
+If creation of a proxy fails, an
 implementation MUST throw `jakarta.xml.ws.WebServiceException`. The cause
 of that exception SHOULD be set to an exception that provides more
 information on the cause of the error (e.g. an `IOException`).
@@ -493,7 +504,7 @@ stub class is involved.
 jakarta.xml.ws.Service service = ...;
 com.example.StockQuoteProvider proxy = service.getPort(portName,
     com.example.StockQuoteProvider.class)
-jakarta.xml.ws.BindingProvider bp = (jakarta.xml.ws.BindingProvider)proxy;
+jakarta.xml.ws.BindingProvider bp = (jakarta.xml.ws.BindingProvider) proxy;
 Map<String,Object> context = bp.getRequestContext();
 context.setProperty("jakarta.xml.ws.session.maintain", Boolean.TRUE);
 proxy.getLastTradePrice("ACME");
@@ -512,7 +523,7 @@ zero or more service specific exceptions.
 invocation, an implemention MUST throw a service specific exception if
 possible. If the error cannot be mapped to a service specific exception,
 an implementation MUST throw a `ProtocolException` or one of its
-subclasses, as appropriate for the binding in use. See section
+subclasses, as appropriate for the binding in use. See
 <<protocolspecificfaults>> for more details.
 
 &#9674; _Conformance (Exceptions During Handler Processing):_ Exceptions thrown during handler
@@ -535,13 +546,14 @@ result in a `WebServiceException` whose cause is a
 === jakarta.xml.ws.Dispatch
 
 XML Web Services use XML messages for communication between services and
-service clients. The higher level JAX-WS APIs are designed to hide the
+service clients. The higher level Jakarta XML Web Services APIs are designed to hide the
 details of converting between Java method invocations and the
 corresponding XML messages, but in some cases operating at the XML
 message level is desirable. The `Dispatch` interface provides support
 for this mode of interaction.
 
-&#9674; _Conformance (`Dispatch` support):_ Implementations MUST support the
+&#9674; __Conformance (__``__Dispatch__``__ support):__
+Implementations MUST support the
 `jakarta.xml.ws.Dispatch` interface.
 
 `Dispatch` supports two usage modes, identified by the constants
@@ -565,11 +577,11 @@ class that supports input and output of messages or message payloads of
 any type. Implementations are required to support the following types of
 object:
 
-`javax.xml.transform.Source`::
+`*javax.xml.transform.Source*`::
 Use of `Source` objects allows clients to use XML generating and
 consuming APIs directly. `Source` objects may be used with any
 protocol binding in either message or message payload mode. When used
-with the HTTP binding (see chapter <<xmlbindchap>>) in payload mode, the
+with the HTTP binding (see <<xmlbindchap>>) in payload mode, the
 HTTP request and response entity bodies must contain XML directly or a
 MIME wrapper with an XML root part. A `null` value for `Source` is
 allowed to make it possible to invoke an HTTP GET method in the HTTP
@@ -577,30 +589,30 @@ Binding case. A `WebServiceException` MUST be thrown when a
 `Dispatch<Source>` is invoked and the Service returns a MIME message.
 When used in message mode, if the message is not an XML message a
 `WebServiceException` MUST be thrown.
-JAXB Objects::
-Use of JAXB allows clients to use JAXB objects generated from an XML
+Jakarta XML Binding Objects::
+Use of Jakarta XML Binding allows clients to use Jakarta XML Binding objects generated from an XML
 Schema to create and manipulate XML representations and to use these
-objects with JAX-WS without requiring an intermediate XML
-serialization. JAXB objects may be used with any protocol binding in
+objects with Jakarta XML Web Services without requiring an intermediate XML
+serialization. Jakarta XML Binding objects may be used with any protocol binding in
 either message or message payload mode. When used with the HTTP
-binding (see chapter <<xmlbindchap>>) in payload mode, the HTTP request
+binding (see <<xmlbindchap>>) in payload mode, the HTTP request
 and response entity bodies must contain XML directly or a MIME wrapper
 with an XML root part. When used in mssage mode, if the message is not
 an XML message a `WebServiceException` MUST be thrown.
-`jakarta.xml.soap.SOAPMessage`::
+`*jakarta.xml.soap.SOAPMessage*`::
 Use of `SOAPMessage` objects allows clients to work with SOAP messages
-using the convenience features provided by the `java.xml.soap`
+using the convenience features provided by the `jakarta.xml.soap`
 package. `SOAPMessage` objects may only be used with `Dispatch`
-instances that use the SOAP binding (see chapter <<soapbindchap>>) in
+instances that use the SOAP binding (see <<soapbindchap>>) in
 message mode.
-`jakarta.activation.DataSource`::
+`*jakarta.activation.DataSource*`::
 Use of `DataSource` objects allows clients to work with MIME-typed
 messages. `DataSource` objects may only be used with `Dispatch`
-instances that use the HTTP binding (see chapter <<xmlbindchap>>) in
+instances that use the HTTP binding (see <<xmlbindchap>>) in
 message mode.
 
-A JAX-WS implementation MUST honor all `WebServiceFeatures` (section
-<<webservicefeature>>) for `Dispatch` based applications.
+A Jakarta XML Web Services implementation MUST honor all `WebServiceFeatures`
+(<<webservicefeature>>) for `Dispatch` based applications.
 
 [[dispatchconfig]]
 ==== Configuration
@@ -626,13 +638,13 @@ see <<stdbpprops>> for a list of standard properties.
 
 A `Dispatch` instance supports three invocation modes:
 
-Synchronous request response (`invoke` methods)::
+Synchronous request response (`*invoke*` methods)::
 The method blocks until the remote operation completes and the results
 are returned.
-Asynchronous request response (`invokeAsync` methods)::
+Asynchronous request response (`*invokeAsync*` methods)::
 The method returns immediately, any results are provided either
 through a callback or via a polling object.
-One-way (`invokeOneWay` methods)::
+One-way (`*invokeOneWay*` methods)::
 The method is logically non-blocking, subject to the capabilities of
 the underlying protocol, no results are returned.
 
@@ -649,20 +661,23 @@ message with an empty body.
 passed to `invoke` with the HTTP POST and PUT operations is an error
 condition and will result in a `WebServiceException`.
 
-&#9674; _Conformance (Failed `Dispatch.invoke`):_ When an operation is invoked using an
+&#9674; __Conformance (Failed __``__Dispatch.invoke__``__):__
+When an operation is invoked using an
 `invoke` method, an implementation MUST throw a `WebServiceException` if
 there is any error in the configuration of the `Dispatch` instance or a
 `ProtocolException` if an error occurs during the remote operation
 invocation.
 
-&#9674; _Conformance (Failed `Dispatch.invokeAsync`):_ When an operation is invoked using an
+&#9674; __Conformance (Failed __``__Dispatch.invokeAsync__``__):__
+When an operation is invoked using an
 `invokeAsync` method, an implementation MUST throw a
 `WebServiceException` if there is any error in the configuration of the
 `Dispatch` instance. Errors that occur during the invocation are
 reported when the client attempts to retrieve the results of the
 operation.
 
-&#9674; _Conformance (Failed `Dispatch.invokeOneWay`):_ When an operation is invoked using an
+&#9674; __Conformance (Failed __``__Dispatch.invokeOneWay__``__):__
+When an operation is invoked using an
 `invokeOneWay` method, an implementation MUST throw a
 `WebServiceException` if there is any error in the configuration of the
 `Dispatch` instance or if an error is detectedfootnote:[The invocation
@@ -706,18 +721,18 @@ In the case of a `Response` instance this can only be a
 The following interfaces are used to obtain the results of an operation
 invocation:
 
-`jakarta.xml.ws.Response`::
+`*jakarta.xml.ws.Response*`::
 A generic interface that is used to group the results of an invocation
 with the response context. `Response` extends
 `java.util.concurrent.Future<T>` to provide asynchronous result
 polling capabilities.
-`jakarta.xml.ws.AsyncHandler`::
+`*jakarta.xml.ws.AsyncHandler*`::
 A generic interface that clients implement to receive results in an
 asynchronous callback. It defines a single `handleResponse` method
 that has a `Response` object as its argument.
 
 [[using-jaxb]]
-==== Using JAXB
+==== Using Jakarta XML Binding
 
 `Service` provides a `createDispatch` factory method for creating
 `Dispatch` instances that contain an embedded `JAXBContext`. The
@@ -762,20 +777,20 @@ SOAPMessage soapResMsg = disp.invoke(soapReqMsg);
 -------------
 
 [[synchronous-payload-oriented-with-jaxb-objects]]
-===== Synchronous, Payload-Oriented With JAXB Objects
+===== Synchronous, Payload-Oriented With Jakarta XML Binding Objects
 
 [source,java,numbered]
 -------------
 JAXBContext jc = JAXBContext.newInstance("primer.po");
 Unmarshaller u = jc.createUnmarshaller();
-PurchaseOrder po = (PurchaseOrder)u.unmarshal(
-new FileInputStream( "po.xml" ) );
+PurchaseOrder po = (PurchaseOrder) u.unmarshal(
+    new FileInputStream("po.xml"));
 Service service = ...;
 Dispatch<Object> disp = service.createDispatch(portName, jc, PAYLOAD);
-OrderConfirmation conf = (OrderConfirmation)disp.invoke(po);
+OrderConfirmation conf = (OrderConfirmation) disp.invoke(po);
 -------------
 In the above example `PurchaseOrder` and `OrderConfirmation` are
-interfaces pre-generated by JAXB from the schema document primer.po.
+interfaces pre-generated by Jakarta XML Binding from the schema document 'primer.po'.
 
 [[asynchronous-polling-message-oriented]]
 ===== Asynchronous, Polling, Message-Oriented
@@ -785,10 +800,10 @@ interfaces pre-generated by JAXB from the schema document primer.po.
 SOAPMessage soapReqMsg = ...;
 Service service = ...;
 Dispatch<SOAPMessage> disp = service.createDispatch(portName,
-SOAPMessage.class, MESSAGE);
+    SOAPMessage.class, MESSAGE);
 Response<SOAPMessage> res = disp.invokeAsync(soapReqMsg);
 while (!res.isDone()) {
-// do something while we wait
+    // do something while we wait
 }
 SOAPMessage soapResMsg = res.get();
 -------------
@@ -817,7 +832,7 @@ disp.invokeAsync(reqMsg, handler);
 [[catalogfacility]]
 === Catalog Facility
 
-JAX-WS mandates support for a standard catalog facility to be used when
+Jakarta XML Web Services mandates support for a standard catalog facility to be used when
 resolving any Web service document that is part of the description of a
 Web service, specifically WSDL and XML Schema documents.
 
@@ -844,12 +859,12 @@ Relative URIs inside a catalog file are relative to the location of the
 catalog that contains them.
 
 &#9674; _Conformance (Use of the Catalog):_ In the process of resolving a URI that points to a
-WSDL document or any document reachable from it, a JAX-WS implementation
+WSDL document or any document reachable from it, a Jakarta XML Web Services implementation
 MUST perform a URI resolution for it, as prescribed by the XML Catalogs
 1.1 specification, using the catalog defined above as its entity
 catalog.
 
-In particular, every JAX-WS API argument or annotation element whose
+In particular, every Jakarta XML Web Services API argument or annotation element whose
 semantics is that of a WSDL location URI MUST undergo URI resolution
 using the catalog facility described in this section.
 
@@ -872,7 +887,7 @@ class delegates to the `jakarta.xml.ws.spi.Provider` to perform the
 `getPort` operation. The following method can be used to get a proxy for
 a Port.
 
-`getPort(Class<T> serviceEndpointInterface, WebServiceFeature... features)`::
+`*getPort(Class<T> serviceEndpointInterface, WebServiceFeature... features)*`::
 Gets a proxy for the `serviceEndpointInterface` that can be used to
 invoke operations on the endpoint referred to by the
 `EndpointReference` instance. The specified `features` MUST be
