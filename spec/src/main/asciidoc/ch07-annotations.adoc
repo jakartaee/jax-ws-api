@@ -19,8 +19,8 @@ the logical default is and how it is computed.
 JAX-WS 2.0 uses annotations extensively. For an annotation to be
 correct, besides being syntactically correct, e.g. placed on a program
 element of the appropriate type, it must obey a set of constraints
-detailed in this specification. For annotations defined by JSR-181, the
-annotation in question must also obey the constraints in the relevant
+detailed in this specification. For annotations defined by Jakarta XML Web Services Metadata,
+the annotation in question must also obey the constraints in the relevant
 specification (see <<bib16>>).
 
 &#9674; _Conformance (Correctness of annotations):_ An implementation MUST check at runtime
@@ -91,7 +91,7 @@ annotation will be inherited from the superclass.
 === jakarta.xml.ws.WebFault
 
 The `WebFault` annotation is used when mapping WSDL faults to Java
-exceptions, see section <<faulttoexceptmap>>. It is used to capture the
+exceptions, see <<faulttoexceptmap>>. It is used to capture the
 name of the fault element used when marshalling the JAXB type generated
 from the global element referenced by the WSDL fault message. It can
 also be used to customize the mapping of service specific exceptions to
@@ -174,7 +174,7 @@ Table 7.5: `ResponseWrapper` properties.
 
 When resolving the URI specified as the `wsdlLocation` element or any
 document it may transitively reference, a JAX-WS implementation MUST use
-the catalog facility defined in section <<catalogfacility>>.
+the catalog facility defined in <<catalogfacility>>.
 
 [[mdwebendpoint]]
 === jakarta.xml.ws.WebEndpoint
@@ -271,7 +271,7 @@ Table 7.7: `WebServiceProvider` properties.
 
 When resolving the URL specified as the `wsdlLocation` element or any
 document it may transitively reference, a JAX-WS implementation MUST use
-the catalog facility defined in section <<catalogfacility>>.
+the catalog facility defined in <<catalogfacility>>.
 
 [[mdbindingtype]]
 === jakarta.xml.ws.BindingType
@@ -384,7 +384,7 @@ generated service class.
 
 When resolving the URI specified as the `wsdlLocation` element or any
 document it may transitively reference, a JAX-WS implementation MUST use
-the catalog facility defined in section <<catalogfacility>>.
+the catalog facility defined in <<catalogfacility>>.
 
 [[example-6]]
 ==== Example
@@ -497,16 +497,18 @@ public MyComponent {
 -------------
 
 [[mdjsr181]]
-=== Annotations Defined by JSR-181
+=== Annotations Defined by Jakarta XML Web Services Metadata
 
-In addition to the annotations defined in the preceding sections, JAX-WS
-2.0 uses several annotations defined by JSR-181.
+In addition to the annotations defined in the preceding sections, Jakarta
+XML Web Services uses several annotations defined by Jakarta
+XML Web Services Metadata.
 
-&#9674; _Conformance (JSR-181 conformance):_ A JAX-WS 2.0 implementation MUST be conformant to
-the JAX-WS profile of JSR-181 1.1 <<bib16>>.
+&#9674; _Conformance (Jakarta XML Web Services Metadata conformance):_ A Jakarta XML Web
+Services 3.0 implementation MUST be conformant to the Jakarta XML Web Services
+profile of Jakarta XML Web Services Metadata 2.0<<bib16>>.
 
 As a convenience to the reader, the following sections reproduce the
-definition of the JSR-181 annotations applicable to JAX-WS.
+definition of the Jakarta XML Web Services Metadata annotations applicable to Jakarta XML Web Services.
 
 [[mdwebservice]]
 ==== jakarta.jws.WebService
@@ -527,7 +529,7 @@ public @interface WebService {
 Consistently with the URI resolution process in JAX-WS, when resolving
 the URI specified as the `wsdlLocation` element or any document it may
 transitively reference, a JAX-WS implementation MUST use the catalog
-facility defined in section <<catalogfacility>>.
+facility defined in <<catalogfacility>>.
 
 [[mdwebmethod]]
 ==== jakarta.jws.WebMethod
@@ -622,7 +624,7 @@ For such a method, the mapped operation in the generated WSDL’s
 `wsam:Action` attribute on the WSDL `input`, `output` and `fault`
 messages of the WSDL operation is based upon which attributes of the
 Action annotation have been specified. The `wsam:Action` computation
-algorithm is specified in section <<wsamComputation>>
+algorithm is specified in <<wsamComputation>>
 
 [id="Table 7.11"]
 Table 7.11: `FaultAction` properties.
@@ -640,12 +642,12 @@ wsdl:fault s of the operation   |””
 
 The `FaultAction` annotation is used within the `Action` annotation to
 specify the WS-Addressing Action of a service specific exception as
-defined by section <<j2w11except>>.
+defined by <<j2w11except>>.
 
 The `wsam:Action` attribute value in the fault message in the generated
 WSDL operation mapped for an exception class is equal to the
 corresponding `value` in the FaultAction. The `wsam:Action` computation
-algorithm is specified in section <<wsamComputation>>
+algorithm is specified in <<wsamComputation>>
 
 [id="Table 7.12"]
 Table 7.12: `FaultAction` properties.
@@ -705,7 +707,7 @@ public @interface Addressing {
 The `Addressing` annotation is applied to an endpoint implementation
 class and to an injected web service proxy reference. It is used to
 control the use of WS-Addressing<<bib26>><<37>><<bib27>>.
-It corresponds with the `AddressingFeature` described in section <<addressingfeature>>.
+It corresponds with the `AddressingFeature` described in <<addressingfeature>>.
 
 [id="Table 7.14"]
 Table 7.14: `Addressing` properties.
@@ -718,8 +720,8 @@ the use of anonymous responses, or non-anonymous responses, or all. |`Responses.
 |==================================
 
 The generated WSDL must indicate the use of addressing as specified in
-the section <<j2w11svcports>>. The runtime requirements of enabling
-addressing for SOAP binding are specified in section <<addressing>>.
+the <<j2w11svcports>>. The runtime requirements of enabling
+addressing for SOAP binding are specified in <<addressing>>.
 
 [[mtomannotation]]
 ==== jakarta.xml.ws.soap.MTOM
@@ -727,7 +729,7 @@ addressing for SOAP binding are specified in section <<addressing>>.
 The `MTOM` annotation is applied to an endpoint implementation class
 and to an injected web service proxy reference.
 It is used to control the use of MTOM. It corresponds to the
-`MTOMFeature` described in section <<mtomfeature>>.
+`MTOMFeature` described in <<mtomfeature>>.
 
 [id="Table 7.15"]
 Table 7.15: `MTOM` properties.
@@ -749,7 +751,7 @@ and to an injected web service proxy reference
 . It is used to control whether a JAX-WS implementation MUST
 respect/honor the contents of the `wsdl:binding` associated with an
 endpoint. It has a corresponding `RespectBindingFeature` described in
-section <<respbindfeature>>.
+<<respbindfeature>>.
 
 [id="Table 7.16"]
 Table 7.16: `RespectBinding` properties.

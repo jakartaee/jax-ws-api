@@ -13,7 +13,7 @@ processing.
 === Configuration
 
 A SOAP binding instance requires SOAP specific configuration in addition
-to that described in section <<handlerconfig>>. The additional information
+to that described in <<handlerconfig>>. The additional information
 can be configured either programmatically or using deployment metadata.
 The following subsections describe each form of configuration.
 
@@ -78,7 +78,7 @@ a client attempts to configure the binding to play the none role via
 ===== SOAP Handlers
 
 The handler chain for a SOAP binding is configured as described in
-section <<handfmwrkprogconf>>. The handler chain may contain handlers of
+<<handfmwrkprogconf>>. The handler chain may contain handlers of
 the following types:
 
 Logical::
@@ -139,7 +139,7 @@ Web Services.
 === Processing Model
 
 The SOAP binding implements the general handler framework processing
-model described in section <<handprocmodel>> but extends it to include
+model described in <<handprocmodel>> but extends it to include
 SOAP specific processing as described in the following subsections.
 
 [[soapmuprocrules]]
@@ -147,7 +147,7 @@ SOAP specific processing as described in the following subsections.
 
 The SOAP protocol binding performs the following additional processing
 on inbound SOAP messages prior to the start of normal handler invocation
-processing (see section <<handlerexecution>>). Refer to the SOAP
+processing (see <<handlerexecution>>). Refer to the SOAP
 specification<<2>><<3>><<4>> for a normative description of the
 SOAP processing model. This section is not intended to supercede any
 requirement stated within the SOAP specification, but rather to outline
@@ -188,7 +188,7 @@ the message currently being processed or not:
 +
 Response::
 The message direction is reversed and the binding dispatches the SOAP
-must understand exception (see section <<soap11excepthandling>>).
+must understand exception (see <<soap11excepthandling>>).
 No response::
 The binding dispatches the SOAP must understand exception (see section
 <<soap11excepthandling>>).
@@ -219,7 +219,7 @@ fault message as follows:
 
 * If the exception is an instance of `SOAPFaultException` then the
 fields of the contained Jakarta SOAP with Attachments' `SOAPFault` are serialized to a new SOAP
-fault message, see section <<mapextosoapfault>>. The current message is
+fault message, see <<mapextosoapfault>>. The current message is
 replaced by the new SOAP fault message.
 * If the exception is of any other type then a new SOAP fault message is
 created to reflect a server class of error for SOAP 1.1<<bib2>>
@@ -244,16 +244,16 @@ The exception is passed to the binding provider.
 
 Service endpoints can throw service specific exceptions or runtime
 exceptions. In both cases they can provide protocol specific information
-using the cause mechanism, see section <<protocolspecificfaults>>.
+using the cause mechanism, see <<protocolspecificfaults>>.
 
 A server side implementation of the SOAP binding is responsible for
 catching exceptions thrown by a service endpoint implementation and, if
 the message exchange pattern in use includes a response to the message
 that caused the exception, converting such exceptions to SOAP fault
 messages and invoking the `handleFault` method on handlers for the fault
-message as described in section <<handlerexecution>>.
+message as described in <<handlerexecution>>.
 
-Section <<mapextosoapfault>> describes the rules for mapping an exception
+<<mapextosoapfault>> describes the rules for mapping an exception
 to a SOAP fault.
 
 [[mapextosoapfault]]
@@ -274,7 +274,7 @@ message are populated according to the following rules of precedence:
 2.  Empty
 * `detail` (`Detail` in SOAP 1.2)
 1.  Serialized service specific exception (see
-_WrapperException_.`getFaultInfo()` in section <<faulttoexceptmap>>)
+_WrapperException_.`getFaultInfo()` in <<faulttoexceptmap>>)
 2.  `SOAPFaultException.getFault().getDetail()`
 
 [[soapbindmsgcontext]]
@@ -316,7 +316,7 @@ binding of SOAP 1.2<<bib4>>.
 &#9674; _Conformance (SOAP MTOM Support):_ An implementation MUST support MTOM<<bib30>>
 footnote:[JAX-WS inherits the JAXB support for
 the SOAP MTOM<<bib30>>/XOP<<bib31>> mechanism for optimizing transmission
-of binary data types, see section <<wsdl11typemapping>>.].
+of binary data types, see <<wsdl11typemapping>>.].
 
 `SOAPBinding` defines a property (in the JavaBeans sense) called
 `MTOMEnabled` that can be used to control the use of MTOM. The
@@ -386,7 +386,7 @@ accepted or processed.
 [[security]]
 ===== Security
 
-Section <<stdbpprops>> defines two standard context properties
+<<stdbpprops>> defines two standard context properties
 (`jakarta.xml.ws.security.auth.username` and
 `jakarta.xml.ws.security.auth.password`) that may be used to configure
 authentication information.
@@ -402,7 +402,7 @@ authentication.
 [[session-management-1]]
 ===== Session Management
 
-Section <<stdbpprops>> defines a standard context property
+<<stdbpprops>> defines a standard context property
 (`jakarta.xml.ws.session.maintain`) that may be used to control whether a
 client side runtime will join a session initiated by a service.
 

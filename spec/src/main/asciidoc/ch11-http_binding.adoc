@@ -20,7 +20,7 @@ constant `jakarta.xml.ws.http.HTTPBinding.HTTP_BINDING`.
 binding.
 
 An XML/HTTP binding instance allows HTTP-specific configuration in
-addition to that described in section <<handlerconfig>>. The additional
+addition to that described in <<handlerconfig>>. The additional
 information can be configured either programmatically or using
 deployment metadata. The following subsections describe each form of
 configuration.
@@ -36,7 +36,7 @@ using deployment metadata.
 ===== HTTP Handlers
 
 The handler chain for an XML/HTTP binding is configured as described in
-section <<handfmwrkprogconf>>. The handler chain may contain handlers of
+<<handfmwrkprogconf>>. The handler chain may contain handlers of
 the following types:
 
 Logical::
@@ -79,7 +79,7 @@ Web Services.
 === Processing Model
 
 The XML/HTTP binding implements the general handler framework processing
-model described in section <<handprocmodel>>.
+model described in <<handprocmodel>>.
 
 [[xmlexcepthandling]]
 ==== Exception Handling
@@ -130,16 +130,16 @@ The exception is passed to the binding provider.
 
 Service endpoints can throw service specific exceptions or runtime
 exceptions. In both cases they can provide protocol specific information
-using the cause mechanism, see section <<protocolspecificfaults>>.
+using the cause mechanism, see <<protocolspecificfaults>>.
 
 A server side implementation of the XML/HTTP binding is responsible for
 catching exceptions thrown by a service endpoint implementation and, if
 the message exchange pattern in use includes a response to the message
 that caused the exception, converting such exceptions to HTTP response
 messages and invoking the `handleFault` method on handlers for the
-response message as described in section <<handlerexecution>>.
+response message as described in <<handlerexecution>>.
 
-Section <<mapextohttpfault>> describes the rules for mapping an exception
+<<mapextohttpfault>> describes the rules for mapping an exception
 to a HTTP status code.
 
 [[mapextohttpfault]]
@@ -173,7 +173,7 @@ accepted or processed.
 [[security-1]]
 ==== Security
 
-Section <<stdbpprops>> defines two standard context properties
+<<stdbpprops>> defines two standard context properties
 (`jakarta.xml.ws.security.auth.username` and
 `jakarta.xml.ws.security.auth.password`) that may be used to configure
 authentication information.
@@ -189,7 +189,7 @@ authentication.
 [[session-management-2]]
 ==== Session Management
 
-Section <<stdbpprops>> defines a standard context property
+<<stdbpprops>> defines a standard context property
 (`jakarta.xml.ws.session.maintain`) that may be used to control whether a
 client side runtime will join a session initiated by a service.
 

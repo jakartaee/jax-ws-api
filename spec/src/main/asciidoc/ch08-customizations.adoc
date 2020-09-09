@@ -199,7 +199,7 @@ conflicting binding declarations.
 number of external JAX-WS and JAXB binding files for processing in
 conjunction with at least one WSDL document.
 
-Please refer to section <<jaxbbindingdeclarations>> for more information
+Please refer to <<jaxbbindingdeclarations>> for more information
 on processing JAXB binding declarations.
 
 [[externalbindingfileex]]
