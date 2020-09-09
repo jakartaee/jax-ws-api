@@ -5,7 +5,7 @@
 [[xmlbindchap]]
 == HTTP Binding
 
-This chapter describes the JAX-WS XML/HTTP binding. The JAX-WS XML/HTTP
+This chapter describes the Jakarta XML Web Services XML/HTTP binding. The Jakarta XML Web Services XML/HTTP
 binding provides raw XML over HTTP messaging capabilities as used in
 many Web services today.
 
@@ -28,7 +28,7 @@ configuration.
 [[programmatic-configuration-1]]
 ==== Programmatic Configuration
 
-JAX-WS only defines APIs for programmatic configuration of client side
+Jakarta XML Web Services only defines APIs for programmatic configuration of client side
 XML/HTTP bindings – server side bindings are expected to be configured
 using deployment metadata.
 
@@ -71,9 +71,8 @@ entire XML message via a logical message context.
 [[deployment-model-2]]
 ==== Deployment Model
 
-JAX-WS defines no standard deployment model for handlers. Such a model
-is provided by JSR 109<<bib17>> Implementing Enterprise
-Web Services.
+Jakarta XML Web Services defines no standard deployment model for handlers. Such a model
+is provided by Jakarta Enterprise Web Services<<bib17>>.
 
 [[processing-model-1]]
 === Processing Model
@@ -97,9 +96,9 @@ handlers and following the processing model described in section
 exception to a fault message subject to further handler processing if
 the following criteria are met:
 
-1.  A handler throws a `ProtocolException` from `handleMessage`
-2.  The MEP in use includes a response to the message being processed
-3.  The current message is not already a fault message (the handler
+. A handler throws a `ProtocolException` from `handleMessage`
+. The MEP in use includes a response to the message being processed
+. The current message is not already a fault message (the handler
 might have undertaken the work prior to throwing the exception).
 
 If the above criteria are met then the exception is converted to a HTTP
@@ -149,7 +148,7 @@ When mapping an exception to a HTTP status code, the status code of the
 HTTP fault message is populated according to the following rules of
 precedence:
 
-1.  `HTTPException.getStatusCode()`footnote:[If the exception is a HTTPException or has a cause that is a HTTPException .]
+1.  ``HTTPException.getStatusCode()``footnote:[If the exception is a `HTTPException` or has a cause that is a `HTTPException`.]
 2.  `500`.
 
 [[xmlbindhttp]]
