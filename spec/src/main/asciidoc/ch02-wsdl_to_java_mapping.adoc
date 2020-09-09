@@ -963,7 +963,7 @@ described above.
     <output .../>
     <fault name="operationException"
            message="tns:operationException"/>
-    </operation>
+  </operation>
 </portType>
 
 // fault mapping
@@ -989,8 +989,8 @@ the mandatory WSDL 1.1 protocol bindings.
 WSDL 1.1 specified extension elements for the WSDL SOAP and MIME
 bindings.
 
-==== [[general-considerations]]
-General Considerations
+[[general-considerations]]
+==== General Considerations
 
 R2209 in WS-I Simple SOAP Binding Profile 1.1<<bib32>>
 recommends that all parts of a message be bound but does not require it.
