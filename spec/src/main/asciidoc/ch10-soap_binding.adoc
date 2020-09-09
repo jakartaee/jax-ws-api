@@ -46,7 +46,7 @@ receiver role is identified by the URI
 http://www.w3.org/2003/05/soap-envelope/role/ultimateReceiver or by
 omission of the `role` attribute from a SOAP header.
 
-_♦ Conformance (SOAP required roles):_ An implementation of the SOAP binding MUST act in
+&#9674; _Conformance (SOAP required roles):_ An implementation of the SOAP binding MUST act in
 the following roles: next and ultimate receiver.
 
 A SOAP 1.2 endpoint never plays the following role:
@@ -55,22 +55,22 @@ None::
 In SOAP 1.2, the none role is identified by the URI
 http://www.w3.org/2003/05/soap-envelope/role/none.
 
-_♦ Conformance (SOAP required roles):_ An implementation of the SOAP binding MUST NOT act
+&#9674; _Conformance (SOAP required roles):_ An implementation of the SOAP binding MUST NOT act
 in the none role.
 
 The `jakarta.xml.ws.SOAPBinding` interface is an abstraction of the JAX-WS
 SOAP binding. It extends `jakarta.xml.ws.Binding` with methods to
 configure additional SOAP roles played by the endpoint.
 
-_♦ Conformance (Default role visibility):_ An implementation MUST include the required
+&#9674; _Conformance (Default role visibility):_ An implementation MUST include the required
 next and ultimate receiver roles in the `Set` returned from
 `SOAPBinding.getRoles`.
 
-_♦ Conformance (Default role persistence):_ An implementation MUST add the required next
+&#9674; _Conformance (Default role persistence):_ An implementation MUST add the required next
 and ultimate receiver roles to the roles configured with
 `SOAPBinding.setRoles`.
 
-_♦ Conformance (None role error):_ An implementation MUST throw `WebServiceException` if
+&#9674; _Conformance (None role error):_ An implementation MUST throw `WebServiceException` if
 a client attempts to configure the binding to play the none role via
 `SOAPBinding.setRoles`.
 
@@ -110,16 +110,16 @@ mime attachments in the message.
 `jakarta.xml.ws.binding.attachments.outbound` property will be ignored as
 the message type already provides a way to specify attachments.
 
-_♦ Conformance (Incompatible handlers):_ An implementation MUST throw
+&#9674; _Conformance (Incompatible handlers):_ An implementation MUST throw
 `WebServiceException` when, at the time a binding provider is created,
 the handler chain returned by the configured `HandlerResolver` contains
 an incompatible handler.
 
-_♦ Conformance (Incompatible handlers):_ Implementations MUST throw a
+&#9674; _Conformance (Incompatible handlers):_ Implementations MUST throw a
 `WebServiceException` when attempting to configure an incompatible
 handler using `Binding.setHandlerChain`.
 
-_♦ Conformance (Logical handler access):_ An implementation MUST allow access to the
+&#9674; _Conformance (Logical handler access):_ An implementation MUST allow access to the
 contents of the SOAP body via a logical message context.
 
 [[soap-headers]]
@@ -218,7 +218,7 @@ If the above criteria are met then the exception is converted to a SOAP
 fault message as follows:
 
 * If the exception is an instance of `SOAPFaultException` then the
-fields of the contained SAAJ `SOAPFault` are serialized to a new SOAP
+fields of the contained Jakarta SOAP with Attachments' `SOAPFault` are serialized to a new SOAP
 fault message, see section <<mapextosoapfault>>. The current message is
 replaced by the new SOAP fault message.
 * If the exception is of any other type then a new SOAP fault message is
@@ -298,7 +298,7 @@ The SOAP 1.1 HTTP binding is identified by the URL
 `http://schemas.xmlsoap.org/wsdl/soap/http`, which is also the value of
 the constant `jakarta.xml.ws.soap.SOAPBinding.SOAP11HTTP_BINDING`.
 
-_♦ Conformance (SOAP 1.1 HTTP Binding Support):_ An implementation MUST support the HTTP
+&#9674; _Conformance (SOAP 1.1 HTTP Binding Support):_ An implementation MUST support the HTTP
 binding of SOAP 1.1<<bib2>> and SOAP With Attachments<<38>> as clarified by the WS-I Basic
 Profile<<bib20>>, WS-I Simple SOAP
 Binding Profile<<bib32>> and WS-I Attachment Profile<<33>>.
@@ -307,13 +307,13 @@ The SOAP 1.2 HTTP binding is identified by the URL
 `http://www.w3.org/2003/05/soap/bindings/HTTP/`, which is also the value
 of the constant `jakarta.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING`.
 
-_♦ Conformance (SOAP 1.2 HTTP Binding Support):_ An implementation MUST support the HTTP
+&#9674; _Conformance (SOAP 1.2 HTTP Binding Support):_ An implementation MUST support the HTTP
 binding of SOAP 1.2<<bib4>>.
 
 [[mtom]]
 ===== MTOM
 
-_♦ Conformance (SOAP MTOM Support):_ An implementation MUST support MTOM<<bib30>>
+&#9674; _Conformance (SOAP MTOM Support):_ An implementation MUST support MTOM<<bib30>>
 footnote:[JAX-WS inherits the JAXB support for
 the SOAP MTOM<<bib30>>/XOP<<bib31>> mechanism for optimizing transmission
 of binary data types, see section <<wsdl11typemapping>>.].
@@ -324,17 +324,17 @@ of binary data types, see section <<wsdl11typemapping>>.].
 property. The `setMTOMEnabled` method is used to change the value of the
 property so as to enable or disable the use of MTOM.
 
-_♦ Conformance (Semantics of MTOM enabled):_ When MTOM is enabled, a receiver MUST accept
+&#9674; _Conformance (Semantics of MTOM enabled):_ When MTOM is enabled, a receiver MUST accept
 both non-optimized and optimized messages, and a sender MAY send an
 optimized message, non-optimized messages being also acceptable.
 
 The heuristics used by a sender to determine whether to use optimization
 or not are implementation-specific.
 
-_♦ Conformance (MTOM support):_ Predefined `SOAPBinding` instances MUST support
+&#9674; _Conformance (MTOM support):_ Predefined `SOAPBinding` instances MUST support
 enabling/disabling MTOM support using the `setMTOMenabled` method.
 
-_♦ Conformance (SOAP bindings with MTOM disabled):_ The bindings corresponding to the
+&#9674; _Conformance (SOAP bindings with MTOM disabled):_ The bindings corresponding to the
 following IDs:
 
 * `jakarta.xml.ws.soap.SOAPBinding.SOAP11HTTP_BINDING`
@@ -354,7 +354,7 @@ The URL of the latter is
 predefined constant
 `jakarta.xml.ws.soap.SOAPBinding.SOAP12HTTP_MTOM_BINDING`.
 
-_♦ Conformance (SOAP bindings with MTOM enabled):_ The bindings corresponding to the
+&#9674; _Conformance (SOAP bindings with MTOM enabled):_ The bindings corresponding to the
 following IDs:
 
 * `jakarta.xml.ws.soap.SOAPBinding.SOAP11HTTP_MTOM_BINDING`
@@ -362,7 +362,7 @@ following IDs:
 
 MUST have MTOM enabled by default.
 
-_♦ Conformance (MTOM on Other SOAP Bindings):_ Other bindings that extend `SOAPBinding`
+&#9674; _Conformance (MTOM on Other SOAP Bindings):_ Other bindings that extend `SOAPBinding`
 MAY NOT support changing the value of the `MTOMEnabled` property. In
 this case, if an application attempts to change its value, an
 implementation MUST throw a `WebServiceException`.
@@ -375,7 +375,7 @@ transfer protocol for a one-way SOAP message, implementations wait for
 the HTTP response even though there is no SOAP message in the HTTP
 response entity body.
 
-_♦ Conformance (One-way operations):_ When invoking one-way operations, an implementation
+&#9674; _Conformance (One-way operations):_ When invoking one-way operations, an implementation
 of the SOAP/HTTP binding MUST block until the HTTP response is received
 or an error occurs.
 
@@ -391,10 +391,10 @@ Section <<stdbpprops>> defines two standard context properties
 `jakarta.xml.ws.security.auth.password`) that may be used to configure
 authentication information.
 
-_♦ Conformance (HTTP basic authentication support):_ An implementation of the SOAP/HTTP
+&#9674; _Conformance (HTTP basic authentication support):_ An implementation of the SOAP/HTTP
 binding MUST support HTTP basic authentication.
 
-_♦ Conformance (Authentication properties):_ A client side implementation MUST support
+&#9674; _Conformance (Authentication properties):_ A client side implementation MUST support
 use of the the standard properties `jakarta.xml.ws.security.auth.username`
 and `jakarta.xml.ws.security.auth.password` to configure HTTP basic
 authentication.
@@ -439,10 +439,10 @@ based state management.
 If addressing is enabled, implementations are required to follow
 WS-Addressing<<bib26>><<bib37>><<bib27>> protocols.
 
-_♦ Conformance (SOAP Addressing Support):_ An implementation MUST support WS-Addressing
+&#9674; _Conformance (SOAP Addressing Support):_ An implementation MUST support WS-Addressing
 1.0 - SOAP Binding<<bib37>>.
 
-_♦ Conformance (`wsa:Action` value): `wsa:Action` value MUST be got from `@Action`
+&#9674; _Conformance (`wsa:Action` value): `wsa:Action` value MUST be got from `@Action`
 annotation elements in SEI, if present. But if a client sets a
 `BindingProvider.SOAPACTION_URI_PROPERTY` property then that MUST be
 used for `wsa:Action` header.

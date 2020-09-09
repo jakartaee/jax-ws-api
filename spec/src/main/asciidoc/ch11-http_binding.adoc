@@ -16,7 +16,7 @@ The XML/HTTP binding is identified by the URL
 `http://www.w3.org/2004/08/wsdl/http`, which is also the value of the
 constant `jakarta.xml.ws.http.HTTPBinding.HTTP_BINDING`.
 
-_♦ Conformance (XML/HTTP Binding Support):_ An implementation MUST support the XML/HTTP
+&#9674; _Conformance (XML/HTTP Binding Support):_ An implementation MUST support the XML/HTTP
 binding.
 
 An XML/HTTP binding instance allows HTTP-specific configuration in
@@ -56,16 +56,16 @@ mime attachments to the message.
 `Dispatch` of type `DataSource` should be used to send mime attachments
 for the XML / HTTP binding in message mode.
 
-_♦ Conformance (Incompatible handlers):_ An implementation MUST throw
+&#9674; _Conformance (Incompatible handlers):_ An implementation MUST throw
 `WebServiceException` when, at the time a binding provider is created,
 the handler chain returned by the configured `HandlerResolver` contains
 an incompatible handler.
 
-_♦ Conformance (Incompatible handlers):_ Implementations MUST throw a
+&#9674; _Conformance (Incompatible handlers):_ Implementations MUST throw a
 `WebServiceException` when attempting to configure an incompatible
 handler using `Binding.setHandlerChain`.
 
-_♦ Conformance (Logical handler access):_ An implementation MUST allow access to the
+&#9674; _Conformance (Logical handler access):_ An implementation MUST allow access to the
 entire XML message via a logical message context.
 
 [[deployment-model-2]]
@@ -162,7 +162,7 @@ HTTP interactions are request-response in nature. When used for one-way
 messages, implementations wait for the HTTP response even though there
 is no XML message in the HTTP response entity body.
 
-_♦ Conformance (One-way operations):_ When invoking one-way operations, an implementation
+&#9674; _Conformance (One-way operations):_ When invoking one-way operations, an implementation
 of the XML/HTTP binding MUST block until the HTTP response is received
 or an error occurs.
 
@@ -178,10 +178,10 @@ Section <<stdbpprops>> defines two standard context properties
 `jakarta.xml.ws.security.auth.password`) that may be used to configure
 authentication information.
 
-_♦ Conformance (HTTP basic authentication support):_ An implementation of the XML/HTTP
+&#9674; _Conformance (HTTP basic authentication support):_ An implementation of the XML/HTTP
 binding MUST support HTTP basic authentication.
 
-_♦ Conformance (Authentication properties):_ A client side implementation MUST support
+&#9674; _Conformance (Authentication properties):_ A client side implementation MUST support
 use of the the standard properties `jakarta.xml.ws.security.auth.username`
 and `jakarta.xml.ws.security.auth.password` to configure HTTP basic
 authentication.
@@ -207,11 +207,11 @@ identifier.
 SSL::
 The SSL session ID is used to track a session.
 
-_♦ Conformance (URL rewriting support)_ An implementation MUST support use of HTTP URL
+&#9674; _Conformance (URL rewriting support)_ An implementation MUST support use of HTTP URL
 rewriting for state management.
 
-_♦ Conformance (Cookie support):_ An implementation SHOULD support use of HTTP cookies
+&#9674; _Conformance (Cookie support):_ An implementation SHOULD support use of HTTP cookies
 for state management.
 
-_♦ Conformance (SSL session support):_ An implementation MAY support use of SSL session
+&#9674; _Conformance (SSL session support):_ An implementation MAY support use of SSL session
 based state management.

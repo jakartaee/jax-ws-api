@@ -23,13 +23,13 @@ detailed in this specification. For annotations defined by JSR-181, the
 annotation in question must also obey the constraints in the relevant
 specification (see <<bib16>>).
 
-_♦ Conformance (Correctness of annotations):_ An implementation MUST check at runtime
+&#9674; _Conformance (Correctness of annotations):_ An implementation MUST check at runtime
 that the annotations pertaining to a method being invoked, either on the
 client or on the server, as well as any containing program elements
 (i.e. classes, packages) is in conformance with the specification for
 that annotation
 
-_♦ Conformance (Handling incorrect annotations):_ If an incorrect or inconsistent
+&#9674; _Conformance (Handling incorrect annotations):_ If an incorrect or inconsistent
 annotation is detected:
 
 * In a client setting, an implementation MUST NOT invoke the remote
@@ -41,7 +41,7 @@ the cause of the error (e.g. an `IllegalArgumentException` or a
 to an endpoint implementation object. Rather, it MUST generate a fault
 appropriate to the binding in use.
 
-_♦ Conformance (Unsupported `WebServiceFeatureAnnotation`):_ If an unrecongnized or
+&#9674; _Conformance (Unsupported `WebServiceFeatureAnnotation`):_ If an unrecongnized or
 unsupported annotation annotated with the `WebServiceFeatureAnnotation`
 meta-annotation:
 
@@ -255,7 +255,7 @@ the `WebService` annotation does for SEI-based endpoints.
 The `WebServiceProvider` and `WebService` annotations are mutually
 exclusive.
 
-_♦ Conformance (WebServiceProvider and WebService):_ A class annotated with the
+&#9674; _Conformance (WebServiceProvider and WebService):_ A class annotated with the
 `WebServiceProvider` annotation MUST NOT carry a `WebService`
 annotation.
 
@@ -502,7 +502,7 @@ public MyComponent {
 In addition to the annotations defined in the preceding sections, JAX-WS
 2.0 uses several annotations defined by JSR-181.
 
-_♦ Conformance (JSR-181 conformance):_ A JAX-WS 2.0 implementation MUST be conformant to
+&#9674; _Conformance (JSR-181 conformance):_ A JAX-WS 2.0 implementation MUST be conformant to
 the JAX-WS profile of JSR-181 1.1 <<bib16>>.
 
 As a convenience to the reader, the following sections reproduce the

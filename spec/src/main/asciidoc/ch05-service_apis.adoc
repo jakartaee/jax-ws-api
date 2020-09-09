@@ -25,14 +25,14 @@ for services to be able to operate at the XML message level. The
 `Provider` interface offers an alternative to SEIs and may be
 implemented by services wishing to work at the XML message level.
 
-_♦ Conformance (Provider support required):_ An implementation MUST support
+&#9674; _Conformance (Provider support required):_ An implementation MUST support
 `Provider<Source>` in payload mode with all the predefined bindings. It
 MUST also support `Provider<SOAPMessage>` in message mode in conjunction
 with the predefined SOAP bindings and
 `Provider<jakarta.activation.DataSource>` in message mode in conjunction
 with the predefined HTTP binding.
 
-_♦ Conformance (Provider default constructor):_ A `Provider` based service endpoint
+&#9674; _Conformance (Provider default constructor):_ A `Provider` based service endpoint
 implementation MUST provide a public default constructor.
 
 An empty Source payload can be used in payload mode to send a response
@@ -44,10 +44,10 @@ bound to a concrete class, e.g. `Provider<Source>` or
 `Provider<SOAPMessage>`, as opposed to being left unbound, as in
 `Provider<T>`.
 
-_♦ Conformance (Provider implementation):_ A `Provider` based service endpoint
+&#9674; _Conformance (Provider implementation):_ A `Provider` based service endpoint
 implementation MUST implement a typed `Provider` interface.
 
-_♦ Conformance (WebServiceProvider annotation):_ A `Provider` based service endpoint
+&#9674; _Conformance (WebServiceProvider annotation):_ A `Provider` based service endpoint
 implementation MUST carry a `WebServiceProvider` annotation (see
 <<mdwebsvcprovider>>).
 
@@ -241,19 +241,19 @@ Test test = new Test();
 Endpoint e = Endpoint.publish("http://localhost:8080/test", test);
 -------------
 
-_♦ Conformance (Endpoint publish(String address, Object implementor) Method):_ The effect
+&#9674; _Conformance (Endpoint publish(String address, Object implementor) Method):_ The effect
 of invoking the `publish` method on an `Endpoint` MUST be the same as
 first invoking the `create` method with the binding ID appropriate to
 the URL scheme used by the address, then invoking the
 `publish(String address)` method on the resulting `endpoint`.
 
-_♦ Conformance (Default Endpoint Binding):_ In the absence of a specified binding, if the
+&#9674; _Conformance (Default Endpoint Binding):_ In the absence of a specified binding, if the
 URL scheme for the address argument of the `Endpoint.publish` method is
 ``http'' or ``https'' then an implementation MUST use the SOAP 1.1/HTTP
 binding (see chapter <<soapbindchap>>) as the binding for the newly
 created endpoint.
 
-_♦ Conformance (Other Bindings):_ An implementation MAY support using the
+&#9674; _Conformance (Other Bindings):_ An implementation MAY support using the
 `Endpoint.publish` method with addresses whose URL scheme is neither
 ``http'' nor ``https''.
 
@@ -290,7 +290,7 @@ Publishes the endpoint using the specified server context. The server
 context MUST contain address information for the resulting endpoint
 and it MUST be compatible with the endpoint’s binding.
 
-_♦ Conformance (Publishing over HTTP):_ If the `Binding` for an `Endpoint` is a SOAP (see
+&#9674; _Conformance (Publishing over HTTP):_ If the `Binding` for an `Endpoint` is a SOAP (see
 <<soapbindchap>>) or HTTP (see <<xmlbindchap>>) binding, then an
 implementation MUST support publishing the `Endpoint` to a URL whose
 scheme is either ``http'' or ``https''.
@@ -300,7 +300,7 @@ annotations on the implementor class, the `Binding` in use and the set
 of metadata documents specified on the endpoint (see
 <<endpointmetadata>>).
 
-_♦ Conformance (WSDL Publishing):_ An `Endpoint` that uses the SOAP 1.1/HTTP binding (see
+&#9674; _Conformance (WSDL Publishing):_ An `Endpoint` that uses the SOAP 1.1/HTTP binding (see
 <<soapbindchap>>) MUST make its contract available as a WSDL 1.1 document
 at the publishing address suffixed with ``?WSDL'' or ``?wsdl''.
 
@@ -367,7 +367,7 @@ applications to publish Web service endpoints. To this end, JAX-WS 2.0
 defines a new permission class, `jakarta.xml.ws.WebServicePermission`, and
 one named permission, `publishEndpoint`.
 
-_♦ Conformance (Checking publishEndpoint Permission):_ When any of the `publish`
+&#9674; _Conformance (Checking publishEndpoint Permission):_ When any of the `publish`
 methods defined by the `Endpoint` class are invoked, an implementation
 MUST check whether a `SecurityManager` is installed with the
 application. If it is, implementations MUST verify that the application
@@ -387,10 +387,10 @@ way it is possible, e.g., to make sure that the WSDL or XML Schema
 document that is published contains information that cannot be
 represented using built-in Java annotations (see <<metadata>>).
 
-_♦ Conformance (Required Metadata Types):_ An implementation MUST support WSDL 1.1 and
+&#9674; _Conformance (Required Metadata Types):_ An implementation MUST support WSDL 1.1 and
 XML Schema 1.0 documents as metadata.
 
-_♦ Conformance (Unknown Metadata):_ An implementation MUST ignore metadata documents
+&#9674; _Conformance (Unknown Metadata):_ An implementation MUST ignore metadata documents
 whose type it does not recognize.
 
 When specifying a list of documents as metadata, an application may need
@@ -699,7 +699,7 @@ dispatch any incoming requests to the application. The `setExecutor` and
 `getExecutor` methods of `Endpoint` can be used to modify and retrieve
 the executor configured for a service.
 
-_♦ Conformance (Use of Executor):_ If an executor object is successfully set on an
+&#9674; _Conformance (Use of Executor):_ If an executor object is successfully set on an
 `Endpoint` via the `setExecutor` method, then an implementation MUST use
 it to dispatch incoming requests upon publication of the `Endpoint` by
 means of the `publish(String address)` method. If publishing is carried
@@ -707,7 +707,7 @@ out using the `publish(Object serverContext)`) method, an implementation
 MAY use the specified executor or another one specific to the server
 context being used.
 
-_♦ Conformance (Default Executor):_ If an executor has not been set on an `Endpoint`, an
+&#9674; _Conformance (Default Executor):_ If an executor has not been set on an `Endpoint`, an
 implementation MUST use its own executor, a
 `java.util.concurrent.ThreadPoolExecutor` or analogous mechanism, to
 dispatch incoming requests.
@@ -742,7 +742,7 @@ been published. If the Class `clazz` is not a subclass of
 MUST throw `java.lang.UnsupportedOperationException` if the `Endpoint`
 instance uses the XML/HTTP binding.
 
-_♦ Conformance (`Endpoint’s W3CEndpointReference`):_ The returned `W3EndpointReference`
+&#9674; _Conformance (`Endpoint’s W3CEndpointReference`):_ The returned `W3EndpointReference`
 MUST contain `wsam:ServiceName` and `wsam:ServiceName[@EndpointName]` as
 per Addressing 1.0 - Metadata<<bib27>>. The
 `wsam:InterfaceName` MAY be present in the `W3CEndpointReference`. If
@@ -871,6 +871,6 @@ Occasionally it is necessary for one application component to create an
 `W3CEndpointReferenceBuilder` class provides a standard API for creating
 `W3CEndpointReference` instances for web service endpoints.
 
-_♦ Conformance (Building W3CEndpointReference):_ `W3CEndpointReferenceBuilder.build()`
+&#9674; _Conformance (Building W3CEndpointReference):_ `W3CEndpointReferenceBuilder.build()`
 method MUST construct an `EndpointReference` as per the Addressing 1.0 -
 Metadata<<bib27>>.

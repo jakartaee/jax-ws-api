@@ -2,34 +2,6 @@
 // Copyright (c) 2020 Contributors to the Eclipse Foundation
 //
 
-= Jakarta XML-Based Web Services, Version 2.3
-Comments to <javaee-spec@javaee.groups.io>
-v2.3, July 11, 2017
-// Metadata:
-:decription: Jakarta XML-Based Web Services, Version 2.3
-// Settings:
-:sectnums:
-:sectnumlevels: 5
-:xrefstyle: full
-
-Editors: +
-Jitendra Kotamraju +
-Lukas Jungmann +
-
-Comments to: javaee-spec@javaee.groups.io
-
-_Oracle Corporation +
-500 Oracle Parkway +
-Redwood Shores, CA 94065 USA_
-
-
-Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
-
-Oracle and Java are registered trademarks of Oracle and/or its
-affiliates. Other names may be trademarks of their respective owners.
-
-
-
 [[introduction]]
 == Introduction
 
@@ -37,14 +9,14 @@ XML<<bib1>> is a platform-independent means of representing
 structured information. XML Web Services use XML as the basis for
 communication between Web-based services and clients of those services
 and inherit XML’s platform independence. SOAP<<bib2>><<bib3>><<bib4>>
-describes one such XML based message format and ``defines, using XML
+describes one such XML based message format and "defines, using XML
 technologies, an extensible messaging framework containing a message
 construct that can be exchanged over a variety of underlying
-protocols.''
+protocols."
 
-WSDL<<bib5>> is ``an XML format for describing network
+WSDL<<bib5>> is "an XML format for describing network
 services as a set of endpoints operating on messages containing either
-document-oriented or procedure-oriented information.'' WSDL can be
+document-oriented or procedure-oriented information." WSDL can be
 considered the de-facto service description language for XML Web
 Services.
 
@@ -53,99 +25,115 @@ oriented XML Web Services in the Java platform. JAX-RPC 1.1<<bib7>> added
 support for the WS-I Basic Profile 1.0<<bib8>> to improve interoperability between JAX-RPC
 implementations and with services implemented using other technologies.
 
-JAX-WS 2.0 (this specification) is a follow-on to JAX-RPC 1.1, extending
-it as described in the following sections.
+Jakarta XML Web Services (this specification) is a follow-on to JAX-RPC 1.1,
+extending it as described in the following sections.
+
+Throughout the document, references to JAXB refer to the Jakarta XML Binding
+unless otherwise noted.
 
 [[goals]]
 === Goals
 
 Since the release of JAX-RPC 1.0<<bib6>>, new specifications and
-new versions of the standards it depends on have been released. JAX-WS
-2.0 relates to these specifications and standards as follows:
+new versions of the standards it depends on have been released.
+Jakarta XML Web Services relates to these specifications
+and standards as follows:
 
-JAXB::
+Jakarta XML Binding::
 Due primarily to scheduling concerns, JAX-RPC 1.0 defined its own data
 binding facilities. With the release of JAXB 1.0 <<bib9>>
 there is no reason to maintain two separate sets of XML mapping
-rules in the Java platform. JAX-WS 2.0 will delegate data
-binding-related tasks to the JAXB 2.0<<bib10>>
-specification that is being developed in parallel with JAX-WS 2.0.
-JAXB 2.0<<bib10>> will add support for Java to XML
+rules in the Java platform. Jakarta XML Web Services will delegate data
+binding-related tasks to the Jakarta XML Binding<<bib10>>
+specification that is being developed in parallel with Jakarta XML Web Services. +
+Jakarta XML Binding<<bib10>> will add support for Java to XML
 mapping, additional support for less used XML schema constructs, and
 provide bidirectional customization of Java
-latexmath:[$\Leftrightarrow$] XML data binding. JAX-WS 2.0 will allow
+&#x21d4; XML data binding. Jakarta XML Web Services will allow
 full use of JAXB provided facilities including binding customization
 and optional schema validation.
 * JAX-WS 2.1 requires JAXB 2.1<<bib11>>.
 * JAX-WS 2.2 requires JAXB 2.2<<bib12>>.
 * JAX-WS 2.3 requires JAXB 2.3<<bib13>>.
+* Jakarta XML Web Services 3.0 requires Jakarta XML Binding 3.0.
 
 SOAP 1.2::
 Whilst SOAP 1.1 is still widely deployed, it’s expected that services
 will migrate to SOAP 1.2<<bib3>><<bib4>>
 now that it is a W3C Recommendation.
-JAX-WS 2.0 will add support for SOAP 1.2 whilst requiring continued
-support for SOAP 1.1.
+Jakarta XML Web Services will add support for SOAP 1.2 whilst
+requiring continued support for SOAP 1.1.
+
 WSDL 2.0::
 The W3C is expected to progress WSDL 2.0<<bib14>> to
-Recommendation during the lifetime of this JSR. JAX-WS 2.0 will add
-support for WSDL 2.0 whilst requiring continued support for WSDL 1.1.
- +
-The expert group for the JSR decided against this goal for this
-release . We will look at adding support in a future revision of the
-JAX-WS specification.
+Recommendation during the lifetime of this JSR. Jakarta XML Web Services
+will add support for WSDL 2.0 whilst requiring continued support for WSDL 1.1.
+[NOTE]
+.Note
+====
+_The expert group decided against this goal for this
+release. We will look at adding support in a future revision of the
+Jakarta XML Web Services specification._
+====
+
 WS-I Basic Profile 1.1::
 JAX-RPC 1.1 added support for WS-I Basic Profile 1.0. WS-I Basic
 Profile 1.1 is expected to supersede 1.0 during the lifetime of this
-JSR and JAX-WS 2.0 will add support for the additional clarifications
-it provides.
+specificatoin and Jakarta XML Web Services will add support
+for the additional clarifications it provides.
+
 A Metadata Facility for the Java Programming Language (JSR 175)::
-JAX-WS 2.0 will define the use of Java annotations<<bib15>> to
+Jakarta XML Web Services will define the use of Java annotations<<bib15>> to
 simplify the most common development scenarios for both clients and
 servers.
-Web Services Metadata for the Java Platform (JSR 181)::
-JAX-WS 2.0 will align with and complement the annotations defined by
-JSR 181<<bib16>>.
-Implementing Enterprise Web Services (JSR 109)::
-The JSR 109<<bib17>> defined `jaxrpc-mapping-info`
-deployment descriptor provides deployment time Java
-latexmath:[$\Leftrightarrow$] WSDL mapping functionality. In
-conjunction with JSR 181<<bib16>>, JAX-WS 2.0 will complement this
-mapping functionality with development time Java annotations that
-control Java latexmath:[$\Leftrightarrow$] WSDL mapping.
-Web Services Security (JSR 183)::
-JAX-WS 2.0 will align with and complement the security APIs defined by
-JSR 183<<bib18>>.
 
-JAX-WS 2.0 will improve support for document/message centric usage:
+Jakarta XML Web Services Metadata::
+Jakarta XML Web Services will align with and complement the annotations defined by
+JSR 181<<bib16>>.
+
+Jakarta Enterprise Web Services::
+The Jakarta Enterprise Web Services specification<<bib17>>
+defined `jaxrpc-mapping-info`
+deployment descriptor provides deployment time Java
+&#x21d4; WSDL mapping functionality. In
+conjunction with Jakarta Enterprise Web Services Metadata<<bib16>>,
+Jakarta Enterprise Web Services will complement this
+mapping functionality with development time Java annotations that
+control Java &#x21d4; WSDL mapping.
+
+Web Services Security (JSR 183)::
+Jakarta XML Web Services will align with and complement the security APIs
+defined by JSR 183<<bib18>>.
+
+Jakarta XML Web Services will improve support for document/message centric usage:
 
 Asynchrony::
-JAX-WS 2.0 will add support for client side asynchronous operations.
+Jakarta XML Web Services will add support for client side asynchronous operations.
+
 Non-HTTP Transports::
-JAX-WS 2.0 will improve the separation between the XML message format
-and the underlying transport mechanism to simplify use of JAX-WS with
-non-HTTP transports.
+Jakarta XML Web Services will improve the separation between the XML message
+format and the underlying transport mechanism to simplify use of Jakarta XML
+Web Services with non-HTTP transports.
+
 Message Access::
-JAX-WS 2.0 will simplify client and service access to the messages
-underlying an exchange.
+Jakarta XML Web Services will simplify client and service access
+to the messages underlying an exchange.
+
 Session Management::
-JAX-RPC 1.1 session management capabilities are tied to HTTP. JAX-WS
-2.0 will add support for message based session management.
+JAX-RPC 1.1 session management capabilities are tied to HTTP. Jakarta
+XML Web Services will add support for message based session management.
 
-JAX-WS 2.0 will also address issues that have arisen with experience of
-implementing and using JAX-RPC 1.0:
+Jakarta XML Web Services will also address issues that have arisen
+with experience of implementing and using JAX-RPC 1.0:
 
-Inclusion in Java SE::
-JAX-WS 2.0 will prepare JAX-WS for inclusion in a future version of
-Java SE. Application portability is a key requirement and JAX-WS 2.0
-will define mechanisms to produce fully portable clients.
 Handlers::
-JAX-WS 2.0 will simplify the development of handlers and will provide
-a mechanism to allow handlers to collaborate with service clients and
-service endpoint implementations.
+Jakarta XML Web Services will simplify the development of handlers and
+will provide a mechanism to allow handlers to collaborate with service
+clients and service endpoint implementations.
+
 Versioning and Evolution of Web Services::
-JAX-WS 2.0 will describe techniques and mechanisms to ease the burden
-on developers when creating new versions of existing services.
+Jakarta XML Web Services will describe techniques and mechanisms to ease
+the burden on developers when creating new versions of existing services.
 
 [[nongoals20]]
 === Non-Goals
@@ -153,54 +141,61 @@ on developers when creating new versions of existing services.
 The following are non-goals:
 
 Backwards Compatibility of Binary Artifacts::
-Binary compatibility between JAX-RPC 1.x and JAX-WS 2.0 implementation
-runtimes.
+Binary compatibility between JAX-RPC 1.x and Jakarta XML Web Services
+implementation runtimes.
+
 Pluggable data binding::
-JAX-WS 2.0 will defer data binding to JAXB<<bib10>>;
+Jakarta XML Web Services will defer data binding to Jakarta XML Binding<<bib10>>;
 it is not a goal to provide a plug-in API to allow other types of data
-binding technologies to be used in place of JAXB. However, JAX-WS 2.0
-will maintain the capability to selectively disable data binding to
-provide an XML based fragment suitable for use as input to alternative
-data binding technologies.
+binding technologies to be used in place of Jakarta XML Binding. However,
+Jakarta XML Web Services will maintain the capability to selectively disable
+data binding to provide an XML based fragment suitable for use as input to
+alternative data binding technologies.
+
 SOAP Encoding Support::
 Use of the SOAP encoding is essentially deprecated in the web services
 community, e.g., the WS-I Basic Profile<<bib8>> excludes SOAP encoding. Instead,
-literal usage is  preferred, either in the RPC or document style.
+literal usage is  preferred, either in the RPC or document style. +
  +
 SOAP 1.1 encoding is supported in JAX-RPC 1.0 and 1.1 but its support
-in JAX-WS 2.0 runs counter to the goal of delegation of data binding
-to JAXB. Therefore JAX-WS 2.0 will make support for SOAP 1.1 encoding
-optional and defer description of it to JAX-RPC 1.1.
+in Jakarta XML Web Services runs counter to the goal of delegation of
+data binding to Jakarta XML Binding. Therefore Jakarta XML Web Services
+will make support for SOAP 1.1 encoding optional and defer description of
+it to JAX-RPC 1.1. +
  +
 Support for the SOAP 1.2 Encoding<<bib4>>
-is optional in SOAP 1.2 and JAX-WS 2.0 will not add support for SOAP
-1.2 encoding.
+is optional in SOAP 1.2 and Jakarta XML Web Services will not add
+support for SOAP 1.2 encoding.
+
 Backwards Compatibility of Generated Artifacts::
 JAX-RPC 1.0 and JAXB 1.0 bind XML to Java in different ways.
 Generating source code that works with unmodified JAX-RPC 1.x client
 source code is not a goal.
+
 Support for Java versions prior to Java SE 5.0::
-JAX-WS 2.0 relies on many of the Java language features added in Java
-SE 5.0. It is not a goal to support JAX-WS 2.0 on Java versions prior
-to Java SE 5.0.
+Jakarta XML Web Services relies on many of the Java language features
+added in Java SE 5.0. It is not a goal to support Jakarta XML Web
+Services on Java versions prior to Java SE 5.0.
+
 Service Registration and Discovery::
-It is not a goal of JAX-WS 2.0 to describe registration and discovery
-of services via UDDI or ebXML RR. This capability is provided
-independently by JAXR<<bib19>>.
+It is not a goal of Jakarta XML Web Services to describe registration
+and discovery of services via UDDI or ebXML RR. This capability is
+provided independently by JAXR<<bib19>>.
 
 [[requirements]]
 === Requirements
 
 [[relationship-to-jaxb]]
-==== Relationship To JAXB
+==== Relationship To Jakarta XML Binding
 
-JAX-WS describes the WSDL latexmath:[$\Leftrightarrow$] Java mapping,
-but data binding is delegated to JAXB<<bib10>>. The
-specification must clearly designate where JAXB rules apply to the WSDL
-latexmath:[$\Leftrightarrow$] Java mapping without reproducing those
-rules and must describe how JAXB capabilities (e.g., the JAXB binding
-language) are incorporated into JAX-WS. JAX-WS is required to be able to
-influence the JAXB binding, e.g., to avoid name collisions and to be
+Jakarta XML Web Services specification describes the WSDL &#x21d4; Java mapping,
+but data binding is delegated to Jakarta XML Binding<<bib10>>. The
+specification must clearly designate where Jakarta XML Binding rules
+apply to the WSDL &#x21d4; Java mapping without reproducing those
+rules and must describe how Jakarta XML Binding capabilities (e.g.,
+the Jakarta XML Binding binding language) are incorporated into
+Jakarta XML Web Services. Jakarta XML Web Services is required to be able to
+influence the Jakarta XML Binding binding, e.g., to avoid name collisions and to be
 able to control schema validation on serialization and deserialization.
 
 [[standardized-wsdl-mapping]]
@@ -208,7 +203,7 @@ able to control schema validation on serialization and deserialization.
 
 WSDL is the de-facto service description language for XML Web Services.
 The specification must specify a standard WSDL
-latexmath:[$\Leftrightarrow$] Java mapping. The following versions of
+&#x21d4; Java mapping. The following versions of
 WSDL must be supported:
 
 * WSDL 1.1<<bib5>> as clarified by the WS-I Basic
@@ -216,24 +211,27 @@ Profile(Ballinger, Ehnebuske, Gudgin, et al. 2004; Ballinger, Ehnebuske,
 Ferris, et al. 2004)
 
 The standardized WSDL mapping will describe the default WSDL
-latexmath:[$\Leftrightarrow$] Java mapping. The default mapping may be
+&#x21d4; Java mapping. The default mapping may be
 overridden using customizations as described below.
 
 [[customizable-wsdl-mapping]]
 ==== Customizable WSDL Mapping
 
 The specification must provide a standard way to customize the WSDL
-latexmath:[$\Leftrightarrow$] Java mapping. The following customization
+&#x21d4; Java mapping. The following customization
 methods will be specified:
 
 Java Annotations::
-In conjunction with JAXB<<bib10>> and JSR 181<<bib16>>,
+In conjunction with Jakarta XML Binding<<bib10>> and Jakarta XML
+Web Services Metadata<<bib16>> specifications,
 the specification will define a set of standard annotations
 that may be used in Java source files to specify the mapping from Java
 artifacts to their associated WSDL components. The annotations will
 support mapping to WSDL 1.1.
+
 WSDL Annotations::
-In conjunction with JAXB<<bib10>> and JSR 181<<bib16>>,
+In conjunction with Jakarta XML Binding<<bib10>> and Jakarta XML
+Web Services Metadata<<bib16>> specifications,
 the specification will define a set of standard annotations
 that may be used either within WSDL documents or as in an external
 form to specify the mapping from WSDL components to their associated
@@ -273,11 +271,13 @@ describes:
 
 Data binding for handlers::
 The framework will offer data binding facilities to handlers and will
-support handlers that are decoupled from the SAAJ API.
+support handlers that are decoupled from the Jakarta SOAP with Attachments API.
+
 Handler Context::
 The framework will describe a mechanism for communicating properties
 between handlers and the associated service clients and service
 endpoint implementations.
+
 Unified Response and Fault Handling::
 The `handleResponse` and `handleFault` methods will be unified and the
 the declarative model for handlers will be improved.
@@ -295,8 +295,8 @@ for existing clients.
 
 There must be a detailed description of the generated method signatures
 to support both asynchronous and synchronous method invocation in stubs
-generated by JAX-WS. Both forms of invocation will support a user
-configurable timeout period.
+generated by Jakarta XML Web Services. Both forms of invocation will
+support a user configurable timeout period.
 
 [[session-management]]
 ==== Session Management
@@ -308,9 +308,11 @@ Session APIs::
 Definition of a session interface and methods to obtain the session
 interface and initiate sessions for handlers and service endpoint
 implementations.
+
 HTTP based sessions::
 The session management mechanism must support HTTP cookies and URL
 rewriting.
+
 SOAP based sessions::
 The session management mechanism must support SOAP based session
 information.
@@ -325,8 +327,8 @@ information.
 ===== Reliable Messaging Support
 
 A developer wishes to add support for a reliable messaging SOAP feature
-to an existing service endpoint. The support takes the form of a JAX-WS
-handler.
+to an existing service endpoint. The support takes the form of a Jakarta
+XML Web Services handler.
 
 [[message-logging]]
 ===== Message Logging
@@ -343,48 +345,52 @@ conformance to one or more WS-I profiles at runtime.
 [[conventions]]
 === Conventions
 
-The keywords `MUST', `MUST NOT', `REQUIRED', `SHALL', `SHALL NOT',
-`SHOULD', `SHOULD NOT', `RECOMMENDED', `MAY', and `OPTIONAL' in this
+The keywords 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT',
+'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in this
 document are to be interpreted as described in RFC 2119<<bib22>>.
 
 For convenience, conformance requirements are called out from the main
 text as follows:
 
-♦ _Conformance (Example):_ Implementations MUST do something.
+&#9674; _Conformance (Example):_ Implementations MUST do something.
 
 A list of all such conformance requirements can be found in appendix
 <<confreqs>>.
 
-Java code and XML fragments are formatted as shown in figure <<1.1>>:
+Java code and XML fragments are formatted as shown in figure <<fex>>:
 
-[id="1.1"]
-Figure 1.1: Example Java Code
+[id="fex"]
+.Example Java Code
 [source,java,numbered]
 -------------
 package com.example.hello;
 
 public class Hello {
-public static void main(String args[]) {
-System.out.println("Hello World");
-}
+    public static void main(String args[]) {
+        System.out.println("Hello World");
+    }
 }
 -------------
 
 
 Non-normative notes are formatted as shown below.
 
-*Note:* _This is a note._
+[NOTE]
+.Note
+====
+_This is a note._
+====
 
 This specification uses a number of namespace prefixes throughout; they
-are listed in Table <<Table 1.1>>. Note that the choice of any namespace
+are listed in <<TableNS>>. Note that the choice of any namespace
 prefix is arbitrary and not semantically significant (see XML
 Infoset<<bib23>>).
 
-[id="Table 1.1"]
-Table 1.1: Prefixes and Namespaces used in this specification.
-
-|==============================
-|*Prefix* |*Namespace* |*Notes*
+[id="TableNS"]
+.Prefixes and Namespaces used in this specification.
+[cols=,,,options="header"]
+|===
+|Prefix |Namespace |Notes
 |env |http://www.w3.org/2003/05/soap-envelope |A normative XML
 Schema<<bib24>><<bib25>> document for the
 http://www.w3.org/2003/05/soap-envelope namespace can be found at
@@ -395,24 +401,24 @@ schema<<bib24>><<bib25>> specification
 schema<<bib5>>
 |soap |http://schemas.xmlsoap.org/wsdl/soap/ |The namespace of the WSDL
 SOAP binding schema<<bib24>><<bib25>>
-|jaxb |http://java.sun.com/xml/ns/jaxb |The namespace of the JAXB
-<<bib9>> specification
-|jaxws |http://java.sun.com/xml/ns/jaxws |The namespace of the JAX-WS
-specification
+|jaxb |https://jakarta.ee/xml/ns/jaxb |The namespace of the Jakarta
+XML Binding<<bib9>> specification
+|jaxws |http://java.sun.com/xml/ns/jaxws |The namespace of the Jakarta
+XML Web Services specification
 |wsa |http://www.w3.org/2005/08/addressing |The namespace of the
 WS-Addressing 1.0<<bib26>> schema
 |wsam |http://www.w3.org/2007/05/addressing/metadata |The
 namespace of the WS-Addressing 1.0 - Metadata<<bib27>> schema
 |wsp |http://www.w3.org/ns/ws-policy |The
 namespace of the Web Services Policy 1.5 - Framework<<bib28>> schema
-|==============================
+|===
 
-Namespace names of the general form `http://example.org/...' and
-`http://example.com/...' represent application or context-dependent URIs
+Namespace names of the general form 'http://example.org/...' and
+'http://example.com/...' represent application or context-dependent URIs
 (see RFC 2396<<bib21>>).
 
 All parts of this specification are normative, with the exception of
-examples, notes and sections explicitly marked as `Non-Normative'.
+examples, notes and sections explicitly marked as 'Non-Normative'.
 
 [[expert-group-members]]
 === Expert Group Members
