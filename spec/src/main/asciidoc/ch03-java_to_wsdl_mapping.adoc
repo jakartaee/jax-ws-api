@@ -16,10 +16,10 @@ The following sections describe the default mapping from each Java
 construct to the equivalent WSDL 1.1 artifact.
 
 An application MAY customize the mapping using the annotations defined
-in section <<metadata>>.
+in <<metadata>>.
 
 &#9674; _Conformance (Standard annotations):_ An implementation MUST support the use of
-annotations defined in section [metadata] to customize the Java to WSDL
+annotations defined in <<metadata>> to customize the Java to WSDL
 1.1 mapping.
 
 [[javanames]]
@@ -52,16 +52,16 @@ description of the constructs in the corresponding Java package.
 A default value for the `targetNamespace` attribute is derived from the
 package name as follows:
 
-1.  The package name is tokenized using the . character as a delimiter.
-2.  The order of the tokens is reversed.
-3.  The value of the `targetNamespace` attribute is obtained by
+. The package name is tokenized using the . character as a delimiter.
+. The order of the tokens is reversed.
+. The value of the `targetNamespace` attribute is obtained by
 concatenating http://to the list of tokens separated by  . and /.
 
 E.g., the Java package com.example.ws would be mapped to the target
 namespace http://ws.example.com/ .
 
 &#9674; _Conformance (Package name mapping):_ The `jakarta.jws.WebService` annotation (see
-section <<mdwebservice>>) MAY be used to specify the target namespace to
+<<mdwebservice>>) MAY be used to specify the target namespace to
 use for a Web service and MUST be used for classes or interfaces in no
 package. In the absence of a `jakarta.jws.WebService` annotation the Java
 package name MUST be mapped to the value of the `wsdl:definitions`
@@ -115,7 +115,7 @@ a `WebMethod` annotation with the `exclude` element set to `true`.
 interfaces.
 
 For mapping purposes, this class must be a top level class or a static
-inner class. As defined by JSR 181, a class annotated with
+inner class. As defined by Jakarta XML Web Services Metadata, a class annotated with
 `jakarta.jws.WebService` must have a default public constructor.
 
 [[j2wsdl11interface]]
@@ -178,7 +178,7 @@ elements.
 
 &#9674; _Conformance (Operation naming):_ In the absence of customizations, the value of the
 `name` attribute of the `wsdl:operation` element MUST be the name of the
-Java method. The `jakarta.jws.WebMethod` (see [mdwebmethod]) annotation
+Java method. The `jakarta.jws.WebMethod` (see <<mdwebmethod>>) annotation
 MAY be used to customize the value of the `name` attribute of the
 `wsdl:operation` element and MUST be used to resolve naming conflicts.
 If the `exclude` element of the `jakarta.jws.WebMethod` is set to `true`
@@ -187,7 +187,7 @@ then the Java method MUST NOT be present in the wsdl as a
 
 Methods are either one-way or two-way: one way methods have an input but
 produce no output, two way methods have an input and produce an output.
-Section [j2wsdl11onewayops] describes one way operations further.
+<<j2wsdl11onewayops>> describes one way operations further.
 
 The `wsdl:operation` element corresponding to each method has one or
 more child elements as follows:
@@ -201,18 +201,18 @@ a `wsdl:message` to describe the operation output.
 * (Two-way methods only) zero or more `wsdl:fault` child elements, one for
 each exception thrown by the method. The `wsdl:fault` child elements
 refer to associated `wsdl:message` elements to describe each fault. See
-section [j2w11except] for further details on exception mapping.
+<<j2w11except>> for further details on exception mapping.
 
 * `wsdl:input`, `wsdl:output`(if any), and `wsdl:fault`(if any) child
 elements must have `wsam:Action` attribute to describe WS-Addressing
 Action property. The value of the `wsam:Action` attribute is computed
-using the algorithm in section <<wsamComputation>>
+using the algorithm in <<wsamComputation>>
 
 The value of a `wsdl:message` element’s `name` attribute is not
 significant but by convention it is normally equal to the corresponding
 operation name for input messages and the operation name concatenated
 with Response for output messages. Naming of fault messages is described
-in section section <<j2w11except>>.
+in <<j2w11except>>.
 
 &#9674; _Conformance (Generating wsam:Action ):_ `wsdl:operation`’s child elements
 `wsdl:input`, `wsdl:output`, and `wsdl:fault` MUST have the
@@ -237,7 +237,7 @@ containing a single method to WSDL 1.1 using document style. Figure
 <<3.2>> shows an example of mapping a Java interface
 containing a single method to WSDL 1.1 using RPC style.
 
-Section <<j2w11methodparams>> describes the mapping from Java methods and
+<<j2w11methodparams>> describes the mapping from Java methods and
 their parameters to corresponding global element declarations and named
 types in the `wsdl:types` section.
 
@@ -345,7 +345,7 @@ requirement are amenable to become one-way operations and automatic
 choice between two-way and one-way mapping is not possible.
 
 &#9674; _Conformance (One-way mapping):_ Implementations MUST support use of the
-`jakarta.jws.OneWay` (see [mdoneway]) annotation to specify which methods
+`jakarta.jws.OneWay` (see <<mdoneway>>) annotation to specify which methods
 to map to one-way operations. Methods that are not annotated with
 `jakarta.jws.OneWay` MUST NOT be mapped to one-way operations.
 
@@ -458,12 +458,12 @@ is classified as `in/out` or `out`, all other parameters are classified
 as `in`.
 
 &#9674; _Conformance (Parameter classification):_ The `jakarta.jws.WebParam` annotation (see
-[mdwebparam]) MAY be used to specify whether a holder parameter is
+<<mdwebparam>>) MAY be used to specify whether a holder parameter is
 treated as `in/out` or `out`. If not specified, the default MUST be
 `in/out`.
 
 &#9674; _Conformance (Parameter naming):_ The `jakarta.jws.WebParam` annotation (see
-[mdwebparam]) MAY be used to specify the `name` of the `wsdl:part` or
+<<mdwebparam>>) MAY be used to specify the `name` of the `wsdl:part` or
 XML Schema element declaration corresponding to a Java parameter. If
 both the `name` and `partName` elements are used in the
 `jakarta.jws.WebParam` annotation then the `partName` MUST be used for the
@@ -473,7 +473,7 @@ replaced with the zero-based argument index. Thus, for instance, the
 first argument of a method will have a default parameter name of arg0,
 the second one arg1and so on.
 
-&#9674; _Conformance (Result naming):_ The `jakarta.jws.WebResult` annotation (see [mdwebparam])
+&#9674; _Conformance (Result naming):_ The `jakarta.jws.WebResult` annotation (see <<mdwebparam>>)
 MAY be used to specify the `name` of the `wsdl:part` or XML Schema
 element declaration corresponding to the Java method return type. If
 both the `name` and `partName` elements are used in the
@@ -645,17 +645,17 @@ declaration for the request bean.
 `out`::
 The parameter or return value is mapped to a child element of the
 global element declaration for the response bean. In the case of a
-parameter, the class of the value of the holder class (see section
+parameter, the class of the value of the holder class (see
 <<j2wsdl11paramclass>>) is used for the mapping rather than the holder
 class itself.
 `in/out`::
 The parameter is mapped to a child element of the global element
 declarations for the request and response beans. The class of the
-value of the holder class (see section <<j2wsdl11paramclass>>) is used
+value of the holder class (see <<j2wsdl11paramclass>>) is used
 for the mapping rather than the holder class itself.
 
 The global element declarations are used as the values of the
-`wsdl:part` elements `element` attribute, see figure [exinterfacemap].
+`wsdl:part` elements `element` attribute, see figure <<exinterfacemap>>.
 
 [[j2wsdl11docbaremap]]
 ===== Document Bare
@@ -780,11 +780,11 @@ NOT be mapped to WSDL.
 JAXB defines the mapping from a Java bean to XML Schema element
 declarations and type definitions and is used to generate the global
 element declaration that describes the fault. For exceptions that match
-the pattern described in section <<faulttoexceptmap>> (i.e. exceptions
+the pattern described in <<faulttoexceptmap>> (i.e. exceptions
 that have a `getFaultInfo` method and `WebFault` annotation), the
 _FaultBean_ is used as input to JAXB when mapping the exception to XML
 Schema. For exceptions that do not match the pattern described in
-section <<faulttoexceptmap>>, JAX-WS maps those exceptions to Java beans
+<<faulttoexceptmap>>, JAX-WS maps those exceptions to Java beans
 and then uses those Java beans as input to the JAXB mapping. The
 following algorithm is used to map non-matching exception classes to the
 corresponding Java beans for use with JAXB:
@@ -926,7 +926,7 @@ qualified name of the corresponding `wsdl:portType` suffixed with
 Binding.
 
 The `wsdl:port` extensibility elements define the binding specific
-endpoint address for a given port, see section <<j2w11svcports>>.
+endpoint address for a given port, see <<j2w11svcports>>.
 
 [[method-and-parameters]]
 ==== Method and Parameters
@@ -1124,7 +1124,7 @@ Figure 3.6: WSDL SOAP HTTP binding
 
 A Java SEI is mapped to a `soap:binding` child element of the
 corresponding `wsdl:binding` element plus a `soap:address` child element
-of any corresponding `wsdl:port` element (see section [j2w11svcports]).
+of any corresponding `wsdl:port` element (see <<j2w11svcports>>).
 
 The value of the `transport` attribute of the `soap:binding` is
 `http://schemas.xmlsoap.org/soap/http`. The value of the `style`
@@ -1268,12 +1268,12 @@ element that is a child of a `wsdl:definitions` element for the
 appropriate target namespace. The latter is mapped from the value of the
 `targetNamespace` element of the `WebService` annotation, if non-empty
 value, otherwise from the package of the Java service implementation
-class according to the rules in section <<j2w11package>>.
+class according to the rules in <<j2w11package>>.
 
 In mapping a `@WebService`-annotated class (see <<j2ws11class>>) to a
 `wsdl:service`, the `serviceName` element of the `WebService` annotation
 are used to derive the service name. The value of the `name` attribute
-of the `wsdl:service` element is computed according to the JSR-181
+of the `wsdl:service` element is computed according to the Jakarta XML Web Services Metadata
 <<bib16>> specification. It is given by the `serviceName` element of
 the `WebService` annotation, if present with a non-default value,
 otherwise the name of the implementation class with the Servicesuffix
@@ -1306,7 +1306,7 @@ service implementation class (see <<j2w11bindings>>).
 
 Binding specific child extension elements of the `wsdl:port` element
 define the endpoint address for a port. E.g. see the `soap:address`
-element described in section <<j2w11soapbindif>>.
+element described in <<j2w11soapbindif>>.
 
 If the endpoint enables Addressing, that can be indicated in the
 generated WSDL as per the Addressing 1.0 - Metadata<<bib27>>.

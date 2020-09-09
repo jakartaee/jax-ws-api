@@ -876,7 +876,7 @@ Any schema element of the type `wsa:EndpointReference` or its subtypes MUST be m
 
 A `wsdl:fault` element is mapped to a Java exception.
 
-&#9674; __Conformance (__``__jakarta.xml.ws.WebFault__``__ required):_
+&#9674; __Conformance (__``__jakarta.xml.ws.WebFault__``__ required):__
 A mapped exception MUST be annotated with a `jakarta.xml.ws.WebFault` annotation.
 
 &#9674; _Conformance (Exception naming):_ In the absence of customizations, the name of a

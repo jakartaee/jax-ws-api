@@ -13,9 +13,9 @@ and standard APIs provided for their use.
 
 JAX-WS services typically implement a native Java service endpoint
 interface (SEI), perhaps mapped from a WSDL port type, either directly
-or via the use of annotations. Section <<j2wsdl11interface>> describes the
+or via the use of annotations. <<j2wsdl11interface>> describes the
 requirements that a Java interface must meet to qualify as a JAX-WS SEI.
-Section <<wsdl11porttype>> describes the mapping from a WSDL port type to
+<<wsdl11porttype>> describes the mapping from a WSDL port type to
 an equivalent Java SEI.
 
 Java SEIs provide a high level Java-centric abstraction that hides the
@@ -312,7 +312,7 @@ when the latter is published over a transport other than HTTP.
 
 The success of the two `Endpoint.publish` methods described above is
 conditional to the presence of the appropriate permission as described
-in section <<endpointpublishpermission>>.
+in <<endpointpublishpermission>>.
 
 Applications that wish to modify the configuration information (e.g. the
 metadata) for an `Endpoint` must make sure the latter is in the
@@ -334,7 +334,7 @@ its implementor should be written so as to support multiple threads. The
 `synchronized` keyword may be used as usual to control access to
 critical sections of code. For finer control over the threads used to
 dispatch incoming requests, an application can directly set the executor
-to be used, as described in section <<endpointexecutor>>.
+to be used, as described in <<endpointexecutor>>.
 
 [[example-4]]
 ===== Example
@@ -416,7 +416,7 @@ present on the endpoint implementation class and has a value other than
 the default one (i.e. it is not the empty string), then a JAX-WS
 implementation MUST use the document referred to from the `wsdlLocation`
 annotation element to determine the contract, according to the rules in
-section <<usingwsdllocationandmetadata>>.
+<<usingwsdllocationandmetadata>>.
 
 In addition to the case in which the `Endpoint` API is explicitly used,
 the requirements in this section are also applicable to the publishing
@@ -448,7 +448,7 @@ binding used by the endpoint:
 
 SOAP 1.1/HTTP Binding::
 A JAX-WS implementation MUST generate a WSDL description for the
-endpoint based on the rules in section <<usingwsdllocationandmetadata>>
+endpoint based on the rules in <<usingwsdllocationandmetadata>>
 below.
 SOAP 1.2/HTTP Binding::
 A JAX-WS implementation MUST NOT generate a WSDL description for the
@@ -517,7 +517,7 @@ potentially remote sites.
 The value of the `wsdlLocation` annotation element on an endpoint
 implementation class, if any, MUST be a relative URL. The document it
 points to MUST be packaged with the application. Moreover, it MUST
-follow the requirements in section <<applicationspecifiedservice>> below
+follow the requirements in <<applicationspecifiedservice>> below
 (``Application-specified Service'').
 
 In the Java SE platform, relative URLs are treated as resources. When
@@ -596,7 +596,7 @@ multiple, different URLs.
 When resolving URI references to other documents when processing
 metadata documents or any of the documents they may transitively
 reference, a JAX-WS implementation MUST use the catalog facility defined
-in section <<catalogfacility>>, except when there is a metadata document
+in <<catalogfacility>>, except when there is a metadata document
 whose system id matches the URI in question. In other words, metadata
 documents have priority over catalog-based mappings.
 

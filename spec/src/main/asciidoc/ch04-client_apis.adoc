@@ -20,21 +20,21 @@ refer to a client side JAX-WS runtime system.
 port type bound to a particular protocol and available at a particular
 endpoint address.
 
-`Service` instances are created as described in section <<svcusage>>.
+`Service` instances are created as described in <<svcusage>>.
 `Service` instances provide facilities to:
 
 * Create an instance of a proxy via one of the `getPort` methods. See
-section <<proxies>> for information on proxies.
+<<proxies>> for information on proxies.
 * Create a `Dispatch` instance via the `createDispatch` method. See
-section <<dispatch>> for information on the `Dispatch` interface.
+<<dispatch>> for information on the `Dispatch` interface.
 * Create a new port via the `addPort` method. Such ports only include
 binding and endpoint information and are thus only suitable for creating
 `Dispatch` instances since these do not require WSDL port type
 information.
 * Configure per-service, per-port, and per-protocol message handlers
-using a handler resolver (see section <<clienthandlerresolver>>).
+using a handler resolver (see <<clienthandlerresolver>>).
 * Configure the `java.util.concurrent.Executor` to be used for
-asynchronous invocations (see section <<serviceexecutor>>).
+asynchronous invocations (see <<serviceexecutor>>).
 
 &#9674; _Conformance (Service completeness):_ A `Service` implementation MUST be capable of
 creating proxies, `Dispatch` instances, and new ports.
@@ -90,7 +90,7 @@ any passed-in feature, it MUST throw `WebServiceException`.
 ===== Static case
 
 When starting from a WSDL document, a concrete service implementation
-class MUST be generated as defined in section <<gensvcif>>. The generated
+class MUST be generated as defined in <<gensvcif>>. The generated
 implementation class MUST have all the public constructors as shown in
 the example below.
 
@@ -269,7 +269,7 @@ WSDL location MUST be referenced using `wsdli:wsdlLocation` in the
 
 The `BindingProvider` interface provides methods to obtain the `Binding`
 and to manipulate the binding providers context. Further details on
-`Binding` can be found in section <<protocolbinding>>. The following
+`Binding` can be found in <<protocolbinding>>. The following
 subsection describes the function and use of context with
 `BindingProvider` instances.
 
@@ -284,7 +284,7 @@ and response phases of a message exchange with a service:
 
 Request::
 The contents of the request context are used to initialize the message
-context (see section <<handmsgctxif>>) prior to invoking any handlers
+context (see <<handmsgctxif>>) prior to invoking any handlers
 (see chapter <<handfmwk>>) for the outbound message. Each property
 within the request context is copied to the message context with a
 scope of `HANDLER`.
@@ -619,7 +619,7 @@ binding and service endpoint address. However, a `Dispatch` instance may
 support configuration of certain aspects of its operation and provides
 methods (inherited from `BindingProvider`) to dynamically query and
 change the values of properties in its request and response contexts –
-see section <<stdbpprops>> for a list of standard properties.
+see <<stdbpprops>> for a list of standard properties.
 
 [[operation-invocation]]
 ==== Operation Invocation
@@ -671,7 +671,7 @@ invocation is dependent on the underlying protocol in use. For SOAP/HTTP
 it is possible that certain HTTP level errors may be detected.] during
 the remote operation invocation.
 
-See section <<soapbindhttp>> for additional SOAP/HTTP requirements.
+See <<soapbindhttp>> for additional SOAP/HTTP requirements.
 
 [[dispasyncresp]]
 ==== Asynchronous Response

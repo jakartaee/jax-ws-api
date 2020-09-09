@@ -10,7 +10,7 @@
 === 2.3 Changes
 
 * Changed the definition of the discovery process of
-`javax.xml.ws.spi.Provider` implementation (section <<providerdiscovery>>)
+`javax.xml.ws.spi.Provider` implementation (<<providerdiscovery>>)
 * Added `@Repeateble` to `@WebServiceClientRef`
 * Added missing javadoc
 * Added `@since` to javadoc
@@ -19,43 +19,43 @@
 [[changes-1]]
 === 2.2 Changes
 
-* Added `@Action` generation requirements in SEI (section <<msgandpart>>)
-* Updated `wsa:EndpointReference` mapping (section <<w3ceprmapping>>)
+* Added `@Action` generation requirements in SEI (<<msgandpart>>)
+* Updated `wsa:EndpointReference` mapping (<<w3ceprmapping>>)
 * Updated that the use of metadata in `mime:content` is disabled by
-default (section <<mimecontent>>)
+default (<<mimecontent>>)
 * Updated generated service constructor requirements (section
 <<gensvcif>>,<<staticcase>>)
 * Updated that static or final methods cannot be web methods (section
 <<j2ws11class>>)
-* Added `wsam:Action` algorithm and requirements (section <<j2w11method>>,
+* Added `wsam:Action` algorithm and requirements (<<j2w11method>>,
 <<wsamComputation>>)
 * Clarified the namespace of the generated JAXB beans (section
 <<j2w11methodparams>>)
 * Added that packaging wrapper beans optional (section
 <<j2wsdldocwrapped>>)
 * Added requirements for wsdl:part names in doc/lit wrapper case
-(section <<j2wsdldocwrapped>>)
+(<<j2wsdldocwrapped>>)
 * Added that @XmlElement can be specified on doc/lit wrapper method
-parameters (section <<j2wsdldocwrapped>>)
-* Added wsdl:message naming requirements (section <<j2w11except>>)
+parameters (<<j2wsdldocwrapped>>)
+* Added wsdl:message naming requirements (<<j2w11except>>)
 * Added @XmlType requirements on exception classes (section
 <<j2w11except>>)
 * Clarified the fault bean’s @XmlType requirements (section
 <<j2w11except>>)
-* Added that packaging exception beans optional (section <<j2w11except>>)
-* Added Use of Addressing requirements in WSDL (section <<j2w11svcports>>)
+* Added that packaging exception beans optional (<<j2w11except>>)
+* Added Use of Addressing requirements in WSDL (<<j2w11svcports>>)
 * Added service creation with web service features (section
 <<dynamiccase>>)
-* Added W3CEndpointReference requirements (section <<bindingproviderif>>,
+* Added W3CEndpointReference requirements (<<bindingproviderif>>,
 <<epr5>>, <<webservicecontext>>, <<w3cendpointreferencebuilder>>)
-* Added Use of Addressing requirements in proxies (section <<proxies>>)
+* Added Use of Addressing requirements in proxies (<<proxies>>)
 * Clarified the empty payload Source for Provider (section
 <<providersvcapi>>)
 * Clarified oneway invocation for Provider endpoints (section
 <<invocation>>)
-* Added features usage with Endpoint API (section <<endpointfactusage>>,
+* Added features usage with Endpoint API (<<endpointfactusage>>,
 <<providerendpointcreation>>)
-* Added HTTP SPI (section <<httpspi>>)
+* Added HTTP SPI (<<httpspi>>)
 * Clarified that fully qualified class name can be specified for
 generated exception, service classes customizations (section
 <<bindingdeclporttypefault>>, <<bindingdeclservice>>)
@@ -90,17 +90,17 @@ MUST honor `WebServiceFeatures` (section 4.3 and 5.1).
 * Added section 5.4 on
 `javax.xml.ws.wsaddressing.W3CEndpointReferenceBuilder`.
 * Modified description of `createEndpoint` method to state to cover case
-when no binding is specified (section <<providerendpointcreation>>).
-* Added section <<readepr>> EndpointReferences.
-* Added section <<getport>> Getting Port Objects.
-* Added section <<webservicefeature>> javax.xml.ws.WebServiceFeature.
+when no binding is specified (<<providerendpointcreation>>).
+* Added <<readepr>> EndpointReferences.
+* Added <<getport>> Getting Port Objects.
+* Added <<webservicefeature>> javax.xml.ws.WebServiceFeature.
 * Added conformance rquirement for unsupported
 `WebServiceFeatureAnnotations` (section 7).
 * Added `Action`, `FaultAction` and `WebServiceFeatureAnnotation`
 annotations (sections 7.12, 7.13 and 7.14).
 * Added `javax.xml.ws.reference.parameters` standard message context
 property (table 9.2).
-* Added section <<addressing>> Addressing.
+* Added <<addressing>> Addressing.
 
 [[changes-since-proposed-final-draft]]
 === Changes since Proposed Final Draft
@@ -267,12 +267,12 @@ ServiceFactory.
 * Removed the HTTP method getter/setter from HTTPBinding and replaced
 them with a new message context property called
 javax.xml.ws.http.request.method.
-* In section <<soapmuprocrules>> clarified that SOAP headers directly
+* In <<soapmuprocrules>> clarified that SOAP headers directly
 supported by a binding must be treated as understood when processing
 mustUnderstand attributes.
 * Added getStackTrace to the list of getters defined on
 java.lang.Throwable with must not be mapped to fault bean properties.
-* In section <<stdbpprops>>, removed the requirement that an exception be
+* In <<stdbpprops>>, removed the requirement that an exception be
 thrown if the application attempts to set an unknown or unsupported
 property on a binding provider, since there are no stub-specific
 properties any more, only those in the request context.
@@ -295,18 +295,18 @@ status code.
 * Added javax.xml.ws.ServiceMode annotation type, see section
 <<mdservicemode>>.
 * Fixed example of external binding file to use a schema annotation, see
-section <<externalbindingfile>>.
+<<externalbindingfile>>.
 * Modified Dispatch so it can be used with multiple message types and
-either message payloads or entire messages, see section <<dispatch>>.
+either message payloads or entire messages, see <<dispatch>>.
 * Modified Provider so it can be used with multiple message types and
 either message payloads or entire messages, see section
 <<providersvcapi>>.
 * Added new annotation for generated exceptions, see section
 <<mdwebfault>>.
 * Added default Java package name to WSDL targetNamespace mapping
-algorithm, see section <<j2w11package>>.
+algorithm, see <<j2w11package>>.
 * Added ordering to properties in request and response beans for
-doc/lit/wrapped, see section <<j2wsdldocwrapped>>.
+doc/lit/wrapped, see <<j2wsdldocwrapped>>.
 * Clarified that SEI method should throw JAX-RPC exception with a cause
 of any runtime exception thrown during local processing, see section
 <<stubexceptions>>.
@@ -314,7 +314,7 @@ of any runtime exception thrown during local processing, see section
 <<j2wsdl11interface>>.
 * Updated document bare mapping to clarify that `@WebParam` and
 `@WebResult` can be used to customize the generated global element
-names, see section <<j2wsdl11docbaremap>>.
+names, see <<j2wsdl11docbaremap>>.
 
 [[changes-since-early-draft-1]]
 === Changes Since Early Draft 1
@@ -324,15 +324,15 @@ names, see section <<j2wsdl11docbaremap>>.
 * Added chapter <<j2wsdl20chap>> Java to WSDL 2.0 Mapping.
 * Added mapping from Java to `wsdl:service` and `wsdl:port`, see
 sections <<j2w11bindif>>, <<j2w11soapbindif>> and <<j2w11svcports>>.
-* Fixed section <<wsdl11typemapping>> to allow use of JAXB interface based
+* Fixed <<wsdl11typemapping>> to allow use of JAXB interface based
 mapping.
 * Added support for document/literal/bare mapping in Java to WSDL
-mapping, see section <<j2w11methodparams>>.
+mapping, see <<j2w11methodparams>>.
 * Added conformance requirement to describe the expected behaviour when
 two or more faults refer to the same global element, see section
 <<faulttoexceptmap>>.
 * Added resolution to issue regarding binding of duplicate headers, see
-section <<wsdl11headbindext>>.
+<<wsdl11headbindext>>.
 * Added use of JAXB ns URI to Java package name mapping, see section
 <<wsdl11defmap>>.
 * Added use of JAXB package name to ns URI mapping, see section
@@ -340,7 +340,7 @@ section <<wsdl11headbindext>>.
 * Introduced new typographic convention to clearly mark non-normative
 notes.
 * Removed references to J2EE and JNDI usage from ServiceFactory
-description, see section <<svcfactusage>>.
+description, see <<svcfactusage>>.
 * Clarified relationship between TypeMappingRegistry and JAXB.
 * Emphasized control nature of context properties, added lifecycle
 subsection.
@@ -350,21 +350,21 @@ subsection of this now contains much of the mterial from the JAX-RPC 1.1
 Runtime Services chapter.
 * Clarified that async methods are added to the regular sync SEI when
 async mapping is enabled rather than to a separate async-only SEI, see
-section <<wsdl11asyncmethod>>.
+<<wsdl11asyncmethod>>.
 * Added support for WSDL MIME binding, see section
 <<wsdl11mimebindingmap>>.
 * Clarified that fault mapping should only generate a single exception
-for each equivalent set of faults, see section <<faulttoexceptmap>>.
+for each equivalent set of faults, see <<faulttoexceptmap>>.
 * Added property for message attachments.
 * Removed element references to anonymous type as valid for wrapper
 style mapping (this doesn’t prevent substitution as orignally thought),
-see section <<wrappedstyle>>.
+see <<wrappedstyle>>.
 * Removed implementation specific methods from generated service
-interfaces, see section <<gensvcif>>.
+interfaces, see <<gensvcif>>.
 * Clarified behaviour under fault condition for asynchronous operation
-mapping, see section <<wsdl112jasyncfaults>>.
+mapping, see <<wsdl112jasyncfaults>>.
 * Clarified that additional parts mapped using soapbind:header cannot be
-mapped to a method return type, see section <<paramorderandreturn>>.
+mapped to a method return type, see <<paramorderandreturn>>.
 * Added new section to clarify mapping from exception to SOAP fault, see
 <<mapextosoapfault>>.
 * Clarified meaning of _other_ in the handler processing section, see
@@ -386,4 +386,4 @@ and <<bindingmsgsec>>.
 HandlerInfo is authoritative wrt which protocol elements (e.g. SOAP
 headers) it processes.
 * Updated exception mapping for Java to WSDL since JAXB does not
-envision mapping exception classes directly, see section <<j2w11except>>.
+envision mapping exception classes directly, see <<j2w11except>>.

@@ -32,7 +32,7 @@ identifiers SHOULD include a domain name controlled by the
 implementation’s vendor.
 
 `Binding` provides methods to manipulate the handler chain configured on
-an instance (see section <<handfmwrkprogconf>>).
+an instance (see <<handfmwrkprogconf>>).
 
 &#9674; _Conformance (Read-only handler chains):_ An implementation MAY prevent changes to
 handler chains configured by some other means (e.g. via a deployment
@@ -144,7 +144,7 @@ using the following methods on `Provider`:
 *`createServiceDelegate(URL wsdlDocumentLocation, QName serviceName, Class <? extends Service> serviceClass)`*
 Creates and returns a `ServiceDelegate` for the specified service. When
 starting from WSDL the serviceClass will be the generated service class
-as described in section <<gensvcif>>. In the dynamic case where there is
+as described in <<gensvcif>>. In the dynamic case where there is
 no service class generated it will be `jakarta.xml.ws.Service`. The
 serviceClass is used by the `ServiceDelegate` to get access to the
 annotations.
@@ -346,7 +346,7 @@ The `AddressingFeature` is used to control the use of
 WS-Addressing<<bib26>> by JAX-WS. This feature MUST be
 supported with the SOAP 1.1/HTTP or SOAP 1.2/HTTP bindings. Using this
 feature with any other binding is undefined. This feature corresponds to
-the Addressing annotation described in section <<addrannotation>>.
+the Addressing annotation described in <<addrannotation>>.
 
 Enabling this feature on the server will result in the runtime being
 capable of consuming and responding to WS-Addressing headers. Enabling
@@ -412,7 +412,7 @@ service. This feature should be used instead of the
 `jakarta.xml.ws.soap.SOAPBinding.setMTOMEnabled()`. This feature MUST be
 supported with the SOAP 1.1/HTTP or SOAP 1.2/HTTP bindings. Using this
 feature with any other bindings is undefined. This feature corresponds
-to the `MTOM` annotation described in section <<mtomannotation>>.
+to the `MTOM` annotation described in <<mtomannotation>>.
 
 Enabling this feature on either the server or client will result the
 JAX-WS runtime using MTOM and for binary data being sent as an
@@ -433,7 +433,7 @@ default value is `0`.
 The `RespectBindingFeature` is used to control whether a JAX-WS
 implementation MUST respect/honor the contents of the `wsdl:binding`
 associated with an endpoint. It has a corresponding `RespectBinding`
-annotation described in section <<respbindingannotation>>.
+annotation described in <<respbindingannotation>>.
 
 &#9674; _Conformance ( jakarta.xml.ws.RespectBindingFeature ):_ When the
 `jakarta.xml.ws.RespectBindingFeature` is enabled, a JAX-WS implementation

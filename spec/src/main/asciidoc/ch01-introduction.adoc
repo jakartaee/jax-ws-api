@@ -29,7 +29,8 @@ Jakarta XML Web Services (this specification) is a follow-on to JAX-RPC 1.1,
 extending it as described in the following sections.
 
 Throughout the document, references to JAXB refer to the Jakarta XML Binding
-unless otherwise noted.
+unless otherwise noted and references to JAX-WS refer to the Jakarta XML Web
+Services unless otherwise noted.
 
 [[goals]]
 === Goals
@@ -89,7 +90,7 @@ servers.
 
 Jakarta XML Web Services Metadata::
 Jakarta XML Web Services will align with and complement the annotations defined by
-JSR 181<<bib16>>.
+Jakarta XML Web Services Metadata<<bib16>>.
 
 Jakarta Enterprise Web Services::
 The Jakarta Enterprise Web Services specification<<bib17>>

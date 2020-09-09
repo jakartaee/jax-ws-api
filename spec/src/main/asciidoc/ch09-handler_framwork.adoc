@@ -78,17 +78,17 @@ The binding is responsible for instantiation, invocation, and
 destruction of handlers according to the rules specified in section
 <<handprocmodel>>. The binding is responsible for instantiation and
 management of message contexts according to the rules specified in
-section <<handmsgctxmngmt>>
+<<handmsgctxmngmt>>
 
 image::images/handlers.png[]
 Figure 9.2: Handler class hierarchy
 
 &#9674; _Conformance (Logical handler support):_ All binding implementations MUST support
-logical handlers (see section <<handlertypes>>) being deployed in their
+logical handlers (see <<handlertypes>>) being deployed in their
 handler chains.
 
 &#9674; _Conformance (Other handler support):_ Binding implementations MAY support other
-handler types (see section <<handlertypes>>) being deployed in their
+handler types (see <<handlertypes>>) being deployed in their
 handler chains.
 
 &#9674; _Conformance (Incompatible handlers):_ An implementation MUST throw
@@ -114,14 +114,14 @@ no standard interface between binding providers and their binding.
 
 The binding is responsible for catching runtime exceptions thrown by
 handlers and respecting any resulting message direction and message type
-change as described in section <<handlerexecution>>.
+change as described in <<handlerexecution>>.
 
 Outbound exceptionsfootnote:[Outbound exceptions are exceptions thrown
 by a handler that result in the message direction being set to outbound
-according to the rules in section <<handlerexecution>>.] are converted to
+according to the rules in <<handlerexecution>>.] are converted to
 protocol fault messages and dispatched using whatever means the protocol
 binding uses for communication. Specific protocol bindings describe the
-mechanism for their particular protocol, section <<soap11excepthandling>>
+mechanism for their particular protocol, <<soap11excepthandling>>
 describes the mechanism for the SOAP 1.1 binding. Inbound exceptions are
 passed to the binding provider.
 
@@ -175,7 +175,7 @@ protocol handlers. In performing this operation, the order of handlers
 of any given type (logical or protocol) in the original chain is
 maintained. Figure <<9.3>> illustrates this.
 
-Section <<handlerexecution>> describes how the handler order relates to
+<<handlerexecution>> describes how the handler order relates to
 the order of handler execution for inbound and outbound messages.
 
 image::images/handord.png[]
@@ -184,18 +184,18 @@ Figure 9.3: Handler ordering, Ln and Pn represent logical and protocol handlers 
 [[handlerchain]]
 ===== jakarta.jws.HandlerChain annotation
 
-The `jakarta.jws.HandlerChain` annotation defined by JSR-181 <<bib16>>
-may be used to specify in a declarative way the handler chain to use for
-a service.
+The `jakarta.jws.HandlerChain` annotation defined by Jakarta XML Web Services
+Metadata <<bib16>> may be used to specify in a declarative way the handler
+chain to use for a service.
 
 When used in conunction with JAX-WS, the `name` element of the
 `HandlerChain` annotation, if present, MUST have the default value (the
 empty string).
 
 In addition to appearing on a endpoint implementation class or a SEI, as
-specified by JSR-181, the `handlerChain` annotation MAY appear on a
-generated service class. In this case, it affects all the proxies and
-`Dispatch` instances created using any of the ports on the service.
+specified by Jakarta XML Web Services Metadata, the `handlerChain` annotation
+MAY appear on a generated service class. In this case, it affects all the proxies
+and `Dispatch` instances created using any of the ports on the service.
 
 &#9674; _Conformance (HandlerChain annotation):_ An implementation MUST support using the
 `HandlerChain` annotation on an endpoint implementation class, including
@@ -229,7 +229,7 @@ Figure 9.4: Use of the HandlerChain annotation
 ===== jakarta.xml.ws.Binding
 
 The `Binding` interface is an abstraction of a JAX-WS protocol binding
-(see section [protocolbinding] for more details). As described above,
+(see <<protocolbinding>> for more details). As described above,
 the handler chain initially configured on an instance is a snapshot of
 the applicable handlers configured on the `Service` instance at the time
 of creation. `Binding` provides methods to manipulate the initially
@@ -324,11 +324,11 @@ made available for garbage collection.
 [[handlerexecution]]
 ==== Handler Execution
 
-As described in section <<handlerordering>>, a set of handlers is managed
+As described in <<handlerordering>>, a set of handlers is managed
 by a binding as an ordered list called a handler chain. Unless modified
 by the actions of a handler (see below) normal processing involves each
 handler in the chain being invoked in turn. Each handler is passed a
-message context (see section <<handmsgctxmngmt>>) whose contents may be
+message context (see <<handmsgctxmngmt>>) whose contents may be
 manipulated by the handler.
 
 For outbound messages handler processing starts with the first handler
@@ -374,7 +374,7 @@ the following:
 Return `true`::
 This indicates that normal message processing should continue. The
 runtime invokes `handleMessage` on the next handler or dispatches the
-message (see section <<handmsgdispatch>>) if there are no further
+message (see <<handmsgdispatch>>) if there are no further
 handlers.
 Return `false`::
 This indicates that normal message processing should cease. Subsequent
@@ -389,12 +389,12 @@ Response;;
 The message direction is reversed, the runtime invokes
 `handleMessage` on the nextfootnote:[Next in this context means the
 next handler taking into account the message direction reversal]
-handler or dispatches the message (see section <<handmsgdispatch>>) if
+handler or dispatches the message (see <<handmsgdispatch>>) if
 there are no further handlers.
 No response;;
 Normal message processing stops, `close` is called on each
 previously invoked handler in the chain, the message is dispatched
-(see section <<handmsgdispatch>>).
+(see <<handmsgdispatch>>).
 Throw `ProtocolException` or a subclass::
 This indicates that normal message processing should cease. Subsequent
 actions depend on whether the MEP in use requires a response to the
@@ -407,11 +407,11 @@ fault message then it is replaced with a fault messagefootnote:[The
 handler may have already converted the message to a fault message,
 in which case no change is made.], and the runtime invokes
 `handleFault` on the nexthandler or dispatches the message (see
-section <<handmsgdispatch>>) if there are no further handlers.
+<<handmsgdispatch>>) if there are no further handlers.
 No response;;
 Normal message processing stops, `close` is called on each
 previously invoked handler in the chain, the exception is dispatched
-(see section <<handexcepthandling>>).
+(see <<handexcepthandling>>).
 Throw any other runtime exception::
 This indicates that normal message processing should cease. Subsequent
 actions depend on whether the MEP in use includes a response to the
@@ -425,7 +425,7 @@ reversed, and the exception is dispatched (see section
 No response;;
 Normal message processing stops, `close` is called on each
 previously invoked handler in the chain, the exception is dispatched
-(see section <<handexcepthandling>>).
+(see <<handexcepthandling>>).
 
 [[handlefault]]
 ===== `handleFault`
@@ -436,7 +436,7 @@ the `handleFault` implementation can do one of the following:
 Return `true`::
 This indicates that fault message processing should continue. The
 runtime invokes `handleFault` on the next handler or dispatches the
-fault message (see section <<handmsgdispatch>>) if there are no further
+fault message (see <<handmsgdispatch>>) if there are no further
 handlers.
 Return `false`::
 This indicates that fault message processing should cease. Fault
@@ -497,7 +497,7 @@ context. Sections <<handmsgctxif>> and <<handlogmsgctx>> describe
 `MessageContext` and `LogicalMessageContext` respectively. In addition,
 JAX-WS bindings may define a message context subtype for their
 particular protocol binding that provides access to protocol specific
-features. Section <<soapbindmsgcontext>> describes the message context
+features. <<soapbindmsgcontext>> describes the message context
 subtype for the JAX-WS SOAP binding.
 
 [[handmsgctxif]]
@@ -517,7 +517,7 @@ particular endpoint. E.g., if a logical handler puts a property in the
 message context, that property will also be available to any protocol
 handlers in the chain during the execution of an MEP instance.
 `APPLICATION` scoped properties are also made available to client
-applications (see section <<bindingproviderconfig>>) and service endpoint
+applications (see <<bindingproviderconfig>>) and service endpoint
 implementations. The defaultscope for a property is `HANDLER`.
 
 &#9674; _Conformance (Message context property scope):_ Properties in a message context MUST be
@@ -627,13 +627,13 @@ served.
 [[handlogmsgctx]]
 ==== jakarta.xml.ws.handler.LogicalMessageContext
 
-Logical handlers (see section <<handlertypes>>) are passed a message
+Logical handlers (see <<handlertypes>>) are passed a message
 context of type `LogicalMessageContext` when invoked.
 `LogicalMessageContext` extends `MessageContext` with methods to obtain
 and modify the message payload, it does not provide access to the
 protocol specific aspects of a message. A protocol binding defines what
 component of a message are available via a logical message context.
-E.g., the SOAP binding, see section <<soapbindchaphand>>, defines that a
+E.g., the SOAP binding, see <<soapbindchaphand>>, defines that a
 logical handler deployed in a SOAP binding can access the contents of
 the SOAP body but not the SOAP headers whereas the XML/HTTP binding
 described in chapter <<xmlbindchap>> defines that a logical handler can
