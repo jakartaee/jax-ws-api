@@ -5,10 +5,10 @@
 [[metadata]]
 == Annotations
 
-This chapter describes the annotations used by JAX-WS.
+This chapter describes the annotations used by Jakarta XML Web Services.
 
 For simplicity, when describing an annotation we use the term
-``property'' in lieu of the more correct ``annotation elements''. Also,
+"property" in lieu of the more correct "annotation elements". Also,
 for each property we list the default value, which is the default as it
 appears in the declaration of the annotation type. Often properties have
 logical defaults which are computed based on contextual information and,
@@ -16,7 +16,7 @@ for this reason, cannot be captured using the annotation element default
 facility built into the language. In this case, the text describes what
 the logical default is and how it is computed.
 
-JAX-WS 2.0 uses annotations extensively. For an annotation to be
+Jakarta XML Web Services uses annotations extensively. For an annotation to be
 correct, besides being syntactically correct, e.g. placed on a program
 element of the appropriate type, it must obey a set of constraints
 detailed in this specification. For annotations defined by Jakarta XML Web Services Metadata,
@@ -29,8 +29,8 @@ client or on the server, as well as any containing program elements
 (i.e. classes, packages) is in conformance with the specification for
 that annotation
 
-&#9674; _Conformance (Handling incorrect annotations):_ If an incorrect or inconsistent
-annotation is detected:
+&#9674; _Conformance (Handling incorrect annotations):_
+If an incorrect or inconsistent annotation is detected:
 
 * In a client setting, an implementation MUST NOT invoke the remote
 operation being invoked, if any. Instead, it MUST throw a
@@ -41,9 +41,9 @@ the cause of the error (e.g. an `IllegalArgumentException` or a
 to an endpoint implementation object. Rather, it MUST generate a fault
 appropriate to the binding in use.
 
-&#9674; _Conformance (Unsupported `WebServiceFeatureAnnotation`):_ If an unrecongnized or
-unsupported annotation annotated with the `WebServiceFeatureAnnotation`
-meta-annotation:
+&#9674; __Conformance (Unsupported __``__WebServiceFeatureAnnotation__``__):__
+If an unrecongnized or unsupported annotation annotated
+with the `WebServiceFeatureAnnotation` meta-annotation:
 
 * In a client setting, an implementation MUST NOT invoke the remote
 operation being invoked, if any. Instead, it MUST throw a
@@ -70,7 +70,8 @@ envelope).
 
 
 [id="Table 7.1"]
-Table 7.1: `ServiceMode` properties.
+.`ServiceMode` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`value`      |The service mode, one of
@@ -92,13 +93,14 @@ annotation will be inherited from the superclass.
 
 The `WebFault` annotation is used when mapping WSDL faults to Java
 exceptions, see <<faulttoexceptmap>>. It is used to capture the
-name of the fault element used when marshalling the JAXB type generated
+name of the fault element used when marshalling the Jakarta XML Binding type generated
 from the global element referenced by the WSDL fault message. It can
 also be used to customize the mapping of service specific exceptions to
 WSDL faults.
 
 [id="Table 7.2"]
-Table 7.2: `WebFault` properties.
+.`WebFault` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description                        |Default
 |`name`     |The local name of the element      |””
@@ -112,7 +114,7 @@ Table 7.2: `WebFault` properties.
 === jakarta.xml.ws.RequestWrapper
 
 The `RequestWrapper` annotation is applied to the methods of an SEI. It
-is used to capture the JAXB generated request wrapper bean and the
+is used to capture the Jakarta XML Binding generated request wrapper bean and the
 element name and namespace for marshalling / unmarshalling the bean. The
 default value of `localName` element is the `operationName` as defined
 in `WebMethod` annotation and the default value for the
@@ -122,7 +124,8 @@ conflicts in document literal mode. Only the `className` element is
 required in this case.
 
 [id="Table 7.3"]
-Table 7.3: `RequestWrapper` properties.
+.`RequestWrapper` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description        |Default
 |`localName`    |The local name of the element  |””
@@ -135,17 +138,18 @@ Table 7.3: `RequestWrapper` properties.
 === jakarta.xml.ws.ResponseWrapper
 
 The `ResponseWrapper` annotation is applied to the methods of an SEI. It
-is used to capture the JAXB generated response wrapper bean and the
+is used to capture the Jakarta XML Binding generated response wrapper bean and the
 element name and namespace for marshalling / unmarshalling the bean. The
 default value of the `localName` element is the `operationName` as
-defined in the `WebMethod` appended with ``Response'' and the default
+defined in the `WebMethod` appended with "Response" and the default
 value of the `targetNamespace` element is the target namespace of the
 SEI. When starting from Java, this annotation is used to resolve
 overloading conflicts in document literal mode. Only the `className`
 element is required in this case.
 
 [id="Table 7.4"]
-Table 7.4: `ResponseWrapper` properties.
+.`ResponseWrapper` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`localName`    |The local name of the element  |””
@@ -164,7 +168,8 @@ Web service, identify by a URL to a WSDL document and the qualified name
 of a `wsdl:service` element.
 
 [id="Table 7.5"]
-Table 7.5: `ResponseWrapper` properties.
+.`WebServiceClient` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`name`     |The local name of the service  |””
@@ -173,19 +178,20 @@ Table 7.5: `ResponseWrapper` properties.
 |==================================
 
 When resolving the URI specified as the `wsdlLocation` element or any
-document it may transitively reference, a JAX-WS implementation MUST use
+document it may transitively reference, a Jakarta XML Web Services implementation MUST use
 the catalog facility defined in <<catalogfacility>>.
 
 [[mdwebendpoint]]
 === jakarta.xml.ws.WebEndpoint
 
-The `WebEndpoint` annotation is specified on the `get`_PortName_`()`
+The `WebEndpoint` annotation is specified on the ``get``__PortName__``()``
 methods of a generated service class (see <<gensvcif>>). It is used to
 associate a get method with a specific `wsdl:port`, identified by its
 local name (a `NCName`).
 
 [id="Table 7.6"]
-Table 7.6: `WebEndpoint` properties.
+.`WebEndpoint` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`name`     |The local name of the port  |””
@@ -201,8 +207,8 @@ class.
 -------------
 <!-- WSDL extract -->
 <wsdl:service name="StockQuoteService">
-    <wsdl:port name="StockQuoteHTTPPort" binding="StockQuoteHTTPBinding"/>
-    <wsdl:port name="StockQuoteSMTPPort" binding="StockQuoteSMTPBinding"/>
+  <wsdl:port name="StockQuoteHTTPPort" binding="StockQuoteHTTPBinding"/>
+  <wsdl:port name="StockQuoteSMTPPort" binding="StockQuoteSMTPBinding"/>
 </wsdl:service>
 
 // Generated Service Class
@@ -260,7 +266,8 @@ exclusive.
 annotation.
 
 [id="Table 7.7"]
-Table 7.7: `WebServiceProvider` properties.
+.`WebServiceProvider` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`wsdlLocation` |The URL for the WSDL description   |””
@@ -270,7 +277,7 @@ Table 7.7: `WebServiceProvider` properties.
 |==================================
 
 When resolving the URL specified as the `wsdlLocation` element or any
-document it may transitively reference, a JAX-WS implementation MUST use
+document it may transitively reference, a Jakarta XML Web Services implementation MUST use
 the catalog facility defined in <<catalogfacility>>.
 
 [[mdbindingtype]]
@@ -281,21 +288,21 @@ class. It specifies the binding to use when publishing an endpoint of
 this type.
 
 [id="Table 7.8"]
-Table 7.8: `BindingType` properties.
+.`BindingType` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`value` |The binding ID (a URI)   |””
 |==================================
 
-The default binding for an endpoint is the SOAP 1.1/HTTP one (see
-chapter <<soapbindchap>>).
+The default binding for an endpoint is the SOAP 1.1/HTTP one (see <<soapbindchap>>).
 
 [[mdwebsvcref]]
 === jakarta.xml.ws.WebServiceRef
 
 The `WebServiceRef` annotation is used to declare a reference to a Web
 service. It follows the resource pattern exemplified by the
-`jakarta.annotation.Resource` annotation in JSR-250 <<bib35>>.
+`jakarta.annotation.Resource` annotation in Jakarta Annotations <<bib35>>.
 
 The injected references of `WebServiceRef` annotation are not guaranteed
 to be thread safe. If the references are accessed by multiple threads,
@@ -303,7 +310,7 @@ usual synchronization techinques can be used to support multiple
 threads.
 
 The `WebServiceRef` annotation is required to be honored when running on
-the Java EE 5 platform, where it is subject to the common resource
+the Jakarta EE platform, where it is subject to the common resource
 injection rules described by the platform specification <<bib36>>.
 
 The injected references of `WebServiceRef` annotation can be configured
@@ -312,21 +319,22 @@ with the corresponding features of annotations annotated with
 can be configured with the MTOM web service feature using `@MTOM`.
 Similarly, a generated service reference can be configured with web
 service features using the corresponding `WebServiceFeatureAnnotation`
-annotations. JAX-WS specification defines three standard features
+annotations. Jakarta XML Web Services specification defines three standard features
 AddressingFeature, MTOMFeature and RespectBindingFeature that can be
 used while creating proxy instances. However, there are no standard
 features that can be used while creating service instances in the
-current specification. A JAX-WS implementation may define its own
-features but they will be non-portable across all JAX-WS
+current specification. A Jakarta XML Web Services implementation may define its own
+features but they will be non-portable across all Jakarta XML Web Services
 implementations.
 
-If a JAX-WS implementation encounters an unsupported or unrecognized
+If a Jakarta XML Web Services implementation encounters an unsupported or unrecognized
 annotation annotated with the `WebServiceFeatureAnnotation` that is
 specified with `@WebServiceRef`, an error MUST be given.
 
 
 [id="Table 7.9"]
-Table 7.9: `WebServiceRef` properties.
+.`WebServiceRef` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`name`     |The name identifying the Web service reference.    |””
@@ -343,36 +351,33 @@ to the target web service reference.   |””
 The name of the resource, as defined by the `name` element (or
 defaulted) is a name that is local to the application component using
 the resource.
-
 The name can be absolute JNDI name(with a logical namespace) or relative
 to the JNDI java:comp/env namespace.
-
 Many application servers provide a way to map these local names to names
 of resources known to the application server. This `mappedName` is often
 a global JNDI name, but may be a name of any form. Application servers
 are not required to support any particular form or type of mapped name,
 nor the ability to use mapped names. A mapped name is product-dependent
 and often installation-dependent. No use of a mapped name is portable.
-
 A defined reference can be resolved using a portable JNDI name provided
 by `lookup` element. In this case, it is an error if there are any
 circular dependencies between entries of references. Similarly, it is an
 error if looking up the specified JNDI name results in a resource whose
 type is not compatible with the reference being created. Since this
-``lookup'' functionality is just resolving to an already defined
+"lookup" functionality is just resolving to an already defined
 reference, only `name` can be specified with `lookup` (doesn’t require
 any other metadata like `wsdlLocation` etc.).
 
 There are two uses to the `WebServiceRef` annotation:
 
-1.  To define a reference whose type is a generated service class. In
+. To define a reference whose type is a generated service class. In
 this case, the `type` and `value` element will both refer to the
 generated service class type. Moreover, if the reference type can be
 inferred by the field/method declaration the annotation is applied to,
 the `type` and `value` elements MAY have the default value
 (`Object.class`, that is). If the type cannot be inferred, then at least
 the `type` element MUST be present with a non-default value.
-2.  To define a reference whose type is a SEI. In this case, the `type`
+. To define a reference whose type is a SEI. In this case, the `type`
 element MAY be present with its default value if the type of the
 reference can be inferred from the annotated field/method declaration,
 but the `value` element MUST always be present and refer to a generated
@@ -383,7 +388,7 @@ information specified in the `WebService` annotation of the referenced
 generated service class.
 
 When resolving the URI specified as the `wsdlLocation` element or any
-document it may transitively reference, a JAX-WS implementation MUST use
+document it may transitively reference, a Jakarta XML Web Services implementation MUST use
 the catalog facility defined in <<catalogfacility>>.
 
 [[example-6]]
@@ -451,18 +456,19 @@ limition against specifying repeated annotations of the same type on any
 given class, which prevents listing multiple `javax.ws.WebServiceRef`
 annotations one after the other. This annotation follows the resource
 pattern exemplified by the `jakarta.annotation.Resources` annotation in
-JSR-250 <<bib35>>.
+Jakarta Annotations <<bib35>>.
 
 Since no name and type can be inferred in this case, each
 `WebServiceRef` annotation inside a `WebServiceRefs` MUST contain `name`
 and `type` elements with non-default values.
 
 The `WebServiceRef` annotation is required to be honored when running on
-the Java EE 5 platform, where it is subject to the common resource
+the Jakarta EE platform, where it is subject to the common resource
 injection rules described by the platform specification <<bib36>>.
 
 [id="Table 7.10"]
-Table 7.10: `WebServiceRefs` properties.
+.`WebServiceRefs` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`value`        |An array of `WebServiceRef` annotations, each defining a web
@@ -526,9 +532,9 @@ public @interface WebService {
 };
 -------------
 
-Consistently with the URI resolution process in JAX-WS, when resolving
+Consistently with the URI resolution process in Jakarta XML Web Services, when resolving
 the URI specified as the `wsdlLocation` element or any document it may
-transitively reference, a JAX-WS implementation MUST use the catalog
+transitively reference, a Jakarta XML Web Services implementation MUST use the catalog
 facility defined in <<catalogfacility>>.
 
 [[mdwebmethod]]
@@ -627,13 +633,13 @@ Action annotation have been specified. The `wsam:Action` computation
 algorithm is specified in <<wsamComputation>>
 
 [id="Table 7.11"]
-Table 7.11: `FaultAction` properties.
+.`Action` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
-|`fault`        |Array of FaultAction for the
-wsdl:fault s of the operation   |””
-|`input`        |Action for the wsdl:input of the operation |””
-|`output`       |Action for the wsdl:output of the operation    |””
+|`fault`    |Array of `FaultAction` for the `wsdl:fault` s of the operation |””
+|`input`    |Action for the `wsdl:input` of the operation |””
+|`output`   |Action for the `wsdl:output` of the operation    |””
 |==================================
 
 
@@ -650,7 +656,8 @@ corresponding `value` in the FaultAction. The `wsam:Action` computation
 algorithm is specified in <<wsamComputation>>
 
 [id="Table 7.12"]
-Table 7.12: `FaultAction` properties.
+.`FaultAction` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`value`        |Action for the `wsdl:fault` of the operation   |””
@@ -660,16 +667,17 @@ Table 7.12: `FaultAction` properties.
 [[webservfeatureannotation]]
 === jakarta.xml.ws.spi.WebServiceFeatureAnnotation
 
-The `WebServiceFeatureAnnotation` is a meta-annotation used by a JAX-WS
-implementation to identify other annotations as `WebServiceFeature`s.
-JAX-WS provides the following annotations as `WebServiceFeatures`:
+The `WebServiceFeatureAnnotation` is a meta-annotation used by a Jakarta XML Web Services
+implementation to identify other annotations as ``WebServiceFeature``s.
+Jakarta XML Web Services provides the following annotations as `WebServiceFeatures`:
 `jakarta.xml.ws.soap.Addressing`, `jakarta.xml.ws.soap.MTOM`, and
-`jakarta.xml.ws.RespectBinding`. If a JAX-WS implementation encounters an
+`jakarta.xml.ws.RespectBinding`. If a Jakarta XML Web Services implementation encounters an
 annotation annotated with the `WebServiceFeatureAnnotation` that it does
 not support or recognize an ERROR MUST be given.
 
 [id="Table 7.13"]
-Table 7.13: `WebServiceFeatureAnnotation` properties.
+.`WebServiceFeatureAnnotation` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`id`        |Unique identifier for the
@@ -710,7 +718,8 @@ control the use of WS-Addressing<<bib26>><<37>><<bib27>>.
 It corresponds with the `AddressingFeature` described in <<addressingfeature>>.
 
 [id="Table 7.14"]
-Table 7.14: `Addressing` properties.
+.`Addressing` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`enabled`  |Specifies if WS-Addressing is enabled or not.  |true
@@ -732,7 +741,8 @@ It is used to control the use of MTOM. It corresponds to the
 `MTOMFeature` described in <<mtomfeature>>.
 
 [id="Table 7.15"]
-Table 7.15: `MTOM` properties.
+.`MTOM` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`enabled`  |Specifies if MTOM is enabled or not.  |true
@@ -744,17 +754,15 @@ being sent as an attachment. |0
 ==== jakarta.xml.ws.RespectBinding
 
 The `RespectBinding` annotation is applied to an endpoint implementation
-class
-
-and to an injected web service proxy reference
-
-. It is used to control whether a JAX-WS implementation MUST
+class and to an injected web service proxy reference.
+It is used to control whether a Jakarta XML Web Services implementation MUST
 respect/honor the contents of the `wsdl:binding` associated with an
 endpoint. It has a corresponding `RespectBindingFeature` described in
 <<respbindfeature>>.
 
 [id="Table 7.16"]
-Table 7.16: `RespectBinding` properties.
+`RespectBinding` properties.
+[cols=",,",options="header"]
 |==================================
 |Property   |Description    |Default
 |`enabled`  |Specifies whether the wsdl:binding must be

@@ -403,7 +403,7 @@ return types. Jakarta XML Binding will bind the `W3CEndpointReference` class to 
 W3C EndpointReference XML Schema in the WSDL.
 
 [[mtomfeature]]
-===== jakarta.xml.ws.soap.MTOMFeature
+==== jakarta.xml.ws.soap.MTOMFeature
 
 The `MTOMFeature` is used to specify if MTOM should be used with a web
 service. This feature should be used instead of the
@@ -429,7 +429,7 @@ An implementation MUST support the
 `jakarta.xml.ws.soap.MTOMFeature` and its `threshold` property.
 
 [[respbindfeature]]
-===== jakarta.xml.ws.RespectBindingFeature
+==== jakarta.xml.ws.RespectBindingFeature
 
 The `RespectBindingFeature` is used to control whether a Jakarta XML Web Services
 implementation MUST respect/honor the contents of the `wsdl:binding`
