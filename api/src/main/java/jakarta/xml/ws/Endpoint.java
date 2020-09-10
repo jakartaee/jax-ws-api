@@ -42,7 +42,7 @@ import org.w3c.dom.Element;
  *
  * <p>An endpoint may have a list of metadata documents, such as WSDL
  * and XMLSchema documents, bound to it. At publishing time, the
- * JAX-WS implementation will try to reuse as much of that metadata
+ * Jakarta XML Web Services implementation will try to reuse as much of that metadata
  * as possible instead of generating new ones based on the annotations
  * present on the implementor.
  *
@@ -173,7 +173,7 @@ public abstract class Endpoint {
     /**
      * Publishes this endpoint at the given address.
      * The necessary server infrastructure will be created and
-     * configured by the JAX-WS implementation using some default configuration.
+     * configured by the Jakarta XML Web Services implementation using some default configuration.
      * In order to get more control over the server configuration, please
      * use the {@link jakarta.xml.ws.Endpoint#publish(Object)} method instead.
      *
@@ -200,7 +200,7 @@ public abstract class Endpoint {
      * object at the given address.
      * <p>
      * The necessary server infrastructure will be created and
-     * configured by the JAX-WS implementation using some default configuration.
+     * configured by the Jakarta XML Web Services implementation using some default configuration.
      *
      * In order to get more control over the server configuration, please
      * use the {@link jakarta.xml.ws.Endpoint#create(String,Object)} and
@@ -230,7 +230,7 @@ public abstract class Endpoint {
      * with the web service features.
      * <p>
      * The necessary server infrastructure will be created and
-     * configured by the JAX-WS implementation using some default configuration.
+     * configured by the Jakarta XML Web Services implementation using some default configuration.
      *
      * In order to get more control over the server configuration, please
      * use the {@link jakarta.xml.ws.Endpoint#create(String,Object)} and
@@ -316,7 +316,7 @@ public abstract class Endpoint {
      * @since 1.7, JAX-WS 2.2
      */
     public void publish(HttpContext serverContext) {
-        throw new UnsupportedOperationException("JAX-WS 2.2 implementation must override this default behaviour.");
+        throw new UnsupportedOperationException("Jakarta XML Web Services implementation must override this default behaviour.");
     }
 
     /**
@@ -460,7 +460,7 @@ public abstract class Endpoint {
             Element... referenceParameters);
 
     /**
-     * By setting a {@code EndpointContext}, JAX-WS runtime knows about
+     * By setting a {@code EndpointContext}, Jakarta XML Web Services runtime knows about
      * addresses of other endpoints in an application. If multiple endpoints
      * share different ports of a WSDL, then the multiple port addresses
      * are patched when the WSDL is accessed.
@@ -475,6 +475,6 @@ public abstract class Endpoint {
      * @since 1.7, JAX-WS 2.2
      */
     public void setEndpointContext(EndpointContext ctxt) {
-        throw new UnsupportedOperationException("JAX-WS 2.2 implementation must override this default behaviour.");
+        throw new UnsupportedOperationException("Jakarta XML Web Services implementation must override this default behaviour.");
     }
 }

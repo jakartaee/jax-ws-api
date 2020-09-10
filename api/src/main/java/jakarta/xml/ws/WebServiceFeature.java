@@ -15,8 +15,8 @@ package jakarta.xml.ws;
  * A WebServiceFeature is used to represent a feature that can be
  * enabled or disabled for a web service.
  * <p>
- * The JAX-WS specification will define some standard features and
- * JAX-WS implementors are free to define additional features if
+ * The Jakarta XML Web Services specification will define some standard features and
+ * Jakarta XML Web Services implementors are free to define additional features if
  * necessary.  Vendor specific features may not be portable so
  * caution should be used when using them. Each Feature definition
  * MUST define a {@code public static final String ID}

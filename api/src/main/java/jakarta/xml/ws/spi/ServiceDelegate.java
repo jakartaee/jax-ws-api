@@ -23,7 +23,7 @@ import jakarta.xml.ws.WebServiceException;
 
 /**
  * Service delegates are used internally by {@code Service} objects
- * to allow pluggability of JAX-WS implementations.
+ * to allow pluggability of Jakarta XML Web Services implementations.
  * <p>
  * Every {@code Service} object has its own delegate, created using
  * the {@link jakarta.xml.ws.spi.Provider#createServiceDelegate} method. A {@code Service}
@@ -127,7 +127,7 @@ public abstract class ServiceDelegate {
      * The parameter {@code serviceEndpointInterface} specifies
      * the service endpoint interface that is supported by the
      * returned proxy.
-     * In the implementation of this method, the JAX-WS
+     * In the implementation of this method, the Jakarta XML Web Services
      * runtime system takes the responsibility of selecting a protocol
      * binding (and a port) and configuring the proxy accordingly from
      * the WSDL associated with this {@code Service} instance or
@@ -195,7 +195,7 @@ public abstract class ServiceDelegate {
      * The {@code getPort} method returns a proxy. The parameter
      * {@code serviceEndpointInterface} specifies the service
      * endpoint interface that is supported by the returned proxy.
-     * In the implementation of this method, the JAX-WS
+     * In the implementation of this method, the Jakarta XML Web Services
      * runtime system takes the responsibility of selecting a protocol
      * binding (and a port) and configuring the proxy accordingly.
      * The returned proxy should not be reconfigured by the client.
@@ -222,7 +222,7 @@ public abstract class ServiceDelegate {
      * The {@code getPort} method returns a proxy. The parameter
      * {@code serviceEndpointInterface} specifies the service
      * endpoint interface that is supported by the returned proxy.
-     * In the implementation of this method, the JAX-WS
+     * In the implementation of this method, the Jakarta XML Web Services
      * runtime system takes the responsibility of selecting a protocol
      * binding (and a port) and configuring the proxy accordingly.
      * The returned proxy should not be reconfigured by the client.
@@ -345,7 +345,7 @@ public abstract class ServiceDelegate {
      * reference parameters, on all messages sent to the endpoint.
      * The {@code endpointReference's} address MUST be used
      * for invocations on the endpoint.
-     * In the implementation of this method, the JAX-WS
+     * In the implementation of this method, the Jakarta XML Web Services
      * runtime system takes the responsibility of selecting a protocol
      * binding (and a port) and configuring the dispatch accordingly from
      * the WSDL associated with this {@code Service} instance or
@@ -415,11 +415,11 @@ public abstract class ServiceDelegate {
 
 
     /**
-     * Creates a {@code Dispatch} instance for use with JAXB
+     * Creates a {@code Dispatch} instance for use with Jakarta XML Binding
      * generated objects.
      *
      * @param portName  Qualified name for the target service endpoint
-     * @param context The JAXB context used to marshall and unmarshall
+     * @param context The JAXBContext used to marshall and unmarshall
      * messages or message payloads.
      * @param mode Controls whether the created dispatch instance is message
      * or payload oriented, i.e. whether the user will work with complete
@@ -438,11 +438,11 @@ public abstract class ServiceDelegate {
 
 
     /**
-     * Creates a {@code Dispatch} instance for use with JAXB
+     * Creates a {@code Dispatch} instance for use with Jakarta XML Binding
      * generated objects.
      *
      * @param portName  Qualified name for the target service endpoint
-     * @param context The JAXB context used to marshall and unmarshall
+     * @param context The JAXBContext used to marshall and unmarshall
      * messages or message payloads.
      * @param mode Controls whether the created dispatch instance is message
      * or payload oriented, i.e. whether the user will work with complete
@@ -468,7 +468,7 @@ public abstract class ServiceDelegate {
             JAXBContext context, Service.Mode mode, WebServiceFeature... features);
 
     /**
-     * Creates a {@code Dispatch} instance for use with JAXB
+     * Creates a {@code Dispatch} instance for use with Jakarta XML Binding
      * generated objects. If there
      * are any reference parameters in the
      * {@code endpointReference}, then those reference
@@ -476,7 +476,7 @@ public abstract class ServiceDelegate {
      * reference parameters, on all messages sent to the endpoint.
      * The {@code endpointReference's} address MUST be used
      * for invocations on the endpoint.
-     * In the implementation of this method, the JAX-WS
+     * In the implementation of this method, the Jakarta XML Web Services
      * runtime system takes the responsibility of selecting a protocol
      * binding (and a port) and configuring the dispatch accordingly from
      * the WSDL associated with this {@code Service} instance or
@@ -501,7 +501,7 @@ public abstract class ServiceDelegate {
      * @param endpointReference  The {@code EndpointReference}
      * for the target service endpoint that will be invoked by the
      * returned {@code Dispatch} object.
-     * @param context The JAXB context used to marshall and unmarshall
+     * @param context The JAXBContext used to marshall and unmarshall
      * messages or message payloads.
      * @param mode Controls whether the created dispatch instance is message
      * or payload oriented, i.e. whether the user will work with complete

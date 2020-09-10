@@ -12,7 +12,7 @@ package jakarta.xml.ws;
 
 
 /** The {@code Binding} interface is the base interface
- *  for JAX-WS protocol bindings.
+ *  for Jakarta XML Web Services protocol bindings.
  *
  *  @since 1.6, JAX-WS 2.0
 **/

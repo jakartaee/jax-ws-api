@@ -15,7 +15,7 @@ import jakarta.xml.soap.SOAPFault;
 /** The {@code SOAPFaultException} exception represents a
  *  SOAP 1.1 or 1.2 fault.
  *
- *  <p>A {@code SOAPFaultException} wraps a SAAJ {@code SOAPFault}
+ *  <p>A {@code SOAPFaultException} wraps a Jakarta SOAP with Attachments' {@code SOAPFault}
  *  that manages the SOAP-specific representation of faults.
  *  The {@code createFault} method of
  *  {@code jakarta.xml.soap.SOAPFactory} may be used to create an instance

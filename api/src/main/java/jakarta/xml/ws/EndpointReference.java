@@ -39,10 +39,10 @@ import java.io.StringWriter;
  * an {@code EndpointReference} for a particular version of Addressing.
  * For example the {@link W3CEndpointReference} is for use
  * with W3C Web Services Addressing 1.0 - Core Recommendation.
- * If JAX-WS implementors need to support different versions
+ * If Jakarta XML Web Services implementors need to support different versions
  * of addressing, they should write their own
  * {@code EndpointReference} subclass for that version.
- * This will allow a JAX-WS implementation to create
+ * This will allow a Jakarta XML Web Services implementation to create
  * a vendor specific {@code EndpointReferences} that the
  * vendor can use to flag a different version of
  * addressing.
@@ -55,12 +55,12 @@ import java.io.StringWriter;
  * schema mapped from the SEI will be more descriptive of the
  * type of endpoint reference being passed.
  * <p>
- * JAX-WS implementors are expected to extract the XML infoset
+ * Jakarta XML Web Services implementors are expected to extract the XML infoset
  * from an {@code EndpointReferece} using the
  * {@link EndpointReference#writeTo}
  * method.
  * <p>
- * JAXB will bind this class to xs:anyType. If a better binding
+ * Jakarta XML Binding will bind this class to xs:anyType. If a better binding
  * is desired, web services developers should use a concrete
  * subclass such as {@link W3CEndpointReference}.
  *
@@ -123,7 +123,7 @@ public abstract class EndpointReference {
      * returned proxy.
      * The {@code EndpointReference} instance specifies the
      * endpoint that will be invoked by the returned proxy.
-     * In the implementation of this method, the JAX-WS
+     * In the implementation of this method, the Jakarta XML Web Services
      * runtime system takes the responsibility of selecting a protocol
      * binding (and a port) and configuring the proxy accordingly from
      * the WSDL Metadata from this {@code EndpointReference} or from

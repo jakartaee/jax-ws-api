@@ -49,7 +49,7 @@ import jakarta.xml.ws.Service;
  * overrides WSDL's indication of the use of WS-Addressing. In some cases,
  * this is really required. For example, if an application has implemented
  * WS-Addressing itself, it can use this feature to disable addressing. That
- * means a JAX-WS implementation doesn't consume or produce WS-Addressing
+ * means a Jakarta XML Web Services implementation doesn't consume or produce WS-Addressing
  * headers.
  *
  * <p>

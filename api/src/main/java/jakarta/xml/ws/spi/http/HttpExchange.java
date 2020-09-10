@@ -262,7 +262,7 @@ public abstract class HttpExchange {
 
     /**
      * Returns an attribute that is associated with this
-     * {@code HttpExchange}. JAX-WS handlers and endpoints may then
+     * {@code HttpExchange}. Jakarta XML Web Services handlers and endpoints may then
      * access the attribute via {@link MessageContext}.
      * <p>
      * Servlet containers must expose {@link MessageContext#SERVLET_CONTEXT},

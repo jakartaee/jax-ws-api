@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * A handler which is invoked to process HTTP requests.
  * <p>
- * JAX-WS runtime provides the implementation for this and sets
+ * Jakarta XML Web Services runtime provides the implementation for this and sets
  * it using {@link HttpContext#setHandler(HttpHandler)} during
  * {@link Endpoint#publish(HttpContext) }
  *

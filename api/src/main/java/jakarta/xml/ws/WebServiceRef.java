@@ -54,7 +54,7 @@ import java.lang.annotation.RetentionPolicy;
  * </code></pre>
  *
  * <p>
- * If a JAX-WS implementation encounters an unsupported or unrecognized
+ * If a Jakarta XML Web Services implementation encounters an unsupported or unrecognized
  * annotation annotated with the {@code WebServiceFeatureAnnotation}
  * that is specified with {@code WebServiceRef}, an ERROR MUST be given.
  *

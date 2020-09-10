@@ -18,7 +18,7 @@ import javax.xml.namespace.QName;
  *  the port it is being asked to create a handler chain for.
  *  <p>
  *  This interface is never implemented by an application,
- *  only by a JAX-WS implementation.
+ *  only by a Jakarta XML Web Services implementation.
  *
  *  @since 1.6, JAX-WS 2.0
 **/

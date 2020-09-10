@@ -18,7 +18,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Invoker hides the detail of calling into application endpoint
  * implementation. Container hands over an implementation of Invoker
- * to JAX-WS runtime, and jax-ws runtime calls {@link #invoke}
+ * to Jakarta XML Web Services runtime, and Jakarta XML Web Services runtime calls {@link #invoke}
  * for a web service invocation. Finally, Invoker does the actual
  * invocation of web service on endpoint instance.
  *
@@ -34,7 +34,7 @@ import java.lang.reflect.InvocationTargetException;
 public abstract class Invoker {
 
     /**
-     * JAX-WS runtimes calls this method to ask container to inject
+     * Jakarta XML Web Services runtimes calls this method to ask container to inject
      * WebServiceContext on the endpoint instance. The
      * {@code WebServiceContext} object uses thread-local information
      * to return the correct information during the actual endpoint invocation
@@ -53,7 +53,7 @@ public abstract class Invoker {
     throws IllegalAccessException, IllegalArgumentException, InvocationTargetException;
     
     /**
-     * JAX-WS runtime calls this method to do the actual web service
+     * Jakarta XML Web Services runtime calls this method to do the actual web service
      * invocation on endpoint instance. The injected
      * {@code WebServiceContext.getMessageContext()} gives the correct
      * information for this invocation.

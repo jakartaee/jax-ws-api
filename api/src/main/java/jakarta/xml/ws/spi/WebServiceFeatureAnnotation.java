@@ -30,7 +30,7 @@ import jakarta.xml.ws.soap.MTOM;
  * {@code enabled} property of type
  * {@code boolean} with a default value of {@code true}.
  * <p>
- * JAX-WS defines the following
+ * Jakarta XML Web Services defines the following
  * {@code WebServiceFeature} annotations ({@code Addressing},
  * {@code MTOM}, {@code RespectBinding}), however, an implementation
  * may define vendors specific annotations for other features.
@@ -40,7 +40,7 @@ import jakarta.xml.ws.soap.MTOM;
  * feature annotation can be used in conjunction with the {@link WebServiceRef}
  * annotation if necessary.
  * <p>
- * If a JAX-WS implementation encounters an annotation annotated
+ * If a Jakarta XML Web Services implementation encounters an annotation annotated
  * with the {@code WebServiceFeatureAnnotation} that it does not
  * recognize/support an error MUST be given.
  *
@@ -57,7 +57,7 @@ public @interface WebServiceFeatureAnnotation {
     /**
      * Unique identifier for the WebServiceFeature.  This
      * identifier MUST be unique across all implementations
-     * of JAX-WS.
+     * of Jakarta XML Web Services.
      * @return unique identifier for the WebServiceFeature
      */
     String id();

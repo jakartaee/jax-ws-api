@@ -80,14 +80,14 @@ public interface SOAPBinding extends Binding {
   public void setMTOMEnabled(boolean flag);
   
   /**
-   * Gets the SAAJ {@code SOAPFactory} instance used by this SOAP binding.
+   * Gets the Jakarta SOAP with Attachments' {@code SOAPFactory} instance used by this SOAP binding.
    *
    * @return SOAPFactory instance used by this SOAP binding.
   **/
   public SOAPFactory getSOAPFactory();
   
   /**
-   * Gets the SAAJ {@code MessageFactory} instance used by this SOAP binding.
+   * Gets the Jakarta SOAP with Attachments' {@code MessageFactory} instance used by this SOAP binding.
    *
    * @return MessageFactory instance used by this SOAP binding.
   **/

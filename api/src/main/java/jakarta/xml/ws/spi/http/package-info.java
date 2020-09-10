@@ -16,9 +16,7 @@
 
   <p>
   References in this document to JAX-WS refer to the Jakarta XML Web Services unless otherwise noted.<br>
-  References in this document to SAAJ refer to the Jakarta SOAP with Attachments unless otherwise noted.<br>
   References in this document to JAXB refer to the Jakarta XML Binding unless otherwise noted.<br>
-  References in this document to JWS refer to the Jakarta Web Services Metadata unless otherwise noted.
 
   <p>
   The portable deployment is done as below:
@@ -32,14 +30,14 @@
   web service in servlet container case.</li>
   <li>Then publishes all the endpoints using
   {@link jakarta.xml.ws.Endpoint#publish(HttpContext)}. During publish(),
-  JAX-WS runtime registers a {@link jakarta.xml.ws.spi.http.HttpHandler}
+  Jakarta XML Web Services runtime registers a {@link jakarta.xml.ws.spi.http.HttpHandler}
   callback to handle incoming requests or
   {@link jakarta.xml.ws.spi.http.HttpExchange} objects. The HttpExchange
   object encapsulates a HTTP request and a response.
   </ol>
 
   <pre>{@literal
-  Container                               JAX-WS runtime
+  Container                               Jakarta XML Web Services runtime
   ---------                               --------------
   1. Creates Invoker1, ... InvokerN
   2. Provider.createEndpoint(...)     --> 3. creates Endpoint1
@@ -59,7 +57,7 @@
 
   The request processing is done as below(for every request):
   <pre>{@literal
-  Container                               JAX-WS runtime
+  Container                               Jakarta XML Web Services runtime
   ---------                               --------------
   1. Creates a HttpExchange
   2. Gets handler from HttpContext
