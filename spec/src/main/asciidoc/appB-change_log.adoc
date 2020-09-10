@@ -6,6 +6,12 @@
 [[change-log]]
 == Change Log
 
+=== 3.0 Changes
+
+* Changed specification version and license.
+* Package namespace changed to `jakarta.xml.ws.*`.
+* Alignment with Jakarta XML Binding 3.0
+
 [[changes]]
 === 2.3 Changes
 
