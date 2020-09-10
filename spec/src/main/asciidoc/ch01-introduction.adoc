@@ -21,11 +21,11 @@ considered the de-facto service description language for XML Web
 Services.
 
 JAX-RPC 1.0<<bib6>> defined APIs and conventions for supporting RPC
-oriented XML Web Services in the Java platform. JAX-RPC 1.1<<bib7>> added
-support for the WS-I Basic Profile 1.0<<bib8>> to improve interoperability between JAX-RPC
-implementations and with services implemented using other technologies.
+oriented XML Web Services in the Java platform. Jakarta XML RPC<<bib7>> added
+support for the WS-I Basic Profile 1.0<<bib8>> to improve interoperability between
+Jakarta XML RPC implementations and with services implemented using other technologies.
 
-Jakarta XML Web Services (this specification) is a follow-on to JAX-RPC 1.1,
+Jakarta XML Web Services (this specification) is a follow-on to Jakarta XML RPC,
 extending it as described in the following sections.
 
 Throughout the document, references to JAXB refer to the Jakarta XML Binding
@@ -45,9 +45,9 @@ Due primarily to scheduling concerns, JAX-RPC 1.0 defined its own data
 binding facilities. With the release of JAXB 1.0 <<bib9>>
 there is no reason to maintain two separate sets of XML mapping
 rules in the Java platform. Jakarta XML Web Services will delegate data
-binding-related tasks to the Jakarta XML Binding<<bib10>>
+binding-related tasks to the Jakarta XML Binding<<bib39>>
 specification that is being developed in parallel with Jakarta XML Web Services. +
-Jakarta XML Binding<<bib10>> will add support for Java to XML
+Jakarta XML Binding<<bib39>> will add support for Java to XML
 mapping, additional support for less used XML schema constructs, and
 provide bidirectional customization of Java
 &#x21d4; XML data binding. Jakarta XML Web Services will allow
@@ -56,7 +56,7 @@ and optional schema validation.
 * JAX-WS 2.1 requires JAXB 2.1<<bib11>>.
 * JAX-WS 2.2 requires JAXB 2.2<<bib12>>.
 * JAX-WS 2.3 requires JAXB 2.3<<bib13>>.
-* Jakarta XML Web Services 3.0 requires Jakarta XML Binding 3.0.
+* Jakarta XML Web Services 3.0 requires Jakarta XML Binding 3.0<<bib39>>.
 
 SOAP 1.2::
 Whilst SOAP 1.1 is still widely deployed, it’s expected that services
@@ -78,7 +78,7 @@ Jakarta XML Web Services specification._
 ====
 
 WS-I Basic Profile 1.1::
-JAX-RPC 1.1 added support for WS-I Basic Profile 1.0. WS-I Basic
+Jakarta XML RPC added support for WS-I Basic Profile 1.0. WS-I Basic
 Profile 1.1 is expected to supersede 1.0 during the lifetime of this
 specificatoin and Jakarta XML Web Services will add support
 for the additional clarifications it provides.
@@ -121,7 +121,7 @@ Jakarta XML Web Services will simplify client and service access
 to the messages underlying an exchange.
 
 Session Management::
-JAX-RPC 1.1 session management capabilities are tied to HTTP. Jakarta
+Jakarta XML RPC session management capabilities are tied to HTTP. Jakarta
 XML Web Services will add support for message based session management.
 
 Jakarta XML Web Services will also address issues that have arisen
@@ -142,11 +142,11 @@ the burden on developers when creating new versions of existing services.
 The following are non-goals:
 
 Backwards Compatibility of Binary Artifacts::
-Binary compatibility between JAX-RPC 1.x and Jakarta XML Web Services
+Binary compatibility between Jakarta XML RPC and Jakarta XML Web Services
 implementation runtimes.
 
 Pluggable data binding::
-Jakarta XML Web Services will defer data binding to Jakarta XML Binding<<bib10>>;
+Jakarta XML Web Services will defer data binding to Jakarta XML Binding<<bib39>>;
 it is not a goal to provide a plug-in API to allow other types of data
 binding technologies to be used in place of Jakarta XML Binding. However,
 Jakarta XML Web Services will maintain the capability to selectively disable
@@ -158,11 +158,11 @@ Use of the SOAP encoding is essentially deprecated in the web services
 community, e.g., the WS-I Basic Profile<<bib8>> excludes SOAP encoding. Instead,
 literal usage is  preferred, either in the RPC or document style. +
  +
-SOAP 1.1 encoding is supported in JAX-RPC 1.0 and 1.1 but its support
+SOAP 1.1 encoding is supported in JAX-RPC 1.0 and Jakarta XML RPC but its support
 in Jakarta XML Web Services runs counter to the goal of delegation of
 data binding to Jakarta XML Binding. Therefore Jakarta XML Web Services
 will make support for SOAP 1.1 encoding optional and defer description of
-it to JAX-RPC 1.1. +
+it to Jakarta XML RPC. +
  +
 Support for the SOAP 1.2 Encoding<<bib4>>
 is optional in SOAP 1.2 and Jakarta XML Web Services will not add
@@ -170,7 +170,7 @@ support for SOAP 1.2 encoding.
 
 Backwards Compatibility of Generated Artifacts::
 JAX-RPC 1.0 and JAXB 1.0 bind XML to Java in different ways.
-Generating source code that works with unmodified JAX-RPC 1.x client
+Generating source code that works with unmodified Jakarta XML RPC client
 source code is not a goal.
 
 Support for Java versions prior to Java SE 5.0::
@@ -181,7 +181,7 @@ Services on Java versions prior to Java SE 5.0.
 Service Registration and Discovery::
 It is not a goal of Jakarta XML Web Services to describe registration
 and discovery of services via UDDI or ebXML RR. This capability is
-provided independently by JAXR<<bib19>>.
+provided independently by Jakarta XML Registries<<bib19>>.
 
 [[requirements]]
 === Requirements
@@ -190,7 +190,7 @@ provided independently by JAXR<<bib19>>.
 ==== Relationship To Jakarta XML Binding
 
 Jakarta XML Web Services specification describes the WSDL &#x21d4; Java mapping,
-but data binding is delegated to Jakarta XML Binding<<bib10>>. The
+but data binding is delegated to Jakarta XML Binding<<bib39>>. The
 specification must clearly designate where Jakarta XML Binding rules
 apply to the WSDL &#x21d4; Java mapping without reproducing those
 rules and must describe how Jakarta XML Binding capabilities (e.g.,
@@ -223,7 +223,7 @@ The specification must provide a standard way to customize the WSDL
 methods will be specified:
 
 Java Annotations::
-In conjunction with Jakarta XML Binding<<bib10>> and Jakarta XML
+In conjunction with Jakarta XML Binding<<bib39>> and Jakarta XML
 Web Services Metadata<<bib16>> specifications,
 the specification will define a set of standard annotations
 that may be used in Java source files to specify the mapping from Java
@@ -231,7 +231,7 @@ artifacts to their associated WSDL components. The annotations will
 support mapping to WSDL 1.1.
 
 WSDL Annotations::
-In conjunction with Jakarta XML Binding<<bib10>> and Jakarta XML
+In conjunction with Jakarta XML Binding<<bib39>> and Jakarta XML
 Web Services Metadata<<bib16>> specifications,
 the specification will define a set of standard annotations
 that may be used either within WSDL documents or as in an external

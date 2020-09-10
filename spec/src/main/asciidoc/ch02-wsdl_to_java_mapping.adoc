@@ -46,7 +46,7 @@ the source WSDL document and the applicable external binding files.
 
 A WSDL document has a root `wsdl:definitions` element. A
 `wsdl:definitions` element and its associated `targetNamespace`
-attribute is mapped to a Java package. Jakarta XML Binding<<bib10>>
+attribute is mapped to a Java package. Jakarta XML Binding<<bib39>>
 (see appendix D) defines a standard mapping from a namespace URI to a
 Java package name. By default, this algorithm is used to map the value
 of a `wsdl:definitions` element’s `targetNamespace` attribute to a Java
@@ -55,7 +55,7 @@ package name.
 &#9674; _Conformance (Definitions mapping):_ In the absence of customizations,
 the Java package
 name is mapped from the value of a `wsdl:definitions` element’s
-`targetNamespace` attribute using the algorithm defined by Jakarta XML Binding<<bib10>>.
+`targetNamespace` attribute using the algorithm defined by Jakarta XML Binding<<bib39>>.
 
 An application MAY customize this mapping using the `jaxws:package`
 binding declaration defined in <<bindingdecldefinitions>>.
@@ -809,8 +809,8 @@ class MyPriceHandler implements AsyncHandler<Float> {
 [[wsdl11typemapping]]
 === Types
 
-Mapping of XML Schema types to Java is described by the JAXB 2.1
-specification<<bib11>>. The contents of a `wsdl:types` section is
+Mapping of XML Schema types to Java is described by the Jakarta XML Binding
+specification<<bib39>>. The contents of a `wsdl:types` section is
 passed to Jakarta XML Binding along with any additional type or element declarations
 (e.g., see <<wsdl11asyncmethod>>) required to map other WSDL
 constructs to Java. E.g., <<wsdl11asyncmethod>> defines an
@@ -1062,7 +1062,7 @@ WSDL 1.1 MIME binding<<bib5>>:
   A binding construct that may be used to bind a message part to an
   attachment.
 
-Jakarta XML Binding<<bib10>> describes the mapping from the WS-I
+Jakarta XML Binding<<bib39>> describes the mapping from the WS-I
 defined `wsiap:swaref` schema type to Java and, since Jakarta XML Web Services inherits
 this capability, it is not discussed further here. Use of the
 `mime:content` construct is outside the scope of Jakarta XML Binding mapping and the
@@ -1098,7 +1098,7 @@ set of MIME types described for the part in the binding. The case where
 the parameter mode is `INOUT` and is bound to different mime bindings in
 the input and output messages using the `mime:content` element MUST also
 be treated in the same way as described above. Please refer to appendix
-H in the Jakarta XML Binding specification <<bib10>> for details
+H in the Jakarta XML Binding specification <<bib39>> for details
 of the type mapping.
 
 The part belongs to the message bound by the `soap:body` then it is
@@ -1396,7 +1396,7 @@ mapped from the WSDL port type for both referenced bindings.
 [[xmlnames]]
 === XML Names
 
-Appendix D of Jakarta XML Binding<<bib13>> defines a mapping from
+Appendix D of Jakarta XML Binding<<bib39>> defines a mapping from
 XML names to Java identifiers. Jakarta XML Web Services uses this mapping to convert WSDL
 identifiers to Java identifiers with the following modifications and
 additions:

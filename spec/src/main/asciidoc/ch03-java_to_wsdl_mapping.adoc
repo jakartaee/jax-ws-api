@@ -133,7 +133,7 @@ following criteria:
 * `jakarta.jws.WebMethod` if used, MUST NOT have the `exclude` element set
 to `true`.
 * All method parameters and return types are compatible with the Jakarta
-XML Binding<<bib10>> Java to XML Schema mapping definition
+XML Binding<<bib39>> Java to XML Schema mapping definition
 
 &#9674; _Conformance (portType naming):_ The `jakarta.jws.WebService` annotation (see section
 <<mdwebservice>>) MAY be used to customize the `name` and
