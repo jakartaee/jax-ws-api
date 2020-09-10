@@ -464,12 +464,7 @@ not meant for end developers but for container or its extension
 developers.
 
 The HTTP SPI allows a deployment to use any available web services
-runtime for HTTP transport. Java EE 6 web profile vendors can support
-JSR-109<<bib17>> deployments using the JAX-WS 2.2
-runtime in Java SE platform. For example, a Servlet 3.0 extension can be
-used to do the JSR-109 deployment by reading deployment descriptors and
-hand-off the request processing to the web services runtime that is in
-Java SE platform.
+runtime for HTTP transport.
 
 The HTTP SPI consists of the following classes:
 
@@ -545,10 +540,3 @@ Typical portable undeployment is done as below:
   3. EndpointN.stop()
 ....
 
-Having a support for this SPI in a Jakarta XML Web Services implementation in Java SE
-platform would enable deployments to use the Java SE platform’s web
-services runtime portably.
-
-&#9674; _Conformance (HTTP SPI in SE platform):_ A JAX-WS 2.2 implementation in Java SE
-platform MUST support
-`Endpoint.publish(jakarta.xml.ws.spi.http.HttpContext)`.
