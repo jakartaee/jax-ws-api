@@ -469,7 +469,7 @@ applications._
 ====
 
 A generated contract MUST follow the rules in <<j2wsdl11chap>> and
-those in the Jakarta XML Binding specification <<bib10>>.
+those in the Jakarta XML Binding specification <<bib39>>.
 
 [[contractproviderendpoints]]
 ===== Provider-based Endpoints

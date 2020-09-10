@@ -28,8 +28,8 @@ http://www.w3.org/TR/2001/NOTE-wsdl-20010315.
 - [[[bib6,6]]] Rahul Sharma. The Java API for XML Based RPC (JAX-RPC) 1.0. JSR, JCP, June 2002. See
 http://jcp.org/en/jsr/detail?id=101.
 
-- [[[bib7,7]]] Roberto Chinnici. The Java API for XML Based RPC (JAX-RPC) 1.1. Maintenance JSR, JCP,
-August 2003. See http://jcp.org/en/jsr/detail?id=101.
+- [[[bib7,7]]] Jakarta XML RPC Specification 1.1. Eclipse Foundation, September 2019. See
+https://jakarta.ee/specifications/xml-rpc/.
 
 - [[[bib8,8]]] Keith Ballinger, David Ehnebuske, Martin Gudgin, Mark Nottingham, and Prasad Yendluri. Basic
 Profile Version 1.0. Final Material, WS-I, April 2004. See
@@ -57,17 +57,17 @@ Working Draft, W3C, August 2004. See http://www.w3.org/TR/2004/WD-wsdl20-2004080
 - [[[bib15,15]]] Joshua Bloch. A Metadata Facility for the Java Programming Language. JSR, JCP, August 2003. See
 http://jcp.org/en/jsr/detail?id=175.
 
-- [[[bib16,16]]] Jim Trezzo. Web Services Metadata for the Java Platform. JSR, JCP, August 2003. See
-http://jcp.org/en/jsr/detail?id=181.
+- [[[bib16,16]]] Jakarta XML Web Services Metadata Specification 3.0. Eclipse Foundation, November 2020. See
+https://jakarta.ee/specifications/web-services-metadata.
 
-- [[[bib17,17]]] Jim Knutson and Heather Kreger. Web Services for J2EE. JSR, JCP, September 2002. See
+- [[[bib17,17]]] Jakarta Enterprise. Web Services Specification. Eclipse Foundation, November 2020. See
 http://jcp.org/en/jsr/detail?id=109.
 
 - [[[bib18,18]]] Nataraj Nagaratnam. Web Services Message Security APIs. JSR, JCP, April 2002. See
 http://jcp.org/en/jsr/detail?id=183.
 
-- [[[bib19,19]]] Farrukh Najmi. Java API for XML Registries 1.0 (JAXR). JSR, JCP, June 2002. See
-http://www.jcp.org/en/jsr/detail?id=93.
+- [[[bib19,19]]] Jakarta XML Registries Specification 1.0. Eclipse Foundation, September 2019. See
+https://jakarta.ee/specifications/xml-registries.
 
 - [[[bib20,20]]] Keith Ballinger, David Ehnebuske, Chris Ferris, Martin Gudgin, Canyang Kevin Liu, Mark
 Nottingham, Jorgen Thelin, and Prasad Yendluri. Basic Profile Version 1.1. Final Material, WS-I,
@@ -132,3 +132,6 @@ Recommendation, W3C, May 2006. See http://www.w3.org/TR/2006/REC-ws-addr-soap-20
 
 - [[[bib38,38]]] John Barton, Satish Thatte, and Henrik Frystyk Nielsen. SOAP Messages With Attachments. Note,
 W3C, December 2000. http://www.w3.org/TR/SOAP-attachments.
+
+- [[[bib39,39]]] Jakarta XML Binding Specification 3.0. Eclipse Foundation, November 2020. See
+https://jakarta.ee/specifications/xml-binding.
