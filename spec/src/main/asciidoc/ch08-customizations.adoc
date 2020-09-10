@@ -19,27 +19,27 @@ customizations will hereafter be referred to as __binding
 declarations__.
 
 All XML elements defined in this section belong to the
-`http://java.sun.com/xml/ns/jaxws` namespace. For clarity, the rest of
+`https://jakarta.ee/xml/ns/jaxws` namespace. For clarity, the rest of
 this section uses qualified element names exclusively. Wherever it
 appears, the `jaxws` prefix is assumed to be bound to the
-`http://java.sun.com/xml/ns/jaxws` namespace name.
+`https://jakarta.ee/xml/ns/jaxws` namespace name.
 
 The binding language is extensible. Extensions are expressed using
 elements and/or attributes whose namespace name is different from the
 one used by this specification.
 
 &#9674; _Conformance (Standard binding declarations):_
-The `http://java.sun.com/xml/ns/jaxws`
+The `https://jakarta.ee/xml/ns/jaxws`
 namespace is reserved for standard Jakarta XML Web Services binding declarations.
 Implementations MUST support all standard Jakarta XML Web Services binding declarations.
 Implementation-specific binding declaration extensions MUST NOT use the
-`http://java.sun.com/xml/ns/jaxws` namespace.
+`https://jakarta.ee/xml/ns/jaxws` namespace.
 
 &#9674; _Conformance (Binding language extensibility):_
 Implementations MUST ignore unknown
 elements and attributes appearing inside a binding declaration whose
 namespace name is not the one specified in the standard, i.e.
-`http://java.sun.com/xml/ns/jaxws`.
+`https://jakarta.ee/xml/ns/jaxws`.
 
 [[bindingdeclarationcontainer]]
 === Binding Declaration Container
@@ -84,8 +84,8 @@ which have any `jaxws:bindings` ancestors (i.e. on non top-level
 binding declarations).
 
 For the Jakarta XML Web Services specification, the version identifier, if present,
-MUST be `2.0`. If the `@version` attribute is absent, it will implicitly
-be assumed to be `2.0`.
+MUST be `3.0`. If the `@version` attribute is absent, it will implicitly
+be assumed to be `3.0`.
 
 [[embeddedbindingdeclarations]]
 === Embedded Binding Declarations
@@ -334,7 +334,7 @@ the name of a Java field, method, type or package.
 
 The following sections detail the predefined binding declarations,
 classified according to the WSDL element they’re allowed on. All these
-declarations reside in the `http://java.sun.com/xml/ns/jaxws` namespace.
+declarations reside in the `https://jakarta.ee/xml/ns/jaxws` namespace.
 
 [[bindingdecldefinitions]]
 ==== Definitions

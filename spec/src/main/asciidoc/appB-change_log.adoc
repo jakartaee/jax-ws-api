@@ -12,6 +12,7 @@
 * Package namespace changed to `jakarta.xml.ws.*`.
 * Alignment with Jakarta XML Binding 3.0
 * Drop requirements related to JAX-WS inclusion in Java SE
+* Updated namespace of customization schema to `https://jakarta.ee/xml/ns/jaxws` and bumped schema version to `3.0`
 
 [[changes]]
 === 2.3 Changes
