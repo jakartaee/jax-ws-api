@@ -120,7 +120,7 @@ class FactoryFinder {
                         fallbackClassName, classLoader, EXCEPTION_HANDLER);
             }
         } catch (Exception ignored) {
-            logger.log(Level.SEVERE, "Error reading JAX-WS configuration from ["  + path +
+            logger.log(Level.SEVERE, "Error reading Jakarta XML Web Services configuration from ["  + path +
                     "] file. Check it is accessible and has correct format.", ignored);
         }
         return null;

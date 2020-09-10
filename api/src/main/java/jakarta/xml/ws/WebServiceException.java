@@ -11,7 +11,7 @@
 package jakarta.xml.ws;
 
 /** The {@code WebServiceException} class is the base
- *  exception class for all JAX-WS API runtime exceptions.
+ *  exception class for all Jakarta XML Web Services API runtime exceptions.
  *
  *  @since 1.6, JAX-WS 2.0
 **/

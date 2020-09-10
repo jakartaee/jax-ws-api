@@ -103,7 +103,7 @@ public abstract class Provider {
     public ServiceDelegate createServiceDelegate(
             java.net.URL wsdlDocumentLocation,
             QName serviceName, Class<? extends Service> serviceClass, WebServiceFeature ... features) {
-        throw new UnsupportedOperationException("JAX-WS 2.2 implementation must override this default behaviour.");
+        throw new UnsupportedOperationException("Jakarta XML Web Services implementation must override this default behaviour.");
     }
 
     /**
@@ -169,7 +169,7 @@ public abstract class Provider {
      * returned proxy.
      * The parameter {@code endpointReference} specifies the
      * endpoint that will be invoked by the returned proxy.
-     * In the implementation of this method, the JAX-WS
+     * In the implementation of this method, the Jakarta XML Web Services
      * runtime system takes the responsibility of selecting a protocol
      * binding (and a port) and configuring the proxy accordingly from
      * the WSDL metadata of the
@@ -349,7 +349,7 @@ public abstract class Provider {
             QName interfaceName, QName serviceName, QName portName,
             List<Element> metadata, String wsdlDocumentLocation, List<Element> referenceParameters,
             List<Element> elements, Map<QName, String> attributes) {
-        throw new UnsupportedOperationException("JAX-WS 2.2 implementation must override this default behaviour.");
+        throw new UnsupportedOperationException("Jakarta XML Web Services implementation must override this default behaviour.");
     }
 
     /**
@@ -374,7 +374,7 @@ public abstract class Provider {
      */
     public Endpoint createAndPublishEndpoint(String address,
             Object implementor, WebServiceFeature ... features) {
-        throw new UnsupportedOperationException("JAX-WS 2.2 implementation must override this default behaviour.");
+        throw new UnsupportedOperationException("Jakarta XML Web Services implementation must override this default behaviour.");
     }
 
     /**
@@ -395,7 +395,7 @@ public abstract class Provider {
      */
     public Endpoint createEndpoint(String bindingId, Object implementor,
             WebServiceFeature ... features) {
-        throw new UnsupportedOperationException("JAX-WS 2.2 implementation must override this default behaviour.");
+        throw new UnsupportedOperationException("Jakarta XML Web Services implementation must override this default behaviour.");
     }
 
     /**
@@ -418,7 +418,7 @@ public abstract class Provider {
      */
     public Endpoint createEndpoint(String bindingId, Class<?> implementorClass,
             Invoker invoker, WebServiceFeature ... features) {
-        throw new UnsupportedOperationException("JAX-WS 2.2 implementation must override this default behaviour.");
+        throw new UnsupportedOperationException("Jakarta XML Web Services implementation must override this default behaviour.");
     }
 
 }

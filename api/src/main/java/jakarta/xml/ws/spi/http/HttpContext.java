@@ -32,7 +32,7 @@ public abstract class HttpContext {
     protected HttpHandler handler;
 
     /**
-     * JAX-WS runtime sets its handler during
+     * Jakarta XML Web Services runtime sets its handler during
      * {@link Endpoint#publish(HttpContext)} to handle
      * HTTP requests for this context. Container or its extensions
      * use this handler to process the requests.
@@ -69,7 +69,7 @@ public abstract class HttpContext {
 
     /**
      * Returns an attribute value for container's configuration
-     * and other data that can be used by jax-ws runtime.
+     * and other data that can be used by Jakarta XML Web Services runtime.
      *
      * @param name attribute name
      * @return attribute value
@@ -78,7 +78,7 @@ public abstract class HttpContext {
 
     /**
      * Returns all attribute names for container's configuration
-     * and other data that can be used by jax-ws runtime.
+     * and other data that can be used by Jakarta XML Web Services runtime.
      *
      * @return set of all attribute names
      */

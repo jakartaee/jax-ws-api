@@ -13,7 +13,7 @@ package jakarta.xml.ws.handler;
 import jakarta.xml.ws.ProtocolException;
 
 /** The {@code Handler} interface
- *  is the base interface for JAX-WS handlers.
+ *  is the base interface for Jakarta XML Web Services handlers.
  *
  * @param <C> message context
  *  @since 1.6, JAX-WS 2.0
@@ -22,7 +22,7 @@ public interface Handler<C extends MessageContext> {
 
   /** The {@code handleMessage} method is invoked for normal processing
    *  of inbound and outbound messages. Refer to the description of the handler
-   *  framework in the JAX-WS specification for full details.
+   *  framework in the Jakarta XML Web Services specification for full details.
    *
    *  @param context the message context.
    *  @return An indication of whether handler processing should continue for
@@ -33,16 +33,16 @@ public interface Handler<C extends MessageContext> {
    *                 <li>Return {@code false} to block
    *                     processing.</li>
    *                  </ul>
-   *  @throws RuntimeException Causes the JAX-WS runtime to cease
+   *  @throws RuntimeException Causes the Jakarta XML Web Services runtime to cease
    *    handler processing and generate a fault.
-   *  @throws ProtocolException Causes the JAX-WS runtime to switch to
+   *  @throws ProtocolException Causes the Jakarta XML Web Services runtime to switch to
    *    fault message processing.
   **/
   public boolean handleMessage(C context);
 
   /** The {@code handleFault} method is invoked for fault message
    *  processing.  Refer to the description of the handler
-   *  framework in the JAX-WS specification for full details.
+   *  framework in the Jakarta XML Web Services specification for full details.
    *
    *  @param context the message context
    *  @return An indication of whether handler fault processing should continue
@@ -53,18 +53,18 @@ public interface Handler<C extends MessageContext> {
    *                 <li>Return {@code false} to block
    *                     processing.</li>
    *                  </ul>
-   *  @throws RuntimeException Causes the JAX-WS runtime to cease
+   *  @throws RuntimeException Causes the Jakarta XML Web Services runtime to cease
    *    handler fault processing and dispatch the fault.
-   *  @throws ProtocolException Causes the JAX-WS runtime to cease
+   *  @throws ProtocolException Causes the Jakarta XML Web Services runtime to cease
    *    handler fault processing and dispatch the fault.
   **/
   public boolean handleFault(C context);
 
   /**
    * Called at the conclusion of a message exchange pattern just prior to
-   * the JAX-WS runtime dispatching a message, fault or exception.  Refer to
+   * the Jakarta XML Web Services runtime dispatching a message, fault or exception.  Refer to
    * the description of the handler
-   * framework in the JAX-WS specification for full details.
+   * framework in the Jakarta XML Web Services specification for full details.
    *
    * @param context the message context
   **/

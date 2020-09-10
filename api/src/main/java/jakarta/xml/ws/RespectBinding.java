@@ -20,7 +20,7 @@ import jakarta.xml.ws.spi.WebServiceFeatureAnnotation;
 
 /**
  * This feature clarifies the use of the {@code wsdl:binding}
- * in a JAX-WS runtime.
+ * in a Jakarta XML Web Services runtime.
  * <p>
  * This annotation MUST only be used in conjunction the
  * {@code jakarta.jws.WebService}, {@link WebServiceProvider},

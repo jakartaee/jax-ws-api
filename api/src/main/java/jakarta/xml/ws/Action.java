@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * {@code output} and {@code fault} messages of the WSDL {@code operation}
  * is based upon which attributes of the {@code Action} annotation have been specified.
  * For the exact computation of {@code wsam:Action} values for the messages, refer
- * to the algorithm in the JAX-WS specification.
+ * to the algorithm in the Jakarta XML Web Services specification.
  * <p>
  * <b>Example 1</b>: Specify explicit values for {@code Action} message addressing property
  * for {@code input} and {@code output} messages.
@@ -65,7 +65,7 @@ import java.lang.annotation.Target;
  * <p>
  * <b>Example 2</b>: Specify explicit value for {@code Action} message addressing property
  * for only the {@code input} message. The {@code wsam:Action} values for the
- * WSDL {@code output} message are computed using the algorithm in the JAX-WS specification.
+ * WSDL {@code output} message are computed using the algorithm in the Jakarta XML Web Services specification.
  *
  * <pre>
  * {@literal @}WebService(targetNamespace="http://example.com/numbers")
@@ -95,7 +95,7 @@ import java.lang.annotation.Target;
  *
  * It is legitimate to specify an explicit value for {@code Action} message addressing property for
  * {@code output} message only. In this case, {@code wsam:Action} value for the
- * WSDL {@code input} message is computed using the algorithm in the JAX-WS specification.
+ * WSDL {@code input} message is computed using the algorithm in the Jakarta XML Web Services specification.
  *
  * <p>
  * <b>Example 3</b>: See {@link FaultAction} annotation for an example of

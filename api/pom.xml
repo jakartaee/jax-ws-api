@@ -406,6 +406,8 @@
                     <release>11</release>
                     <notimestamp>true</notimestamp>
                     <docfilessubdirs>true</docfilessubdirs>
+                    <!-- we don't want @since in generated javadoc -->
+                    <nosince>true</nosince>
                     <groups>
                         <group>
                             <title>Jakarta XML Web Services API Packages</title>

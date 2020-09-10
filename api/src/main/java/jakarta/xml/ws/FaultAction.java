@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  * message in the generated WSDL operation mapped for {@code className}
  * class is equal to the corresponding value in the {@code FaultAction}.
  * For the exact computation of {@code wsam:Action} values for the
- * fault messages, refer to the algorithm in the JAX-WS specification.
+ * fault messages, refer to the algorithm in the Jakarta XML Web Services specification.
  *
  * <p>
  * <b>Example 1</b>: Specify explicit values for {@code Action} message addressing

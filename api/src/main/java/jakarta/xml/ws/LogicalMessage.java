@@ -48,7 +48,7 @@ public interface LogicalMessage {
   **/
   public void setPayload(Source payload);
 
-  /** Gets the message payload as a JAXB object. Note that there is no
+  /** Gets the message payload as a Jakarta XML Binding object. Note that there is no
    *  connection between the returned object and the message payload,
    *  changes to the payload require calling {@code setPayload}.
    *

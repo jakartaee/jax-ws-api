@@ -42,7 +42,7 @@ import javax.xml.transform.Source;
  * pass/return endpoint references that represent the W3C WS-Addressing
  * recommendation.
  * <p>
- * JAXB will use the JAXB annotations and bind this class to XML infoset
+ * Jakarta XML Binding will use the Jakarta XML Binding annotations and bind this class to XML infoset
  * that is consistent with that defined by WS-Addressing.  See
  * <a href="http://www.w3.org/TR/2006/REC-ws-addr-core-20060509/">
  * WS-Addressing</a>
