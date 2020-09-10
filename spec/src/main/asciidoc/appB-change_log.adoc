@@ -11,6 +11,7 @@
 * Changed specification version and license.
 * Package namespace changed to `jakarta.xml.ws.*`.
 * Alignment with Jakarta XML Binding 3.0
+* Drop requirements related to JAX-WS inclusion in Java SE
 
 [[changes]]
 === 2.3 Changes
