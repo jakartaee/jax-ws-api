@@ -124,8 +124,8 @@ http://www.oasis-open.org/committees/download.php/14041/xml-catalogs.html.
 - [[[bib35,35]]] Rajiv Mordani. Common Annotations for the Java Platform. JSR, JCP, July 2005. See
 http://jcp.org/en/jsr/detail?id=250.
 
-- [[[bib36,36]]] Bill Shannon. Java Platform Enterprise Edition 5 Specification. JSR, JCP, August 2005. See
-http://jcp.org/en/jsr/detail?id=244.
+- [[[bib36,36]]] Jakarta EE Platform 9 Specification. Eclipse Foundation, November 2020. See
+https://jakarta.ee/specifications/platform.
 
 - [[[bib37,37]]] Tony Rogers Marting Gudgin, Marc Hadley. Web services addressing 1.0 - soap binding.
 Recommendation, W3C, May 2006. See http://www.w3.org/TR/2006/REC-ws-addr-soap-20060509/.
