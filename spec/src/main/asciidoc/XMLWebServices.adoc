@@ -14,7 +14,8 @@ include::ch09-handler_framwork.adoc[]
 include::ch10-soap_binding.adoc[]
 include::ch11-http_binding.adoc[]
 
-include::appA-conformance_requirements.adoc[]
+// no index of conformance requirements for now
+// include::appA-conformance_requirements.adoc[]
 include::appB-change_log.adoc[]
 include::appC-bibliography.adoc[]
 
