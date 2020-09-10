@@ -404,7 +404,7 @@ schema<<bib5>>
 SOAP binding schema<<bib24>><<bib25>>
 |jaxb |https://jakarta.ee/xml/ns/jaxb |The namespace of the Jakarta
 XML Binding<<bib9>> specification
-|jaxws |http://java.sun.com/xml/ns/jaxws |The namespace of the Jakarta
+|jaxws |https://jakarta.ee/xml/ns/jaxws |The namespace of the Jakarta
 XML Web Services specification
 |wsa |http://www.w3.org/2005/08/addressing |The namespace of the
 WS-Addressing 1.0<<bib26>> schema
