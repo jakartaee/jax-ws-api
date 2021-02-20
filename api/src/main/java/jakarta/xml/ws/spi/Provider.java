@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -30,9 +30,7 @@ public abstract class Provider {
      * A constant representing the name of the default
      * {@code Provider} implementation class.
      **/
-    // Using two strings so that package renaming doesn't change it
-    private static final String DEFAULT_JAXWSPROVIDER =
-            "com.sun"+".xml.internal.ws.spi.ProviderImpl";
+    private static final String DEFAULT_JAXWSPROVIDER = "com.sun.xml.ws.spi.ProviderImpl";
 
     /**
      * Creates a new instance of Provider
