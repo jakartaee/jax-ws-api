@@ -120,8 +120,8 @@
         <legal.doc.source>${project.basedir}/..</legal.doc.source>
 
         <jws-api.version>3.0.0</jws-api.version>
-        <soap-api.version>2.0.1</soap-api.version>
-        <xml.bind-api.version>3.0.1</xml.bind-api.version>
+        <soap-api.version>3.0.0-SNAPSHOT</soap-api.version>
+        <xml.bind-api.version>4.0.0-SNAPSHOT</xml.bind-api.version>
     </properties>
 
     <build>
