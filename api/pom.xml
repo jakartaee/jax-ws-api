@@ -90,11 +90,6 @@
             <artifactId>jakarta.xml.soap-api</artifactId>
             <version>${soap-api.version}</version>
         </dependency>
-        <dependency>
-            <groupId>jakarta.jws</groupId>
-            <artifactId>jakarta.jws-api</artifactId>
-            <version>${jws-api.version}</version>
-        </dependency>
     </dependencies>
 
     <properties>
@@ -119,7 +114,6 @@
 
         <legal.doc.source>${project.basedir}/..</legal.doc.source>
 
-        <jws-api.version>3.0.0</jws-api.version>
         <soap-api.version>2.0.1</soap-api.version>
         <xml.bind-api.version>3.0.1</xml.bind-api.version>
     </properties>
@@ -420,12 +414,6 @@
                     <docfilessubdirs>true</docfilessubdirs>
                     <!-- we don't want @since in generated javadoc -->
                     <nosince>true</nosince>
-                    <groups>
-                        <group>
-                            <title>Jakarta XML Web Services API Packages</title>
-                            <packages>jakarta.xml.ws*</packages>
-                        </group>
-                    </groups>
                     <description>Jakarta XML Web Services API documentation</description>
                     <doctitle>Jakarta XML Web Services API documentation</doctitle>
                     <windowtitle>Jakarta XML Web Services API documentation</windowtitle>
@@ -435,6 +423,13 @@ Comments to: <a href="mailto:${release.spec.feedback}">${release.spec.feedback}<
 Copyright &#169; 2019, ${current.year} Eclipse Foundation. All rights reserved.<br>
 Use is subject to <a href="{@docRoot}/doc-files/speclicense.html" target="_top">license terms</a>.]]>
                     </bottom>
+                    <tags>
+                        <tag>
+                            <name>specdefault</name>
+                            <placement>X</placement>
+                            <head>Default:</head>
+                        </tag>
+                    </tags>
                 </configuration>
             </plugin>
         </plugins>
