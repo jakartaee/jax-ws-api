@@ -25,6 +25,10 @@ oriented XML Web Services in the Java platform. Jakarta XML RPC<<bib7>> added
 support for the WS-I Basic Profile 1.0<<bib8>> to improve interoperability between
 Jakarta XML RPC implementations and with services implemented using other technologies.
 
+Jakarta Web Services Metadata defines the syntax and semantics of Java Web Service
+(JWS) metadata and default values and implementers are expected to provide tools that map the
+annotated Java classes onto a specific runtime environment.
+
 Jakarta XML Web Services (this specification) is a follow-on to Jakarta XML RPC,
 extending it as described in the following sections.
 
@@ -39,6 +43,28 @@ Since the release of JAX-RPC 1.0<<bib6>>, new specifications and
 new versions of the standards it depends on have been released.
 Jakarta XML Web Services relates to these specifications
 and standards as follows:
+
+Jakarta Web Services Metadata::
+
+* Define an annotated Java syntax for programming Web Service
+applications.
+* Provide a simplified model for Web Service development that facilitates
+and accelerates development.
+* Provide a syntax that is amenable to manipulation by tools.
+* Define a standard for to building and deploying Web Services without
+requiring knowledge and implementation of generalized APIs and
+deployment descriptors.
+
+This specification addresses the need to simplify:
+
+* Development of server applications that conform both to basic SOAP and
+WSDL standards.
+* Building Web Services that can be deployed with the core Web Services
+APIs and existing Jakarta EE standards.
+* Separate control of public Web Service message contracts and private
+implementation signatures, because in practice public and private
+formats evolve on different schedules.
+
 
 Jakarta XML Binding::
 Due primarily to scheduling concerns, JAX-RPC 1.0 defined its own data
@@ -464,6 +490,31 @@ Brian Zotter (BEA Systems) +
 Nicholas L Gallardo (IBM) +
 Alessio Soldano (Red Hat) +
 
+==== JWS Expert Group Members
+The following people have been part of the original JWS Specification
+Expert Group:
+
+Alexander Aptus (Togethersoft Corporation) +
+John Bossons +
+Charles Campbell +
+Shih-Chang Chen (Oracle) +
+Alan Davies (SeeBeyond Technology Corp) +
+Stuart Edmondston (BEA Systems) +
+John Harby +
+RajivMordani (Sun Microsystems) +
+Michael Morton (IBM) +
+Simon Nash (IBM) +
+Mark Pollack +
+Srividya Rajagopalan (Nokia) +
+Krishna Sankar (Cisco Systems) +
+Manfred Schneider (SAP AG) +
+John Schneider (BEA Systems) +
+Kalyan Seshu (Paramati Technologies) +
+Rahul Sharma (Motorola) +
+Michael Shenfield (Research In Motion) +
+Evan Simeone (PalmSource) +
+Brian Zotter (BEA Systems) +
+
 [[acknowledgements]]
 === Acknowledgements
 
@@ -480,3 +531,9 @@ contributions to the 2.2 reference implementation and to the
 specification. JAX-WS TCK team (Arthur Frechette, Alan Frechette) and
 SQE team (Jonathan Benoit) assisted the conformance testing of the 2.2
 specification.
+
+Manoj Cheenath (BEA Systems), Don Ferguson (BEA Systems), Chris Fry (BEA
+Systems), Neal Yin (BEA Systems), Beverley Talbott (BEA Systems), Matt Mihic,
+Jim Trezzo, Doug Kohlert (Sun Microsystems), Jitendra Kotamraju (Sun
+Microsystems), and Rama Pulavarthi (Sun Microsystems) have all provided
+valuable technical input to the JWS specification.
