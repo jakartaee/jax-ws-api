@@ -6,3 +6,8 @@
 
 Jakarta XML Web Services defines a means for implementing XML-Based Web Services
 based on Jakarta SOAP with Attachments and Jakarta Web Services Metadata.
+
+Jakarta Web Services Metadata defines a programming model for Web Services in Java,
+use of metadata, a non-normative processing model for metadata annotated web service
+source files, runtime requirements for a container, and annotations used for WSDL,
+binding, and configuration.
