@@ -64,6 +64,7 @@ pipeline {
                 sshagent([SSH_CREDENTIALS_ID]) {
                     sh 'etc/jenkins/continuous.sh'
                 }
+		jacoco()
 		recordIssues(tools: [java(), javaDoc(), spotBugs(useRankAsPriority: true)])
             }
         }
