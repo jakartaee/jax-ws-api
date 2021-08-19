@@ -14,4 +14,4 @@
 echo '-[ Jakarta XML Web Services Specification Build ]-------------------------------'
 (cd spec && mvn -U -C -B -Dstatus='DRAFT' clean install)
 echo '-[ Jakarta XML Web Services API Build ]-----------------------------------------'
-(cd api && mvn -U -C -B -V -Psnapshots,staging,oss-release clean deploy spotbugs:spotbugs)
+(cd api && mvn -U -C -B -V -Psnapshots,staging,oss-release clean deploy)

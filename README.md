@@ -6,9 +6,10 @@
 [//]: # "  "
 [//]: # " SPDX-License-Identifier: BSD-3-Clause "
 
-[![Build Status](https://travis-ci.com/eclipse-ee4j/jax-ws-api.svg?branch=master)](https://travis-ci.com/eclipse-ee4j/jax-ws-api)
-
 # Jakarta XML Web Services project
+
+[![Build Status](https://github.com/eclipse-ee4j/jax-ws-api/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/eclipse-ee4j/jax-ws-api/actions/workflows/maven.yml?branch=master)
+[![Jakarta Staging (Snapshots)](https://img.shields.io/nexus/s/https/jakarta.oss.sonatype.org/jakarta.xml.ws/jakarta.xml.ws-api.svg)](https://jakarta.oss.sonatype.org/content/repositories/staging/jakarta/xml/ws/jakarta.xml.ws-api/)
 
 Jakarta XML Web Services defines a means for implementing XML-Based Web Services
 based on [Jakarta SOAP with Attachments](https://github.com/eclipse-ee4j/saaj-api)
