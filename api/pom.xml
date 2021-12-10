@@ -114,7 +114,7 @@
 
         <legal.doc.source>${project.basedir}/..</legal.doc.source>
 
-        <soap-api.version>3.0.0-RC1</soap-api.version>
+        <soap-api.version>3.0.0-RC2</soap-api.version>
         <xml.bind-api.version>4.0.0-RC3</xml.bind-api.version>
     </properties>
 
