@@ -26,7 +26,7 @@ import jakarta.xml.ws.WebServiceException;
 
 class FactoryFinder {
 
-    private static final Logger logger;
+    private static final Logger LOGGER;
 
     private static final ServiceLoaderUtil.ExceptionHandler<WebServiceException> EXCEPTION_HANDLER =
             new ServiceLoaderUtil.ExceptionHandler<WebServiceException>() {
@@ -39,16 +39,16 @@ class FactoryFinder {
     private final static PrivilegedAction<String> propertyAction = () -> System.getProperty("jax-ws.debug");
 
     static {
-        logger = Logger.getLogger("jakarta.xml.ws");
+        LOGGER = Logger.getLogger("jakarta.xml.ws");
         try {
             if (AccessController.doPrivileged(propertyAction) != null) {
                 // disconnect the logger from a bigger framework (if any)
                 // and take the matters into our own hands
-                logger.setUseParentHandlers(false);
-                logger.setLevel(Level.ALL);
+                LOGGER.setUseParentHandlers(false);
+                LOGGER.setLevel(Level.ALL);
                 ConsoleHandler handler = new ConsoleHandler();
                 handler.setLevel(Level.ALL);
-                logger.addHandler(handler);
+                LOGGER.addHandler(handler);
             } else {
                 // don't change the setting of this logger
                 // to honor what other frameworks
@@ -57,7 +57,7 @@ class FactoryFinder {
         } catch (Throwable t) {
             // just to be extra safe. in particular System.getProperty may throw
             // SecurityException.
-            logger.log(Level.SEVERE, "Exception during loading the class", t);
+            LOGGER.log(Level.SEVERE, "Exception during loading the class", t);
         }
     }
     /**
@@ -69,37 +69,38 @@ class FactoryFinder {
      * <P>
      * This method is package private so that this code can be shared.
      *
-     * @return the {@code Class} object of the specified message factory;
-     *         may not be {@code null}
-     *
+     * @param <T>                   type of the factory class
      * @param factoryClass          the name of the factory to find, which is
      *                              a system property
      * @param fallbackClassName     the implementation class name, which is
      *                              to be used only if nothing else
      *                              is found; {@code null} to indicate that
      *                              there is no fallback class name
+     * @return the {@code Class} object of the specified message factory;
+     *         may not be {@code null}
+     *
      * @exception WebServiceException if there is an error
      */
     @SuppressWarnings("unchecked")
     static <T> T find(Class<T> factoryClass, String fallbackClassName) {
         ClassLoader classLoader = ServiceLoaderUtil.contextClassLoader(EXCEPTION_HANDLER);
 
-        T provider = ServiceLoaderUtil.firstByServiceLoader(factoryClass, logger, EXCEPTION_HANDLER);
+        T provider = ServiceLoaderUtil.firstByServiceLoader(factoryClass, LOGGER, EXCEPTION_HANDLER);
         if (provider != null) return provider;
 
         String factoryId = factoryClass.getName();
 
         // try to read from $java.home/lib/jaxws.properties
-        provider = (T) fromJDKProperties(factoryId, fallbackClassName, classLoader);
+        provider = fromJDKProperties(factoryId, fallbackClassName, classLoader);
         if (provider != null) return provider;
 
         // Use the system property
-        provider = (T) fromSystemProperty(factoryId, fallbackClassName, classLoader);
+        provider = fromSystemProperty(factoryId, fallbackClassName, classLoader);
         if (provider != null) return provider;
 
         // handling Glassfish (platform specific default)
         if (isOsgi()) {
-            provider = (T) lookupUsingOSGiServiceLoader(factoryId);
+            provider = lookupUsingOSGiServiceLoader(factoryId);
             if (provider != null) {
                 return provider;
             }
@@ -114,22 +115,22 @@ class FactoryFinder {
                 fallbackClassName, classLoader, EXCEPTION_HANDLER);
     }
 
-    private static Object fromSystemProperty(String factoryId,
+    private static <T> T fromSystemProperty(String factoryId,
                                              String fallbackClassName,
                                              ClassLoader classLoader) {
         try {
             String systemProp = System.getProperty(factoryId);
             if (systemProp != null) {
-                logger.log(Level.FINE, "Found system property {0}", systemProp);
+                LOGGER.log(Level.FINE, "Found system property {0}", systemProp);
                 return newInstance(systemProp, fallbackClassName, classLoader);
             }
-        } catch (SecurityException ignored) {
-            logger.log(Level.SEVERE, "Access is not allowed to the system property with key " + factoryId, ignored);
+        } catch (SecurityException se) {
+            LOGGER.log(Level.SEVERE, "Access is not allowed to the system property with key " + factoryId, se);
         }
         return null;
     }
 
-    private static Object fromJDKProperties(String factoryId,
+    private static <T> T fromJDKProperties(String factoryId,
                                             String fallbackClassName,
                                             ClassLoader classLoader) {
         Path path = null;
@@ -143,7 +144,7 @@ class FactoryFinder {
             }
 
             if (Files.exists(path)) {
-                logger.log(Level.FINE, "Found {0}", path);
+                LOGGER.log(Level.FINE, "Found {0}", path);
                 Properties props = new Properties();
                 try (InputStream inStream = Files.newInputStream(path)) {
                     props.load(inStream);
@@ -151,9 +152,9 @@ class FactoryFinder {
                 String factoryClassName = props.getProperty(factoryId);
                 return newInstance(factoryClassName, fallbackClassName, classLoader);
             }
-        } catch (Exception ignored) {
-            logger.log(Level.SEVERE, "Error reading Jakarta XML Web Services configuration from ["  + path +
-                    "] file. Check it is accessible and has correct format.", ignored);
+        } catch (Throwable t) {
+            LOGGER.log(Level.SEVERE, "Error reading Jakarta XML Web Services configuration from ["  + path +
+                    "] file. Check it is accessible and has correct format.", t);
         }
         return null;
     }
@@ -164,44 +165,46 @@ class FactoryFinder {
         try {
             Class.forName(OSGI_SERVICE_LOADER_CLASS_NAME);
             return true;
-        } catch (ClassNotFoundException ignored) {
-            logger.log(
+        } catch (ClassNotFoundException cnfe) {
+            LOGGER.log(
                     Level.SEVERE,
                     "Class " + OSGI_SERVICE_LOADER_CLASS_NAME + " cannot be loaded",
-                    ignored
+                    cnfe
             );
         }
         return false;
     }
 
-    private static Object lookupUsingOSGiServiceLoader(String factoryId) {
+    private static <T> T lookupUsingOSGiServiceLoader(String factoryId) {
         try {
-            logger.fine("Trying to create the provider from the OSGi ServiceLoader");
+            LOGGER.fine("Trying to create the provider from the OSGi ServiceLoader");
             // Use reflection to avoid having any dependendcy on ServiceLoader class
-            Class serviceClass = Class.forName(factoryId);
-            Class[] args = new Class[]{serviceClass};
-            Class target = Class.forName(OSGI_SERVICE_LOADER_CLASS_NAME);
+            Class<?> serviceClass = Class.forName(factoryId);
+            Class<?>[] args = new Class<?>[]{serviceClass};
+            Class<?> target = Class.forName(OSGI_SERVICE_LOADER_CLASS_NAME);
             java.lang.reflect.Method m = target.getMethod("lookupProviderInstances", Class.class);
-            java.util.Iterator iter = ((Iterable) m.invoke(null, (Object[]) args)).iterator();
+            @SuppressWarnings({"unchecked"})
+            java.util.Iterator<? extends T> iter = ((Iterable<? extends T>) m.invoke(null, (Object[]) args)).iterator();
             return iter.hasNext() ? iter.next() : null;
-        } catch (Exception ignored) {
+        } catch (Throwable t) {
             // log and continue
-            logger.log(
+            LOGGER.log(
                     Level.SEVERE,
                     "Access to the system property with key " + factoryId + " is not allowed",
-                    ignored
+                    t
             );
             return null;
         }
     }
 
-    private static Object newInstance(String className, String defaultImplClassName, ClassLoader classLoader){
-        Object newInstance = ServiceLoaderUtil.newInstance(className,
+    private static <T> T newInstance(String className, String defaultImplClassName, ClassLoader classLoader){
+        @SuppressWarnings({"unchecked"})
+        T newInstance = (T) ServiceLoaderUtil.newInstance(className,
                 defaultImplClassName, classLoader, EXCEPTION_HANDLER);
-        if (logger.isLoggable(Level.FINE)) {
+        if (LOGGER.isLoggable(Level.FINE)) {
             // extra check to avoid costly which operation if not logged
             Class<?> newInstanceClass = newInstance.getClass();
-            logger.log(
+            LOGGER.log(
                     Level.FINE,
                     "loaded {0} from {1}", new Object[]{newInstanceClass.getName(), which(newInstanceClass)}
             );
@@ -221,7 +224,7 @@ class FactoryFinder {
      * @return
      *          the URL for the class or null if it wasn't found
      */
-    static URL which(Class clazz) {
+    static URL which(Class<?> clazz) {
         return which(clazz, getClassClassLoader(clazz));
     }
 
@@ -237,7 +240,7 @@ class FactoryFinder {
      * @return
      *          the URL for the class or null if it wasn't found
      */
-    static URL which(Class clazz, ClassLoader loader) {
+    static URL which(Class<?> clazz, ClassLoader loader) {
 
         String classnameAsResource = clazz.getName().replace('.', '/') + ".class";
 
@@ -252,18 +255,17 @@ class FactoryFinder {
         if (System.getSecurityManager() == null) {
             return ClassLoader.getSystemClassLoader();
         } else {
-            return (ClassLoader) java.security.AccessController.doPrivileged(
-                    (PrivilegedAction) ClassLoader::getSystemClassLoader);
+            return AccessController.doPrivileged(
+                    (PrivilegedAction<ClassLoader>) ClassLoader::getSystemClassLoader);
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private static ClassLoader getClassClassLoader(final Class c) {
+    private static ClassLoader getClassClassLoader(final Class<?> c) {
         if (System.getSecurityManager() == null) {
             return c.getClassLoader();
         } else {
-            return (ClassLoader) java.security.AccessController.doPrivileged(
-                    (PrivilegedAction) c::getClassLoader);
+            return AccessController.doPrivileged(
+                    (PrivilegedAction<ClassLoader>) c::getClassLoader);
         }
     }
 

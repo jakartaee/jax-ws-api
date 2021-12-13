@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -36,7 +36,8 @@ import jakarta.xml.soap.SOAPFault;
  *  @since 1.6, JAX-WS 2.0
  **/
 public class SOAPFaultException extends jakarta.xml.ws.ProtocolException  {
-    
+
+    private static final long serialVersionUID = -5717334416389757052L;
     private SOAPFault fault;
     
     /** Constructor for SOAPFaultException

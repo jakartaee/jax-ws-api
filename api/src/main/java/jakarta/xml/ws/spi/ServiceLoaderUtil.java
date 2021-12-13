@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -54,22 +54,24 @@ class ServiceLoaderUtil {
         }
     }
 
-    static Class nullSafeLoadClass(String className, ClassLoader classLoader) throws ClassNotFoundException {
+    @SuppressWarnings({"unchecked"})
+    static <T> Class<T> nullSafeLoadClass(String className, ClassLoader classLoader) throws ClassNotFoundException {
         if (classLoader == null) {
-            return Class.forName(className);
+            return (Class<T>) Class.forName(className);
         } else {
-            return classLoader.loadClass(className);
+            return (Class<T>) classLoader.loadClass(className);
         }
     }
 
     // Returns instance of required class. It checks package access (security)
     // unless it is defaultClassname. It means if you are trying to instantiate
     // default implementation (fallback), pass the class name to both first and second parameter.
-    static <T extends Exception> Object newInstance(String className,
+    static <T, E extends Exception> T newInstance(String className,
                                                     String defaultImplClassName, ClassLoader classLoader,
-                                                    final ExceptionHandler<T> handler) throws T {
+                                                    final ExceptionHandler<E> handler) throws E {
         try {
-            return safeLoadClass(className, defaultImplClassName, classLoader).newInstance();
+            Class<T> cls = safeLoadClass(className, defaultImplClassName, classLoader);
+            return cls.getConstructor().newInstance();
         } catch (ClassNotFoundException x) {
             throw handler.createException(x, "Provider " + className + " not found");
         } catch (Exception x) {
@@ -77,7 +79,8 @@ class ServiceLoaderUtil {
         }
     }
 
-    static Class safeLoadClass(String className,
+    @SuppressWarnings({"unchecked"})
+    static <T> Class<T> safeLoadClass(String className,
                                String defaultImplClassName,
                                ClassLoader classLoader) throws ClassNotFoundException {
 
@@ -86,7 +89,7 @@ class ServiceLoaderUtil {
         } catch (SecurityException se) {
             // anyone can access the platform default factory class without permission
             if (defaultImplClassName != null && defaultImplClassName.equals(className)) {
-                return Class.forName(className);
+                return (Class<T>) Class.forName(className);
             }
             // not platform default implementation ...
             throw se;

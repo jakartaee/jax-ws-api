@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -18,6 +18,9 @@ package jakarta.xml.ws;
  *  @since 1.6, JAX-WS 2.0
 **/
 public class ProtocolException extends WebServiceException {
+
+    private static final long serialVersionUID = -5162391758599890377L;
+
     /**
      * Constructs a new protocol exception with {@code null} as its detail message. The
      * cause is not initialized, and may subsequently be initialized by a call

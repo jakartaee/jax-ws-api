@@ -102,6 +102,7 @@
         <spotbugs.skip>false</spotbugs.skip>
         <spotbugs.threshold>Low</spotbugs.threshold>
         <spotbugs.version>4.5.0.0</spotbugs.version>
+        <bld.failOnWarning>true</bld.failOnWarning>
 
         <release.spec.feedback>jaxws-dev@eclipse.org</release.spec.feedback>
 
@@ -305,6 +306,7 @@
                     <release>11</release>
                     <compilerArgs>
                         <arg>-Xlint:all</arg>
+                        <arg>-Xdoclint:all,-missing</arg>
                     </compilerArgs>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
@@ -398,6 +400,9 @@
                         </manifest>
                     </archive>
                     <release>11</release>
+                    <doclint>all,-missing</doclint>
+                    <quiet>true</quiet>
+                    <failOnWarnings>${bld.failOnWarning}</failOnWarnings>
                     <notimestamp>true</notimestamp>
                     <docfilessubdirs>true</docfilessubdirs>
                     <!-- we don't want @since in generated javadoc -->
