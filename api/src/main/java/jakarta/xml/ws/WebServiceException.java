@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2021 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -17,7 +17,9 @@ package jakarta.xml.ws;
 **/
 
 public class WebServiceException extends java.lang.RuntimeException {
-  
+
+  private static final long serialVersionUID = 6923454787998151997L;
+
   /** Constructs a new exception with {@code null} as its
    *  detail message. The cause is not initialized.
   **/
