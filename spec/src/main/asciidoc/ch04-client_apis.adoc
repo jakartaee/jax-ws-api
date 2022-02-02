@@ -249,7 +249,7 @@ illustrates the class relationships.
 
 [[bprovclsrel]]
 .Binding Provider Class Relationships
-image::images/bindingprovider.png[]
+image::images/bindingprovider.svg[]
 
 A web service client can get an `jakarta.xml.ws.EndpointReference` from a
 `BindingProvider` instance that will reference the target endpoint.
