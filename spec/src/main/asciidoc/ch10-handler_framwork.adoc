@@ -40,7 +40,7 @@ invoked with different types of message context.
 
 [[handarchfig]]
 .Handler architecture
-image::images/handarch.png[]
+image::images/handarch.svg[]
 
 [[handlertypes]]
 ==== Types of Handler
@@ -67,7 +67,7 @@ protocol-specific interface that extends `jakarta.xml.ws.handler.Handler`.
 
 [[handclshie]]
 .Handler class hierarchy
-image::images/handlers.png[]
+image::images/handlers.svg[]
 
 [[binding-responsibilities]]
 ==== Binding Responsibilities
@@ -181,7 +181,7 @@ the order of handler execution for inbound and outbound messages.
 
 [[handord]]
 .Handler ordering, Ln and Pn represent logical and protocol handlers respectively.
-image::images/handord.png[]
+image::images/handord.svg[]
 
 [[handlerchain]]
 ===== jakarta.jws.HandlerChain annotation
