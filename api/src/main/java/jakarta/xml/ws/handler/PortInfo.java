@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -30,14 +30,14 @@ public interface PortInfo {
    *
    *  @return javax.xml.namespace.QName The qualified name of the WSDL service.
   **/
-  public QName getServiceName();
+  QName getServiceName();
 
   /** 
    *  Gets the qualified name of the WSDL port being accessed.
    *
    *  @return javax.xml.namespace.QName The qualified name of the WSDL port.
   **/
-  public QName getPortName();
+  QName getPortName();
 
   /** 
    *  Gets the URI identifying the binding used by the port being accessed.
@@ -46,6 +46,6 @@ public interface PortInfo {
    *
    *  @see jakarta.xml.ws.Binding
   **/
-  public String getBindingID();
+  String getBindingID();
 
 }

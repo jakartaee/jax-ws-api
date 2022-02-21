@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -36,7 +36,7 @@ public interface LogicalMessage {
    *  @return The contained message payload; returns {@code null} if no
    *          payload is present in this message.
   **/
-  public Source getPayload();
+  Source getPayload();
 
   /** Sets the message payload
    *
@@ -46,7 +46,7 @@ public interface LogicalMessage {
    *  @throws java.lang.UnsupportedOperationException If this
    *          operation is not supported
   **/
-  public void setPayload(Source payload);
+  void setPayload(Source payload);
 
   /** Gets the message payload as a Jakarta XML Binding object. Note that there is no
    *  connection between the returned object and the message payload,
@@ -60,7 +60,7 @@ public interface LogicalMessage {
    *     JAXBContext to unmarshall the payload. The cause of
    *     the WebServiceException is the original JAXBException.
   **/
-  public Object getPayload(JAXBContext context);
+  Object getPayload(JAXBContext context);
 
   /** Sets the message payload
    *
@@ -73,5 +73,5 @@ public interface LogicalMessage {
    *     JAXBContext to marshall the payload. The cause of
    *     the WebServiceException is the original JAXBException.
   **/
-  public void setPayload(Object payload, JAXBContext context);
+  void setPayload(Object payload, JAXBContext context);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -45,5 +45,5 @@ public interface Provider<T> {
    *  @see jakarta.xml.ws.handler.MessageContext
    *  @see jakarta.xml.ws.ProtocolException
   **/
-  public T invoke(T request);
+  T invoke(T request);
 }

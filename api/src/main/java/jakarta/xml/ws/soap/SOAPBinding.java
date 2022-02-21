@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -26,31 +26,31 @@ public interface SOAPBinding extends Binding {
   /**
    * A constant representing the identity of the SOAP 1.1 over HTTP binding.
    */
-  public static final String SOAP11HTTP_BINDING = "http://schemas.xmlsoap.org/wsdl/soap/http";
+  String SOAP11HTTP_BINDING = "http://schemas.xmlsoap.org/wsdl/soap/http";
 
   /**
    * A constant representing the identity of the SOAP 1.2 over HTTP binding.
    */
-  public static final String SOAP12HTTP_BINDING = "http://www.w3.org/2003/05/soap/bindings/HTTP/";
+  String SOAP12HTTP_BINDING = "http://www.w3.org/2003/05/soap/bindings/HTTP/";
 
   /**
    * A constant representing the identity of the SOAP 1.1 over HTTP binding
    * with MTOM enabled by default.
    */
-  public static final String SOAP11HTTP_MTOM_BINDING = "http://schemas.xmlsoap.org/wsdl/soap/http?mtom=true";
+  String SOAP11HTTP_MTOM_BINDING = "http://schemas.xmlsoap.org/wsdl/soap/http?mtom=true";
 
   /**
    * A constant representing the identity of the SOAP 1.2 over HTTP binding
    * with MTOM enabled by default.
    */
-  public static final String SOAP12HTTP_MTOM_BINDING = "http://www.w3.org/2003/05/soap/bindings/HTTP/?mtom=true";
+  String SOAP12HTTP_MTOM_BINDING = "http://www.w3.org/2003/05/soap/bindings/HTTP/?mtom=true";
     
   
   /** Gets the roles played by the SOAP binding instance.
    *
    *  @return {@code Set<String>} The set of roles played by the binding instance.
   **/
-  public Set<String> getRoles();
+  Set<String> getRoles();
 
   /** Sets the roles played by the SOAP binding instance.
    *
@@ -58,15 +58,15 @@ public interface SOAPBinding extends Binding {
    *  @throws jakarta.xml.ws.WebServiceException On an error in the configuration of
    *                  the list of roles.
   **/
-  public void setRoles(Set<String> roles);
+  void setRoles(Set<String> roles);
 
   /**
    * Returns {@code true} if the use of MTOM is enabled.
    *
    * @return {@code true} if and only if the use of MTOM is enabled.
   **/
-  
-  public boolean isMTOMEnabled();
+
+  boolean isMTOMEnabled();
   
   /**
    * Enables or disables use of MTOM.
@@ -77,19 +77,19 @@ public interface SOAPBinding extends Binding {
    *                  by this binding instance.
    * 
    **/
-  public void setMTOMEnabled(boolean flag);
+  void setMTOMEnabled(boolean flag);
   
   /**
    * Gets the Jakarta SOAP with Attachments' {@code SOAPFactory} instance used by this SOAP binding.
    *
    * @return SOAPFactory instance used by this SOAP binding.
   **/
-  public SOAPFactory getSOAPFactory();
+  SOAPFactory getSOAPFactory();
   
   /**
    * Gets the Jakarta SOAP with Attachments' {@code MessageFactory} instance used by this SOAP binding.
    *
    * @return MessageFactory instance used by this SOAP binding.
   **/
-  public MessageFactory getMessageFactory();
+  MessageFactory getMessageFactory();
 }

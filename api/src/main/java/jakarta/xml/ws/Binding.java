@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -10,6 +10,10 @@
 
 package jakarta.xml.ws;
 
+
+import jakarta.xml.ws.handler.Handler;
+
+import java.util.List;
 
 /** The {@code Binding} interface is the base interface
  *  for Jakarta XML Web Services protocol bindings.
@@ -25,7 +29,7 @@ public interface Binding {
     *
     *  @return {@code java.util.List<Handler>} Handler chain
     */
-    public java.util.List<jakarta.xml.ws.handler.Handler> getHandlerChain();
+   List<Handler> getHandlerChain();
 
    /** 
     * Sets the handler chain for the protocol binding instance.
@@ -38,7 +42,7 @@ public interface Binding {
     *          avoid any overriding of a pre-configured handler
     *          chain.
     */
-    public void setHandlerChain(java.util.List<jakarta.xml.ws.handler.Handler> chain);
+    void setHandlerChain(List<Handler> chain);
 
     /** 
      * Get the URI for this binding instance. 

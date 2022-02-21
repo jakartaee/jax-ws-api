@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -27,14 +27,14 @@ public interface BindingProvider {
      * Standard property: User name for authentication.
      * <p>Type: {@code java.lang.String}
      **/
-    public static final String USERNAME_PROPERTY =
+    String USERNAME_PROPERTY =
             "jakarta.xml.ws.security.auth.username";
 
     /**
      * Standard property: Password for authentication.
      * <p>Type: {@code java.lang.String}
      **/
-    public static final String PASSWORD_PROPERTY =
+    String PASSWORD_PROPERTY =
             "jakarta.xml.ws.security.auth.password";
 
     /**
@@ -44,7 +44,7 @@ public interface BindingProvider {
      * binding in use.
      * <p>Type: {@code java.lang.String}
      **/
-    public static final String ENDPOINT_ADDRESS_PROPERTY =
+    String ENDPOINT_ADDRESS_PROPERTY =
             "jakarta.xml.ws.service.endpoint.address";
 
     /**
@@ -56,7 +56,7 @@ public interface BindingProvider {
      * The default value for this property is {@code false}.
      * <p>Type: {@code java.lang.Boolean}
      **/
-    public static final String SESSION_MAINTAIN_PROPERTY =
+    String SESSION_MAINTAIN_PROPERTY =
             "jakarta.xml.ws.session.maintain";
 
     /**
@@ -73,7 +73,7 @@ public interface BindingProvider {
      *
      * <p>Type: {@code java.lang.Boolean}
      **/
-    public static final String SOAPACTION_USE_PROPERTY =
+    String SOAPACTION_USE_PROPERTY =
             "jakarta.xml.ws.soap.http.soapaction.use";
 
     /**
@@ -86,7 +86,7 @@ public interface BindingProvider {
      *
      * <p>Type: {@code java.lang.String}
      **/
-    public static final String SOAPACTION_URI_PROPERTY =
+    String SOAPACTION_URI_PROPERTY =
             "jakarta.xml.ws.soap.http.soapaction.uri";
 
     /**
@@ -141,7 +141,7 @@ public interface BindingProvider {
      *
      * @since 1.6, JAX-WS 2.1
      */
-    public EndpointReference getEndpointReference();
+    EndpointReference getEndpointReference();
 
 
     /**
@@ -164,5 +164,5 @@ public interface BindingProvider {
      *
      * @since 1.6, JAX-WS 2.1
      */
-    public <T extends EndpointReference> T getEndpointReference(Class<T> clazz);
+    <T extends EndpointReference> T getEndpointReference(Class<T> clazz);
 }

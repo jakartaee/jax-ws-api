@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -35,7 +35,7 @@ public interface SOAPMessageContext
    *  @return Returns the {@code SOAPMessage}; returns {@code null} if no
    *          {@code SOAPMessage} is present in this message context
   **/
-  public SOAPMessage getMessage();
+  SOAPMessage getMessage();
 
   /** Sets the SOAPMessage in this message context
    *
@@ -45,7 +45,7 @@ public interface SOAPMessageContext
    *  @throws java.lang.UnsupportedOperationException If this
    *          operation is not supported
   **/
-  public void setMessage(SOAPMessage message);
+  void setMessage(SOAPMessage message);
 
   /** Gets headers that have a particular qualified name from the message in the
    *  message context. Note that a SOAP message can contain multiple headers
@@ -65,8 +65,8 @@ public interface SOAPMessageContext
    *     {@code JAXBContext} to unmarshall. The cause of
    *     the {@code WebServiceException} is the original {@code JAXBException}.
   **/
-  public Object[] getHeaders(QName header, JAXBContext context,
-    boolean allRoles);
+  Object[] getHeaders(QName header, JAXBContext context,
+                      boolean allRoles);
 
   /** Gets the SOAP actor roles associated with an execution
    *  of the handler chain.
@@ -80,5 +80,5 @@ public interface SOAPMessageContext
    *
    *  @return Array of {@code String} for SOAP actor roles
   **/
-  public Set<String> getRoles();
+  Set<String> getRoles();
 }

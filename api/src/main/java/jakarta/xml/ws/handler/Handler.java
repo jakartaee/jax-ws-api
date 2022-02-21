@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -38,7 +38,7 @@ public interface Handler<C extends MessageContext> {
    *  @throws ProtocolException Causes the Jakarta XML Web Services runtime to switch to
    *    fault message processing.
   **/
-  public boolean handleMessage(C context);
+  boolean handleMessage(C context);
 
   /** The {@code handleFault} method is invoked for fault message
    *  processing.  Refer to the description of the handler
@@ -58,7 +58,7 @@ public interface Handler<C extends MessageContext> {
    *  @throws ProtocolException Causes the Jakarta XML Web Services runtime to cease
    *    handler fault processing and dispatch the fault.
   **/
-  public boolean handleFault(C context);
+  boolean handleFault(C context);
 
   /**
    * Called at the conclusion of a message exchange pattern just prior to
@@ -68,5 +68,5 @@ public interface Handler<C extends MessageContext> {
    *
    * @param context the message context
   **/
-  public void close(MessageContext context);
+  void close(MessageContext context);
 }

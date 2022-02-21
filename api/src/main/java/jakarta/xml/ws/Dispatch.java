@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -39,7 +39,7 @@ public interface Dispatch<T> extends BindingProvider {
      * @throws WebServiceException If there is any error in the configuration of
      *     the {@code Dispatch} instance
     **/
-    public T invoke(T msg);
+    T invoke(T msg);
 
     /** Invoke a service operation asynchronously.  The
      *  method returns without waiting for the response to the operation
@@ -57,7 +57,7 @@ public interface Dispatch<T> extends BindingProvider {
      * @throws WebServiceException If there is any error in the configuration of
      *     the {@code Dispatch} instance
     **/
-    public Response<T> invokeAsync(T msg);
+    Response<T> invokeAsync(T msg);
 
     /** Invoke a service operation asynchronously. The
      *  method returns without waiting for the response to the operation
@@ -80,7 +80,7 @@ public interface Dispatch<T> extends BindingProvider {
      * @throws WebServiceException If there is any error in the configuration of
      *     the {@code Dispatch} instance
     **/
-    public Future<?> invokeAsync(T msg, AsyncHandler<T> handler);
+    Future<?> invokeAsync(T msg, AsyncHandler<T> handler);
 
     /** Invokes a service operation using the one-way
      *  interaction mode. The operation invocation is logically non-blocking,
@@ -99,5 +99,5 @@ public interface Dispatch<T> extends BindingProvider {
      *     the {@code Dispatch} instance or if an error occurs during the
      *     invocation.
     **/
-    public void invokeOneWay(T msg);
+    void invokeOneWay(T msg);
 }
