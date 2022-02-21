@@ -567,7 +567,7 @@ public @interface Oneway {
 -------------
 @Target({PARAMETER})
 public @interface WebParam {
-    public enum Mode { IN, OUT, INOUT };
+    enum Mode { IN, OUT, INOUT };
 
     String name() default "";
     String targetNamespace() default "";
@@ -592,15 +592,16 @@ public @interface WebResult {
 
 [[mdsoapbinding]]
 ==== jakarta.jws.SOAPBinding
+
 [source,java,numbered]
 -------------
 @Target({TYPE, METHOD})
 public @interface SOAPBinding {
-    public enum Style { DOCUMENT, RPC }
+    enum Style { DOCUMENT, RPC }
 
-    public enum Use { LITERAL, ENCODED }
+    enum Use { LITERAL, ENCODED }
 
-    public enum ParameterStyle { BARE, WRAPPED }
+    enum ParameterStyle { BARE, WRAPPED }
 
     Style style() default Style.DOCUMENT;
     Use use() default Use.LITERAL;

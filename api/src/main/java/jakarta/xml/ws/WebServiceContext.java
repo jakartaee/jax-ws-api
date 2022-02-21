@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -47,7 +47,7 @@ public interface WebServiceContext {
      * @see jakarta.xml.ws.handler.MessageContext.Scope
      * @see java.lang.IllegalStateException
      **/
-    public MessageContext getMessageContext();
+    MessageContext getMessageContext();
 
     /**
      * Returns the Principal that identifies the sender
@@ -64,7 +64,7 @@ public interface WebServiceContext {
      * @see java.security.Principal
      * @see java.lang.IllegalStateException
      **/
-    public Principal getUserPrincipal();
+    Principal getUserPrincipal();
 
     /**
      * Returns a boolean indicating whether the
@@ -81,7 +81,7 @@ public interface WebServiceContext {
      *         if the method is called while no request is
      *         being serviced.
      **/
-    public boolean isUserInRole(String role);
+    boolean isUserInRole(String role);
 
     /**
      * Returns the {@code EndpointReference} for this
@@ -107,7 +107,7 @@ public interface WebServiceContext {
      *
      * @since 1.6, JAX-WS 2.1
      */
-    public EndpointReference getEndpointReference(Element... referenceParameters);
+    EndpointReference getEndpointReference(Element... referenceParameters);
 
     /**
      * Returns the {@code EndpointReference} associated with
@@ -132,6 +132,6 @@ public interface WebServiceContext {
      *
      * @since 1.6, JAX-WS 2.1
      **/
-    public <T extends EndpointReference> T getEndpointReference(Class<T> clazz,
-            Element... referenceParameters);
+    <T extends EndpointReference> T getEndpointReference(Class<T> clazz,
+                                                         Element... referenceParameters);
 }

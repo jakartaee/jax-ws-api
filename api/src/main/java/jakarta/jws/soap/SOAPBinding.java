@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -27,7 +27,7 @@ public @interface SOAPBinding {
     /**
      * The SOAP binding style
      */
-    public enum Style {
+    enum Style {
       DOCUMENT,
       RPC
     };
@@ -35,7 +35,7 @@ public @interface SOAPBinding {
     /**
      * The SOAP binding use
      */
-    public enum Use {
+    enum Use {
       LITERAL,
       ENCODED
     };
@@ -43,7 +43,7 @@ public @interface SOAPBinding {
     /**
      * The style of mapping parameters onto SOAP messages
      */
-    public enum ParameterStyle {
+    enum ParameterStyle {
       BARE,
       WRAPPED
     }

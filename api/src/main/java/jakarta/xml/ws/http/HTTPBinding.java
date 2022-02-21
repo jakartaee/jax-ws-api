@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -23,5 +23,5 @@ public interface HTTPBinding extends Binding {
   /**
    * A constant representing the identity of the XML/HTTP binding.
    */
-  public static final String HTTP_BINDING = "http://www.w3.org/2004/08/wsdl/http";
+  String HTTP_BINDING = "http://www.w3.org/2004/08/wsdl/http";
 }

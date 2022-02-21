@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -30,7 +30,7 @@ public interface MessageContext extends Map<String, Object> {
      * outbound messages, {@code false} for inbound.
      * <p>Type: boolean
      */
-    public static final String MESSAGE_OUTBOUND_PROPERTY =
+    String MESSAGE_OUTBOUND_PROPERTY =
             "jakarta.xml.ws.handler.message.outbound";
 
     /**
@@ -38,7 +38,7 @@ public interface MessageContext extends Map<String, Object> {
      * message, key is  the MIME Content-ID, value is a DataHandler.
      * <p>Type: {@code java.util.Map<String, DataHandler>}
      */
-    public static final String INBOUND_MESSAGE_ATTACHMENTS =
+    String INBOUND_MESSAGE_ATTACHMENTS =
             "jakarta.xml.ws.binding.attachments.inbound";
 
     /**
@@ -46,105 +46,105 @@ public interface MessageContext extends Map<String, Object> {
      * message, key is the MIME Content-ID, value is a DataHandler.
      * <p>Type: {@code java.util.Map<String, DataHandler>}
      */
-    public static final String OUTBOUND_MESSAGE_ATTACHMENTS =
+    String OUTBOUND_MESSAGE_ATTACHMENTS =
             "jakarta.xml.ws.binding.attachments.outbound";
 
     /**
      * Standard property: input source for WSDL document.
      * <p>Type: org.xml.sax.InputSource
      */
-    public static final String WSDL_DESCRIPTION =
+    String WSDL_DESCRIPTION =
             "jakarta.xml.ws.wsdl.description";
 
     /**
      * Standard property: name of WSDL service.
      * <p>Type: javax.xml.namespace.QName
      */
-    public static final String WSDL_SERVICE =
+    String WSDL_SERVICE =
             "jakarta.xml.ws.wsdl.service";
 
     /**
      * Standard property: name of WSDL port.
      * <p>Type: javax.xml.namespace.QName
      */
-    public static final String WSDL_PORT =
+    String WSDL_PORT =
             "jakarta.xml.ws.wsdl.port";
 
     /**
      * Standard property: name of wsdl interface (2.0) or port type (1.1).
      * <p>Type: javax.xml.namespace.QName
      */
-    public static final String WSDL_INTERFACE =
+    String WSDL_INTERFACE =
             "jakarta.xml.ws.wsdl.interface";
 
     /**
      * Standard property: name of WSDL operation.
      * <p>Type: javax.xml.namespace.QName
      */
-    public static final String WSDL_OPERATION =
+    String WSDL_OPERATION =
             "jakarta.xml.ws.wsdl.operation";
 
     /**
      * Standard property: HTTP response status code.
      * <p>Type: java.lang.Integer
      */
-    public static final String HTTP_RESPONSE_CODE =
+    String HTTP_RESPONSE_CODE =
             "jakarta.xml.ws.http.response.code";
 
     /**
      * Standard property: HTTP request headers.
      * <p>Type: {@code java.util.Map<java.lang.String, java.util.List<java.lang.String>>}
      */
-    public static final String HTTP_REQUEST_HEADERS =
+    String HTTP_REQUEST_HEADERS =
             "jakarta.xml.ws.http.request.headers";
 
     /**
      * Standard property: HTTP response headers.
      * <p>Type: {@code java.util.Map<java.lang.String, java.util.List<java.lang.String>>}
      */
-    public static final String HTTP_RESPONSE_HEADERS =
+    String HTTP_RESPONSE_HEADERS =
             "jakarta.xml.ws.http.response.headers";
 
     /**
      * Standard property: HTTP request method.
      * <p>Type: java.lang.String
      */
-    public static final String HTTP_REQUEST_METHOD =
+    String HTTP_REQUEST_METHOD =
             "jakarta.xml.ws.http.request.method";
 
     /**
      * Standard property: servlet request object.
      * <p>Type: jakarta.servlet.http.HttpServletRequest
      */
-    public static final String SERVLET_REQUEST =
+    String SERVLET_REQUEST =
             "jakarta.xml.ws.servlet.request";
 
     /**
      * Standard property: servlet response object.
      * <p>Type: jakarta.servlet.http.HttpServletResponse
      */
-    public static final String SERVLET_RESPONSE =
+    String SERVLET_RESPONSE =
             "jakarta.xml.ws.servlet.response";
 
     /**
      * Standard property: servlet context object.
      * <p>Type: jakarta.servlet.ServletContext
      */
-    public static final String SERVLET_CONTEXT =
+    String SERVLET_CONTEXT =
             "jakarta.xml.ws.servlet.context";
 
     /**
      * Standard property: Query string for request.
      * <p>Type: String
      **/
-    public static final String QUERY_STRING =
+    String QUERY_STRING =
             "jakarta.xml.ws.http.request.querystring";
 
     /**
      * Standard property: Request Path Info
      * <p>Type: String
      */
-    public static final String PATH_INFO =
+    String PATH_INFO =
             "jakarta.xml.ws.http.request.pathinfo";
 
     /**
@@ -155,7 +155,7 @@ public interface MessageContext extends Map<String, Object> {
      *
      * @since 1.6, JAX-WS 2.1
      */
-    public static final String REFERENCE_PARAMETERS =
+    String REFERENCE_PARAMETERS =
             "jakarta.xml.ws.reference.parameters";
 
     /**
@@ -165,7 +165,7 @@ public interface MessageContext extends Map<String, Object> {
      * {@code HANDLER}
      * are only normally visible to handlers.
      */
-    public enum Scope {
+    enum Scope {
 
         /**
          * Application visibility.
@@ -186,7 +186,7 @@ public interface MessageContext extends Map<String, Object> {
      * @throws java.lang.IllegalArgumentException if an illegal
      *             property name is specified
      */
-    public void setScope(String name,  Scope scope);
+    void setScope(String name, Scope scope);
 
     /**
      * Gets the scope of a property.
@@ -196,5 +196,5 @@ public interface MessageContext extends Map<String, Object> {
      * @throws java.lang.IllegalArgumentException if a non-existant
      *             property name is specified
      */
-    public Scope getScope(String  name);
+    Scope getScope(String name);
 }

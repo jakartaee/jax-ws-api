@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -10,7 +10,9 @@
 
 package jakarta.xml.ws.handler;
 
-/** 
+import java.util.List;
+
+/**
  *  {@code HandlerResolver} is an interface implemented
  *  by an application to get control over the handler chain
  *  set on proxy/dispatch objects at the time of their creation.
@@ -33,6 +35,6 @@ public interface HandlerResolver {
    *
    *  @param portInfo Contains information about the port being accessed.
    *  @return {@code java.util.List<Handler>} chain
-  **/
-  public java.util.List<Handler> getHandlerChain(PortInfo portInfo);
+   **/
+  List<Handler> getHandlerChain(PortInfo portInfo);
 }

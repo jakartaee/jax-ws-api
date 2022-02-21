@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -32,21 +32,21 @@ public @interface WebFault {
      *
      * @return loxL name
      */
-    public String name() default "";
+    String name() default "";
 
     /**
      * Element's namespace name.
      *
      * @return target namespace name
      */
-    public String targetNamespace() default "";
+    String targetNamespace() default "";
 
     /**
      * Fault bean name.
      *
      * @return bean name
      */
-    public String faultBean() default "";
+    String faultBean() default "";
 
     /**
      * wsdl:Message's name. Default name is the exception's class name.
@@ -54,6 +54,6 @@ public @interface WebFault {
      * @return wsdl:Message's name
      * @since 1.7, JAX-WS 2.2
      */
-    public String messageName() default "";
+    String messageName() default "";
 
 }

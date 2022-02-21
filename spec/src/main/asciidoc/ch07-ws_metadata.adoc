@@ -710,7 +710,7 @@ message body.
 @Target({PARAMETER})
 public @interface WebParam {
 
-   public enum Mode {
+   enum Mode {
       IN,
       OUT,
       INOUT
@@ -1195,17 +1195,17 @@ element named after the operation.
 @Retention(value=RetentionPolicy.RUNTIME)
 @Target({TYPE, METHOD})
 public @interface SOAPBinding {
-   public enum Style {
+   enum Style {
       DOCUMENT,
       RPC
    };
 
-   public enum Use {
+   enum Use {
       LITERAL,
       ENCODED
    };
 
-   public enum ParameterStyle {
+   enum ParameterStyle {
        BARE,
        WRAPPED
    }
