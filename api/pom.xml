@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
         <relativePath/>
     </parent>
 
@@ -101,15 +101,15 @@
         <spotbugs.exclude>${project.basedir}/../etc/spotbugs-exclude.xml</spotbugs.exclude>
         <spotbugs.skip>false</spotbugs.skip>
         <spotbugs.threshold>Low</spotbugs.threshold>
-        <spotbugs.version>4.5.0.0</spotbugs.version>
+        <spotbugs.version>4.5.3.0</spotbugs.version>
         <bld.failOnWarning>true</bld.failOnWarning>
 
         <release.spec.feedback>jaxws-dev@eclipse.org</release.spec.feedback>
 
         <api.package>jakarta.xml.ws</api.package>
         <extension.name>jakarta.xml.ws</extension.name>
-        <spec.version>3.0</spec.version>
-        <old.spec.version>2.3</old.spec.version>
+        <spec.version>4.0</spec.version>
+        <old.spec.version>3.0</old.spec.version>
 
         <non.final>false</non.final>
 
@@ -144,22 +144,22 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
+                    <version>3.10.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.2.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.3.1</version>
+                    <version>3.3.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
-                    <version>5.1.2</version>
+                    <version>5.1.4</version>
                     <configuration>
                         <instructions>
                             <_noextraheaders>true</_noextraheaders>
@@ -184,7 +184,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.3.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -235,14 +235,6 @@
                     <ignoreYear>${copyright.ignoreyear}</ignoreYear>
                     <quiet>false</quiet>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copyright</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -322,7 +314,7 @@
                         <specVersion>${old.spec.version}</specVersion>
                         <newSpecVersion>${spec.version}</newSpecVersion>
                         <specImplVersion>${project.version}</specImplVersion>
-                        <apiPackage>${extension.name}</apiPackage>a
+                        <apiPackage>${extension.name}</apiPackage>
                     </spec>
                 </configuration>
                 <executions>
@@ -342,6 +334,7 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
+                    <niceManifest>true</niceManifest>
                     <instructions>
                         <Bundle-Description>Jakarta XML Web Services API ${spec.version} Specification</Bundle-Description>
                         <Bundle-Version>${spec.bundle.version}</Bundle-Version>
