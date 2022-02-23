@@ -58,20 +58,16 @@ public final class W3CEndpointReference extends EndpointReference {
 
     private final JAXBContext w3cjc = getW3CJaxbContext();
 
-    // should be changed to package private, keeping original modifier to keep backwards compatibility
-
     /**
      * Addressing namespace.
      */
-    protected static final String NS = "http://www.w3.org/2005/08/addressing";
+    static final String NS = "http://www.w3.org/2005/08/addressing";
 
     // default constructor forbidden ...
-    // should be private, keeping original modifier to keep backwards compatibility
-
     /**
      * Default constructor.
      */
-    protected W3CEndpointReference() {
+    private W3CEndpointReference() {
     }
 
     /**
@@ -177,9 +173,6 @@ public final class W3CEndpointReference extends EndpointReference {
         return elements;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void writeTo(Result result){
         try {
