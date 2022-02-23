@@ -1,10 +1,15 @@
 //
-// Copyright (c) 2020 Contributors to the Eclipse Foundation
+// Copyright (c) 2020, 2022 Contributors to the Eclipse Foundation
 //
 
 [appendix]
 [[change-log]]
 == Change Log
+
+=== 4.0 Changes
+
+* Merged Jakarta Web Services Metadata specification into Jakarta Web Services specification.
+* Annotated `jakarta.xml.ws.AsyncHandler` with `@FunctionalInterface`.
 
 === 3.0 Changes
 
@@ -328,8 +333,8 @@ names, see <<j2wsdl11docbaremap>>.
 === Changes Since Early Draft 1
 
 * Added chapter <<serviceapis>> Service APIs.
-* Added chapter <<wsdl202java>> WSDL 2.0 to Java Mapping.
-* Added chapter <<j2wsdl20chap>> Java to WSDL 2.0 Mapping.
+* Added chapter for WSDL 2.0 to Java Mapping.
+* Added chapter for Java to WSDL 2.0 Mapping.
 * Added mapping from Java to `wsdl:service` and `wsdl:port`, see
 sections <<j2w11bindif>>, <<j2w11soapbindif>> and <<j2w11svcports>>.
 * Fixed <<wsdl11typemapping>> to allow use of JAXB interface based
@@ -348,7 +353,7 @@ two or more faults refer to the same global element, see section
 * Introduced new typographic convention to clearly mark non-normative
 notes.
 * Removed references to J2EE and JNDI usage from ServiceFactory
-description, see <<svcfactusage>>.
+description.
 * Clarified relationship between TypeMappingRegistry and JAXB.
 * Emphasized control nature of context properties, added lifecycle
 subsection.
@@ -387,8 +392,7 @@ description of rules for moving between jaxws context and message
 context boundaries.
 * Removed requirement for Response.get to throw JAXRPCException, now
 throws standard java.util.concurrent.ExecutionException instead.
-* Added security API information, see sections <<servicesecurityconfig>>
-and <<bindingmsgsec>>.
+* Added security API information.
 * Clarrified SOAP mustUnderstand processing, see section
 <<soapmuprocrules>>. Made it clear that the handler rather than the
 HandlerInfo is authoritative wrt which protocol elements (e.g. SOAP
