@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -54,8 +54,7 @@ public final class MTOMFeature extends WebServiceFeature {
      * as attachment.
      * The value of this property MUST always be {@literal >=} 0. Default value is 0.
      */
-    // should be changed to private final, keeping original modifier to keep backwards compatibility
-    protected int threshold;
+    private int threshold;
     
 
     /**
@@ -110,9 +109,7 @@ public final class MTOMFeature extends WebServiceFeature {
         this.threshold = threshold;
     }    
     
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public String getID() {
         return ID;
     }

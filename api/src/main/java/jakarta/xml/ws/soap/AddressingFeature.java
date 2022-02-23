@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -111,8 +111,7 @@ public final class AddressingFeature extends WebServiceFeature {
      * requires WS-Addressing. If required is true, WS-Addressing headers MUST
      * be present on incoming and outgoing messages.
      */
-    // should be private final, keeping original modifier due to backwards compatibility
-    protected boolean required;
+    private boolean required;
 
     /**
      * If addressing is enabled, this property determines if endpoint requires
@@ -222,9 +221,7 @@ public final class AddressingFeature extends WebServiceFeature {
         this.responses = responses;
     }
     
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public String getID() {
         return ID;
     }
