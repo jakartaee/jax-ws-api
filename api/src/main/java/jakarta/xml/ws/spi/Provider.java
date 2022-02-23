@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -45,16 +45,16 @@ public abstract class Provider {
      * The algorithm used to locate the provider subclass to use consists
      * of the following steps:
      * <ul>
+     *  <li> If a system property with the name {@code jakarta.xml.ws.spi.Provider}
+     *  is defined, then its value is used as the name of the implementation class.
+     *  This phase of the look up enables per-JVM override of the Jakarta XML Web Services implementation.
      *  <li> Use the service-provider loading facilities, defined by the {@link java.util.ServiceLoader} class,
      *  to attempt to locate and load an implementation of {@link jakarta.xml.ws.spi.Provider} service using
      *  the {@linkplain java.util.ServiceLoader#load(java.lang.Class) default loading mechanism}.
-     *  <li>Use the configuration file "jaxws.properties". The file is in standard
-     *  {@link java.util.Properties} format and typically located in the
-     *  {@code conf} directory of the Java installation. It contains the fully qualified
-     *  name of the implementation class with the key {@code jakarta.xml.ws.spi.Provider}.
-     *  <li> If a system property with the name {@code jakarta.xml.ws.spi.Provider}
-     *  is defined, then its value is used as the name of the implementation class.
-     *  <li> Finally, a platform default implementation is used.
+     *  <li>
+     *  Finally, if all the steps above fail, then the rest of the lookup is unspecified. That said,
+     *  the recommended behavior is to simply look for some hard-coded platform default Jakarta XML Web Services implementation.
+     *  This phase of the lookup is so that the environment can have its own Jakarta XML Web Services implementation as the last resort.
      * </ul>
      *
      * @return provider object
