@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 #
-# Copyright (c) 2019 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2019, 2022 Oracle and/or its affiliates. All rights reserved.
 #
 # This program and the accompanying materials are made available under the
 # terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -50,7 +50,7 @@ else
     fi
   fi
   echo '-[ Release tag cleanup ]--------------------------------------------------------'
-  if [[ -n `git ls-remote --tags ${GIT_ORIGIN} | grep "${RELEASE_TAG}"` ]]; then
+  if [[ -n `git ls-remote --tags ${GIT_ORIGIN} | grep "${RELEASE_TAG}\$"` ]]; then
     if [ "${OVERWRITE}" = 'true' ]; then
       echo "${RELEASE_TAG} tag already exists, deleting"
       git push --delete origin "${RELEASE_TAG}" && true
@@ -90,7 +90,7 @@ echo '-[ Deploy artifacts to staging repository ]-----------------------------'
       clean ${MVN_DEPLOY_ARGS})
 
 echo '-[ Tag release ]----------------------------------------------------------------'
-git tag "${RELEASE_TAG}" -m "JSON-B API ${API_RELEASE_VERSION} release"
+git tag "${RELEASE_TAG}" -m "JAX-WS API ${API_RELEASE_VERSION} release"
 
 # Set next release cycle snapshot version
 echo '-[ API next snapshot version ]--------------------------------------------------'
