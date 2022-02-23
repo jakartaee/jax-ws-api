@@ -1,5 +1,5 @@
 //
-// Copyright (c) 2020 Contributors to the Eclipse Foundation
+// Copyright (c) 2020, 2022 Contributors to the Eclipse Foundation
 //
 
 [[core-apis]]
@@ -70,17 +70,18 @@ the `java.lang.Class.forName(String)` method. As soon as a step results
 in an implementation class being successfully loaded, the algorithm
 terminates.
 
+. If a system property with the name `jakarta.xml.ws.spi.Provider` is
+defined, then its value is used as the name of the implementation class.
+This phase of the look up enables per-JVM override
+of the Jakarta XML Web Services implementation.
 . Use the service-provider loading facilities, defined by the
 `java.util.ServiceLoader` class, to attempt to locate and load an
 implementation of `jakarta.xml.ws.spi.Provider` service using the default
 loading mechanism .
-. Use the configuration file `jaxws.properties`. The file is in
-standard `java.util.Properties` format and typically located in the conf
-directory of the Java installation. It contains the fully qualified name
-of the implementation class with the key `jakarta.xml.ws.spi.Provider`.
-. If a system property with the name `jakarta.xml.ws.spi.Provider` is
-defined, then its value is used as the name of the implementation class.
-. Finally, a platform implementation is used.
+. Finally, if all the steps above fail, then the rest of the lookup is unspecified.
+That said, the recommended behavior is to simply look for some hard-coded platform
+default Jakarta XML Web Services implementation. This phase of the lookup is
+so that the environment can have its own Jakarta XML Web Services implementation as the last resort.
 
 [[providerendpointcreation]]
 ==== Creating Endpoint Objects

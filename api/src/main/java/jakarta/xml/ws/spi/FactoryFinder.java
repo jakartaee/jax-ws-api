@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -85,17 +85,13 @@ class FactoryFinder {
     static <T> T find(Class<T> factoryClass, String fallbackClassName) {
         ClassLoader classLoader = ServiceLoaderUtil.contextClassLoader(EXCEPTION_HANDLER);
 
-        T provider = ServiceLoaderUtil.firstByServiceLoader(factoryClass, LOGGER, EXCEPTION_HANDLER);
-        if (provider != null) return provider;
-
         String factoryId = factoryClass.getName();
 
-        // try to read from $java.home/lib/jaxws.properties
-        provider = fromJDKProperties(factoryId, fallbackClassName, classLoader);
+        // Use the system property
+        T provider = fromSystemProperty(factoryId, fallbackClassName, classLoader);
         if (provider != null) return provider;
 
-        // Use the system property
-        provider = fromSystemProperty(factoryId, fallbackClassName, classLoader);
+        provider = ServiceLoaderUtil.firstByServiceLoader(factoryClass, LOGGER, EXCEPTION_HANDLER);
         if (provider != null) return provider;
 
         // handling Glassfish (platform specific default)
@@ -126,35 +122,6 @@ class FactoryFinder {
             }
         } catch (SecurityException se) {
             LOGGER.log(Level.SEVERE, "Access is not allowed to the system property with key " + factoryId, se);
-        }
-        return null;
-    }
-
-    private static <T> T fromJDKProperties(String factoryId,
-                                            String fallbackClassName,
-                                            ClassLoader classLoader) {
-        Path path = null;
-        try {
-            String JAVA_HOME = System.getProperty("java.home");
-            path = Paths.get(JAVA_HOME, "conf", "jaxws.properties");
-
-            // to ensure backwards compatibility
-            if (!Files.exists(path)) {
-                path = Paths.get(JAVA_HOME, "lib", "jaxws.properties");
-            }
-
-            if (Files.exists(path)) {
-                LOGGER.log(Level.FINE, "Found {0}", path);
-                Properties props = new Properties();
-                try (InputStream inStream = Files.newInputStream(path)) {
-                    props.load(inStream);
-                }
-                String factoryClassName = props.getProperty(factoryId);
-                return newInstance(factoryClassName, fallbackClassName, classLoader);
-            }
-        } catch (Throwable t) {
-            LOGGER.log(Level.SEVERE, "Error reading Jakarta XML Web Services configuration from ["  + path +
-                    "] file. Check it is accessible and has correct format.", t);
         }
         return null;
     }
