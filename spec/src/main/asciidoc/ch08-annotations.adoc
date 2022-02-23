@@ -197,7 +197,7 @@ local name (a `NCName`).
 |`name`     |The local name of the port  |””
 |==================================
 
-[[example-5]]
+[[example-81]]
 ==== Example
 
 The following shows a WSDL extract and the resulting generated service
@@ -391,7 +391,7 @@ When resolving the URI specified as the `wsdlLocation` element or any
 document it may transitively reference, a Jakarta XML Web Services implementation MUST use
 the catalog facility defined in <<catalogfacility>>.
 
-[[example-6]]
+[[example-82]]
 ==== Example
 
 The following shows both uses of the `WebServiceRef` annotation.
@@ -480,7 +480,7 @@ instances of this annotation. If an instance needs to be configured with
 the web service features, use @WebServiceRef to inject the resource
 along with its features.
 
-[[example-7]]
+[[example-83]]
 ==== Example
 
 The following shows how to use the `WebServiceRefs` annotation to
