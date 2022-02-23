@@ -10,6 +10,7 @@
 
 * Merged Jakarta Web Services Metadata specification into Jakarta Web Services specification.
 * Annotated `jakarta.xml.ws.AsyncHandler` with `@FunctionalInterface`.
+* Extended the API of `jakarta.xml.ws.wsaddressing.W3CEndpointReference` with getters.
 
 === 3.0 Changes
 

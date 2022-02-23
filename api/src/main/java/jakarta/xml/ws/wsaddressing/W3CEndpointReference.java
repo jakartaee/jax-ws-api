@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -100,6 +100,81 @@ public final class W3CEndpointReference extends EndpointReference {
         } catch (ClassCastException e) {
             throw new WebServiceException("Source did not contain W3CEndpointReference", e);
         }
+    }
+
+    /**
+     * Returns the {@code address} of the {@code W3CEndpointReference} instance's
+     * {@code wsa:Address} element.
+     *
+     * @return The {@code address} of the {@code wsa:Address}.
+     */
+    String getAddressUri() {
+        return address.uri;
+    }
+
+    /**
+     * Returns a list of extension attributes of the
+     * {@code W3CEndpointReference} instance's
+     * {@code wsa:Address} element.
+     *
+     * @return The extension attributes of the {@code wsa:Address} element.
+     */
+    Map<QName,String> getAddressAttributes() {
+        if (address == null) {
+            return null;
+        }
+        return address.attributes;
+    }
+
+    /**
+     * Returns a list of the {@code referenceParameter}s of the
+     * {@code W3CEndpointReference} instance's
+     * {@code wsa:ReferenceParameters} element.
+     *
+     * @return The {@code referenceParameter}s of the
+     *   {@code wsa:ReferenceParameters} element.
+     */
+    List<Element> getReferenceParameters () {
+        if (referenceParameters == null) {
+            return null;
+        }
+        return referenceParameters.elements;
+    }
+
+    /**
+     * Returns the list of {@code metadataElement}s of the
+     * {@code W3CEndpointReference} instance's
+     * of the {@code wsa:Metadata} element.
+     *
+     * @return The {@code metadataElement}s of the {@code wsa:Metadata} element.
+     */
+    List<Element> getMetadata () {
+        if (metadata == null) {
+            return null;
+        }
+        return metadata.elements;
+    }
+
+    /**
+     * Returns a list of extension attributes of the
+     * {@code W3CEndpointReference} instance's
+     * {@code wsa:EndpointReference} element.
+     *
+     * @return The extension attributes of the {@code W3CEndpointReference}.
+     */
+    Map<QName,String> getAttributes() {
+        return attributes;
+    }
+
+    /**
+     * Returns a list of an extension elements of the
+     * {@code W3CEndpointReference} instance's
+     * {@code wsa:EndpointReference} element.
+     *
+     * @return Extension {@code element}s of the {@code W3CEndpointReference} instance.
+     */
+    List<Element> getElements() {
+        return elements;
     }
 
     /**
