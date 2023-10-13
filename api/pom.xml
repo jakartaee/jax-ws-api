@@ -347,6 +347,15 @@
                         <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
                         <Implementation-Build-Id>${scmBranch}-${buildNumber}</Implementation-Build-Id>
                         <Import-Package>!org.glassfish.hk2.osgiresourcelocator,*</Import-Package>
+                        <Require-Capability><![CDATA[
+                            osgi.extender;filter:="(&(osgi.extender=osgi.serviceloader.processor)
+                              (version>=1.0.0)(!(version>=2.0.0)))";resolution:=optional,
+                            osgi.serviceloader;
+                              filter:="(osgi.serviceloader=jakarta.xml.ws.spi.Provider)";
+                                osgi.serviceloader="jakarta.xml.ws.spi.Provider";
+                                cardinality:=multiple;resolution:=optional
+                          ]]>
+                        </Require-Capability>
                     </instructions>
                 </configuration>
                 <executions>
