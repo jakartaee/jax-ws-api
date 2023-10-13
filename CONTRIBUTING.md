@@ -1,4 +1,4 @@
-[//]: # " Copyright (c) 2018, 2020 Oracle and/or its affiliates. All rights reserved. "
+[//]: # " Copyright (c) 2018, 2023 Oracle and/or its affiliates. All rights reserved. "
 [//]: # "  "
 [//]: # " This program and the accompanying materials are made available under the "
 [//]: # " terms of the Eclipse Distribution License v. 1.0, which is available at "
@@ -12,10 +12,17 @@ Thanks for your interest in this project.
 
 ## Project description
 
-Jakarta XML Web Services defines a means for implementing XML-Based Web Services
-based on Jakarta SOAP with Attachments and Jakarta Web Services Metadata.
+The Jakarta XML Web Services™ is a Java programming language API for creating
+web services, particularly SOAP services. Jakarta XML Web Services is one of the
+Java XML programming APIs. It is part of the Jakarta EE platform.
 
 * https://projects.eclipse.org/projects/ee4j.jaxws
+
+## Terms of Use
+
+This repository is subject to the Terms of Use of the Eclipse Foundation
+
+* https://www.eclipse.org/legal/termsofuse.php
 
 ## Developer resources
 
@@ -26,25 +33,9 @@ more.
 
 The project maintains the following source code repositories
 
-* https://github.com/eclipse-ee4j/jws-api
-* https://github.com/eclipse-ee4j/jax-ws-api
-* https://github.com/eclipse-ee4j/saaj-api
-
-## Eclipse Contributor Agreement
-
-Before your contribution can be accepted by the project team contributors must
-electronically sign the Eclipse Contributor Agreement (ECA).
-
-* http://www.eclipse.org/legal/ECA.php
-
-Commits that are provided by non-committers must have a Signed-off-by field in
-the footer indicating that the author is aware of the terms by which the
-contribution has been provided to the project. The non-committer must
-additionally have an Eclipse Foundation account and must have a signed Eclipse
-Contributor Agreement (ECA) on file.
-
-For more information, please see the Eclipse Committer Handbook:
-https://www.eclipse.org/projects/handbook/#resources-commit
+* https://github.com/jakartaee/jws-api
+* https://github.com/jakartaee/jax-ws-api
+* https://github.com/jakartaee/saaj-api
 
 ## Eclipse Development Process
 
@@ -60,6 +51,22 @@ Jakarta EE specification projects.
 * https://www.eclipse.org/org/documents/Eclipse_IP_Policy.pdf
 * https://jakarta.ee/about/jesp/
 * https://www.eclipse.org/legal/efsp_non_assert.php
+
+## Eclipse Contributor Agreement
+
+In order to be able to contribute to Eclipse Foundation projects you must
+electronically sign the Eclipse Contributor Agreement (ECA).
+
+* https://www.eclipse.org/legal/ECA.php
+
+The ECA provides the Eclipse Foundation with a permanent record that you agree
+that each of your contributions will comply with the commitments documented in
+the Developer Certificate of Origin (DCO). Having an ECA on file associated with
+the email address matching the "Author" field of your contribution's Git commits
+fulfills the DCO's requirement that you sign-off on your contributions.
+
+For more information, please see the Eclipse Committer Handbook:
+https://www.eclipse.org/projects/handbook/#resources-commit
 
 ## Contact
 
