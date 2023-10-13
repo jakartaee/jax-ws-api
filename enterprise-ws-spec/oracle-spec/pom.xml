@@ -42,15 +42,15 @@
     </properties>
 
     <scm>
-        <connection>scm:git:git@github.com:eclipse-ee4j/jakarta-enterprise-web-services.git</connection>
-        <developerConnection>scm:git:git@github.com:eclipse-ee4j/jakarta-enterprise-web-services.git</developerConnection>
-        <url>https://github.com/eclipse-ee4j/jakarta-enterprise-web-services</url>
+        <connection>scm:git:git@github.com:jakartaee/jakarta-enterprise-web-services.git</connection>
+        <developerConnection>scm:git:git@github.com:jakartaee/jakarta-enterprise-web-services.git</developerConnection>
+        <url>https://github.com/jakartaee/jakarta-enterprise-web-services</url>
         <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
         <site>
-            <url>scm:git:git@github.com:eclipse-ee4j/jakarta-enterprise-web-services.git</url>
+            <url>scm:git:git@github.com:jakartaee/jakarta-enterprise-web-services.git</url>
         </site>
     </distributionManagement>
 

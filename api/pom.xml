@@ -1,6 +1,6 @@
 <!--
 
-    Copyright (c) 1997, 2021 Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 1997, 2023 Oracle and/or its affiliates. All rights reserved.
 
     This program and the accompanying materials are made available under the
     terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
         <relativePath/>
     </parent>
 
@@ -27,12 +27,12 @@
     <packaging>jar</packaging>
     <name>Jakarta XML Web Services API</name>
     <description>Jakarta XML Web Services API</description>
-    <url>https://github.com/eclipse-ee4j/jax-ws-api</url>
+    <url>https://github.com/jakartaee/jax-ws-api</url>
 
     <scm>
-        <connection>scm:git:git://github.com/eclipse-ee4j/jax-ws-api</connection>
-        <developerConnection>scm:git:git://github.com/eclipse-ee4j/jax-ws-api</developerConnection>
-        <url>https://github.com/eclipse-ee4j/jax-ws-api</url>
+        <connection>scm:git:git://github.com/jakartaee/jax-ws-api</connection>
+        <developerConnection>scm:git:git://github.com/jakartaee/jax-ws-api</developerConnection>
+        <url>https://github.com/jakartaee/jax-ws-api</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -66,7 +66,7 @@
 
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/eclipse-ee4j/jax-ws-api/issues</url>
+        <url>https://github.com/jakartaee/jax-ws-api/issues</url>
     </issueManagement>
 
     <mailingLists>
@@ -101,7 +101,7 @@
         <spotbugs.exclude>${project.basedir}/../etc/spotbugs-exclude.xml</spotbugs.exclude>
         <spotbugs.skip>false</spotbugs.skip>
         <spotbugs.threshold>Low</spotbugs.threshold>
-        <spotbugs.version>4.5.3.0</spotbugs.version>
+        <spotbugs.version>4.7.3.6</spotbugs.version>
         <bld.failOnWarning>true</bld.failOnWarning>
 
         <release.spec.feedback>jaxws-dev@eclipse.org</release.spec.feedback>
@@ -125,7 +125,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.2.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -144,22 +144,22 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.10.0</version>
+                    <version>3.11.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.2</version>
+                    <version>3.3.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.3.2</version>
+                    <version>3.6.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.felix</groupId>
                     <artifactId>maven-bundle-plugin</artifactId>
-                    <version>5.1.4</version>
+                    <version>5.1.9</version>
                     <configuration>
                         <instructions>
                             <_noextraheaders>true</_noextraheaders>
@@ -169,7 +169,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.4.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.glassfish.copyright</groupId>
@@ -184,7 +184,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>3.4.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
