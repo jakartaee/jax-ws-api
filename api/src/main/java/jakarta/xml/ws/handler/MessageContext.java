@@ -175,7 +175,7 @@ public interface MessageContext extends Map<String, Object> {
         /**
          * Handler visibility.
          */
-        HANDLER};
+        HANDLER}
 
     /**
      * Sets the scope of a property.

@@ -110,4 +110,4 @@ public @interface WebService {
      * @return the complete name of the service endpoint interface
      */
     String endpointInterface() default "";
-};
+}

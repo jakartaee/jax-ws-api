@@ -49,4 +49,4 @@ public @interface HandlerChain {
      * @deprecated As of JSR-181 2.0 with no replacement.
      */
     @Deprecated String name() default "";
-};
+}
