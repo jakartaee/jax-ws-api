@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -11,8 +11,7 @@
 package jakarta.xml.ws.http;
 
 
-/** The {@code HTTPException} exception represents a
- *  XML/HTTP fault.
+/** The {@code HTTPException} exception represents an XML/HTTP fault.
  *
  *  <p>Since there is no standard format for faults or exceptions
  *  in XML/HTTP messaging, only the HTTP status code is captured. 

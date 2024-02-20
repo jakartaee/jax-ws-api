@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -39,24 +39,25 @@ import static java.lang.annotation.RetentionPolicy.*;
  * proxy instance, and the {@code StockQuoteService} service
  * instance are injected using @WebServiceRefs.
  *
- * <pre><code>
- *    {@literal @}WebServiceRefs({{@literal @}WebServiceRef(name="service/stockquoteservice", value=StockQuoteService.class),
- *                     {@literal @}WebServiceRef(name="service/stockquoteprovider", type=StockQuoteProvider.class, value=StockQuoteService.class})
- *    public class MyClient {
- *        void init() {
- *            Context ic = new InitialContext();
- *            StockQuoteService service = (StockQuoteService) ic.lookup("java:comp/env/service/stockquoteservice");
- *            StockQuoteProvider port = (StockQuoteProvider) ic.lookup("java:comp/env/service/stockquoteprovider");
- *            ...
- *       }
- *       ...
- *    }
- * </code></pre>
+ * {@snippet :
+ *  @WebServiceRefs({
+ *      @WebServiceRef(name="service/stockquoteservice", value=StockQuoteService.class),
+ *      @WebServiceRef(name="service/stockquoteprovider", type=StockQuoteProvider.class, value=StockQuoteService.class
+ *  })
+ *  public class MyClient {
+ *      void init() {
+ *          Context ic = new InitialContext();
+ *          StockQuoteService service = (StockQuoteService) ic.lookup("java:comp/env/service/stockquoteservice");
+ *          StockQuoteProvider port = (StockQuoteProvider) ic.lookup("java:comp/env/service/stockquoteprovider");
+ *          ...
+ *      }
+ *      ...
+ *  }
+ * }
  *
  * @see WebServiceRef
  * @since 1.6, JAX-WS 2.0
  */
-
 @Documented
 @Retention(RUNTIME)
 @Target(TYPE)

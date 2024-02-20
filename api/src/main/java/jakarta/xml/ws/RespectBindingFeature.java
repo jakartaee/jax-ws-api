@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -15,7 +15,7 @@ import jakarta.xml.ws.soap.AddressingFeature;
 /**
  * This feature clarifies the use of the {@code wsdl:binding}
  * in a Jakarta XML Web Services runtime.
- *
+ * <p>
  * This feature can be used during the creation of SEI proxy, and
  * {@link Dispatch} instances on the client side and {@link Endpoint}
  * instances on the server side. This feature cannot be used for {@link Service}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -59,7 +59,7 @@ public @interface WebService {
      * <i>This member-value is not allowed on endpoint interfaces.</i>
      *
      * @return the service name
-     * @specdefault The simple name of the Java class + Service".
+     * @specdefault The simple name of the Java class + Service.
      */
     String serviceName() default "";
 

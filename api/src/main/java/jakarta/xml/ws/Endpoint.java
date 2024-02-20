@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -186,7 +186,7 @@ public abstract class Endpoint {
      *          in conjunction with the endpoint's binding.
      *
      * @throws java.lang.IllegalStateException
-     *          If the endpoint has been published already or it has been stopped.
+     *          If the endpoint has been published already, or it has been stopped.
      *
      * @throws java.lang.SecurityException
      *          If a {@code java.lang.SecurityManger}
@@ -201,7 +201,7 @@ public abstract class Endpoint {
      * <p>
      * The necessary server infrastructure will be created and
      * configured by the Jakarta XML Web Services implementation using some default configuration.
-     *
+     * <p>
      * In order to get more control over the server configuration, please
      * use the {@link jakarta.xml.ws.Endpoint#create(String,Object)} and
      * {@link jakarta.xml.ws.Endpoint#publish(Object)} methods instead.
@@ -231,7 +231,7 @@ public abstract class Endpoint {
      * <p>
      * The necessary server infrastructure will be created and
      * configured by the Jakarta XML Web Services implementation using some default configuration.
-     *
+     * <p>
      * In order to get more control over the server configuration, please
      * use the {@link jakarta.xml.ws.Endpoint#create(String,Object)} and
      * {@link jakarta.xml.ws.Endpoint#publish(Object)} methods instead.
@@ -274,7 +274,7 @@ public abstract class Endpoint {
      *              endpoint's binding.
      *
      * @throws java.lang.IllegalStateException
-     *         If the endpoint has been published already or it has been stopped.
+     *         If the endpoint has been published already, or it has been stopped.
      *
      * @throws java.lang.SecurityException
      *          If a {@code java.lang.SecurityManger}
@@ -292,7 +292,7 @@ public abstract class Endpoint {
      * endpoint's binding.
      *
      * <p>
-     * This is meant for container developers to publish the
+     * This is meant for container developers to publish
      * the endpoints portably and not intended for the end
      * developers.
      *
@@ -307,7 +307,7 @@ public abstract class Endpoint {
      *              endpoint's binding.
      *
      * @throws java.lang.IllegalStateException
-     *         If the endpoint has been published already or it has been stopped.
+     *         If the endpoint has been published already, or it has been stopped.
      *
      * @throws java.lang.SecurityException
      *          If a {@code java.lang.SecurityManger}
@@ -321,7 +321,7 @@ public abstract class Endpoint {
 
     /**
      * Stops publishing this endpoint.
-     *
+     * <p>
      * If the endpoint is not in a published state, this method
      * has no effect.
      *
@@ -356,7 +356,7 @@ public abstract class Endpoint {
 
     /**
      * Returns the executor for this {@code Endpoint}instance.
-     *
+     * <p>
      * The executor is used to dispatch an incoming request to
      * the implementor object.
      *
@@ -369,10 +369,10 @@ public abstract class Endpoint {
 
     /**
      * Sets the executor for this {@code Endpoint} instance.
-     *
+     * <p>
      * The executor is used to dispatch an incoming request to
      * the implementor object.
-     *
+     * <p>
      * If this {@code Endpoint} is published using the
      * {@code publish(Object)} method and the specified server
      * context defines its own threading behavior, the executor
@@ -417,7 +417,7 @@ public abstract class Endpoint {
      * returned {@code EndpointReference} instance.
      * @return EndpointReference of this {@code Endpoint} instance.
      * If the returned {@code EndpointReference} is of type
-     * {@code W3CEndpointReference} then it MUST contain the
+     * {@code W3CEndpointReference} then it MUST contain
      * the specified {@code referenceParameters}.
 
      * @throws WebServiceException If any error in the creation of
@@ -443,7 +443,7 @@ public abstract class Endpoint {
      * @return EndpointReference of type {@code clazz} of this
      * {@code Endpoint} instance.
      * If the returned {@code EndpointReference} is of type
-     * {@code W3CEndpointReference} then it MUST contain the
+     * {@code W3CEndpointReference} then it MUST contain
      * the specified {@code referenceParameters}.
 
      * @throws WebServiceException If any error in the creation of
@@ -470,7 +470,7 @@ public abstract class Endpoint {
      *
      * @param ctxt that is shared for multiple endpoints
      * @throws java.lang.IllegalStateException
-     *        If the endpoint has been published already or it has been stopped.
+     *        If the endpoint has been published already, or it has been stopped.
      *
      * @since 1.7, JAX-WS 2.2
      */

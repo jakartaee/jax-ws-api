@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -21,8 +21,8 @@ import org.w3c.dom.Element;
  *  a web service endpoint implementation class to access
  *  message context and security information relative to
  *  a request being served.
- *
- *  Typically a {@code WebServiceContext} is injected
+ * <p>
+ *  Typically, a {@code WebServiceContext} is injected
  *  into an endpoint implementation class using the
  *  {@code Resource} annotation.
  *
@@ -96,7 +96,7 @@ public interface WebServiceContext {
      * @return EndpointReference of the endpoint associated with this
      * {@code WebServiceContext}.
      * If the returned {@code EndpointReference} is of type
-     * {@code W3CEndpointReference} then it MUST contain the
+     * {@code W3CEndpointReference} then it MUST contain
      * the specified {@code referenceParameters}.
      *
      * @throws IllegalStateException This exception is thrown
@@ -121,7 +121,7 @@ public interface WebServiceContext {
      * @return EndpointReference of type {@code clazz} of the endpoint
      * associated with this {@code WebServiceContext} instance.
      * If the returned {@code EndpointReference} is of type
-     * {@code W3CEndpointReference} then it MUST contain the
+     * {@code W3CEndpointReference} then it MUST contain
      * the specified {@code referenceParameters}.
      *
      * @throws IllegalStateException This exception is thrown

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -56,7 +56,7 @@ import java.io.StringWriter;
  * type of endpoint reference being passed.
  * <p>
  * Jakarta XML Web Services implementors are expected to extract the XML infoset
- * from an {@code EndpointReferece} using the
+ * from an {@code EndpointReference} using the
  * {@link EndpointReference#writeTo}
  * method.
  * <p>

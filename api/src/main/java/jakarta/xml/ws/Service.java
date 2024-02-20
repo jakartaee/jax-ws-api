@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -70,7 +70,7 @@ public class Service {
 
     /**
      * Creates a {@code Service}.
-     *
+     * <p>
      * The specified WSDL document location and service qualified name MUST
      * uniquely identify a {@code wsdl:service} element.
      *
@@ -87,7 +87,7 @@ public class Service {
     /**
      * Creates a {@code Service}. The created instance is
      * configured with the web service features.
-     *
+     * <p>
      * The specified WSDL document location and service qualified name MUST
      * uniquely identify a {@code wsdl:service} element.
      *
@@ -282,9 +282,9 @@ public class Service {
      * is thrown.
      * <p>
      * Calling this method has the same behavior as the following
-     * <pre>
-     * {@code port = service.getPort(portName, serviceEndpointInterface);}
-     * </pre>
+     * {@snippet :
+     *  port = service.getPort(portName, serviceEndpointInterface);
+     * }
      * where the {@code portName} is retrieved from the
      * metadata of the {@code endpointReference} or from the
      * {@code serviceEndpointInterface} and the WSDL
@@ -439,9 +439,9 @@ public class Service {
      * {@code endpointReference} metadata.
      * <p>
      * This method behaves the same as calling
-     * <pre>
-     * {@code dispatch = service.createDispatch(portName, type, mode, features);}
-     * </pre>
+     * {@snippet :
+     *  dispatch = service.createDispatch(portName, type, mode, features);
+     * }
      * where the {@code portName} is retrieved from the
      * WSDL or {@code EndpointReference} metadata.
      *
@@ -573,10 +573,10 @@ public class Service {
      * An implementation MUST be able to retrieve the {@code portName} from the
      * {@code endpointReference} metadata.
      * <p>
-     * This method behavies the same as calling
-     * <pre>
-     * {@code dispatch = service.createDispatch(portName, context, mode, features);}
-     * </pre>
+     * This method behaves the same as calling
+     * {@snippet :
+     *  dispatch = service.createDispatch(portName, context, mode, features);
+     * }
      * where the {@code portName} is retrieved from the
      * WSDL or {@code endpointReference} metadata.
      *
@@ -684,7 +684,7 @@ public class Service {
 
     /**
      * Returns the executor for this {@code Service}instance.
-     *
+     * <p>
      * The executor is used for all asynchronous invocations that
      * require callbacks.
      *
@@ -699,7 +699,7 @@ public class Service {
 
     /**
      * Sets the executor for this {@code Service} instance.
-     *
+     * <p>
      * The executor is used for all asynchronous invocations that
      * require callbacks.
      *
@@ -718,7 +718,7 @@ public class Service {
 
     /**
      * Creates a {@code Service} instance.
-     *
+     * <p>
      * The specified WSDL document location and service qualified name MUST
      * uniquely identify a {@code wsdl:service} element.
      *
@@ -738,7 +738,7 @@ public class Service {
     /**
      * Creates a {@code Service} instance. The created instance is
      * configured with the web service features.
-     *
+     * <p>
      * The specified WSDL document location and service qualified name MUST
      * uniquely identify a {@code wsdl:service} element.
      *

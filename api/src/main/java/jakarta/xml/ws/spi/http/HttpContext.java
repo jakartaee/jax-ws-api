@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -18,7 +18,7 @@ import java.util.Set;
  * service to a {@link HttpHandler} which is invoked to handle requests
  * destined for that path on the associated container.
  * <p>
- * Container provides the implementation for this and it matches
+ * Container provides the implementation for this, and it matches
  * web service requests to corresponding HttpContext objects.
  *
  * @author Jitendra Kotamraju
@@ -54,14 +54,14 @@ public abstract class HttpContext {
      *
      * <p>
      * Endpoint's address for this context can be computed as follows:
-     * <pre>
+     * {@snippet :
      *  HttpExchange exch = ...;
      *  String endpointAddress =
      *      exch.getScheme() + "://"
      *      + exch.getLocalAddress().getHostName()
      *      + ":" + exch.getLocalAddress().getPort()
      *      + exch.getContextPath() + getPath();
-     * </pre>
+     * }
      *
      * @return this context's path
      */

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -26,7 +26,7 @@
   may be got from web service deployment descriptor files.</li>
   <li>Container needs to create {@link jakarta.xml.ws.spi.http.HttpContext}
   objects for the deployment. For example, a HttpContext could be
-  created using servlet configuration(for e.g url-pattern) for the
+  created using servlet configuration(for e.g. url-pattern) for the
   web service in servlet container case.</li>
   <li>Then publishes all the endpoints using
   {@link jakarta.xml.ws.Endpoint#publish(HttpContext)}. During publish(),

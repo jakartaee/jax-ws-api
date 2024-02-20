@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -34,7 +34,7 @@ import javax.xml.transform.Source;
 
 
 /**
- * This class represents a W3C Addressing EndpointReferece which is
+ * This class represents a W3C Addressing EndpointReference which is
  * a remote reference to a web service endpoint that supports the
  * W3C WS-Addressing 1.0 - Core Recommendation.
  * <p>

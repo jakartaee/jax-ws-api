@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -31,7 +31,7 @@ import java.util.Set;
 public abstract class EndpointContext {
 
     /**
-     * This gives list of endpoints in an application. For e.g in
+     * This gives list of endpoints in an application. For e.g. in
      * servlet container, a war file may contain multiple endpoints.
      * In case of http, these endpoints are hosted on the same http
      * server.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -40,7 +40,7 @@ import jakarta.xml.ws.Service;
  * If the feature is enabled, the {@code required} property determines
  * whether the endpoint requires WS-Addressing. If it is set true,
  * WS-Addressing headers MUST be present on incoming and outgoing messages.
- * By default the {@code required} property is {@code false}.
+ * By default, the {@code required} property is {@code false}.
  *
  * <p>
  * If the web service developer has not explicitly enabled this feature,
@@ -59,33 +59,30 @@ import jakarta.xml.ws.Service;
  * 3.1 WS-Policy Assertions</a>
  *
  * <p>
- * <b>Example 1: </b>Possible Policy Assertion in the generated WSDL for
- * {@code @Addressing}
- * <pre> {@code
- *   <wsam:Addressing wsp:Optional="true">
- *     <wsp:Policy/>
- *   </wsam:Addressing> }
- * </pre>
+ * <b>Example 1: </b>Possible Policy Assertion in the generated WSDL for {@code @Addressing}
+ * {@snippet lang="XML" :
+ *  <wsam:Addressing wsp:Optional="true">
+ *    <wsp:Policy/>
+ *  </wsam:Addressing> }
+ * }
  *
  * <p>
- * <b>Example 2: </b>Possible Policy Assertion in the generated WSDL for
- * {@code @Addressing(required=true)}
- * <pre> {@code
- *   <wsam:Addressing>
- *     <wsp:Policy/>
- *   </wsam:Addressing> }
- * </pre>
+ * <b>Example 2: </b>Possible Policy Assertion in the generated WSDL for {@code @Addressing(required=true)}
+ * {@snippet lang="XML" :
+ *  <wsam:Addressing>
+ *    <wsp:Policy/>
+ *  </wsam:Addressing> }
+ * }
  *
  * <p>
- * <b>Example 3: </b>Possible Policy Assertion in the generated WSDL for
- * {@code @Addressing(required=true, responses=Responses.ANONYMOUS)}
- * <pre> {@code
- *   <wsam:Addressing>
- *      <wsp:Policy>
- *        <wsam:AnonymousResponses/>
- *      </wsp:Policy>
- *   </wsam:Addressing> }
- * </pre>
+ * <b>Example 3: </b>Possible Policy Assertion in the generated WSDL for {@code @Addressing(required=true, responses=Responses.ANONYMOUS)}
+ * {@snippet lang="XML" :
+ *  <wsam:Addressing>
+ *    <wsp:Policy>
+ *      <wsam:AnonymousResponses/>
+ *    </wsp:Policy>
+ *  </wsam:Addressing> }
+ * }
  *
  * <p>
  * See <a href="http://www.w3.org/TR/2006/REC-ws-addr-core-20060509/">
@@ -99,7 +96,6 @@ import jakarta.xml.ws.Service;
  * @see Addressing
  * @since 1.6, JAX-WS 2.1
  */
-
 public final class AddressingFeature extends WebServiceFeature {
     /** 
      * Constant value identifying the AddressingFeature

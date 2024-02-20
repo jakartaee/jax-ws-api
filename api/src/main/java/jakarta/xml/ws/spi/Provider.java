@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -290,7 +290,7 @@ public abstract class Provider {
      * method can automatically determine the {@code address} of
      * an endpoint that is published by the same Jakarta EE application and is
      * identified by the {@code serviceName} and
-     * {@code portName} propeties.  If the {@code address} is
+     * {@code portName} properties.  If the {@code address} is
      * {@code null} and the {@code serviceName} and
      * {@code portName} do not identify an endpoint published by the
      * same Jakarta EE application, a
@@ -336,7 +336,7 @@ public abstract class Provider {
      *        <li>If the {@code wsdlDocumentLocation} is NOT {@code null}
      *            and does not represent a valid WSDL.
      *        <li>If the {@code wsdlDocumentLocation} is NOT {@code null} but
-     *            wsdli:wsdlLocation's namespace name cannot be got from the available
+     *            wsdl:wsdlLocation's namespace name cannot be got from the available
      *            metadata.
      *     </ul>
      * @throws WebServiceException If an error occurs while creating the

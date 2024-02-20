@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -32,7 +32,7 @@ package jakarta.xml.ws;
  * @since 1.6, JAX-WS 2.1
  */
 public abstract class WebServiceFeature {
-   /**
+   /*
     * Each Feature definition MUST define a public static final
     * String ID that can be used in the Feature annotation to refer
     * to the feature.
