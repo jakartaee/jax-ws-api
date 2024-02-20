@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -24,12 +24,12 @@ import jakarta.xml.ws.spi.Provider;
 
 /**
  * This class is used to build {@code W3CEndpointReference}
- * instances. The intended use of this clsss is for
+ * instances. The intended use of this class is for
  * an application component, for example a factory component,
  * to create an {@code W3CEndpointReference} for a
  * web service endpoint published by the same 
  * Jakarta EE application. It can also be used to create
- * {@code W3CEndpointReferences} for an Java SE based
+ * {@code W3CEndpointReferences} for a Java SE based
  * endpoint by providing the {@code address} property.
  * <p>
  * When creating a {@code W3CEndpointReference} for an
@@ -85,7 +85,7 @@ public final class W3CEndpointReferenceBuilder {
      * Sets the {@code interfaceName} as the
      * {@code wsam:InterfaceName} element in the
      * {@code wsa:Metadata} element.
-     *
+     * <p>
      * See <a href="http://www.w3.org/TR/2007/REC-ws-addr-metadata-20070904/#refmetadatfromepr">
      * 2.1 Referencing WSDL Metadata from an EPR</a> for more details.
      *
@@ -106,14 +106,14 @@ public final class W3CEndpointReferenceBuilder {
      * Sets the {@code serviceName} as the
      * {@code wsam:ServiceName} element in the
      * {@code wsa:Metadata} element.
-     *
+     * <p>
      * See <a href="http://www.w3.org/TR/2007/REC-ws-addr-metadata-20070904/#refmetadatfromepr">
      * 2.1 Referencing WSDL Metadata from an EPR</a> for more details.
      *
      * @param serviceName The service name of the endpoint to be targeted
      *      by the returned {@code W3CEndpointReference}.  This property
      *      may also be used with the {@code endpointName} (portName)
-     *      property to lookup the {@code address} of a web service
+     *      property to look up the {@code address} of a web service
      *      endpoint that is published by the same Jakarta EE application.
      *
      * @return A {@code W3CEndpointReferenceBuilder} instance with
@@ -138,7 +138,7 @@ public final class W3CEndpointReferenceBuilder {
      * @param endpointName The name of the endpoint to be targeted
      *      by the returned {@code W3CEndpointReference}. The
      *      {@code endpointName} (portName) property may also be
-     *      used with the {@code serviceName} property to lookup
+     *      used with the {@code serviceName} property to look up
      *      the {@code address} of a web service
      *      endpoint published by the same Jakarta EE application.
      *
@@ -165,8 +165,8 @@ public final class W3CEndpointReferenceBuilder {
     
     /**
      * Sets the {@code wsdlDocumentLocation} that will be referenced
-     * as {@code wsa:Metadata/@wsdli:wsdlLocation}. The namespace name
-     * for the wsdli:wsdlLocation's value can be taken from the WSDL itself.
+     * as {@code wsa:Metadata/@wsdl:wsdlLocation}. The namespace name
+     * for the wsdl:wsdlLocation's value can be taken from the WSDL itself.
      *
      * <p>
      * See <a href="http://www.w3.org/TR/2007/REC-ws-addr-metadata-20070904/#refmetadatfromepr">

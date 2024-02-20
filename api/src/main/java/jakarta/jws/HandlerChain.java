@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -20,7 +20,7 @@ import java.lang.annotation.ElementType;
  * where embedding the handler configuration directly in the Java source is not appropriate; for example, where the
  * handler configuration needs to be shared across multiple Web Services, or where the handler chain consists of
  * handlers for multiple transports.
- *
+ * <p>
  * It is an error to combine this annotation with the @SOAPMessageHandlers annotation.
  *
  * @since 1.6

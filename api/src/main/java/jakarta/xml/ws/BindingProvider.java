@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -49,7 +49,7 @@ public interface BindingProvider {
 
     /**
      * Standard property: This boolean property is used by a service
-     * client to indicate whether or not it wants to participate in
+     * client to indicate whether it wants to participate in
      * a session with a service endpoint. If this property is set to
      * {@code true}, the service client indicates that it wants the session
      * to be maintained. If set to {@code false}, the session is not maintained.
@@ -61,7 +61,7 @@ public interface BindingProvider {
 
     /**
      * Standard property for SOAPAction. This boolean property
-     * indicates whether or not the value of the
+     * indicates whether the value of the
      * {@code jakarta.xml.ws.soap.http.soapaction.uri} property
      * is used for the value of the SOAPAction. The
      * default value of this property is {@code false} indicating
@@ -92,7 +92,7 @@ public interface BindingProvider {
     /**
      * Get the context that is used to initialize the message context
      * for request messages.
-     *
+     * <p>
      * Modifications to the request context do not affect the message context of
      * either synchronous or asynchronous operations that have already been
      * started.
@@ -103,7 +103,7 @@ public interface BindingProvider {
 
     /**
      * Get the context that resulted from processing a response message.
-     *
+     * <p>
      * The returned context is for the most recently completed synchronous
      * operation. Subsequent synchronous operation invocations overwrite the
      * response context. Asynchronous operations return their response context

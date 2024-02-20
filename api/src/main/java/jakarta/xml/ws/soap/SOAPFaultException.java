@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2021 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -24,7 +24,7 @@ import jakarta.xml.soap.SOAPFault;
  *  {@code SOAPFactory} used by the binding instance.
  *
  *  <p>Note that the value of {@code getFault} is the only part of the
- *  exception used when searializing a SOAP fault.
+ *  exception used when serializing a SOAP fault.
  *
  *  <p>Refer to the SOAP specification for a complete
  *  description of SOAP faults.

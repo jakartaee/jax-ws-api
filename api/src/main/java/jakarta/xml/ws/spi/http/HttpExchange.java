@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -21,7 +21,7 @@ import java.util.Set;
 import java.security.Principal;
 
 /**
- * This class encapsulates a HTTP request received and a 
+ * This class encapsulates an HTTP request received and a
  * response to be generated in one exchange. It provides methods 
  * for examining the request from the client, and for building and
  * sending the response.
@@ -82,7 +82,7 @@ public abstract class HttpExchange {
      * did not include a header of the specified name, this method returns
      * null. If there are multiple headers with the same name, this method
      * returns the first header in the request. The header name is
-     * case-insensitive. This is a convienence method to get a header
+     * case-insensitive. This is a convenience method to get a header
      * (instead of using the {@link #getRequestHeaders}).
      *
      * @param name the name of the request header
@@ -113,7 +113,7 @@ public abstract class HttpExchange {
      * @param name the name of the header
      * @param value the additional header value. If it contains octet string,
      *        it should be encoded according to
-     *        RFC 2047 (http://www.ietf.org/rfc/rfc2047.txt)
+     *        RFC 2047 (<a href="https://www.ietf.org/rfc/rfc2047.txt">https://www.ietf.org/rfc/rfc2047.txt</a>)
      *
      * @see #getResponseHeaders
      */
@@ -273,7 +273,7 @@ public abstract class HttpExchange {
      * <p>If the request has been received by the container using HTTPS, the
      * following information must be exposed as attributes. These attributes
      * are {@link #REQUEST_CIPHER_SUITE}, and {@link #REQUEST_KEY_SIZE}.
-     * If there is a SSL certificate associated with the request, it must
+     * If there is an SSL certificate associated with the request, it must
      * be exposed using {@link #REQUEST_X509CERTIFICATE}
      *
      * @param name attribute name

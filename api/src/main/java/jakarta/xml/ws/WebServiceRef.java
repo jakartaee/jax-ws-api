@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -26,7 +26,7 @@ import java.lang.annotation.RetentionPolicy;
  * It can be used to inject both service and proxy
  * instances. These injected references are not thread safe.
  * If the references are accessed by multiple threads,
- * usual synchronization techinques can be used to
+ * usual synchronization techniques can be used to
  * support multiple threads.
  *
  * <p>
@@ -40,18 +40,18 @@ import java.lang.annotation.RetentionPolicy;
  * <p>
  * For example, in the code below, the injected
  * {@code StockQuoteProvider} proxy MUST
- * have WS-Addressing enabled as specifed by the
+ * have WS-Addressing enabled as specified by the
  * {@link Addressing}
  * annotation.
  *
- * <pre><code>
- *    public class MyClient {
- *       {@literal @}Addressing
- *       {@literal @}WebServiceRef(StockQuoteService.class)
- *       private StockQuoteProvider stockQuoteProvider;
- *       ...
- *    }
- * </code></pre>
+ * {@snippet :
+ *  public class MyClient {
+ *      @Addressing
+ *      @WebServiceRef(StockQuoteService.class)
+ *      private StockQuoteProvider stockQuoteProvider;
+ *      ...
+ *  }
+ * }
  *
  * <p>
  * If a Jakarta XML Web Services implementation encounters an unsupported or unrecognized
@@ -76,7 +76,7 @@ public @interface WebServiceRef {
      * the default is the JavaBeans property name corresponding
      * to the method.  For class annotations, there is no default
      * and this MUST be specified.
-     *
+     * <p>
      * The JNDI name can be absolute(with any logical namespace) or relative
      * to JNDI {@code java:comp/env} namespace.
      *

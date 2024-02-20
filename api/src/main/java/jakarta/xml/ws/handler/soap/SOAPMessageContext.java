@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -55,7 +55,7 @@ public interface SOAPMessageContext
    *  @param  context The JAXBContext that should be used to unmarshall the 
    *          header
    *  @param  allRoles If {@code true} then returns headers for all SOAP
-   *          roles, if {@code false} then only returns headers targetted
+   *          roles, if {@code false} then only returns headers targeted
    *          at the roles currently being played by this SOAP node, see
    *          {@code getRoles}.
    *  @return An array of unmarshalled headers; returns an empty array if no 
@@ -78,7 +78,7 @@ public interface SOAPMessageContext
    *  SOAP actor roles are invariant during the processing of
    *  SOAP message through the handler chain.
    *
-   *  @return Array of {@code String} for SOAP actor roles
+   *  @return A Set of {@code String} for SOAP actor roles
   **/
   Set<String> getRoles();
 }

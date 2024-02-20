@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -193,7 +193,7 @@ public interface MessageContext extends Map<String, Object> {
      *
      * @param name Name of the property
      * @return Scope of the property
-     * @throws java.lang.IllegalArgumentException if a non-existant
+     * @throws java.lang.IllegalArgumentException if a non-existing
      *             property name is specified
      */
     Scope getScope(String name);

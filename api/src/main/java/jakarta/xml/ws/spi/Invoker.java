@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2009, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
  * to Jakarta XML Web Services runtime, and Jakarta XML Web Services runtime calls {@link #invoke}
  * for a web service invocation. Finally, Invoker does the actual
  * invocation of web service on endpoint instance.
- *
+ * <p>
  * Container also injects the provided {@code WebServiceContext} and takes
  * care of invoking {@code jakarta.annotation.PostConstruct} methods,
  * if present, on the endpoint implementation.
@@ -30,7 +30,6 @@ import java.lang.reflect.InvocationTargetException;
  * @author Jitendra Kotamraju
  * @since 1.7, JAX-WS 2.2
  */
-
 public abstract class Invoker {
 
     /**
@@ -68,7 +67,7 @@ public abstract class Invoker {
      * @throws InvocationTargetException if the invocation done
      *         by reflection API throws this exception
 
-     * @see Method#invoke
+     * @see Method#invoke(Object, Object...)
      */
     public abstract Object invoke(Method m, Object... args)
     throws  IllegalAccessException, IllegalArgumentException, InvocationTargetException;

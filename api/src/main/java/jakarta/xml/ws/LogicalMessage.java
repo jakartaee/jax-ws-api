@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -29,7 +29,7 @@ public interface LogicalMessage {
    *  <p>If the returned {@code Source} is an instance of
    *  {@code DOMSource}, then
    *  modifications to the encapsulated DOM tree change the message
-   *  payload in-place, there is no need to susequently call
+   *  payload in-place, there is no need to subsequently call
    *  {@code setPayload}. Other types of {@code Source} provide only
    *  read access to the message payload.
    *

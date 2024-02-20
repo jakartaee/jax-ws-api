@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2020 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -33,65 +33,64 @@ import java.lang.annotation.Target;
  * <b>Example 1</b>: Specify explicit values for {@code Action} message addressing property
  * for {@code input} and {@code output} messages.
  *
- * <pre>
- * {@literal @}WebService(targetNamespace="http://example.com/numbers")
+ * {@snippet :
+ *  @WebService(targetNamespace="http://example.com/numbers")
  *  public class AddNumbersImpl {
- *     <b>{@literal @}Action(
- *          input="http://example.com/inputAction",
- *          output="http://example.com/outputAction")</b>
+ *      @Action(  // @highlight type="bold"
+ *          input="http://example.com/inputAction",  // @highlight type="bold"
+ *          output="http://example.com/outputAction")  // @highlight type="bold"
  *      public int addNumbers(int number1, int number2) {
  *          return number1 + number2;
  *      }
  *  }
- * </pre>
+ * }
  *
  * The generated WSDL looks like:
- * <pre> {@code
- *   <definitions targetNamespace="http://example.com/numbers" ...>
+ * {@snippet lang="XML" :
+ *  <definitions targetNamespace="http://example.com/numbers" ...>
+ *    ...
+ *    <portType name="AddNumbersPortType">
+ *      <operation name="AddNumbers">
+ *        <input message="tns:AddNumbersInput" name="foo"
+ *          wsam:Action="http://example.com/inputAction" /> // @highlight type="bold"
+ *        <output message="tns:AddNumbersOutput" name="bar"
+ *          wsam:Action="http://example.com/outputAction" /> // @highlight type="bold"
+ *      </operation>
+ *    </portType>
  *     ...
- *     <portType name="AddNumbersPortType">
- *       <operation name="AddNumbers">
- *         <input message="tns:AddNumbersInput" name="foo"
- *           <b>wsam:Action="http://example.com/inputAction"</b>/>
- *         <output message="tns:AddNumbersOutput" name="bar"
- *           <b>wsam:Action="http://example.com/outputAction"</b>/>
- *       </operation>
- *     </portType>
- *     ...
- *   </definitions>
+ *  </definitions>
  * }
- * </pre>
  *
  * <p>
  * <b>Example 2</b>: Specify explicit value for {@code Action} message addressing property
  * for only the {@code input} message. The {@code wsam:Action} values for the
  * WSDL {@code output} message are computed using the algorithm in the Jakarta XML Web Services specification.
  *
- * <pre>
- * {@literal @}WebService(targetNamespace="http://example.com/numbers")
+ * {@snippet :
+ *  @WebService(targetNamespace="http://example.com/numbers")
  *  public class AddNumbersImpl {
- *     <b>{@literal @}Action(input="http://example.com/inputAction")</b>
+ *      @Action(input="http://example.com/inputAction")  // @highlight type="bold"
  *      public int addNumbers(int number1, int number2) {
  *          return number1 + number2;
  *      }
  *  }
- * </pre>
+ * }
  *
  * The generated WSDL looks like:
- * <pre> {@code
- *   <definitions targetNamespace="http://example.com/numbers" ...>
- *     ...
- *     <portType name="AddNumbersPortType">
- *       <operation name="AddNumbers">
- *         <input message="tns:AddNumbersInput" name="foo"
- *           <b>wsam:Action="http://example.com/inputAction"</b>/>
- *         <output message="tns:AddNumbersOutput" name="bar"
- *           <b>wsam:Action="http://example.com/numbers/AddNumbersPortType/AddNumbersResponse"</b>/>
- *       </operation>
- *     </portType>
- *     ...
- *   </definitions>
- * }</pre>
+ * {@snippet lang="XML" :
+ *  <definitions targetNamespace="http://example.com/numbers" ...>
+ *    ...
+ *    <portType name="AddNumbersPortType">
+ *      <operation name="AddNumbers">
+ *        <input message="tns:AddNumbersInput" name="foo"
+ *          wsam:Action="http://example.com/inputAction" />  // @highlight type="bold"
+ *        <output message="tns:AddNumbersOutput" name="bar"
+ *          wsam:Action="http://example.com/numbers/AddNumbersPortType/AddNumbersResponse" />  // @highlight type="bold"
+ *      </operation>
+ *    </portType>
+ *    ...
+ *  </definitions>
+ * }
  *
  * It is legitimate to specify an explicit value for {@code Action} message addressing property for
  * {@code output} message only. In this case, {@code wsam:Action} value for the
@@ -106,7 +105,6 @@ import java.lang.annotation.Target;
  *
  * @since 1.6, JAX-WS 2.1
  */
-
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

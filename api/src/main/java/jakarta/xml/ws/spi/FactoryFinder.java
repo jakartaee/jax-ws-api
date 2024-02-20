@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -145,7 +145,7 @@ class FactoryFinder {
     private static <T> T lookupUsingOSGiServiceLoader(String factoryId) {
         try {
             LOGGER.fine("Trying to create the provider from the OSGi ServiceLoader");
-            // Use reflection to avoid having any dependendcy on ServiceLoader class
+            // Use reflection to avoid having any dependency on ServiceLoader class
             Class<?> serviceClass = Class.forName(factoryId);
             Class<?>[] args = new Class<?>[]{serviceClass};
             Class<?> target = Class.forName(OSGI_SERVICE_LOADER_CLASS_NAME);
@@ -181,9 +181,9 @@ class FactoryFinder {
 
     /**
      * Get the URL for the Class from it's ClassLoader.
-     *
+     * <p>
      * Convenience method for {@link #which(Class, ClassLoader)}.
-     *
+     * <p>
      * Equivalent to calling: which(clazz, clazz.getClassLoader())
      *
      * @param clazz

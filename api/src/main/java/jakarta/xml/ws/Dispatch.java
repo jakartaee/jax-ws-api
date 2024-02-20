@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2005, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -25,7 +25,7 @@ import java.util.concurrent.Future;
 public interface Dispatch<T> extends BindingProvider {
 
     /** Invoke a service operation synchronously.
-     *
+     * <p>
      * The client is responsible for ensuring that the {@code msg} object
      * when marshalled is formed according to the requirements of the protocol
      * binding in use.

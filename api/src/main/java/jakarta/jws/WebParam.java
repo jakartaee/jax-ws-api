@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2022 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -68,7 +68,7 @@ public @interface WebParam {
     /**
      * The XML namespace for the parameter.
      * <p>
-     * Only used if the operation is document style or the paramater maps to a header.
+     * Only used if the operation is document style or the parameter maps to a header.
      * If the target namespace is set to "", this represents the empty namespace.
      *
      * @return the XML namespace for the parameter
@@ -93,10 +93,10 @@ public @interface WebParam {
     Mode mode() default Mode.IN;
 
     /**
-     * If true, the parameter is pulled from a message header rather then the message body.
+     * If true, the parameter is pulled from a message header rather than the message body.
      *
      * @return value of {@code true} to pull the parameter from a message header
-     *         rather then the message body or {@code false} otherwise
+     *         rather than the message body or {@code false} otherwise
      */
     boolean header() default false;
 };
