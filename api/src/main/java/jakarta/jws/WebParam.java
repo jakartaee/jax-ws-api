@@ -31,7 +31,7 @@ public @interface WebParam {
         IN,
         OUT,
         INOUT
-    };
+    }
 
     /**
      * Name of the parameter.
@@ -99,4 +99,4 @@ public @interface WebParam {
      *         rather than the message body or {@code false} otherwise
      */
     boolean header() default false;
-};
+}

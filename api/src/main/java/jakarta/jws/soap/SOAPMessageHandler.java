@@ -50,6 +50,6 @@ public @interface SOAPMessageHandler {
      * @return the list of SOAP headers processed by the handler
      */
     String[] headers() default {};
-};
+}
 
 

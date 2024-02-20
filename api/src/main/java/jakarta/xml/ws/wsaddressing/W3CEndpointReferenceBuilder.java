@@ -54,10 +54,10 @@ public final class W3CEndpointReferenceBuilder {
      * Creates a new {@code W3CEndpointReferenceBuilder} instance.
      */
     public W3CEndpointReferenceBuilder() {
-        referenceParameters = new ArrayList<Element>();
-        metadata = new ArrayList<Element>();
-        attributes = new HashMap<QName, String>();
-        elements = new ArrayList<Element>();
+        referenceParameters = new ArrayList<>();
+        metadata = new ArrayList<>();
+        attributes = new HashMap<>();
+        elements = new ArrayList<>();
     }
     
     /**

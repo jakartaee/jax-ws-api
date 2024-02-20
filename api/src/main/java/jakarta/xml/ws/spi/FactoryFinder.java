@@ -10,15 +10,9 @@
 
 package jakarta.xml.ws.spi;
 
-import java.io.*;
-
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.Properties;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +23,7 @@ class FactoryFinder {
     private static final Logger LOGGER;
 
     private static final ServiceLoaderUtil.ExceptionHandler<WebServiceException> EXCEPTION_HANDLER =
-            new ServiceLoaderUtil.ExceptionHandler<WebServiceException>() {
+            new ServiceLoaderUtil.ExceptionHandler<>() {
                 @Override
                 public WebServiceException createException(Throwable throwable, String message) {
                     return new WebServiceException(message, throwable);
@@ -107,7 +101,7 @@ class FactoryFinder {
                 "Provider for " + factoryId + " cannot be found", null);
         }
 
-        return (T) ServiceLoaderUtil.newInstance(fallbackClassName,
+        return ServiceLoaderUtil.newInstance(fallbackClassName,
                 fallbackClassName, classLoader, EXCEPTION_HANDLER);
     }
 
@@ -166,7 +160,7 @@ class FactoryFinder {
 
     private static <T> T newInstance(String className, String defaultImplClassName, ClassLoader classLoader){
         @SuppressWarnings({"unchecked"})
-        T newInstance = (T) ServiceLoaderUtil.newInstance(className,
+        T newInstance = ServiceLoaderUtil.newInstance(className,
                 defaultImplClassName, classLoader, EXCEPTION_HANDLER);
         if (LOGGER.isLoggable(Level.FINE)) {
             // extra check to avoid costly which operation if not logged
