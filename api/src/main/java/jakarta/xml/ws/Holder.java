@@ -25,7 +25,7 @@ public final class Holder<T> implements Serializable {
     /**
      * The value contained in the holder.
      */
-    public transient T value;
+    public T value;
 
     /**
      * Creates a new holder with a {@code null} value.
