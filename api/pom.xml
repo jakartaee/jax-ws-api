@@ -23,7 +23,7 @@
 
     <groupId>jakarta.xml.ws</groupId>
     <artifactId>jakarta.xml.ws-api</artifactId>
-    <version>4.0.2-SNAPSHOT</version>
+    <version>4.0.2</version>
     <packaging>jar</packaging>
     <name>Jakarta XML Web Services API</name>
     <description>Jakarta XML Web Services API</description>
