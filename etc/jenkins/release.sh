@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 #
-# Copyright (c) 2019, 2022 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2019, 2025 Oracle and/or its affiliates. All rights reserved.
 #
 # This program and the accompanying materials are made available under the
 # terms of the Eclipse Distribution License v. 1.0, which is available at
@@ -37,7 +37,7 @@ if [ ${DRY_RUN} = 'true' ]; then
   MVN_DEPLOY_ARGS='install'
   echo '-[ Skipping GitHub branch and tag checks ]--------------------------------------'
 else
-  MVN_DEPLOY_ARGS='deploy'
+  MVN_DEPLOY_ARGS='install javadoc:jar gpg:sign org.sonatype.central:central-publishing-maven-plugin:0.8.0:publish'
   GIT_ORIGIN=`git remote`
   echo '-[ Prepare branch ]-------------------------------------------------------------'
   if [[ -n `git branch -r | grep "${GIT_ORIGIN}/${RELEASE_BRANCH}"` ]]; then
@@ -79,14 +79,11 @@ API_STAGING_KEY=$(echo ${API_STAGING_DESC} | sed -e 's/\./\\\./g')
 echo '-[ API release version ]--------------------------------------------------------'
 set_version 'API' "${API_DIR}" "${API_RELEASE_VERSION}" "${API_GROUP_ID}" "${API_ARTIFACT_ID}" ''
 
-drop_artifacts "${API_STAGING_KEY}" "${API_DIR}"
-
 echo '-[ Deploy artifacts to staging repository ]-----------------------------'
 # Verify, sign and deploy release
 (cd ${API_DIR} && \
   mvn -U -C -B -V \
       -Poss-release,staging -DskipTests \
-      -DstagingDescription="${API_STAGING_DESC}" \
       clean ${MVN_DEPLOY_ARGS})
 
 echo '-[ Tag release ]----------------------------------------------------------------'
