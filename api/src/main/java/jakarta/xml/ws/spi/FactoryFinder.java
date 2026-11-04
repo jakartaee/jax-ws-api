@@ -1,4 +1,5 @@
 /*
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation. All rights reserved.
  * Copyright (c) 2005, 2024 Oracle and/or its affiliates. All rights reserved.
  *
  * This program and the accompanying materials are made available under the
@@ -128,7 +129,7 @@ class FactoryFinder {
             return true;
         } catch (ClassNotFoundException cnfe) {
             LOGGER.log(
-                    Level.SEVERE,
+                    Level.FINER,
                     "Class " + OSGI_SERVICE_LOADER_CLASS_NAME + " cannot be loaded",
                     cnfe
             );
